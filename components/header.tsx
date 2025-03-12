@@ -54,6 +54,45 @@ const callsToAction = [
   { name: "Contact sales", href: "#", icon: "arrow" },
 ];
 
+const menuItems = [
+  {
+    name: "Solutions",
+    items: [
+      { name: "Analytics", href: "/analytics" },
+      { name: "Engagement", href: "/engagement" },
+      { name: "Security", href: "/security" },
+      { name: "Integrations", href: "/integrations" },
+      { name: "Automations", href: "/automations" },
+    ],
+  },
+
+  {
+    name: "Al Suite",
+    items: [
+      { name: "Marketing", href: "/marketing" },
+      { name: "Sales", href: "/sales" },
+      { name: "Customer Success", href: "/customer-success" },
+      { name: "Product", href: "/product" },
+      { name: "Engineering", href: "/engineering" },
+    ],
+  },
+
+  {
+    name: "Resources",
+    items: [
+      { name: "Blog", href: "/blog" },
+      { name: "Customers", href: "/customers" },
+      { name: "Guides", href: "/guides" },
+      { name: "Webinars", href: "/webinars" },
+    ],
+  },
+
+  {
+    name: "Pricing",
+    href: "/pricing",
+  },
+];
+
 export default function Example() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -123,7 +162,7 @@ export default function Example() {
           </Link>
         </div>
 
-        {/* menu */}
+        {/* toggle button */}
         <div className="flex lg:hidden">
           <button
             type="button"
@@ -149,6 +188,7 @@ export default function Example() {
           </button>
         </div>
 
+        {/* menu */}
         <PopoverGroup className="hidden lg:flex lg:gap-x-12 dev">
           <Popover className="relative">
             <PopoverButton className="flex items-center gap-x-1 text-sm/6 font-semibold text-gray-900">
@@ -204,6 +244,7 @@ export default function Example() {
           </a>
         </PopoverGroup>
 
+        {/* right */}
         <div className="hidden lg:flex lg:flex-1 lg:justify-end gap-3">
           <Button href="/login" variant="outline-primary">
             <span>Sign Up</span>
