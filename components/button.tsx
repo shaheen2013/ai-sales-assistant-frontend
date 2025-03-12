@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import React from "react";
 
-interface buttonInterface {
+interface ButtonInterface {
   children: React.ReactNode;
   variant: "primary" | "secondary" | "outline-primary";
   className?: string;
@@ -14,7 +14,7 @@ export default function Button({
   variant,
   className,
   ...props
-}: buttonInterface) {
+}: ButtonInterface) {
   const clx = classNames(
     "rounded-lg cursor-pointer py-[10px] px-6 hover:opacity-75 transition-opacity active:scale-95 transform duration-75 flex gap-2 items-center justify-center text-base font-semibold",
     { "bg-primary-500 text-white": variant === "primary" },

@@ -1,15 +1,3 @@
 export default function Home() {
-  return (
-    <div className="">
-      Home Page
-      <button className="">Neutral</button>
-      <button className="btn btn-primary">Primary</button>
-      <button className="btn btn-secondary">Secondary</button>
-      <button className="btn btn-accent">Accent</button>
-      <button className="btn btn-info">Info</button>
-      <button className="btn btn-success">Success</button>
-      <button className="btn btn-warning">Warning</button>
-      <button className="btn btn-error">Error</button>
-    </div>
-  );
+  return <div className="container dev">Home Page</div>;
 }
