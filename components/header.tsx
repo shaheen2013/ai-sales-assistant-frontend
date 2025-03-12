@@ -12,8 +12,18 @@ import {
   PopoverPanel,
 } from "@headlessui/react";
 import Link from "next/link";
-import { useState } from "react";
+import React, { useState } from "react";
 
+import { cn } from "@/lib/utils";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  navigationMenuTriggerStyle,
+} from "@/components/shadcn/navigation-menu";
 import Button from "./button";
 
 const products = [
@@ -93,6 +103,44 @@ const menuItems = [
   },
 ];
 
+const components: { title: string; href: string; description: string }[] = [
+  {
+    title: "Alert Dialog",
+    href: "/docs/primitives/alert-dialog",
+    description:
+      "A modal dialog that interrupts the user with important content and expects a response.",
+  },
+  {
+    title: "Hover Card",
+    href: "/docs/primitives/hover-card",
+    description:
+      "For sighted users to preview content available behind a link.",
+  },
+  {
+    title: "Progress",
+    href: "/docs/primitives/progress",
+    description:
+      "Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.",
+  },
+  {
+    title: "Scroll-area",
+    href: "/docs/primitives/scroll-area",
+    description: "Visually or semantically separates content.",
+  },
+  {
+    title: "Tabs",
+    href: "/docs/primitives/tabs",
+    description:
+      "A set of layered sections of content—known as tab panels—that are displayed one at a time.",
+  },
+  {
+    title: "Tooltip",
+    href: "/docs/primitives/tooltip",
+    description:
+      "A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.",
+  },
+];
+
 export default function Example() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -101,7 +149,7 @@ export default function Example() {
       <nav className="mx-auto flex container items-center justify-between p-6 lg:px-8">
         {/* brand */}
         <div className="flex lg:flex-1">
-          <Link href="/" className="-m-1.5 p-1.5">
+          <Link href="/" className="">
             <span className="sr-only">Your Company</span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -189,60 +237,91 @@ export default function Example() {
         </div>
 
         {/* menu */}
-        <PopoverGroup className="hidden lg:flex lg:gap-x-12 dev">
-          <Popover className="relative">
-            <PopoverButton className="flex items-center gap-x-1 text-sm/6 font-semibold text-gray-900">
-              Solutions
-            </PopoverButton>
+        <div className="hidden lg:block">
+          <NavigationMenu className="">
+            <NavigationMenuList className="">
+              <NavigationMenuItem>
+                <NavigationMenuTrigger>Solutions</NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+                    <li className="row-span-3">
+                      <NavigationMenuLink asChild>
+                        <a
+                          className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
+                          href="/"
+                        >
+                          {/* <Icons.logo className="h-6 w-6" /> */}
+                          <div className="mb-2 mt-4 text-lg font-medium">
+                            shadcn/ui
+                          </div>
+                          <p className="text-sm leading-tight text-muted-foreground">
+                            Beautifully designed components built with Radix UI
+                            and Tailwind CSS.
+                          </p>
+                        </a>
+                      </NavigationMenuLink>
+                    </li>
+                    <ListItem href="/docs" title="Introduction">
+                      Re-usable components built using Radix UI and Tailwind
+                      CSS.
+                    </ListItem>
+                    <ListItem href="/docs/installation" title="Installation">
+                      How to install dependencies and structure your app.
+                    </ListItem>
+                    <ListItem
+                      href="/docs/primitives/typography"
+                      title="Typography"
+                    >
+                      Styles for headings, paragraphs, lists...etc
+                    </ListItem>
+                  </ul>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
 
-            <PopoverPanel
-              transition
-              className="absolute top-full -left-8 z-10 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white ring-1 shadow-lg ring-gray-900/5 transition data-closed:translate-y-1 data-closed:opacity-0 data-enter:duration-200 data-enter:ease-out data-leave:duration-150 data-leave:ease-in"
-            >
-              <div className="p-4">
-                {products.map((item) => (
-                  <div
-                    key={item.name}
-                    className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm/6 hover:bg-gray-50"
-                  >
-                    <div className="flex size-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
-                      X
-                    </div>
-                    <div className="flex-auto">
-                      <a
-                        href={item.href}
-                        className="block font-semibold text-gray-900"
+              <NavigationMenuItem>
+                <NavigationMenuTrigger>AI Suite</NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
+                    {components.map((component) => (
+                      <ListItem
+                        key={component.title}
+                        title={component.title}
+                        href={component.href}
                       >
-                        {item.name}
-                        <span className="absolute inset-0" />
-                      </a>
-                      <p className="mt-1 text-gray-600">{item.description}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <div className="grid grid-cols-2 divide-x divide-gray-900/5 bg-gray-50">
-                {callsToAction.map((item) => (
-                  <a
-                    key={item.name}
-                    href={item.href}
-                    className="flex items-center justify-center gap-x-2.5 p-3 text-sm/6 font-semibold text-gray-900 hover:bg-gray-100"
-                  >
-                    {/* <item.icon
-                      aria-hidden="true"
-                      className="size-5 flex-none text-gray-400"
-                    /> */}
-                    {item.name}
-                  </a>
-                ))}
-              </div>
-            </PopoverPanel>
-          </Popover>
+                        {component.description}
+                      </ListItem>
+                    ))}
+                  </ul>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
 
-          <a href="#" className="text-sm/6 font-semibold text-gray-900">
-            Pricing
-          </a>
-        </PopoverGroup>
+              <NavigationMenuItem>
+                <NavigationMenuTrigger>Resources</NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
+                    {components.map((component) => (
+                      <ListItem
+                        key={component.title}
+                        title={component.title}
+                        href={component.href}
+                      >
+                        {component.description}
+                      </ListItem>
+                    ))}
+                  </ul>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+
+              <NavigationMenuItem>
+                <Link href="/pricing" legacyBehavior passHref>
+                  <NavigationMenuLink className="font-medium">
+                    Pricing
+                  </NavigationMenuLink>
+                </Link>
+              </NavigationMenuItem>
+            </NavigationMenuList>
+          </NavigationMenu>
+        </div>
 
         {/* right */}
         <div className="hidden lg:flex lg:flex-1 lg:justify-end gap-3">
@@ -272,7 +351,7 @@ export default function Example() {
               viewBox="0 0 24 24"
               fill="none"
             >
-              <g clip-path="url(#clip0_580_3421)">
+              <g clipPath="url(#clip0_580_3421)">
                 <path
                   d="M22.3998 17.2002V21.6002C22.3998 22.4838 21.6834 23.2002 20.7998 23.2002H15.5998V21.6002H20.3998C20.6206 21.6002 20.7998 21.421 20.7998 21.2002V17.2002H22.3998Z"
                   fill="#BCC7CE"
@@ -466,3 +545,28 @@ export default function Example() {
     </header>
   );
 }
+
+const ListItem = React.forwardRef<
+  React.ElementRef<"a">,
+  React.ComponentPropsWithoutRef<"a">
+>(({ className, title, children, ...props }, ref) => {
+  return (
+    <li>
+      <NavigationMenuLink asChild>
+        <a
+          ref={ref}
+          className={cn(
+            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+            className
+          )}
+          {...props}
+        >
+          <div className="text-sm font-medium leading-none">{title}</div>
+          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+            {children}
+          </p>
+        </a>
+      </NavigationMenuLink>
+    </li>
+  );
+});
