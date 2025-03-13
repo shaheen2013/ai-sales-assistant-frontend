@@ -5,18 +5,18 @@ export default function Home() {
     <div className="">
       {/* tag */}
       <div className="flex items-center justify-center mt-9 mb-4">
-        <span className="border border-primary-500 py-2 px-6 rounded-xl font-medium text-primary-500">
+        <span className="border border-primary-500 py-2 lg:px-6 px-4 rounded-xl font-medium text-primary-500 lg:text-base text-sm">
           Become Market Leader
         </span>
       </div>
 
       {/* title/subtitle */}
       <div className="container">
-        <h2 className="text-7xl font-semibold text-center text-gray-2 mb-6">
+        <h2 className="lg:text-7xl text-4xl font-semibold text-center text-gray-2 mb-6">
           AI agent for <span className="text-primary-500">car</span> dealerships
         </h2>
 
-        <p className="text-[#787878] text-center max-w-[1000px] mx-auto text-xl mb-8">
+        <p className="text-[#787878] text-center max-w-[1000px] mx-auto lg:text-xl mb-8 text-base">
           Teez is the ultimate AI assistant designed specifically for car
           dealerships. It helps dealers find potential buyers, manage vehicle
           listings, and provide real-time customer support
@@ -30,7 +30,7 @@ export default function Home() {
           width={1920}
           height={1080}
           alt="Hero"
-          className="w-[830px] h-[600px]"
+          className="lg:w-[830px] lg:h-[600px]"
         />
 
         <Image
@@ -38,7 +38,7 @@ export default function Home() {
           width={1920}
           height={1080}
           alt="Hero"
-          className="absolute top-0 right-0 left-0 z-[-1]"
+          className="hidden lg:block absolute top-0 right-0 left-0 z-[-1]"
         />
       </div>
 
@@ -426,7 +426,7 @@ export default function Home() {
                 />
               </div>
 
-              <div className="max-w-[150px] dev">
+              <div className="max-w-[150px]">
                 <h2 className="text-gray-500 font-semibold text-4xl">300k+</h2>
                 <p>Active Users Worldwide</p>
               </div>
