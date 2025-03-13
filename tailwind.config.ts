@@ -32,6 +32,7 @@ export default {
   			'gray-700': '#212936 ',
   			'gray-800': '#1a202a',
   			'gray-900': '#141820',
+			'gray-primary': '#3B3B3B',
   			'danger-25': '#fbf1f1',
   			'danger-50': '#fbeae9',
   			'danger-100': '#f3beba   ',
