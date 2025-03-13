@@ -2,29 +2,24 @@
 
 import {
   Dialog,
-  DialogPanel,
   Disclosure,
-  DisclosureButton,
+  DialogPanel,
   DisclosurePanel,
-  Popover,
-  PopoverButton,
-  PopoverGroup,
-  PopoverPanel,
+  DisclosureButton,
 } from "@headlessui/react";
 import Link from "next/link";
 import React, { useState } from "react";
 
 import { cn } from "@/lib/utils";
+import Button from "./button";
 import {
   NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
   NavigationMenuList,
+  NavigationMenuLink,
+  NavigationMenuItem,
   NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
+  NavigationMenuContent,
 } from "@/components/shadcn/navigation-menu";
-import Button from "./button";
 
 const products = [
   {
@@ -62,45 +57,6 @@ const products = [
 const callsToAction = [
   { name: "Watch demo", href: "#", icon: "arrow" },
   { name: "Contact sales", href: "#", icon: "arrow" },
-];
-
-const menuItems = [
-  {
-    name: "Solutions",
-    items: [
-      { name: "Analytics", href: "/analytics" },
-      { name: "Engagement", href: "/engagement" },
-      { name: "Security", href: "/security" },
-      { name: "Integrations", href: "/integrations" },
-      { name: "Automations", href: "/automations" },
-    ],
-  },
-
-  {
-    name: "Al Suite",
-    items: [
-      { name: "Marketing", href: "/marketing" },
-      { name: "Sales", href: "/sales" },
-      { name: "Customer Success", href: "/customer-success" },
-      { name: "Product", href: "/product" },
-      { name: "Engineering", href: "/engineering" },
-    ],
-  },
-
-  {
-    name: "Resources",
-    items: [
-      { name: "Blog", href: "/blog" },
-      { name: "Customers", href: "/customers" },
-      { name: "Guides", href: "/guides" },
-      { name: "Webinars", href: "/webinars" },
-    ],
-  },
-
-  {
-    name: "Pricing",
-    href: "/pricing",
-  },
 ];
 
 const components: { title: string; href: string; description: string }[] = [
@@ -246,7 +202,7 @@ export default function Example() {
                   <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
                     <li className="row-span-3">
                       <NavigationMenuLink asChild>
-                        <a
+                        <Link
                           className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
                           href="/"
                         >
@@ -258,7 +214,7 @@ export default function Example() {
                             Beautifully designed components built with Radix UI
                             and Tailwind CSS.
                           </p>
-                        </a>
+                        </Link>
                       </NavigationMenuLink>
                     </li>
                     <ListItem href="/docs" title="Introduction">
@@ -570,3 +526,5 @@ const ListItem = React.forwardRef<
     </li>
   );
 });
+
+ListItem.displayName = "ListItem";
