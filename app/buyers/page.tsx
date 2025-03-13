@@ -38,7 +38,7 @@ const page = () => {
               <span className="border border-primary-500 py-2 px-6 rounded-xl font-medium text-primary-500">
                 Why for Buyers?
               </span>
-              <h2 className="text-4xl font-bold mt-4">
+              <h2 className="text-4xl font-bold my-4">
                 Best for Buyers - Find <br /> Your Perfect Car with Ease
               </h2>
               <p className="text-[#787878] w-full mx-auto text-xl mb-12">
