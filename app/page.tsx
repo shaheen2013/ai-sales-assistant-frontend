@@ -43,15 +43,15 @@ export default function Home() {
       </div>
 
       {/* trusted by */}
-      <div className="bg-[#06052F] py-14">
+      <div className="bg-[#06052F] lg:py-14 py-20 ">
         <div className="container">
           {/* trusted by */}
-          <h3 className="text-5xl font-semibold text-white text-center mb-9">
+          <h3 className="lg:text-5xl text-3xl font-semibold text-white text-center mb-9">
             Trusted by:
           </h3>
 
           {/* brand logos */}
-          <div className="flex justify-center items-center gap-16 mb-32">
+          <div className="flex justify-center items-center lg:gap-16 gap-8 lg:mb-32 mb-16 flex-wrap">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="124"
@@ -319,7 +319,7 @@ export default function Home() {
 
           {/* why teez */}
           <div className="flex justify-center">
-            <span className="border border-white py-2 px-6 mb-3 rounded-lg text-white">
+            <span className="border border-white py-2 px-6 lg:mb-3 mb-4 rounded-lg text-white">
               Why Teez?
             </span>
           </div>
@@ -329,12 +329,12 @@ export default function Home() {
             So Many Reasons To Choose!
           </h2>
 
-          <p className="mb-20">
+          <p className="lg:mb-20 mb-6">
             Start, switch, or advance your sells with more than 5x.
           </p>
 
           {/* cards */}
-          <div className="grid grid-cols-3 gap-9 mb-9">
+          <div className="grid lg:grid-cols-3 gap-9 mb-9">
             <div className="bg-white p-9 rounded-3xl flex flex-col justify-center items-center">
               <Image
                 src="/icons/homepage/save-time.svg"
@@ -385,7 +385,7 @@ export default function Home() {
           </div>
 
           {/* installation */}
-          <div className="bg-white rounded-3xl p-9 flex divide-x divide-gray-100 gap-4">
+          <div className="bg-white rounded-3xl p-9 lg:flex divide-x divide-gray-100 gap-4 hidden">
             <div className="text-center flex-1">
               <h2 className="text-4xl font-bold mb-1">20%</h2>
               <p className="text-gray-400 text-xl">Sells Improvement</p>
