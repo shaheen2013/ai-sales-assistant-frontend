@@ -6,6 +6,7 @@ interface ButtonInterface {
   variant: "primary" | "secondary" | "outline-primary";
   className?: string;
 
+  /* eslint-disable  @typescript-eslint/no-explicit-any */
   [key: string]: any;
 }
 
