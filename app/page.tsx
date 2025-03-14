@@ -325,17 +325,17 @@ export default function Home() {
           </div>
 
           {/* title/subtitle */}
-          <h2 className="text-5xl font-semibold text-white text-center mb-4">
+          <h2 className="lg:text-5xl text-3xl font-semibold text-white text-center mb-4">
             So Many Reasons To Choose!
           </h2>
 
-          <p className="lg:mb-20 mb-6">
+          <p className="lg:mb-20 mb-12 text-white text-center">
             Start, switch, or advance your sells with more than 5x.
           </p>
 
           {/* cards */}
           <div className="grid lg:grid-cols-3 gap-9 mb-9">
-            <div className="bg-white p-9 rounded-3xl flex flex-col justify-center items-center">
+            <div className="bg-white lg:p-9 p-4 rounded-3xl flex flex-col justify-center items-center">
               <Image
                 src="/icons/homepage/save-time.svg"
                 alt="icon1"
@@ -343,15 +343,15 @@ export default function Home() {
                 height={150}
                 className="mb-2"
               />
-              <p className="text-3xl font-semibold mb-2 text-center">
+              <p className="lg:text-3xl text-2xl font-semibold mb-2 text-center">
                 Save Time
               </p>
-              <p className="text-xl text-center text-gray-300">
+              <p className="lg:text-xl text-sm text-center text-gray-300">
                 Automate repetitive tasks so you can focus on selling.
               </p>
             </div>
 
-            <div className="bg-white p-9 rounded-3xl flex flex-col justify-center items-center">
+            <div className="bg-white lg:p-9 p-4 rounded-3xl flex flex-col justify-center items-center">
               <Image
                 src="/icons/homepage/boost-sales.svg"
                 alt="icon1"
@@ -359,15 +359,15 @@ export default function Home() {
                 height={150}
                 className="mb-2"
               />
-              <p className="text-3xl font-semibold mb-2 text-center">
+              <p className="lg:text-3xl text-2xl font-semibold mb-2 text-center">
                 Boost Sales
               </p>
-              <p className="text-xl text-center text-gray-300">
+              <p className="lg:text-xl text-sm text-center text-gray-300">
                 Never miss a lead with 24/7 AI assistance.
               </p>
             </div>
 
-            <div className="bg-white p-9 rounded-3xl flex flex-col justify-center items-center">
+            <div className="bg-white lg:p-9 p-4 rounded-3xl flex flex-col justify-center items-center">
               <Image
                 src="/icons/homepage/smart-ai.svg"
                 alt="icon1"
@@ -375,10 +375,10 @@ export default function Home() {
                 height={150}
                 className="mb-2"
               />
-              <p className="text-3xl font-semibold mb-2 text-center">
+              <p className="lg:text-3xl text-2xl font-semibold mb-2 text-center">
                 Smart AI Conversations
               </p>
-              <p className="text-xl text-center text-gray-300">
+              <p className="lg:text-xl text-sm text-center text-gray-300">
                 Human-like interactions that build trust.
               </p>
             </div>
