@@ -346,7 +346,7 @@ const page = () => {
       </div>
       {/* pro seller */}
       <div className="bg-gradient-to-b p-12 flex justify-center">
-        <div className="max-w-3xl bg-white rounded-lg shadow-md overflow-hidden flex flex-col sm:flex-row ">
+        <div className="max-w-3xl bg-white rounded-lg shadow-md overflow-hidden flex flex-col sm:flex-row border-2">
           <div className="h-[50%] sm:h-auto sm:w-1/2 overflow-hidden">
             <Image
               draggable={false}
