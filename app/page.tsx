@@ -1,3 +1,4 @@
+import Button from "@/components/button";
 import Image from "next/image";
 
 export default function Home() {
@@ -489,6 +490,70 @@ export default function Home() {
           </div>
         </div>
       </div>
+
+      {/* how to begin */}
+      {/* <div className="flex justify-center items-center min-h-screen p-4 bg-gray-100">
+        how to begin section in construction
+      </div> */}
+
+      {/* best for dealers */}
+      <section className="">
+        <div className="container flex py-16 md:flex-row flex-col items-center">
+          <div className="lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center">
+            {/* badge */}
+            <span className="border border-primary-500 py-1 px-3 rounded-lg text-primary-500 mb-9">
+              Best For Dealers
+            </span>
+
+            <h1 className="lg:text-4xl mb-6 font-medium text-gray-900">
+              You Won't Have To Do It Alone
+            </h1>
+
+            <p className="text-gray-400 text-2xl mb-6">
+              -Effortless inventory management and updates
+            </p>
+            <p className="text-gray-400 text-2xl mb-6">
+              -AI-driven lead generation to attract potential buyers
+            </p>
+            <p className="text-gray-400 text-2xl mb-6">
+              -Automated customer support for faster responses and better
+              engagement
+            </p>
+
+            <div className="">
+              <Button className="!py-3 !px-5" variant="primary">
+                <span className="font-normal"> Learn More</span>
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <g id="arrow-right">
+                    <path
+                      id="Vector 3"
+                      d="M6.66705 4.48787C9.88874 8.40133 15.7739 6.92804 15.7739 6.92804M15.7739 6.92804C15.7739 6.92804 11.5554 11.2881 13.3337 16.0349M15.7739 6.92804L4.25856 13.6496"
+                      stroke="white"
+                      strokeLinejoin="bevel"
+                    />
+                  </g>
+                </svg>
+              </Button>
+            </div>
+          </div>
+
+          <div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
+            <Image
+              className="object-cover object-center rounded"
+              alt="hero"
+              src="/icons/homepage/best-for-dealers.svg"
+              width={450}
+              height={360}
+            />
+          </div>
+        </div>
+      </section>
 
       {/* pricing */}
       <section className="text-gray-600 body-font overflow-hidden">
