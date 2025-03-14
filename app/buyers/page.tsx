@@ -38,7 +38,7 @@ const page = () => {
               <span className="border border-primary-500 py-2 px-6 rounded-xl font-medium text-primary-500">
                 Why for Buyers?
               </span>
-              <h2 className="text-2xl md:text-4xl font-bold my-4">
+              <h2 className="text-2xl sm:text-3xl md:text-[44px]/10 font-semibold my-6">
                 Best for Buyers - Find <br /> Your Perfect Car with Ease
               </h2>
               <p className="text-[#787878] w-full mx-auto text-xl mb-12">
@@ -71,7 +71,7 @@ const page = () => {
             {/* Image Section */}
             <div className="grid grid-cols-2  md:ml-8 place-items-center flex-1 gap-2">
               <Image
-              draggable={false}
+                draggable={false}
                 width={300}
                 height={300}
                 src="/images/buyer-banner-1.png"
@@ -80,7 +80,7 @@ const page = () => {
               />
               <div className="h-full flex flex-col gap-2 justify-between">
                 <Image
-                draggable={false}
+                  draggable={false}
                   width={300}
                   height={300}
                   src="/images/buyer-banner-2.png"
@@ -88,7 +88,7 @@ const page = () => {
                   className="rounded-lg shadow-lg w-full max-w-[341px] h-full max-h-[70%] md:max-h-[270px]"
                 />
                 <Image
-                draggable={false}
+                  draggable={false}
                   width={300}
                   height={300}
                   src="/images/buyer-banner-3.png"
@@ -107,7 +107,7 @@ const page = () => {
             <div className="flex flex-col md:flex-row gap-4">
               <div className="flex-1 mb-[56px] md:mb-0">
                 <Image
-                draggable={false}
+                  draggable={false}
                   className="w-full h-full  max-w-[450px]"
                   src="/images/buyer-discover.svg"
                   width={300}
@@ -116,7 +116,7 @@ const page = () => {
                 />
               </div>
               <div className="flex-1">
-                <h2 className="text-2xl md:text-[32px] font-bold mb-4">
+                <h2 className="text-2xl sm:text-3xl md:text-[32px] font-bold mb-4">
                   Discover, Compare, and Connect Effortlessly
                 </h2>
                 <p className="mb-8 text-gray-300">
@@ -163,7 +163,7 @@ const page = () => {
         <div className="max-w-screen-xl px-8 py-12">
           <div className="flex gap-6 flex-col-reverse md:flex-row  items-center justify-between">
             <div className="flex-1 ">
-              <p className="text-[30px] md:text-[46px] font-bold ">
+              <p className="text-2xl sm:text-3xl md:text-[46px] font-bold ">
                 Why Buyers <span className="text-primary-500">Love Teez</span> ?
               </p>
               <p className="my-6 text-gray-primary">
@@ -193,33 +193,33 @@ const page = () => {
                 <div className="border border-green-500 rounded-lg p-4 flex w-full items-center space-x-4 justify-center">
                   <div className="flex">
                     <Image
-                    draggable={false}
-                      width={60}
-                      height={60}
+                      draggable={false}
+                      width={40}
+                      height={40}
                       src="/images/user-1.png"
                       alt="User 1"
                       className="w-10 h-10 rounded-full border-white object-cover -ml-3"
                     />
                     <Image
-                    draggable={false}
-                      width={60}
-                      height={60}
+                      draggable={false}
+                      width={40}
+                      height={40}
                       src="/images/user-2.png"
                       alt="User 2"
                       className="w-10 h-10 rounded-full border-white object-cover -ml-3"
                     />
                     <Image
-                    draggable={false}
-                      width={60}
-                      height={60}
+                      draggable={false}
+                      width={40}
+                      height={40}
                       src="/images/user-3.png"
                       alt="User 3"
                       className="w-10 h-10 rounded-full border-white object-cover -ml-3"
                     />
                     <Image
-                    draggable={false}
-                      width={60}
-                      height={60}
+                      draggable={false}
+                      width={40}
+                      height={40}
                       src="/images/user-4.png"
                       alt="User 4"
                       className="w-10 h-10 rounded-full border-white object-cover -ml-3"
@@ -236,12 +236,13 @@ const page = () => {
             </div>
             <div className="flex-1 flex justify-end md:mt-auto">
               <Image
-              draggable={false}
+                draggable={false}
                 className="w-full h-full  max-w-[450px]"
                 src="/images/why-buyers.svg"
                 width={300}
                 height={200}
                 alt="Buyer Discover banner"
+                priority
               />
             </div>
           </div>
@@ -252,7 +253,7 @@ const page = () => {
         <div className="max-w-screen-xl px-8 py-12">
           <div className="flex justify-center">
             <div className="max-w-[848px]">
-              <p className="text-[30px] md:text-[46px] font-bold text-center">
+              <p className="text-2xl sm:text-3xl md:text-[46px] font-bold text-center">
                 We are <span className="text-primary-500">Trusted </span>by
                 Industry Leaders
               </p>
@@ -264,20 +265,26 @@ const page = () => {
             </div>
           </div>
           {/* logos */}
-          <div className="flex justify-center gap-8 mt-10">
+          <div className="flex items-center justify-center gap-8 mt-10 flex-wrap">
             {[
+              "/images/youtube.png",
+              "/images/facebook.png",
+              "/images/google.png",
+              "/images/youtube.png",
+              "/images/facebook.png",
+              "/images/google.png",
               "/images/youtube.png",
               "/images/facebook.png",
               "/images/google.png",
             ].map((logo, index) => (
               <div key={index}>
                 <Image
-                draggable={false}
+                  draggable={false}
                   src={logo}
                   alt={`Logo ${index + 1}`}
                   width={133}
                   height={44}
-                  className=" flex-1"
+                  className="h-full w-auto  min-w-[133px]"
                 />
               </div>
             ))}
@@ -327,7 +334,12 @@ const page = () => {
                   </svg>
                 </span>
               </summary>
-              <p className="px-5 py-3 bg-gray-100">{faq.answer}</p>
+              <p
+                className="px-5 py-3 border-t rounded-b-lg text-gray-600 transition-all 
+              "
+              >
+                {faq.answer}
+              </p>
             </details>
           ))}
         </div>
@@ -337,7 +349,7 @@ const page = () => {
         <div className="max-w-3xl bg-white rounded-lg shadow-md overflow-hidden flex flex-col sm:flex-row ">
           <div className="h-[50%] sm:h-auto sm:w-1/2 overflow-hidden">
             <Image
-            draggable={false}
+              draggable={false}
               width={460}
               height={300}
               src="/images/pro-seller.png"
