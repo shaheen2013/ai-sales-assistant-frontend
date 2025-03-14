@@ -33,12 +33,12 @@ const page = () => {
       {/* hero */}
       <div className="flex justify-center">
         <div className="max-w-screen-xl">
-          <div className="flex justify-between py-12 px-6 flex-col-reverse md:flex-row md:justify-between gap-6 md:h-[597px]">
+          <div className="flex justify-between py-12 px-6 flex-col-reverse md:flex-row md:justify-between gap-12 md:gap-6 md:h-[597px]">
             <div className="max-w-[613px] flex-1">
               <span className="border border-primary-500 py-2 px-6 rounded-xl font-medium text-primary-500">
                 Why for Buyers?
               </span>
-              <h2 className="text-4xl font-bold my-4">
+              <h2 className="text-2xl md:text-4xl font-bold my-4">
                 Best for Buyers - Find <br /> Your Perfect Car with Ease
               </h2>
               <p className="text-[#787878] w-full mx-auto text-xl mb-12">
@@ -69,23 +69,26 @@ const page = () => {
             </div>
 
             {/* Image Section */}
-            <div className="grid grid-cols-2 mt-12 md:mt-0 md:ml-8 place-items-center flex-1 gap-2">
+            <div className="grid grid-cols-2  md:ml-8 place-items-center flex-1 gap-2">
               <Image
+              draggable={false}
                 width={300}
                 height={300}
                 src="/images/buyer-banner-1.png"
                 alt="Buyer Banner 1"
-                className="rounded-lg shadow-lg mt-auto w-full md:max-w-[253px] max-h-[226px] md:max-h-[382px] min-[160px] md:ml-auto"
+                className="rounded-lg shadow-lg mt-auto w-full md:max-w-[253px] max-h-[70%] md:max-h-[382px] min-[160px] md:ml-auto"
               />
               <div className="h-full flex flex-col gap-2 justify-between">
                 <Image
+                draggable={false}
                   width={300}
                   height={300}
                   src="/images/buyer-banner-2.png"
                   alt="Buyer Banner 2"
-                  className="rounded-lg shadow-lg w-full max-w-[341px] h-full max-h-[160px] md:max-h-[270px]"
+                  className="rounded-lg shadow-lg w-full max-w-[341px] h-full max-h-[70%] md:max-h-[270px]"
                 />
                 <Image
+                draggable={false}
                   width={300}
                   height={300}
                   src="/images/buyer-banner-3.png"
@@ -99,11 +102,12 @@ const page = () => {
       </div>
       {/* discover */}
       <div className="bg-[#06052F] text-white px-8 py-12">
-        <div className="flex justify-center">
+        <div className="flex  justify-center">
           <div className="max-w-screen-xl">
-            <div className="flex ">
-              <div className="flex-1 ">
+            <div className="flex flex-col md:flex-row gap-4">
+              <div className="flex-1 mb-[56px] md:mb-0">
                 <Image
+                draggable={false}
                   className="w-full h-full  max-w-[450px]"
                   src="/images/buyer-discover.svg"
                   width={300}
@@ -112,7 +116,7 @@ const page = () => {
                 />
               </div>
               <div className="flex-1">
-                <h2 className="text-[32px] font-bold mb-4">
+                <h2 className="text-2xl md:text-[32px] font-bold mb-4">
                   Discover, Compare, and Connect Effortlessly
                 </h2>
                 <p className="mb-8 text-gray-300">
@@ -157,9 +161,9 @@ const page = () => {
       {/* why buyers */}
       <div className="flex justify-center">
         <div className="max-w-screen-xl px-8 py-12">
-          <div className="flex gap-6">
-            <div className="flex-1 max-w-[712px]">
-              <p className="text-[46px] font-bold ">
+          <div className="flex gap-6 flex-col-reverse md:flex-row  items-center justify-between">
+            <div className="flex-1 ">
+              <p className="text-[30px] md:text-[46px] font-bold ">
                 Why Buyers <span className="text-primary-500">Love Teez</span> ?
               </p>
               <p className="my-6 text-gray-primary">
@@ -187,31 +191,40 @@ const page = () => {
 
                 {/* Active Users */}
                 <div className="border border-green-500 rounded-lg p-4 flex w-full items-center space-x-4 justify-center">
-                  {/* User Avatars */}
-                  <div className="flex space-x-2 ">
+                  <div className="flex">
                     <Image
+                    draggable={false}
                       width={60}
                       height={60}
-                      src="/user1.jpg"
+                      src="/images/user-1.png"
                       alt="User 1"
-                      className="w-10 h-10 rounded-full border-2 border-white"
+                      className="w-10 h-10 rounded-full border-white object-cover -ml-3"
                     />
                     <Image
+                    draggable={false}
                       width={60}
                       height={60}
-                      src="/user2.jpg"
+                      src="/images/user-2.png"
                       alt="User 2"
-                      className="w-10 h-10 rounded-full border-2 border-white"
+                      className="w-10 h-10 rounded-full border-white object-cover -ml-3"
                     />
                     <Image
+                    draggable={false}
                       width={60}
                       height={60}
-                      src="/user3.jpg"
+                      src="/images/user-3.png"
                       alt="User 3"
-                      className="w-10 h-10 rounded-full border-2 border-white"
+                      className="w-10 h-10 rounded-full border-white object-cover -ml-3"
+                    />
+                    <Image
+                    draggable={false}
+                      width={60}
+                      height={60}
+                      src="/images/user-4.png"
+                      alt="User 4"
+                      className="w-10 h-10 rounded-full border-white object-cover -ml-3"
                     />
                   </div>
-                  {/* Text */}
                   <div>
                     <p className="text-black font-bold text-lg">100k+</p>
                     <p className="text-gray-600 text-sm">
@@ -221,8 +234,9 @@ const page = () => {
                 </div>
               </div>
             </div>
-            <div className="flex-1">
+            <div className="flex-1 flex justify-end md:mt-auto">
               <Image
+              draggable={false}
                 className="w-full h-full  max-w-[450px]"
                 src="/images/why-buyers.svg"
                 width={300}
@@ -238,7 +252,7 @@ const page = () => {
         <div className="max-w-screen-xl px-8 py-12">
           <div className="flex justify-center">
             <div className="max-w-[848px]">
-              <p className="text-[46px] font-bold text-center">
+              <p className="text-[30px] md:text-[46px] font-bold text-center">
                 We are <span className="text-primary-500">Trusted </span>by
                 Industry Leaders
               </p>
@@ -258,6 +272,7 @@ const page = () => {
             ].map((logo, index) => (
               <div key={index}>
                 <Image
+                draggable={false}
                   src={logo}
                   alt={`Logo ${index + 1}`}
                   width={133}
@@ -270,13 +285,15 @@ const page = () => {
         </div>
       </div>
       {/* faq */}
-      <div className="bg-[#0a0a23] text-white py-12 px-6 flex flex-col items-center pb-[15%]">
+      <div className="bg-[#0a0a23] text-white py-12 px-6 flex flex-col items-center">
         {/* Header Section */}
         <div className="mb-8 text-center">
           <button className="bg-[#1c1c3a] text-white text-sm px-4 py-1 rounded-full mb-2">
             Your Ask
           </button>
-          <h2 className="text-3xl font-semibold">Frequently Asked Questions</h2>
+          <h2 className="text-[30px] md:text-[46px] font-semibold">
+            Frequently Asked Questions
+          </h2>
           <p className="text-gray-200 mt-2">
             Need something cleared up? Here are our most frequently asked
             questions.
@@ -316,44 +333,48 @@ const page = () => {
         </div>
       </div>
       {/* pro seller */}
-      <div className="mt-[-12%] lg:mt-[-9%] xl:mt-[-6%] max-w-3xl mx-auto bg-white rounded-lg shadow-md overflow-hidden flex">
-        <div className="w-1/2">
-          <Image
-            width={460}
-            height={300}
-            src="/images/pro-seller.png"
-            alt="Pro Seller"
-            className="w-full h-full object-cover"
-          />
-        </div>
-        {/* Content Section */}
-        <div className="w-1/2 p-6 flex flex-col justify-center">
-          <h2 className="text-2xl font-semibold text-gray-primary">
-            Become <span className="text-green-600 font-bold">Pro</span> Seller!
-          </h2>
-          <p className="text-gray-600 text-sm mt-2">
-            Unlock advanced tools to manage your inventory, attract more buyers,
-            and automate customer interactions—boosting sales with AI-powered
-            efficiency!
-          </p>
-          <button className="mt-4 px-5 py-2 border-2 border-green-600 text-green-600 rounded-lg flex items-center hover:bg-green-100 transition max-w-[164px]">
-            Start Chart{" "}
-            <span className="ml-2">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="21"
-                height="21"
-                viewBox="0 0 21 21"
-                fill="none"
-              >
-                <path
-                  d="M10.3082 4.08734C11.1415 9.08734 16.9749 10.754 16.9749 10.754M16.9749 10.754C16.9749 10.754 11.1415 12.4207 10.3082 17.4207M16.9749 10.754L3.64152 10.8174"
-                  stroke="#019935"
-                  strokeLinejoin="bevel"
-                />
-              </svg>
-            </span>
-          </button>
+      <div className="bg-gradient-to-b p-12 flex justify-center">
+        <div className="max-w-3xl bg-white rounded-lg shadow-md overflow-hidden flex flex-col sm:flex-row ">
+          <div className="h-[50%] sm:h-auto sm:w-1/2 overflow-hidden">
+            <Image
+            draggable={false}
+              width={460}
+              height={300}
+              src="/images/pro-seller.png"
+              alt="Pro Seller"
+              className="w-full h-full object-cover"
+            />
+          </div>
+          {/* Content Section */}
+          <div className="h-[50%] sm:h-auto sm:w-1/2 p-6 flex flex-col justify-center gap-1">
+            <h2 className="text-lg sm:text-2xl font-semibold text-gray-primary">
+              Become <span className="text-green-600 font-bold">Pro</span>{" "}
+              Seller!
+            </h2>
+            <p className="text-gray-600 text-xs sm:text-sm sm:mt-2">
+              Unlock advanced tools to manage your inventory, attract more
+              buyers, and automate customer interactions—boosting sales with
+              AI-powered efficiency!
+            </p>
+            <button className="mt-2 sm:mt-4 px-2 sm:px-5 sm:py-2 border-2 border-green-600 text-green-600 rounded-lg flex items-center hover:bg-green-100 transition max-w-[140] sm:max-w-[164px]">
+              Start Chart{" "}
+              <span className="ml-2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="21"
+                  height="21"
+                  viewBox="0 0 21 21"
+                  fill="none"
+                >
+                  <path
+                    d="M10.3082 4.08734C11.1415 9.08734 16.9749 10.754 16.9749 10.754M16.9749 10.754C16.9749 10.754 11.1415 12.4207 10.3082 17.4207M16.9749 10.754L3.64152 10.8174"
+                    stroke="#019935"
+                    strokeLinejoin="bevel"
+                  />
+                </svg>
+              </span>
+            </button>
+          </div>
         </div>
       </div>
     </div>
