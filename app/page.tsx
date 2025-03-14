@@ -565,8 +565,8 @@ export default function Home() {
             <p className="lg:w-2/3 mx-auto leading-relaxed text-base text-gray-500">
               Whatever cardigan tote bag tumblr hexagon brooklyn asymmetrical.
             </p>
-            <div className="flex mx-auto border-2 border-green-500 rounded overflow-hidden mt-6">
-              <button className="py-1 px-4 bg-green-500 text-white focus:outline-none">
+            <div className="flex mx-auto border-2 border-primary-500 rounded overflow-hidden mt-6">
+              <button className="py-1 px-4 bg-primary-500 text-white focus:outline-none">
                 Monthly
               </button>
               <button className="py-1 px-4 focus:outline-none">Annually</button>
@@ -649,8 +649,8 @@ export default function Home() {
               </div>
             </div>
             <div className="p-4 xl:w-1/4 md:w-1/2 w-full">
-              <div className="h-full p-6 rounded-lg border-2 border-green-500 flex flex-col relative overflow-hidden">
-                <span className="bg-green-500 text-white px-3 py-1 tracking-widest text-xs absolute right-0 top-0 rounded-bl">
+              <div className="h-full p-6 rounded-lg border-2 border-primary-500 flex flex-col relative overflow-hidden">
+                <span className="bg-primary-500 text-white px-3 py-1 tracking-widest text-xs absolute right-0 top-0 rounded-bl">
                   POPULAR
                 </span>
                 <h2 className="text-sm tracking-widest title-font mb-1 font-medium">
@@ -726,7 +726,7 @@ export default function Home() {
                   </span>
                   Mixtape chillwave tumeric
                 </p>
-                <button className="flex items-center mt-auto text-white bg-green-500 border-0 py-2 px-4 w-full focus:outline-none hover:bg-green-600 rounded">
+                <button className="flex items-center mt-auto text-white bg-primary-500 border-0 py-2 px-4 w-full focus:outline-none hover:bg-primary-600 rounded">
                   Button
                   <svg
                     fill="none"
