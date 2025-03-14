@@ -386,17 +386,17 @@ export default function Home() {
 
           {/* installation */}
           <div className="bg-white rounded-3xl p-9 lg:flex divide-x divide-gray-100 gap-4 hidden">
-            <div className="text-center flex-1">
+            <div className="text-center flex flex-col items-center justify-center flex-1">
               <h2 className="text-4xl font-bold mb-1">20%</h2>
               <p className="text-gray-400 text-xl">Sells Improvement</p>
             </div>
 
-            <div className="text-center flex-1">
+            <div className="text-center flex flex-col items-center justify-center flex-1">
               <h2 className="text-4xl font-bold mb-1">$1 M+</h2>
               <p className="text-gray-400 text-xl">Saved by Our Users</p>
             </div>
 
-            <div className="text-center flex-1">
+            <div className="text-center flex flex-col items-center justify-center flex-1">
               <h2 className="text-4xl font-bold mb-1">4.8 Star</h2>
               <p className="text-gray-400 text-xl">Average Rating</p>
             </div>
