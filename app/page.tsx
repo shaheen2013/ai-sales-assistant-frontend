@@ -492,9 +492,62 @@ export default function Home() {
       </div>
 
       {/* how to begin */}
-      {/* <div className="flex justify-center items-center min-h-screen p-4 bg-gray-100">
-        how to begin section in construction
-      </div> */}
+      <section className="dev">
+        <div className="container py-16 md:flex-row flex-col items-center grid grid-cols-2 gap-14 dev">
+          {/* left */}
+          <div className="flex flex-col md:items-start col-span-1 dev">
+            {/* badge */}
+            <span className="border border-primary-500 py-1 px-3 rounded-lg text-primary-500 mb-9">
+              How It Helps Dealers
+            </span>
+
+            <h1 className="lg:text-5xl mb-6 font-semibold text-gray-900">
+              How To Begin a Professional Service
+            </h1>
+
+            <p className="text-gray-400 text-2xl mb-6">
+              AI Agentis designed to streamline dealership operations by
+              automating key tasks—managing inventory, finding potential buyers,
+              and providing real-time customer support through advanced
+              AI-powered text and voice communication.
+            </p>
+
+            <div className="">
+              <Button className="!py-3 !px-5" variant="primary">
+                <span className="font-normal"> Learn More</span>
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <g id="arrow-right">
+                    <path
+                      id="Vector 3"
+                      d="M6.66705 4.48787C9.88874 8.40133 15.7739 6.92804 15.7739 6.92804M15.7739 6.92804C15.7739 6.92804 11.5554 11.2881 13.3337 16.0349M15.7739 6.92804L4.25856 13.6496"
+                      stroke="white"
+                      strokeLinejoin="bevel"
+                    />
+                  </g>
+                </svg>
+              </Button>
+            </div>
+          </div>
+
+          {/* right */}
+          <div className="col-span-1 dev">
+            right side
+            {/* <Image
+              className="object-cover object-center rounded"
+              alt="hero"
+              src="/icons/homepage/best-for-dealers.svg"
+              width={450}
+              height={360}
+            /> */}
+          </div>
+        </div>
+      </section>
 
       {/* best for dealers */}
       <section className="">
