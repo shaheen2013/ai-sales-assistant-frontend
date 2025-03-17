@@ -386,17 +386,17 @@ export default function Home() {
 
           {/* installation */}
           <div className="bg-white rounded-3xl p-9 lg:flex divide-x divide-gray-100 gap-4 hidden">
-            <div className="text-center flex-1">
+            <div className="text-center flex flex-col items-center justify-center flex-1">
               <h2 className="text-4xl font-bold mb-1">20%</h2>
               <p className="text-gray-400 text-xl">Sells Improvement</p>
             </div>
 
-            <div className="text-center flex-1">
+            <div className="text-center flex flex-col items-center justify-center flex-1">
               <h2 className="text-4xl font-bold mb-1">$1 M+</h2>
               <p className="text-gray-400 text-xl">Saved by Our Users</p>
             </div>
 
-            <div className="text-center flex-1">
+            <div className="text-center flex flex-col items-center justify-center flex-1">
               <h2 className="text-4xl font-bold mb-1">4.8 Star</h2>
               <p className="text-gray-400 text-xl">Average Rating</p>
             </div>
@@ -429,6 +429,61 @@ export default function Home() {
               <div className="max-w-[150px]">
                 <h2 className="text-gray-500 font-semibold text-4xl">300k+</h2>
                 <p>Active Users Worldwide</p>
+              </div>
+            </div>
+          </div>
+
+          {/* mobile installation */}
+          <div className="bg-white rounded-3xl px-4 py-8  lg:hidden">
+            <div className="flex divide-x-2 divide-gray-100 mb-5">
+              <div className="text-center flex flex-col items-center justify-center w-1/2">
+                <h2 className="text-2xl font-semibold mb-1">20%</h2>
+                <p className="text-gray-400 text-sm">Sells Improvement</p>
+              </div>
+
+              <div className="text-center flex flex-col items-center justify-center w-1/2">
+                <h2 className="text-2xl font-semibold mb-1">$1 M+</h2>
+                <p className="text-gray-400 text-sm">Saved by Our Users</p>
+              </div>
+            </div>
+
+            <hr className="border border-gray-100 mb-5" />
+
+            <div className="flex divide-x-2 divide-gray-100">
+              <div className="text-center flex flex-col items-center justify-center w-1/2 ">
+                <h2 className="text-2xl font-semibold mb-1">4.8 Star</h2>
+                <p className="text-gray-400 text-sm">Average Rating</p>
+              </div>
+
+              <div className="flex items-center flex-2 justify-center gap-2 pl-4 w-1/2">
+                <div className="flex -space-x-2 overflow-hidden">
+                  <Image
+                    width={24}
+                    height={24}
+                    className="inline-block h-6 w-6 rounded-full ring-2 ring-white"
+                    src="https://dummyimage.com/24x24"
+                    alt=""
+                  />
+                  <Image
+                    width={24}
+                    height={24}
+                    className="inline-block h-6 w-6 rounded-full ring-2 ring-white"
+                    src="https://dummyimage.com/24x24"
+                    alt=""
+                  />
+                  <Image
+                    width={24}
+                    height={24}
+                    className="inline-block h-6 w-6 rounded-full ring-2 ring-white"
+                    src="https://dummyimage.com/24x24"
+                    alt=""
+                  />
+                </div>
+
+                <div className="max-w-[150px]">
+                  <h2 className="text-2xl font-semibold">300k+</h2>
+                  <p className="text-gray-400 text-sm">Active Users</p>
+                </div>
               </div>
             </div>
           </div>
