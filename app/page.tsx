@@ -519,20 +519,22 @@ export default function Home() {
       </div>
 
       {/* how to begin */}
-      <section className="dev">
-        <div className="container py-16 md:flex-row flex-col grid grid-cols-2 gap-14 dev">
+      <section className="">
+        <div className="container py-16 md:flex-row flex-col grid lg:grid-cols-2 gap-14">
           {/* left */}
-          <div className="flex flex-col md:items-start col-span-1 dev">
+          <div className="flex flex-col md:items-start col-span-1">
             {/* badge */}
-            <span className="border border-primary-500 py-1 px-3 rounded-lg text-primary-500 mb-9">
-              How It Helps Dealers
-            </span>
+            <div>
+              <span className="border border-primary-500 py-1 px-3 rounded-lg lg:text-base text-xs text-primary-500 inline-block lg:mb-9 mb-4">
+                How It Helps Dealers
+              </span>
+            </div>
 
-            <h1 className="lg:text-5xl mb-6 font-semibold text-gray-900">
+            <h1 className="lg:text-5xl text-3xl lg:mb-6 mb-4 font-semibold text-gray-900">
               How To Begin a Professional Service
             </h1>
 
-            <p className="text-gray-400 text-2xl mb-6">
+            <p className="text-[#6F6F6F] lg:text-2xl text-base mb-6">
               AI Agentis designed to streamline dealership operations by
               automating key tasks—managing inventory, finding potential buyers,
               and providing real-time customer support through advanced
@@ -563,15 +565,8 @@ export default function Home() {
           </div>
 
           {/* right */}
-          <div className="col-span-1 dev">
+          <div className="col-span-1">
             <Timeline steps={timelineData} />
-            {/* <Image
-              className="object-cover object-center rounded"
-              alt="hero"
-              src="/icons/homepage/best-for-dealers.svg"
-              width={450}
-              height={360}
-            /> */}
           </div>
         </div>
       </section>

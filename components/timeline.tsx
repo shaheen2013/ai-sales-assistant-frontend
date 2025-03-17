@@ -1,5 +1,5 @@
-import classNames from "classnames";
 import React from "react";
+import classNames from "classnames";
 
 interface TimelinePropsSteps {
   title: string;
@@ -11,7 +11,6 @@ interface TimelineProps {
 }
 
 export default function Timeline({ steps }: TimelineProps) {
-  console.log(steps);
   return (
     <div>
       {steps.map((step, index) => (
@@ -19,11 +18,9 @@ export default function Timeline({ steps }: TimelineProps) {
           <div className="relative w-14">
             <div
               className={classNames(
-                "rounded-full border-[8px]  h-14 w-14 flex items-center justify-center text-primary-900 font-bold text-2xl bg-white",
-                {
-                  "border-primary-500": index === 0,
-                  "border-primary-100": index !== 0,
-                }
+                "rounded-full border-[8px] h-14 w-14 flex items-center justify-center text-primary-900 font-bold text-2xl bg-white",
+                { "border-primary-500": index === 0 },
+                { "border-primary-100": index !== 0 }
               )}
             >
               {index + 1}
