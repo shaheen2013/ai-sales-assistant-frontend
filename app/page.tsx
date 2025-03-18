@@ -1,6 +1,34 @@
 import Image from "next/image";
+import Button from "@/components/button";
+import Timeline from "@/components/timeline";
 
 export default function Home() {
+  const timelineData = [
+    {
+      title: "Smart Inventory Management",
+      description:
+        "Effortlessly store, update, and manage your available cars and their details in one place. AI Agenthelps dealers keep track of inventory, ensuring customers always see the most up-to-date listings.",
+    },
+
+    {
+      title: "AI-Powered Lead Generation",
+      description:
+        "No more waiting for customers—AI Agent actively finds potential buyers based on their preferences and browsing behavior. It engages them with personalized conversations, bringing high-quality leads directly to your dealership.",
+    },
+
+    {
+      title: "Instant AI-Driven Customer Support",
+      description:
+        "AI Agent answers customer inquiries in real time, providing details about available cars, financing options, and dealership services. Whether via text or voice, it ensures quick and accurate responses—even outside business hours!",
+    },
+
+    {
+      title: "AI as Your 24/7 Customer Care Representative",
+      description:
+        "Instead of hiring additional staff, let AI Agent handle customer interactions, schedule test drives, follow up on inquiries, and provide support just like a human agent would. It works around the clock, ensuring no lead is ever lost.",
+    },
+  ];
+
   return (
     <div className="">
       {/* tag */}
@@ -325,17 +353,17 @@ export default function Home() {
           </div>
 
           {/* title/subtitle */}
-          <h2 className="text-5xl font-semibold text-white text-center mb-4">
+          <h2 className="lg:text-5xl text-3xl font-semibold text-white text-center mb-4">
             So Many Reasons To Choose!
           </h2>
 
-          <p className="lg:mb-20 mb-6">
+          <p className="lg:mb-20 mb-12 text-white text-center">
             Start, switch, or advance your sells with more than 5x.
           </p>
 
           {/* cards */}
           <div className="grid lg:grid-cols-3 gap-9 mb-9">
-            <div className="bg-white p-9 rounded-3xl flex flex-col justify-center items-center">
+            <div className="bg-white lg:p-9 p-4 rounded-3xl flex flex-col justify-center items-center">
               <Image
                 src="/icons/homepage/save-time.svg"
                 alt="icon1"
@@ -343,15 +371,15 @@ export default function Home() {
                 height={150}
                 className="mb-2"
               />
-              <p className="text-3xl font-semibold mb-2 text-center">
+              <p className="lg:text-3xl text-2xl font-semibold mb-2 text-center">
                 Save Time
               </p>
-              <p className="text-xl text-center text-gray-300">
+              <p className="lg:text-xl text-sm text-center text-gray-300">
                 Automate repetitive tasks so you can focus on selling.
               </p>
             </div>
 
-            <div className="bg-white p-9 rounded-3xl flex flex-col justify-center items-center">
+            <div className="bg-white lg:p-9 p-4 rounded-3xl flex flex-col justify-center items-center">
               <Image
                 src="/icons/homepage/boost-sales.svg"
                 alt="icon1"
@@ -359,15 +387,15 @@ export default function Home() {
                 height={150}
                 className="mb-2"
               />
-              <p className="text-3xl font-semibold mb-2 text-center">
+              <p className="lg:text-3xl text-2xl font-semibold mb-2 text-center">
                 Boost Sales
               </p>
-              <p className="text-xl text-center text-gray-300">
+              <p className="lg:text-xl text-sm text-center text-gray-300">
                 Never miss a lead with 24/7 AI assistance.
               </p>
             </div>
 
-            <div className="bg-white p-9 rounded-3xl flex flex-col justify-center items-center">
+            <div className="bg-white lg:p-9 p-4 rounded-3xl flex flex-col justify-center items-center">
               <Image
                 src="/icons/homepage/smart-ai.svg"
                 alt="icon1"
@@ -375,10 +403,10 @@ export default function Home() {
                 height={150}
                 className="mb-2"
               />
-              <p className="text-3xl font-semibold mb-2 text-center">
+              <p className="lg:text-3xl text-2xl font-semibold mb-2 text-center">
                 Smart AI Conversations
               </p>
-              <p className="text-xl text-center text-gray-300">
+              <p className="lg:text-xl text-sm text-center text-gray-300">
                 Human-like interactions that build trust.
               </p>
             </div>
@@ -490,6 +518,118 @@ export default function Home() {
         </div>
       </div>
 
+      {/* how to begin */}
+      <section className="">
+        <div className="container py-16 md:flex-row flex-col grid lg:grid-cols-2 gap-14">
+          {/* left */}
+          <div className="flex flex-col md:items-start col-span-1">
+            {/* badge */}
+            <div>
+              <span className="border border-primary-500 py-1 px-3 rounded-lg lg:text-base text-xs text-primary-500 inline-block lg:mb-9 mb-4">
+                How It Helps Dealers
+              </span>
+            </div>
+
+            <h1 className="lg:text-5xl text-3xl lg:mb-6 mb-4 font-semibold text-gray-900">
+              How To Begin a Professional Service
+            </h1>
+
+            <p className="text-[#6F6F6F] lg:text-2xl text-base mb-6">
+              AI Agentis designed to streamline dealership operations by
+              automating key tasks—managing inventory, finding potential buyers,
+              and providing real-time customer support through advanced
+              AI-powered text and voice communication.
+            </p>
+
+            <div className="">
+              <Button className="!py-3 !px-5" variant="primary">
+                <span className="font-normal"> Learn More</span>
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <g id="arrow-right">
+                    <path
+                      id="Vector 3"
+                      d="M6.66705 4.48787C9.88874 8.40133 15.7739 6.92804 15.7739 6.92804M15.7739 6.92804C15.7739 6.92804 11.5554 11.2881 13.3337 16.0349M15.7739 6.92804L4.25856 13.6496"
+                      stroke="white"
+                      strokeLinejoin="bevel"
+                    />
+                  </g>
+                </svg>
+              </Button>
+            </div>
+          </div>
+
+          {/* right */}
+          <div className="col-span-1">
+            <Timeline steps={timelineData} />
+          </div>
+        </div>
+      </section>
+
+      {/* best for dealers */}
+      <section className="">
+        <div className="container flex py-16 md:flex-row flex-col items-center">
+          <div className="lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center">
+            {/* badge */}
+            <span className="border border-primary-500 py-1 px-3 rounded-lg text-primary-500 mb-9">
+              Best For Dealers
+            </span>
+
+            <h1 className="lg:text-4xl mb-6 font-medium text-gray-900">
+              You Won't Have To Do It Alone
+            </h1>
+
+            <p className="text-gray-400 text-2xl mb-6">
+              -Effortless inventory management and updates
+            </p>
+            <p className="text-gray-400 text-2xl mb-6">
+              -AI-driven lead generation to attract potential buyers
+            </p>
+            <p className="text-gray-400 text-2xl mb-6">
+              -Automated customer support for faster responses and better
+              engagement
+            </p>
+
+            <div className="">
+              <Button className="!py-3 !px-5" variant="primary">
+                <span className="font-normal"> Learn More</span>
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <g id="arrow-right">
+                    <path
+                      id="Vector 3"
+                      d="M6.66705 4.48787C9.88874 8.40133 15.7739 6.92804 15.7739 6.92804M15.7739 6.92804C15.7739 6.92804 11.5554 11.2881 13.3337 16.0349M15.7739 6.92804L4.25856 13.6496"
+                      stroke="white"
+                      strokeLinejoin="bevel"
+                    />
+                  </g>
+                </svg>
+              </Button>
+            </div>
+          </div>
+
+          <div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
+            <Image
+              className="object-cover object-center rounded"
+              alt="hero"
+              src="/icons/homepage/best-for-dealers.svg"
+              width={450}
+              height={360}
+            />
+          </div>
+        </div>
+      </section>
+
       {/* pricing */}
       <section className="text-gray-600 body-font overflow-hidden">
         <div className="container px-5 py-24 mx-auto">
@@ -500,8 +640,8 @@ export default function Home() {
             <p className="lg:w-2/3 mx-auto leading-relaxed text-base text-gray-500">
               Whatever cardigan tote bag tumblr hexagon brooklyn asymmetrical.
             </p>
-            <div className="flex mx-auto border-2 border-green-500 rounded overflow-hidden mt-6">
-              <button className="py-1 px-4 bg-green-500 text-white focus:outline-none">
+            <div className="flex mx-auto border-2 border-primary-500 rounded overflow-hidden mt-6">
+              <button className="py-1 px-4 bg-primary-500 text-white focus:outline-none">
                 Monthly
               </button>
               <button className="py-1 px-4 focus:outline-none">Annually</button>
@@ -584,8 +724,8 @@ export default function Home() {
               </div>
             </div>
             <div className="p-4 xl:w-1/4 md:w-1/2 w-full">
-              <div className="h-full p-6 rounded-lg border-2 border-green-500 flex flex-col relative overflow-hidden">
-                <span className="bg-green-500 text-white px-3 py-1 tracking-widest text-xs absolute right-0 top-0 rounded-bl">
+              <div className="h-full p-6 rounded-lg border-2 border-primary-500 flex flex-col relative overflow-hidden">
+                <span className="bg-primary-500 text-white px-3 py-1 tracking-widest text-xs absolute right-0 top-0 rounded-bl">
                   POPULAR
                 </span>
                 <h2 className="text-sm tracking-widest title-font mb-1 font-medium">
@@ -661,7 +801,7 @@ export default function Home() {
                   </span>
                   Mixtape chillwave tumeric
                 </p>
-                <button className="flex items-center mt-auto text-white bg-green-500 border-0 py-2 px-4 w-full focus:outline-none hover:bg-green-600 rounded">
+                <button className="flex items-center mt-auto text-white bg-primary-500 border-0 py-2 px-4 w-full focus:outline-none hover:bg-primary-600 rounded">
                   Button
                   <svg
                     fill="none"
