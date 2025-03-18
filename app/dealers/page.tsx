@@ -1,6 +1,7 @@
 import FAQ from "@/components/FAQ";
 import Trusted from "@/components/Trusted";
 import Image from "next/image";
+
 const page = () => {
   return (
     <div className="">
@@ -10,19 +11,19 @@ const page = () => {
           <div className="flex justify-between py-12 px-6 flex-col-reverse md:flex-row md:justify-between gap-12 md:gap-6 md:h-[597px]">
             <div className="max-w-[613px] flex-1">
               <span className="border border-primary-500 py-2 px-6 rounded-xl font-medium text-primary-500">
-                Why for Buyers?
+                Why best for Dealers?
               </span>
               <h2 className="text-2xl sm:text-3xl md:text-[44px]/10 font-semibold my-6">
-                Best for Buyers - Find <br /> Your Perfect Car with Ease
+                Best for Dealers - Supercharge Your Sales with AI
               </h2>
               <p className="text-[#787878] w-full mx-auto text-xl mb-12">
                 AI Agent is designed to streamline dealership operations by
                 automating key tasks—managing inventory, finding potential
                 buyers, and providing real-time customer support through
-                advanced AI-powered text and voice communication.
+                advanced AI-powered text and voice communication.{" "}
               </p>
               <button className="px-6 py-3 text-white bg-primary-500 rounded-lg hover:bg-green-600 flex gap-2 font-bold">
-                Find Your Best Car
+                Find Best Customers
                 <span>
                   {" "}
                   <svg
@@ -48,26 +49,31 @@ const page = () => {
                 draggable={false}
                 width={300}
                 height={300}
-                src="/images/buyer-banner-1.png"
+                src="/images/dealer-banner-1.png"
                 alt="Buyer Banner 1"
-                className="rounded-lg shadow-lg mt-auto w-full md:max-w-[253px] max-h-[70%] md:max-h-[382px] md:ml-auto"
+                className="object-cover rounded-lg shadow-lg mt-auto 
+                w-full max-w-[253px]
+                h-full max-h-[70%] md:max-h-[383px]
+                 md:ml-auto "
               />
               <div className="h-full flex flex-col gap-2 justify-between">
                 <Image
                   draggable={false}
                   width={300}
                   height={300}
-                  src="/images/buyer-banner-2.png"
+                  src="/images/dealer-banner-2.png"
                   alt="Buyer Banner 2"
-                  className="rounded-lg shadow-lg w-full max-w-[341px] h-full max-h-[70%] md:max-h-[270px]"
+                  className="object-cover rounded-lg shadow-lg
+                   w-full max-w-[341px] 
+                   h-full max-h-[80%] md:max-h-[270px]"
                 />
                 <Image
                   draggable={false}
                   width={300}
                   height={300}
-                  src="/images/buyer-banner-3.png"
+                  src="/images/dealer-banner-3.png"
                   alt="Buyer Banner 3"
-                  className="rounded-lg shadow-lg w-full max-w-[341px] flex-1"
+                  className="object-cover rounded-lg shadow-lg w-full md:max-w-[341px] max-h-[127px] md:max-h-[215px]"
                 />
               </div>
             </div>
@@ -83,7 +89,7 @@ const page = () => {
                 <Image
                   draggable={false}
                   className="w-full h-full  max-w-[450px]"
-                  src="/images/buyer-discover.svg"
+                  src="/images/buyer-sell.svg"
                   width={300}
                   height={200}
                   alt="Buyer Discover banner"
@@ -91,22 +97,21 @@ const page = () => {
               </div>
               <div className="flex-1">
                 <h2 className="text-2xl sm:text-3xl md:text-[32px] font-bold mb-4">
-                  Discover, Compare, and Connect Effortlessly
+                  Sell Smarter, Not Harder
                 </h2>
                 <p className="mb-8 text-gray-300">
-                  Tezz AI makes car buying simple and stress-free. Whether
-                  you&apos;re searching for your first car or your dream
-                  upgrade, our intelligent system helps you.
+                  AI Agent helps car dealers boost productivity, attract more
+                  customers, and close deals faster with intelligent automation
                 </p>
                 <ul className="space-y-4 max-w-xl">
                   {[
-                    "Find Cars Faster: Get personalized recommendations based on your preferences.",
-                    "Compare Listings: Easily compare features, prices, and specifications.",
-                    "Instant Support: Chat or talk with our AI assistant 24/7 for quick answers.",
-                    "Get Alerts: Be the first to know about new listings matching your criteria.",
-                    "Simplified Process: From inquiry to closing the deal, we guide you every step of the way.",
+                    "Manage Inventory: Store and organize car details with ease.",
+                    "Find Clients: AI-powered lead generation connects you with potential buyers.",
+                    "24/7 Customer Support: Our AI handles inquiries via text & voice, even when you're offline.",
+                    "Boost Sales Efficiency: Automate follow-ups, schedule appointments, and track performance.",
+                    "Team Collaboration: Perfect for dealerships with multiple agents using the Team Plan.",
                   ].map((feature, index) => (
-                    <li key={index} className="flex items-start space-x-3">
+                    <li key={index} className="flex items-center space-x-3">
                       <div className="border rounded-full p-[5px]">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -137,29 +142,32 @@ const page = () => {
         <div className="max-w-screen-xl px-8 py-12">
           <div className="flex gap-6 flex-col-reverse md:flex-row  items-center justify-between">
             <div className="flex-1 ">
-              <p className="text-2xl sm:text-3xl md:text-[46px] font-bold ">
-                Why Buyers <span className="text-primary-500">Love Teez</span> ?
+              <p className="text-2xl sm:text-3xl  md:text-[46px]/10 font-bold ">
+                Teez: The Ultimate Tool for{" "}
+                <span className="text-primary-500">Car Dealers </span>!
               </p>
               <p className="my-6 text-gray-primary">
-                Teez makes car shopping effortless with instant support via text
-                and voice, personalized recommendations, and faster search
-                results. Find your dream car quicker, get answers on the go, and
-                enjoy a seamless, stress-free buying experience.
+                Boost your sales, save time, and engage customers 24/7 with
+                Teez. Our AI-driven assistant helps you manage car listings,
+                generate leads, and provide real-time support—all through text
+                and voice, making your dealership more efficient and profitable.
               </p>
               <div className="flex flex-col space-y-4 w-full">
                 {/* Top Stats */}
                 <div className="grid grid-cols-3 gap-4">
                   <div className="border border-green-500 rounded-lg p-4 text-center">
-                    <p className="text-green-600 font-bold text-lg">3x</p>
-                    <p className="text-gray-600 text-sm">Faster Car Searches</p>
+                    <p className="text-green-600 font-bold text-lg">40%</p>
+                    <p className="text-gray-600 text-sm">
+                      Increase in Sales Leads
+                    </p>
                   </div>
                   <div className="border border-green-500 rounded-lg p-4 text-center">
-                    <p className="text-black font-bold text-lg">90%</p>
-                    <p className="text-gray-600 text-sm">Buyer Satisfaction</p>
+                    <p className="text-black font-bold text-lg">70%</p>
+                    <p className="text-gray-600 text-sm">Time Saved</p>
                   </div>
                   <div className="border border-green-500 rounded-lg p-4 text-center">
-                    <p className="text-black font-bold text-lg">50%</p>
-                    <p className="text-gray-600 text-sm">More car options</p>
+                    <p className="text-black font-bold text-lg">2x</p>
+                    <p className="text-gray-600 text-sm">Conversion Rate</p>
                   </div>
                 </div>
 
@@ -167,27 +175,25 @@ const page = () => {
                 <div className="border border-green-500 rounded-lg p-4 flex w-full items-center space-x-4 justify-center">
                   <div className="flex">
                     {[
-                      "/images/user-1.png",
-                      "/images/user-2.png",
-                      "/images/user-3.png",
-                      "/images/user-4.png",
-                    ].map((user, index) => (
+                      "/images/brand-1.png",
+                      "/images/brand-2.png",
+                      "/images/brand-3.png",
+                      "/images/brand-4.png",
+                    ].map((src, index) => (
                       <Image
                         draggable={false}
+                        key={index}
                         width={40}
                         height={40}
-                        src={user}
+                        src={src}
                         alt={`User ${index + 1}`}
-                        className="w-10 h-10 rounded-full border-white object-cover -ml-3"
-                        key={index}
+                        className="w-10 h-10 rounded-full  object-cover -ml-3 border border-gray-100"
                       />
                     ))}
                   </div>
                   <div>
-                    <p className="text-black font-bold text-lg">100k+</p>
-                    <p className="text-gray-600 text-sm">
-                      Active Users Worldwide
-                    </p>
+                    <p className="text-black font-bold text-lg">100+</p>
+                    <p className="text-gray-600 text-sm">Reupdated Brand</p>
                   </div>
                 </div>
               </div>
@@ -196,7 +202,7 @@ const page = () => {
               <Image
                 draggable={false}
                 className="w-full h-full  max-w-[450px]"
-                src="/images/why-buyers.svg"
+                src="/images/car-deal.svg"
                 width={300}
                 height={200}
                 alt="Buyer Discover banner"

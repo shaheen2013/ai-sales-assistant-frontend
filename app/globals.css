@@ -48,3 +48,6 @@
     @apply bg-background text-foreground;
   }
 }
+.bg-gradient-to-b {
+  background: linear-gradient(#0a0a23 50%, #fff 0%);
+}
