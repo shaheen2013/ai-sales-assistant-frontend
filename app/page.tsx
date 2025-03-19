@@ -553,7 +553,7 @@ export default function Home() {
 
       {/* best for dealers */}
       <section className="">
-        <div className="container flex lg:py-16 py-14 lg:flex-row flex-col-reverse items-center lg:gap-20 gap-16">
+        <div className="container flex lg:py-16 py-4 lg:flex-row flex-col-reverse items-center lg:gap-20 gap-16">
           {/* left */}
           <div className="lg:flex-grow w-full flex flex-col mb-16 md:mb-0">
             {/* badge */}
@@ -608,6 +608,66 @@ export default function Home() {
               width={720}
               height={480}
             />
+          </div>
+        </div>
+      </section>
+
+      {/* best for buyers */}
+      <section className="">
+        <div className="container flex lg:py-16 py-4 lg:flex-row flex-col items-center lg:gap-20 gap-16">
+          {/* left */}
+          <div className="lg:max-w-lg lg:w-5/6 w-full  flex  justify-center">
+            <Image
+              className="object-cover object-center rounded"
+              alt="hero"
+              src="/icons/homepage/best-for-buyers.svg"
+              width={720}
+              height={480}
+            />
+          </div>
+
+          {/* right */}
+          <div className="lg:flex-grow w-full flex flex-col mb-16 md:mb-0">
+            {/* badge */}
+            <span className="border border-primary-600 py-2 px-6 rounded-lg text-primary-600 mb-9 inline-flex w-max">
+              Best For Buyers
+            </span>
+
+            <h1 className="lg:text-4xl text-3xl mb-6 font-semibold text-gray-900">
+              You Won't Have To Do It Alone
+            </h1>
+
+            <p className="text-[#414141] lg:text-2xl text-base mb-mb-6 mb-2">
+              -Instant access to the latest car listings
+            </p>
+            <p className="text-[#414141] lg:text-2xl text-base mb-mb-6 mb-2">
+              -Personalized recommendations based on preferences
+            </p>
+            <p className="text-[#414141] lg:text-2xl text-base mb-mb-6 mb-8">
+              -Quick answers through AI-powered text & voice support
+            </p>
+
+            <div className="">
+              <Button className="!py-3 !px-5" variant="primary">
+                <span className="font-normal"> Learn More</span>
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <g id="arrow-right">
+                    <path
+                      id="Vector 3"
+                      d="M6.66705 4.48787C9.88874 8.40133 15.7739 6.92804 15.7739 6.92804M15.7739 6.92804C15.7739 6.92804 11.5554 11.2881 13.3337 16.0349M15.7739 6.92804L4.25856 13.6496"
+                      stroke="white"
+                      strokeLinejoin="bevel"
+                    />
+                  </g>
+                </svg>
+              </Button>
+            </div>
           </div>
         </div>
       </section>
