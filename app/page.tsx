@@ -780,7 +780,7 @@ export default function Home() {
             {/* badge */}
             <div>
               <span className="border border-primary-600 py-2 px-6 rounded-lg text-primary-600 mb-9 inline-flex ">
-                Best For Dealers
+                The Plans
               </span>
             </div>
 
@@ -802,12 +802,12 @@ export default function Home() {
               </TabsList>
 
               <TabsContent value="monthly">
-                <div className="w-full grid grid-cols-3 gap-6">
+                <div className="w-full grid lg:grid-cols-3 gap-6">
                   {pricingPlans.monthly.map((plan: PricingPlan, index) => {
                     return (
                       <div
                         key={index}
-                        className="border-2 border-primary-100 rounded-xl p-6 flex flex-col"
+                        className="border-2 border-primary-100 rounded-xl p-6 flex flex-col bg-white"
                       >
                         {/* badge */}
                         <div className="flex justify-center mb-4">
@@ -885,12 +885,12 @@ export default function Home() {
               </TabsContent>
 
               <TabsContent value="annually">
-                <div className="w-full grid grid-cols-3 gap-6">
+                <div className="w-full grid lg:grid-cols-3 gap-6">
                   {pricingPlans.annually.map((plan: PricingPlan, index) => {
                     return (
                       <div
                         key={index}
-                        className="border-2 border-primary-100 rounded-xl p-6 flex flex-col"
+                        className="border-2 border-primary-100 rounded-xl p-6 flex flex-col bg-white"
                       >
                         {/* badge */}
                         <div className="flex justify-center mb-4">
@@ -1366,9 +1366,11 @@ export default function Home() {
         </div>
       </section>
 
-      <div className="bg-[#10143E] h-[300px] p-3"></div>
+      <div className="bg-[#10143E] h-[430px] p-3 mt-[-430px]"></div>
 
-      <section className="bg-[#10143E] dev">yee</section>
+      <section className="bg-[#10143E] text-white py-14">
+        <div className="container">in progress</div>
+      </section>
     </div>
   );
 }
