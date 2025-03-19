@@ -732,7 +732,7 @@ export default function Home() {
             </span>
 
             <h1 className="lg:text-4xl text-3xl mb-6 font-semibold text-gray-900">
-              You Won't Have To Do It Alone
+              You Won&apos;t Have To Do It Alone
             </h1>
 
             <p className="text-[#414141] lg:text-2xl text-base mb-mb-6 mb-2">

@@ -14,6 +14,7 @@ import {
 import Image from "next/image";
 
 export default function Testimonials() {
+  /* eslint-disable  @typescript-eslint/no-explicit-any */
   const [api, setApi] = React.useState<any>();
   const [current, setCurrent] = React.useState(0);
   const [count, setCount] = React.useState(0);
