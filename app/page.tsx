@@ -2,6 +2,8 @@ import Image from "next/image";
 
 import Button from "@/components/button";
 import Timeline from "@/components/timeline";
+import Testimonials from "@/components/partials/Testimonials";
+
 import { timelineData } from "@/static/homepage";
 
 export default function Home() {
@@ -671,6 +673,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* testimonials */}
+      <Testimonials />
 
       {/* pricing */}
       <section className="text-gray-600 body-font overflow-hidden">
