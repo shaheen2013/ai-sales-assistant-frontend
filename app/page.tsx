@@ -1,77 +1,57 @@
 import Image from "next/image";
+
 import Button from "@/components/button";
 import Timeline from "@/components/timeline";
+import { timelineData } from "@/static/homepage";
 
 export default function Home() {
-  const timelineData = [
-    {
-      title: "Smart Inventory Management",
-      description:
-        "Effortlessly store, update, and manage your available cars and their details in one place. AI Agenthelps dealers keep track of inventory, ensuring customers always see the most up-to-date listings.",
-    },
-
-    {
-      title: "AI-Powered Lead Generation",
-      description:
-        "No more waiting for customers—AI Agent actively finds potential buyers based on their preferences and browsing behavior. It engages them with personalized conversations, bringing high-quality leads directly to your dealership.",
-    },
-
-    {
-      title: "Instant AI-Driven Customer Support",
-      description:
-        "AI Agent answers customer inquiries in real time, providing details about available cars, financing options, and dealership services. Whether via text or voice, it ensures quick and accurate responses—even outside business hours!",
-    },
-
-    {
-      title: "AI as Your 24/7 Customer Care Representative",
-      description:
-        "Instead of hiring additional staff, let AI Agent handle customer interactions, schedule test drives, follow up on inquiries, and provide support just like a human agent would. It works around the clock, ensuring no lead is ever lost.",
-    },
-  ];
-
   return (
     <div className="">
-      {/* tag */}
-      <div className="flex items-center justify-center mt-9 mb-4">
-        <span className="border border-primary-500 py-2 lg:px-6 px-4 rounded-xl font-medium text-primary-500 lg:text-base text-sm">
-          Become Market Leader
-        </span>
-      </div>
+      {/* herosection */}
+      <section>
+        {/* tag */}
+        <div className="flex items-center justify-center mt-9 mb-4">
+          <span className="border border-primary-500 py-2 lg:px-6 px-4 rounded-xl font-medium text-primary-500 lg:text-base text-sm">
+            Become Market Leader
+          </span>
+        </div>
 
-      {/* title/subtitle */}
-      <div className="container">
-        <h2 className="lg:text-7xl text-4xl font-semibold text-center text-gray-2 mb-6">
-          AI agent for <span className="text-primary-500">car</span> dealerships
-        </h2>
+        {/* title/subtitle */}
+        <div className="container">
+          <h2 className="lg:text-7xl text-4xl font-semibold text-center text-gray-2 mb-6">
+            AI agent for <span className="text-primary-500">car</span>{" "}
+            dealerships
+          </h2>
 
-        <p className="text-[#787878] text-center max-w-[1000px] mx-auto lg:text-xl mb-8 text-base">
-          Teez is the ultimate AI assistant designed specifically for car
-          dealerships. It helps dealers find potential buyers, manage vehicle
-          listings, and provide real-time customer support
-        </p>
-      </div>
+          <p className="text-[#787878] text-center max-w-[1000px] mx-auto lg:text-xl mb-8 text-base">
+            Teez is the ultimate AI assistant designed specifically for car
+            dealerships. It helps dealers find potential buyers, manage vehicle
+            listings, and provide real-time customer support
+          </p>
+        </div>
 
-      {/* image & pattern */}
-      <div className="flex justify-center relative">
-        <Image
-          src="/icons/homepage/mobile.svg"
-          width={1920}
-          height={1080}
-          alt="Hero"
-          className="lg:w-[830px] lg:h-[600px]"
-        />
+        {/* image & pattern */}
+        <div className="flex justify-center relative">
+          <Image
+            src="/icons/homepage/mobile.svg"
+            width={1920}
+            height={1080}
+            alt="Hero"
+            className="lg:w-[830px] lg:h-[600px]"
+          />
 
-        <Image
-          src="/icons/homepage/pattern.svg"
-          width={1920}
-          height={1080}
-          alt="Hero"
-          className="hidden lg:block absolute top-0 right-0 left-0 z-[-1]"
-        />
-      </div>
+          <Image
+            src="/icons/homepage/pattern.svg"
+            width={1920}
+            height={1080}
+            alt="Hero"
+            className="hidden lg:block absolute top-0 right-0 left-0 z-[-1]"
+          />
+        </div>
+      </section>
 
       {/* trusted by */}
-      <div className="bg-[#06052F] lg:py-14 py-20 ">
+      <section className="bg-[#06052F] lg:py-14 py-20">
         <div className="container">
           {/* trusted by */}
           <h3 className="lg:text-5xl text-3xl font-semibold text-white text-center mb-9">
@@ -516,11 +496,11 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
       {/* how to begin */}
-      <section className="">
-        <div className="container py-16 md:flex-row flex-col grid lg:grid-cols-2 gap-14">
+      <section className="dev">
+        <div className="container py-14 md:flex-row flex-col grid lg:grid-cols-2 gap-14">
           {/* left */}
           <div className="flex flex-col md:items-start col-span-1">
             {/* badge */}
@@ -543,7 +523,7 @@ export default function Home() {
 
             <div className="">
               <Button className="!py-3 !px-5" variant="primary">
-                <span className="font-normal"> Learn More</span>
+                <span className="font-normal"> Ask Anything</span>
                 <svg
                   width="20"
                   height="20"

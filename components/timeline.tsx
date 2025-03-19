@@ -14,11 +14,11 @@ export default function Timeline({ steps }: TimelineProps) {
   return (
     <div>
       {steps.map((step, index) => (
-        <div key={index} className="flex gap-9 z-10">
+        <div key={index} className="flex lg:gap-9 gap-4 z-10">
           <div className="relative w-14">
             <div
               className={classNames(
-                "rounded-full border-[8px] h-14 w-14 flex items-center justify-center text-primary-900 font-bold text-2xl bg-white",
+                "rounded-full lg:border-[8px] border-[5px] h-14 w-14 flex items-center justify-center text-primary-900 font-bold text-2xl bg-white",
                 { "border-primary-500": index === 0 },
                 { "border-primary-100": index !== 0 }
               )}
@@ -28,12 +28,12 @@ export default function Timeline({ steps }: TimelineProps) {
 
             {/* horisontal border */}
             {index !== steps.length - 1 && (
-              <div className="absolute top-0 left-[25px] h-full bg-primary-100 w-[8px] -z-10"></div>
+              <div className="absolute top-0 left-[25px] h-full bg-primary-100 lg:w-[8px] w-[5px] -z-10"></div>
             )}
 
-            {/* borisontal border 2 */}
+            {/* horisontal border 2 */}
             {index == 0 && (
-              <div className="absolute top-0 left-[25px] h-full w-[8px] -z-10 bg-gradient-to-b from-primary-500"></div>
+              <div className="absolute top-0 left-[25px] h-full lg:w-[8px] w-[5px] -z-10 bg-gradient-to-t from-primary-100 to-primary-600"></div>
             )}
           </div>
 
