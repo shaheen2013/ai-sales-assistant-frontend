@@ -499,7 +499,7 @@ export default function Home() {
       </section>
 
       {/* how to begin */}
-      <section className="dev">
+      <section className="">
         <div className="container py-14 md:flex-row flex-col grid lg:grid-cols-2 gap-14">
           {/* left */}
           <div className="flex flex-col md:items-start col-span-1">
@@ -553,24 +553,25 @@ export default function Home() {
 
       {/* best for dealers */}
       <section className="">
-        <div className="container flex py-16 md:flex-row flex-col items-center">
-          <div className="lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center">
+        <div className="container flex lg:py-16 py-14 lg:flex-row flex-col-reverse items-center lg:gap-20 gap-16">
+          {/* left */}
+          <div className="lg:flex-grow w-full flex flex-col mb-16 md:mb-0">
             {/* badge */}
-            <span className="border border-primary-500 py-1 px-3 rounded-lg text-primary-500 mb-9">
+            <span className="border border-primary-600 py-2 px-6 rounded-lg text-primary-600 mb-9 inline-flex w-max">
               Best For Dealers
             </span>
 
-            <h1 className="lg:text-4xl mb-6 font-medium text-gray-900">
+            <h1 className="lg:text-4xl text-3xl mb-6 font-semibold text-gray-900">
               You Won&apos;t Have To Do It Alone
             </h1>
 
-            <p className="text-gray-400 text-2xl mb-6">
+            <p className="text-[#414141] lg:text-2xl text-base mb-mb-6 mb-2">
               -Effortless inventory management and updates
             </p>
-            <p className="text-gray-400 text-2xl mb-6">
+            <p className="text-[#414141] lg:text-2xl text-base mb-mb-6 mb-2">
               -AI-driven lead generation to attract potential buyers
             </p>
-            <p className="text-gray-400 text-2xl mb-6">
+            <p className="text-[#414141] lg:text-2xl text-base mb-mb-6 mb-8">
               -Automated customer support for faster responses and better
               engagement
             </p>
@@ -598,13 +599,14 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
+          {/* right */}
+          <div className="lg:max-w-lg lg:w-5/6 w-full  flex  justify-center">
             <Image
               className="object-cover object-center rounded"
               alt="hero"
               src="/icons/homepage/best-for-dealers.svg"
-              width={450}
-              height={360}
+              width={720}
+              height={480}
             />
           </div>
         </div>
