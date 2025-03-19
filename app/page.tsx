@@ -602,7 +602,7 @@ export default function Home() {
           </div>
 
           {/* right */}
-          <div className="lg:max-w-lg lg:w-5/6 w-full  flex  justify-center">
+          <div className="lg:max-w-lg lg:w-5/6 w-full  flex justify-center">
             <Image
               className="object-cover object-center rounded"
               alt="hero"

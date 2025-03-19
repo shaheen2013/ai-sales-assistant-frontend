@@ -25,7 +25,7 @@ export default function Button({
     { "border-2 border-primary-500": variant === "outline-primary" },
     { "border-2 border-gray-500 text-gray-500": variant === "outline-black" },
 
-    { "opacity-50 cursor-not-allowed": disabled },
+    { "opacity-50 cursor-not-allowed active:scale-100": disabled },
     className
   );
 
