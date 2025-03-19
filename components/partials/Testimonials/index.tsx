@@ -18,9 +18,6 @@ export default function Testimonials() {
   const [current, setCurrent] = React.useState(0);
   const [count, setCount] = React.useState(0);
 
-  console.log("current => ", current);
-  console.log("count => ", count);
-
   React.useEffect(() => {
     if (!api) {
       return;
@@ -117,6 +114,19 @@ export default function Testimonials() {
           {/* <CarouselPrevious />
           <CarouselNext /> */}
         </Carousel>
+
+        {/* dots */}
+        <div className="flex justify-center mt-5 gap-2">
+          {Array.from({ length: count }).map((_, index) => (
+            <button
+              key={index}
+              onClick={() => api?.scrollTo(index)}
+              className={`h-2 w-2 rounded-full ${
+                current === index + 1 ? "bg-[#9BD609]" : "bg-[#E1F3B5]"
+              }`}
+            />
+          ))}
+        </div>
       </div>
     </section>
   );
