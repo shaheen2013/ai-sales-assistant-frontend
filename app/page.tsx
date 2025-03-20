@@ -1411,12 +1411,12 @@ export default function Home() {
         <div className="container">
           {/* badge */}
           <div className="flex items-center justify-center mb-4">
-            <span className="border border-white py-2 px-6 rounded-lg text-white mb-9 inline-flex w-max">
+            <span className="border border-white py-2 px-6 rounded-lg text-white lg:mb-9 mb-2 inline-flex w-max">
               Your Ask
             </span>
           </div>
 
-          <h2 className="text-center font-semibold text-5xl mb-4">
+          <h2 className="text-center font-semibold lg:text-5xl text-3xl mb-4">
             Frequently Asked Questions
           </h2>
 

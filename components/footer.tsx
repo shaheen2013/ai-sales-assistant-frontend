@@ -148,8 +148,11 @@ export default function Footer() {
 
       {/* copyright */}
       <div className="container">
-        <div className=" bg-[#06052F] text-white flex justify-between p-8 mb-9 rounded-xl font-medium text-xl">
-          <div>Copyright ©2025 Teez</div>
+        <div className=" bg-[#06052F] text-white flex lg:flex-row flex-col lg:text-left text-center justify-between lg:p-8 p-4 mb-9 rounded-xl ">
+          <div className="mb-9 lg:mb-0 lg:text-xl text-lg font-medium ">
+            Copyright ©2025 Teez
+          </div>
+
           <div className="flex items-center gap-6">
             <Link href="/term-of-use" className="font-normal text-base">
               Term Of Use
