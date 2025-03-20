@@ -44,11 +44,11 @@ export default function Testimonials() {
       <div className="flex justify-between mb-12">
         {/* left */}
         <div className="lg:w-7/12">
-          <h2 className="text-[#3B3B3B] text-5xl font-semibold mb-4">
+          <h2 className="text-[#3B3B3B] lg:text-5xl text-3xl font-semibold mb-4">
             What Buyers and Dealers Says
           </h2>
 
-          <p className="text-[#6F6F6F] text-xl font-normal">
+          <p className="text-[#6F6F6F] lg:text-xl text-base font-normal">
             Real results, real success! See how AI AutoBot is transforming car
             dealerships by boosting sales, automating tasks, and enhancing
             customer engagement.
