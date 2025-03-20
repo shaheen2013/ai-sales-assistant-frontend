@@ -1,6 +1,7 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
+import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 import Button from "@/components/button";
@@ -8,18 +9,21 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
+
   //   CarouselNext,
   //   CarouselPrevious,
 } from "@/components/shadcn/carousel";
-import Image from "next/image";
+import { useDotButton } from "@/components/shadcn/EmblaCarouselDotButton";
 
 export default function Testimonials() {
   /* eslint-disable  @typescript-eslint/no-explicit-any */
-  const [api, setApi] = React.useState<any>();
-  const [current, setCurrent] = React.useState(0);
-  const [count, setCount] = React.useState(0);
+  const [api, setApi] = useState<any>();
+  const [current, setCurrent] = useState(0);
+  const [count, setCount] = useState(0);
 
-  React.useEffect(() => {
+  const { selectedIndex, scrollSnaps, onDotButtonClick } = useDotButton(api);
+
+  useEffect(() => {
     if (!api) {
       return;
     }
@@ -118,7 +122,7 @@ export default function Testimonials() {
 
         {/* dots */}
         <div className="flex justify-center mt-5 gap-2">
-          {Array.from({ length: count }).map((_, index) => (
+          {scrollSnaps.map((_, index) => (
             <button
               key={index}
               onClick={() => api?.scrollTo(index)}
