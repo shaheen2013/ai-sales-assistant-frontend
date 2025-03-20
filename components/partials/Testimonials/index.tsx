@@ -1,27 +1,24 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
 import Image from "next/image";
+import React, { useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
-import Button from "@/components/button";
 import {
   Carousel,
+  CarouselApi,
   CarouselContent,
   CarouselItem,
-
-  //   CarouselNext,
-  //   CarouselPrevious,
 } from "@/components/shadcn/carousel";
+import Button from "@/components/button";
 import { useDotButton } from "@/components/shadcn/EmblaCarouselDotButton";
 
 export default function Testimonials() {
-  /* eslint-disable  @typescript-eslint/no-explicit-any */
-  const [api, setApi] = useState<any>();
+  const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
   const [count, setCount] = useState(0);
 
-  const { selectedIndex, scrollSnaps, onDotButtonClick } = useDotButton(api);
+  const { scrollSnaps } = useDotButton(api);
 
   useEffect(() => {
     if (!api) {
