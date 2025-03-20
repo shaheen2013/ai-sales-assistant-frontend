@@ -11,6 +11,12 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/shadcn/tabs";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/shadcn/accordion";
 
 export default function Home() {
   interface PricingPlan {
@@ -102,6 +108,38 @@ export default function Home() {
       },
     ],
   };
+
+  const faqs: { name: string; content: string }[] = [
+    {
+      name: "Can AI Agent handle multiple customer inquiries at once?",
+      content:
+        "Yes! Our AI can handle multiple conversations simultaneously, ensuring quick and efficient responses for every customer.",
+    },
+
+    {
+      name: "Can I integrate AI Agent with my existing CRM?",
+      content:
+        "Absolutely! Our AI is designed to seamlessly integrate with your existing CRM, ensuring a smooth transition and enhanced functionality.",
+    },
+
+    {
+      name: "How does AI find potential buyers?",
+      content:
+        "Our AI uses advanced algorithms to analyze customer data and identify potential buyers based on their preferences and behavior.",
+    },
+
+    {
+      name: "How does the Team Plan work for executive assistants?",
+      content:
+        "The Team Plan allows executive assistants to manage multiple clients and tasks simultaneously, ensuring maximum productivity and efficiency.",
+    },
+
+    {
+      name: "Is there a free trial available?",
+      content:
+        "Yes! We offer a 14-day free trial for all our plans, so you can experience the benefits of our AI before committing.",
+    },
+  ];
 
   return (
     <div className="">
@@ -1368,8 +1406,43 @@ export default function Home() {
 
       <div className="bg-[#10143E] h-[430px] p-3 mt-[-430px]"></div>
 
+      {/* your ask */}
       <section className="bg-[#10143E] text-white py-14">
-        <div className="container">in progress</div>
+        <div className="container">
+          {/* badge */}
+          <div className="flex items-center justify-center mb-4">
+            <span className="border border-white py-2 px-6 rounded-lg text-white mb-9 inline-flex w-max">
+              Your Ask
+            </span>
+          </div>
+
+          <h2 className="text-center font-semibold text-5xl mb-4">
+            Frequently Asked Questions
+          </h2>
+
+          <p className="text-center text-[#ECECEC] mb-16">
+            Need something cleared up? Here are our most frequently asked
+            questions.
+          </p>
+
+          <div className="max-w-[1100px] mx-auto">
+            <Accordion
+              type="single"
+              collapsible
+              className="w-full"
+              defaultValue="item-0"
+            >
+              {faqs.map((faq, index) => {
+                return (
+                  <AccordionItem key={index} value={`item-${index}`}>
+                    <AccordionTrigger>{faq.name}</AccordionTrigger>
+                    <AccordionContent>{faq.content}</AccordionContent>
+                  </AccordionItem>
+                );
+              })}
+            </Accordion>
+          </div>
+        </div>
       </section>
     </div>
   );
