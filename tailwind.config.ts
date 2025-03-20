@@ -187,7 +187,7 @@ export default {
     },
     container: {
       center: true,
-      padding: "2rem",
+      padding: "1rem",
       screens: {
         md: "100%",
         lg: "1400px",

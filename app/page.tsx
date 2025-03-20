@@ -1404,10 +1404,10 @@ export default function Home() {
         </div>
       </section>
 
-      <div className="bg-[#10143E] h-[430px] p-3 mt-[-430px]"></div>
+      <div className="bg-[#10143E] h-[430px] p-3 mt-[-430px] lg:block hidden"></div>
 
       {/* your ask */}
-      <section className="bg-[#10143E] text-white py-14">
+      <section className="bg-[#10143E] text-white py-14 lg:pb-12 pb-2">
         <div className="container">
           {/* badge */}
           <div className="flex items-center justify-center mb-4">
@@ -1425,7 +1425,7 @@ export default function Home() {
             questions.
           </p>
 
-          <div className="max-w-[1100px] mx-auto">
+          <div className="lg:max-w-[1100px] mx-auto">
             <Accordion
               type="single"
               collapsible
@@ -1445,10 +1445,12 @@ export default function Home() {
         </div>
       </section>
 
+      <div className="bg-[#10143E] h-[230px] p-3 mb-[-230px]"></div>
+
       {/* become pro seller */}
       <section>
         <div className="container">
-          <div className="max-w-[1100px] my-14 shadow-lg rounded-xl overflow-hidden mx-auto flex lg:flex-row flex-col border-2 border-gray-100">
+          <div className="max-w-[1100px] my-14 shadow-lg rounded-xl overflow-hidden mx-auto flex lg:flex-row flex-col border-2 border-gray-100 bg-white">
             {/* left */}
             <div className=" ">
               <Image
