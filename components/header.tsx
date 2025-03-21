@@ -194,7 +194,85 @@ export default function Example() {
         </div>
 
         {/* menu */}
-        <div className="hidden lg:block">
+        <div className="hidden lg:flex">
+          <NavigationMenu className="">
+            <NavigationMenuList className="">
+              <NavigationMenuItem>
+                <NavigationMenuTrigger>Solutions</NavigationMenuTrigger>
+
+                <NavigationMenuContent className="">
+                  <div className="px-6 py-2 grid grid-cols-3 gap-3 dev">
+                    {/* menu */}
+                    <div className="col-span-1">
+                      <div className="bg-primary-50 rounded-lg p-4 flex items-start gap-2 border-b border-primary-300">
+                        {/* menu icon */}
+                        <div className="bg-primary-400 rounded-md p-1">
+                          <svg
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M7 14C9.21001 14 11 12.21 11 10C11 7.79 9.21001 6 7 6C4.79 6 3.00001 7.79 3.00001 10C3.00001 12.21 4.79 14 7 14ZM7 8C8.10001 8 9.00001 8.9 9.00001 10C9.00001 11.1 8.10001 12 7 12C5.9 12 5 11.1 5 10C5 8.9 5.9 8 7 8ZM14 23C14 23.55 13.55 24 12.9999 24C12.45 24 12 23.55 12 23C12 20.24 9.76 18 7 18C4.24 18 2 20.24 2 23C2 23.55 1.55 24 1 24C0.450005 24 0 23.55 0 23C0 19.14 3.14 16 7 16C10.86 16 14 19.14 14 23ZM24 5V13C24 15.76 21.7599 18 18.9999 18H15C14.45 18 14 17.55 14 17C14 16.45 14.45 16 15 16H18.9999C20.6499 16 21.9999 14.65 21.9999 13V5C21.9999 3.35 20.6499 2 18.9999 2H9.46C8.39 2 7.4 2.58 6.86 3.5C6.58 3.98 5.97001 4.14 5.49001 3.87C5.01001 3.59 4.85 2.98 5.13001 2.5C6.03001 0.96 7.69 0 9.46 0H18.9999C21.7599 0 24 2.24 24 5ZM13.67 10.92L16.59 8H15C14.45 8 14 7.55 14 7C14 6.45 14.45 6 15 6H18C19.1 6 20 6.9 20 8V11C20 11.55 19.55 12 18.9999 12C18.45 12 18 11.55 18 11V9.41L15.08 12.33C14.6199 12.79 14 13.04 13.37 13.04C13.1499 13.04 12.93 13.01 12.71 12.95C12.18 12.8 11.87 12.25 12.02 11.72C12.17 11.19 12.72 10.88 13.26 11.03C13.38 11.06 13.5399 11.05 13.67 10.92Z"
+                              fill="white"
+                            />
+                          </svg>
+                        </div>
+
+                        {/* content */}
+                        <div>
+                          <h2 className="text-base font-semibold text-[#292929]">
+                            For Buyers
+                          </h2>
+                          <p className="text-[#7C7C7C] text-sm">
+                            Empower Your Learning with Comprehensive Training &
+                            Resources
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="rounded-lg p-4 flex items-start gap-2 border-b border-[#94A2B8]">
+                        {/* menu icon */}
+                        <div className="bg-primary-400 rounded-md p-1">
+                          <svg
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M7 14C9.21001 14 11 12.21 11 10C11 7.79 9.21001 6 7 6C4.79 6 3.00001 7.79 3.00001 10C3.00001 12.21 4.79 14 7 14ZM7 8C8.10001 8 9.00001 8.9 9.00001 10C9.00001 11.1 8.10001 12 7 12C5.9 12 5 11.1 5 10C5 8.9 5.9 8 7 8ZM14 23C14 23.55 13.55 24 12.9999 24C12.45 24 12 23.55 12 23C12 20.24 9.76 18 7 18C4.24 18 2 20.24 2 23C2 23.55 1.55 24 1 24C0.450005 24 0 23.55 0 23C0 19.14 3.14 16 7 16C10.86 16 14 19.14 14 23ZM24 5V13C24 15.76 21.7599 18 18.9999 18H15C14.45 18 14 17.55 14 17C14 16.45 14.45 16 15 16H18.9999C20.6499 16 21.9999 14.65 21.9999 13V5C21.9999 3.35 20.6499 2 18.9999 2H9.46C8.39 2 7.4 2.58 6.86 3.5C6.58 3.98 5.97001 4.14 5.49001 3.87C5.01001 3.59 4.85 2.98 5.13001 2.5C6.03001 0.96 7.69 0 9.46 0H18.9999C21.7599 0 24 2.24 24 5ZM13.67 10.92L16.59 8H15C14.45 8 14 7.55 14 7C14 6.45 14.45 6 15 6H18C19.1 6 20 6.9 20 8V11C20 11.55 19.55 12 18.9999 12C18.45 12 18 11.55 18 11V9.41L15.08 12.33C14.6199 12.79 14 13.04 13.37 13.04C13.1499 13.04 12.93 13.01 12.71 12.95C12.18 12.8 11.87 12.25 12.02 11.72C12.17 11.19 12.72 10.88 13.26 11.03C13.38 11.06 13.5399 11.05 13.67 10.92Z"
+                              fill="white"
+                            />
+                          </svg>
+                        </div>
+
+                        {/* content */}
+                        <div>
+                          <h2 className="text-base font-semibold text-[#292929]">
+                            For Buyers
+                          </h2>
+                          <p className="text-[#7C7C7C] text-sm">
+                            Empower Your Learning with Comprehensive Training &
+                            Resources
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* option */}
+                    <div className="col-span-1 dev2">options</div>
+
+                    <div className="col-span-1 dev2">options</div>
+                  </div>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+            </NavigationMenuList>
+          </NavigationMenu>
+
           <NavigationMenu className="">
             <NavigationMenuList className="">
               <NavigationMenuItem>
@@ -231,40 +309,6 @@ export default function Example() {
                     >
                       Styles for headings, paragraphs, lists...etc
                     </ListItem>
-                  </ul>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
-
-              <NavigationMenuItem>
-                <NavigationMenuTrigger>AI Suite</NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-                    {components.map((component) => (
-                      <ListItem
-                        key={component.title}
-                        title={component.title}
-                        href={component.href}
-                      >
-                        {component.description}
-                      </ListItem>
-                    ))}
-                  </ul>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
-
-              <NavigationMenuItem>
-                <NavigationMenuTrigger>Resources</NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-                    {components.map((component) => (
-                      <ListItem
-                        key={component.title}
-                        title={component.title}
-                        href={component.href}
-                      >
-                        {component.description}
-                      </ListItem>
-                    ))}
                   </ul>
                 </NavigationMenuContent>
               </NavigationMenuItem>
