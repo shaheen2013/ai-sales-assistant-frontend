@@ -1,15 +1,7 @@
 import type { Metadata } from "next";
-import { Poppins } from "next/font/google";
-
-import "./globals.css";
 
 import Header from "@/components/header";
 import Footer from "@/components/footer";
-
-const poppins = Poppins({
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   title: "AI Sales Assistant",
@@ -25,13 +17,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${poppins.className} antialiased`}>
-        {/* <Header /> */}
+    <>
+      <Header />
 
-        {children}
-        {/* <Footer /> */}
-      </body>
-    </html>
+      {children}
+      <Footer />
+    </>
   );
 }
