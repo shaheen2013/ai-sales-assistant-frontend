@@ -5,6 +5,6 @@ export const metadata = {
   description: "Dashboard Overview",
 };
 
-export default function Overview() {
+export default function DashboardOverview() {
   return <div>Dashboard Overview</div>;
 }

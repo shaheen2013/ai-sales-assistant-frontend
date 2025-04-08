@@ -1,3 +1,6 @@
+"use client";
+
+import Link from "next/link";
 import Image from "next/image";
 
 import {
@@ -6,10 +9,14 @@ import {
   SidebarFooter,
 } from "@/components/shadcn/sidebar";
 import { dashboardSidebar } from "@/static/dashboard";
-import Link from "next/link";
+import { usePathname } from "next/navigation";
+import classNames from "classnames";
 
 export function DashboardSidebar() {
-  console.log("dashboardSidebar => ", dashboardSidebar);
+  // console.log("dashboardSidebar => ", dashboardSidebar);
+
+  const pathname = usePathname();
+
   return (
     <Sidebar>
       <SidebarContent>
@@ -26,8 +33,6 @@ export function DashboardSidebar() {
         {/* menu items */}
         <div>
           {dashboardSidebar.map((item, index) => {
-            console.log("item => ", item);
-
             return (
               <div key={index}>
                 {/* label */}
@@ -39,18 +44,37 @@ export function DashboardSidebar() {
                 {/* items */}
                 <div className="flex flex-col gap-2 py-2">
                   {item.items.map((subItem, subIndex) => {
+                    const isActive = pathname === subItem.href;
+
                     return (
                       <Link
                         href={subItem.href}
                         key={subIndex}
-                        className="flex items-center gap-2 p-2 cursor-pointer"
+                        className={classNames(
+                          "flex items-center gap-2 py-2 px-4 cursor-pointer",
+                          {
+                            "bg-[#EEF5F0]": isActive,
+                          }
+                        )}
                       >
                         {/* icon */}
-                        <div className="flex items-center justify-center w-6 h-6 text-gray-300">
+                        <div
+                          className={classNames("", {
+                            "text-[#019935] fill-primary-500": isActive,
+                            "fill-gray-300": !isActive,
+                          })}
+                        >
                           {subItem.icon}
                         </div>
 
-                        <span className="text-base font-medium text-gray-300">
+                        <span
+                          className={classNames(
+                            "text-base font-medium text-gray-300",
+                            {
+                              "text-[#019935]": isActive,
+                            }
+                          )}
+                        >
                           {subItem.label}
                         </span>
                       </Link>
