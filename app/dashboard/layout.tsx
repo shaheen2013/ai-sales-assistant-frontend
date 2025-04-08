@@ -1,5 +1,6 @@
-import { SidebarProvider, SidebarTrigger } from "@/components/shadcn/sidebar";
+import DashboardHeader from "@/components/partials/dashboard-header";
 import { DashboardSidebar } from "@/components/partials/dashboard-sidebar";
+import { SidebarProvider, SidebarTrigger } from "@/components/shadcn/sidebar";
 
 export default function DashboardLayout({
   children,
@@ -9,8 +10,9 @@ export default function DashboardLayout({
   return (
     <SidebarProvider>
       <DashboardSidebar />
-      <main>
-        <SidebarTrigger />
+      <main className="w-full">
+        <DashboardHeader />
+        {/* <SidebarTrigger /> */}
         {children}
       </main>
     </SidebarProvider>
