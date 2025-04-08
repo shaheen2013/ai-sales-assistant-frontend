@@ -57,7 +57,7 @@ export default function DashboardHeader() {
       </div>
 
       {/* right   */}
-      <div className="flex justify-center items-center gap-6 dev">
+      <div className="flex justify-center items-center gap-6">
         {/* notification */}
         <div>
           <DropdownMenu onOpenChange={handleOpenChange}>
@@ -117,14 +117,18 @@ export default function DashboardHeader() {
 
                         {/* title, content */}
                         <div>
-                          <p className="font-semibold text-gray-300 text-sm">
+                          <p className="font-semibold text-[#8C91A2] text-sm mb-1">
                             Emerson Curtis{" "}
                             <span className="font-medium text-[#CED0D8]">
                               @john
                             </span>
                           </p>
-                          <p>
-                            Follow-up Reminder <span className=""></span>
+
+                          <p className="text-[#8C91A2] text-sm">
+                            Follow-up Reminder{" "}
+                            <span className="font-medium text-gray-300">
+                              Leads Section
+                            </span>
                           </p>
                         </div>
                       </div>
