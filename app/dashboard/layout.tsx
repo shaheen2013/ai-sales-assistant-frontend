@@ -1,6 +1,6 @@
 import DashboardHeader from "@/components/partials/dashboard-header";
 import { DashboardSidebar } from "@/components/partials/dashboard-sidebar";
-import { SidebarProvider, SidebarTrigger } from "@/components/shadcn/sidebar";
+import { SidebarProvider } from "@/components/shadcn/sidebar";
 
 export default function DashboardLayout({
   children,

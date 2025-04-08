@@ -1,22 +1,8 @@
-// import {
-//   Dialog,
-//   DialogContent,
-//   DialogDescription,
-//   DialogHeader,
-//   DialogTitle,
-//   DialogTrigger,
-// } from "@/components/partials/HeaderDialog";
-
 "use client";
 
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/partials/dashboard-dropdown";
 import { Button } from "../shadcn/button";
@@ -53,7 +39,7 @@ export default function DashboardHeader() {
         <h2 className="text-gray-500 font-semibold text-2xl mb-1">
           Hello, Kawsar!
         </h2>
-        <p className="text-gray-300">Welcome back, let's explore now!</p>
+        <p className="text-gray-300">Welcome back, let&apos;s explore now!</p>
       </div>
 
       {/* right   */}
