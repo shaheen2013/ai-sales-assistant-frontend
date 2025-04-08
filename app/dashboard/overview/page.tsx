@@ -1,7 +1,7 @@
 import React from "react";
 
 export const metadata = {
-  title: "Dashboard Overview",
+  title: "Dashboard Overview | Teez",
   description: "Dashboard Overview",
 };
 

@@ -43,9 +43,14 @@ export function DashboardSidebar() {
                       <Link
                         href={subItem.href}
                         key={subIndex}
-                        className="flex items-center gap-2 p-2 cursor-pointer bg-[#EEF5F0]"
+                        className="flex items-center gap-2 p-2 cursor-pointer"
                       >
-                        <span className="text-base font-medium text-primary-500">
+                        {/* icon */}
+                        <div className="flex items-center justify-center w-6 h-6 text-gray-300">
+                          {subItem.icon}
+                        </div>
+
+                        <span className="text-base font-medium text-gray-300">
                           {subItem.label}
                         </span>
                       </Link>
