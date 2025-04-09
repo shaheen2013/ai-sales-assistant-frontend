@@ -140,14 +140,20 @@ export default function DashboardOverviewChart() {
             }}
           />
 
+          <Line type="monotone" dataKey="reach" stroke="#F0F4A9" />
+          <Line type="monotone" dataKey="engagement" stroke="#DDF2F6" />
+
           <Line
             type="monotone"
-            dataKey="reach"
+            dataKey="impressions"
             stroke="#E5D9FF"
-            activeDot={{ r: 8 }}
+            activeDot={{
+              fill: "#fff",
+              stroke: "#E5D9FF",
+              strokeWidth: 3.4,
+              r: 8,
+            }}
           />
-          <Line type="monotone" dataKey="engagement" stroke="#DDF2F6" />
-          <Line type="monotone" dataKey="impressions" stroke="#F0F4A9" />
         </LineChart>
       </ResponsiveContainer>
     </div>
