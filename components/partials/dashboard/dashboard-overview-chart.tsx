@@ -8,7 +8,6 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend,
   ResponsiveContainer,
 } from "recharts";
 
@@ -95,7 +94,7 @@ export default function DashboardOverviewChart() {
     },
   ];
 
-  function CustomTooltip({ payload, label, active }: any) {
+  function CustomTooltip({ payload }: any) {
     return (
       <div className="border bg-white p-3  rounded-lg custom-tooltip">
         {payload.map((item: any, index: number) => {
@@ -113,24 +112,6 @@ export default function DashboardOverviewChart() {
       </div>
     );
   }
-
-  const CustomActiveDot = (props: any) => {
-    const { cx, cy, stroke } = props;
-
-    return (
-      <circle
-        cx={cx}
-        cy={cy}
-        r={8}
-        fill="#fff"
-        stroke={stroke}
-        strokeWidth={3.4}
-        style={{
-          filter: "drop-shadow(0 0 6px rgba(229, 217, 255, 0.8))",
-        }}
-      />
-    );
-  };
 
   return (
     <div className="h-[450px] border p-6 rounded-lg bg-white shadow-sm">
