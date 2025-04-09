@@ -9,6 +9,11 @@ interface SidebarSection {
   items: SidebarItem[];
 }
 
+interface languages {
+  name: string;
+  flag: string;
+}
+
 export const dashboardSidebar: SidebarSection[] = [
   {
     label: "Menu",
@@ -142,4 +147,15 @@ export const dashboardSidebar: SidebarSection[] = [
       },
     ],
   },
+];
+
+export const languages: languages[] = [
+  { name: "Eng (US)", flag: "/flags/us.png" },
+  { name: "China", flag: "/flags/cn.png" },
+  { name: "Denmark", flag: "/flags/de.png" },
+  { name: "Espain", flag: "/flags/es.png" },
+  { name: "France", flag: "/flags/fr.png" },
+  { name: "Italy", flag: "/flags/it.png" },
+  { name: "Portugal", flag: "/flags/pt.png" },
+  { name: "Russia", flag: "/flags/ru.png" },
 ];
