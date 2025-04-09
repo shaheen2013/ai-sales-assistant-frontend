@@ -7,41 +7,10 @@ export const metadata = {
 
 export default function DashboardOverview() {
   return (
-    <div>
+    <div className="p-4">
       <div>Dashboard Overview</div>
 
-      <p>content</p>
-      <p>content</p>
-      <p>content</p>
-      <p>content</p>
-      <p>content</p>
-      <p>content</p>
-      <p>content</p>
-      <p>content</p>
-      <p>content</p>
-      <p>content</p>
-      <p>content</p>
-      <p>content</p>
-      <p>content</p>
-      <p>content</p>
-      <p>content</p>
-      <p>content</p>
-      <p>content</p>
-      <p>content</p>
-      <p>content</p>
-      <p>content</p>
-      <p>content</p>
-      <p>content</p>
-      <p>content</p>
-      <p>content</p>
-      <p>content</p>
-      <p>content</p>
-      <p>content</p>
-      <p>content</p>
-      <p>content</p>
-      <p>content</p>
-      <p>content</p>
-      <p>content</p>
+
     </div>
   );
 }
