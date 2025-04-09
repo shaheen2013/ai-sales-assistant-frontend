@@ -21,7 +21,7 @@ export function DashboardSidebar() {
     <Sidebar>
       <SidebarContent>
         {/* brand */}
-        <div className="flex items-center justify-center py-9 mb-9">
+        <div className="flex items-center justify-center py-9 mb-6">
           <Image
             src="/icons/homepage/footer-brand.svg"
             alt="Logo"
