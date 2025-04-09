@@ -114,9 +114,27 @@ export default function DashboardOverviewChart() {
     );
   }
 
+  const CustomActiveDot = (props: any) => {
+    const { cx, cy, stroke } = props;
+
+    return (
+      <circle
+        cx={cx}
+        cy={cy}
+        r={8}
+        fill="#fff"
+        stroke={stroke}
+        strokeWidth={3.4}
+        style={{
+          filter: "drop-shadow(0 0 6px rgba(229, 217, 255, 0.8))",
+        }}
+      />
+    );
+  };
+
   return (
-    <div className="h-[400px] border p-6 rounded-lg bg-white shadow-sm">
-      <div className="flex justify-between">
+    <div className="h-[450px] border p-6 rounded-lg bg-white shadow-sm">
+      <div className="flex justify-between mb-2">
         <h3 className="text-[#2A2F3D] text-xl font-semibold mb-4">
           Profile Overview
         </h3>
@@ -138,7 +156,8 @@ export default function DashboardOverviewChart() {
           </div>
         </div>
       </div>
-      <ResponsiveContainer width="100%" height="90%">
+
+      <ResponsiveContainer width="100%" height="85%">
         <LineChart
           data={data}
           margin={{
@@ -191,11 +210,15 @@ export default function DashboardOverviewChart() {
             stroke="#E5D9FF"
             dot={false}
             strokeWidth={4}
+            // activeDot={CustomActiveDot}
             activeDot={{
               fill: "#fff",
               stroke: "#E5D9FF",
               strokeWidth: 3.4,
               r: 8,
+              style: {
+                filter: "drop-shadow(0 0 0 4px rgba(229, 217, 255, 0.5))",
+              },
             }}
           />
         </LineChart>

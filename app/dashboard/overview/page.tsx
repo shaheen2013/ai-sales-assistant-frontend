@@ -71,7 +71,7 @@ export default function DashboardOverview() {
       {/* <div>Dashboard Overview</div> */}
 
       {/* cards */}
-      <div className="flex gap-3 mb-6">
+      <div className="flex gap-3 mb-3">
         {Array.from({ length: 4 }).map((_, index) => {
           return (
             <div
