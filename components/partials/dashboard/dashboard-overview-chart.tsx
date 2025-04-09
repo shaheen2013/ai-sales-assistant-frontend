@@ -134,19 +134,32 @@ export default function DashboardOverviewChart() {
               backgroundColor: "#fff",
               borderRadius: "8px",
             }}
-            itemStyle={{}}
             labelStyle={{
               display: "none",
             }}
           />
-
-          <Line type="monotone" dataKey="reach" stroke="#F0F4A9" />
-          <Line type="monotone" dataKey="engagement" stroke="#DDF2F6" />
-
+          <Line
+            type="monotone"
+            dataKey="reach"
+            stroke="#F0F4A9"
+            dot={false}
+            activeDot={false}
+            strokeWidth={4}
+          />
+          <Line
+            type="monotone"
+            dataKey="engagement"
+            stroke="#DDF2F6"
+            dot={false}
+            activeDot={false}
+            strokeWidth={4}
+          />
           <Line
             type="monotone"
             dataKey="impressions"
             stroke="#E5D9FF"
+            dot={false}
+            strokeWidth={4}
             activeDot={{
               fill: "#fff",
               stroke: "#E5D9FF",
