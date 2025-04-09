@@ -4,8 +4,8 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuTrigger,
-} from "@/components/partials/dashboard-dropdown";
-import { Button } from "../shadcn/button";
+} from "@/components/partials/dashboard/dashboard-dropdown";
+import { Button } from "../../shadcn/button";
 import Image from "next/image";
 import { languages } from "@/static/dashboard";
 
