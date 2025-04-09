@@ -116,6 +116,28 @@ export default function DashboardOverviewChart() {
 
   return (
     <div className="h-[400px] border p-6 rounded-lg bg-white shadow-sm">
+      <div className="flex justify-between">
+        <h3 className="text-[#2A2F3D] text-xl font-semibold mb-4">
+          Profile Overview
+        </h3>
+
+        <div className="flex gap-4">
+          <div className="flex items-center gap-2">
+            <div className="w-3 h-3 rounded bg-[#F0F4A9]"></div>
+            <p className="text-[#2A2F3D] text-sm font-medium">Reach</p>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <div className="w-3 h-3 rounded bg-[#DDF2F6]"></div>
+            <p className="text-[#2A2F3D] text-sm font-medium">Engagement</p>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <div className="w-3 h-3 rounded bg-[#E5D9FF]"></div>
+            <p className="text-[#2A2F3D] text-sm font-medium">Impressions</p>
+          </div>
+        </div>
+      </div>
       <ResponsiveContainer width="100%" height="100%">
         <LineChart
           data={data}
