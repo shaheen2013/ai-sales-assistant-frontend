@@ -23,75 +23,75 @@ export default function DashboardOverviewChart() {
   const data: Data[] = [
     {
       name: "Jan",
-      reach: 4000,
-      engagement: 2400,
-      impressions: 2400,
+      reach: 4231,
+      engagement: 8123,
+      impressions: 1324,
     },
     {
       name: "Feb",
-      reach: 3000,
-      engagement: 1398,
-      impressions: 2210,
+      reach: 3120,
+      engagement: 1475,
+      impressions: 2678,
     },
     {
       name: "Mar",
-      reach: 2000,
-      engagement: 9800,
-      impressions: 2290,
+      reach: 2789,
+      engagement: 9234,
+      impressions: 1890,
     },
     {
       name: "Apr",
-      reach: 2780,
-      engagement: 3908,
-      impressions: 2000,
+      reach: 1904,
+      engagement: 3560,
+      impressions: 2750,
     },
     {
       name: "May",
-      reach: 1890,
-      engagement: 4800,
-      impressions: 2181,
+      reach: 3345,
+      engagement: 5021,
+      impressions: 2120,
     },
     {
       name: "Jun",
-      reach: 2390,
-      engagement: 3800,
-      impressions: 2500,
+      reach: 2450,
+      engagement: 3880,
+      impressions: 2965,
     },
     {
       name: "Jul",
-      reach: 3490,
-      engagement: 4300,
-      impressions: 2100,
+      reach: 3102,
+      engagement: 4678,
+      impressions: 2203,
     },
     {
       name: "Aug",
-      reach: 3490,
-      engagement: 4300,
-      impressions: 2100,
+      reach: 3760,
+      engagement: 4021,
+      impressions: 3180,
     },
     {
       name: "Sep",
-      reach: 3490,
-      engagement: 4300,
-      impressions: 2100,
+      reach: 2890,
+      engagement: 4780,
+      impressions: 2011,
     },
     {
       name: "Oct",
-      reach: 3490,
-      engagement: 4300,
-      impressions: 2100,
+      reach: 3599,
+      engagement: 3890,
+      impressions: 2344,
     },
     {
       name: "Nov",
-      reach: 3490,
-      engagement: 4300,
-      impressions: 2100,
+      reach: 2730,
+      engagement: 5090,
+      impressions: 2455,
     },
     {
       name: "Dec",
-      reach: 3490,
-      engagement: 4300,
-      impressions: 2100,
+      reach: 3950,
+      engagement: 4444,
+      impressions: 2109,
     },
   ];
 
@@ -136,6 +136,11 @@ export default function DashboardOverviewChart() {
             }}
             labelStyle={{
               display: "none",
+            }}
+            cursor={{
+              stroke: "#000",
+              strokeWidth: 1,
+              strokeDasharray: "10 8",
             }}
           />
           <Line
