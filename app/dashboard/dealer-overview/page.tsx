@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 
 export const metadata = {
@@ -24,12 +25,207 @@ export default function DashboardDealerOverview() {
             How do you acquire Dealers?
           </h4>
           <hr className="mb-4" />
-          chart 
+          chart
         </div>
       </div>
 
       {/* right */}
-      <div className="col-span-4 dev">1</div>
+      <div className="col-span-4">
+        {/* conversions */}
+        <div className="border p-4 rounded-xl mb-5">
+          <h3 className="mb-2 text-[#535862] font-medium text-sm ">
+            Total Dealers
+          </h3>
+
+          <div className="flex items-center mb-5 gap-4">
+            <span className="text-gray-400 font-semibold text-3xl">4,862</span>
+
+            {/* badge  */}
+            <span className="flex border items-center rounded-lg shadow px-2 py-1 gap-1">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 12 13"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M6 10V3M6 3L2.5 6.5M6 3L9.5 6.5"
+                  stroke="#079455"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+
+              <span className="text-[#414651] text-sm font-medium">9.2%</span>
+            </span>
+          </div>
+
+          <h3 className="mb-2 text-[#535862] font-medium text-sm ">
+            Paid Dealers
+          </h3>
+
+          <div className="flex items-center mb-5 gap-4">
+            <span className="text-gray-400 font-semibold text-3xl">4,862</span>
+
+            {/* badge  */}
+            <span className="flex border items-center rounded-lg shadow px-2 py-1  gap-1">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 12 13"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M6 10V3M6 3L2.5 6.5M6 3L9.5 6.5"
+                  stroke="#079455"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+
+              <span className="text-[#414651] text-sm font-medium">9.2%</span>
+            </span>
+          </div>
+
+          <h3 className="mb-2 text-[#535862] font-medium text-sm ">
+            Paid Conversion Rate
+          </h3>
+
+          <div className="flex items-center gap-4">
+            <span className="text-gray-400 font-semibold text-3xl">4,862</span>
+
+            {/* badge  */}
+            <span className="flex border items-center rounded-lg shadow px-2 py-1  gap-1">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 12 13"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M6 10V3M6 3L2.5 6.5M6 3L9.5 6.5"
+                  stroke="#079455"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+
+              <span className="text-[#414651] text-sm font-medium">9.2%</span>
+            </span>
+          </div>
+        </div>
+
+        {/* top dealers */}
+        <div className="border p-4 rounded-xl mb-5">
+          <h3 className="mb-6 text-[#535862] font-medium text-sm ">
+            Total Dealers
+          </h3>
+
+          <div>
+            {Array.from({ length: 5 }).map((_, index) => {
+              return (
+                <div className="flex mb-6 last:mb-0 gap-2">
+                  <div className="flex items-center">
+                    <svg
+                      width="12"
+                      height="13"
+                      viewBox="0 0 12 13"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M6 10V3M6 3L2.5 6.5M6 3L9.5 6.5"
+                        stroke="#10A760"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </div>
+
+                  <div className="flex items-center">
+                    <Image
+                      src="https://dummyimage.com/36x36"
+                      alt="avatar"
+                      width={36}
+                      height={36}
+                      className="rounded-full h-9 w-9"
+                    />
+                  </div>
+
+                  <div>
+                    <div className="text-[#414651 font-medium text-sm">
+                      John Doe
+                      <span className="font-normal text-xs ml-1">Just now</span>
+                    </div>
+
+                    <div className="text-xs text-[#535862] font-normal">
+                      Member since
+                      <span className="font-medium text-[#535862] ml-1">
+                        Feb 2025
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+
+            {Array.from({ length: 5 }).map((_, index) => {
+              return (
+                <div className="flex mb-6 last:mb-0 gap-2">
+                  <div className="flex items-center">
+                    <svg
+                      width="12"
+                      height="13"
+                      viewBox="0 0 12 13"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M6 3L6 10M6 10L9.5 6.5M6 10L2.5 6.5"
+                        stroke="#D92D21"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </div>
+
+                  <div className="flex items-center">
+                    <Image
+                      src="https://dummyimage.com/36x36"
+                      alt="avatar"
+                      width={36}
+                      height={36}
+                      className="rounded-full h-9 w-9"
+                    />
+                  </div>
+
+                  <div>
+                    <div className="text-[#414651 font-medium text-sm">
+                      John Doe
+                      <span className="font-normal text-xs ml-1">Just now</span>
+                    </div>
+
+                    <div className="text-xs text-[#535862] font-normal">
+                      Member since
+                      <span className="font-medium text-[#535862] ml-1">
+                        Feb 2025
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
