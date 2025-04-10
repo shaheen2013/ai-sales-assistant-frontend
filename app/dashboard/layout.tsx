@@ -13,7 +13,8 @@ export default function DashboardLayout({
       <main className="w-full">
         <DashboardHeader />
         {/* <SidebarTrigger /> */}
-        {children}
+
+        <div className="p-6">{children}</div>
       </main>
     </SidebarProvider>
   );

@@ -16,9 +16,7 @@ export const metadata = {
 
 export default function DashboardOverview() {
   return (
-    <div className="px-6 pt-10">
-      {/* <div>Dashboard Overview</div> */}
-
+    <div className="py-2">
       {/* cards */}
       <div className="flex gap-3 mb-3">
         {Array.from({ length: 4 }).map((_, index) => {
@@ -101,13 +99,6 @@ export default function DashboardOverview() {
       {/* chart */}
       <div>
         <DashboardOverviewChart />
-
-        {/* <ChartContainer config={{}}>
-          <BarChart data={data}>
-            <Bar dataKey="value" />
-            <ChartTooltip content={<ChartTooltipContent />} />
-          </BarChart>
-        </ChartContainer> */}
       </div>
     </div>
   );

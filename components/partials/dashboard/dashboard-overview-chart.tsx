@@ -152,8 +152,20 @@ export default function DashboardOverviewChart() {
             strokeDasharray="5 0"
             horizontal={false}
           />
-          <XAxis dataKey="name" />
-          <YAxis />
+          {/* <XAxis dataKey="name" /> */}
+          <XAxis
+            dataKey="name"
+            stroke="#E3E8EF" // color of the axis line and ticks
+            tick={{ fill: "#878787", fontSize: 14, dy: 8 }} // tick label styles
+            axisLine={{ stroke: "#E3E8EF" }} // X axis line color
+            tickLine={{ stroke: "#fff" }} // small tick marks
+          />
+          <YAxis
+            stroke="#878787"
+            tick={{ fill: "#878787", fontSize: 14, dx: -8 }}
+            axisLine={{ stroke: "#E3E8EF" }}
+            tickLine={{ stroke: "#fff" }}
+          />
           <Tooltip
             content={CustomTooltip}
             contentStyle={{
