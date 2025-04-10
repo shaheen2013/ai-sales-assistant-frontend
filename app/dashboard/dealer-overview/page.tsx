@@ -2,6 +2,7 @@ import Image from "next/image";
 import React from "react";
 
 import DashboardDealerOverviewChart from "@/components/partials/dashboard/dashboard-dealer-overview-chart";
+import DashboardDealerOverviewPieChart from "@/components/partials/dashboard/dashboard-dealer-overview-pie-chart";
 
 export const metadata = {
   title: "Dealer Overview | Teez",
@@ -36,7 +37,9 @@ export default function DashboardDealerOverview() {
             </div>
 
             {/* right */}
-            <div className="col-span-4 dev">1</div>
+            <div className="col-span-4">
+              <DashboardDealerOverviewPieChart />
+            </div>
           </div>
         </div>
       </div>

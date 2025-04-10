@@ -129,8 +129,8 @@ export default function DashboardDealerOverviewChart() {
           x2="551.689"
           y2="14.6636"
           stroke="#F5F5F5"
-          stroke-width="0.77037"
-          stroke-linecap="round"
+          strokeWidth="0.77037"
+          strokeLinecap="round"
         />
         <line
           x1="0.874077"
@@ -138,8 +138,8 @@ export default function DashboardDealerOverviewChart() {
           x2="551.689"
           y2="14.5875"
           stroke="#F5F5F5"
-          stroke-width="0.77037"
-          stroke-linecap="round"
+          strokeWidth="0.77037"
+          strokeLinecap="round"
         />
         <line
           x1="0.874077"
@@ -147,8 +147,8 @@ export default function DashboardDealerOverviewChart() {
           x2="551.689"
           y2="12.5836"
           stroke="#F5F5F5"
-          stroke-width="0.77037"
-          stroke-linecap="round"
+          strokeWidth="0.77037"
+          strokeLinecap="round"
         />
         <line
           x1="0.874077"
@@ -156,8 +156,8 @@ export default function DashboardDealerOverviewChart() {
           x2="551.689"
           y2="10.5816"
           stroke="#F5F5F5"
-          stroke-width="0.77037"
-          stroke-linecap="round"
+          strokeWidth="0.77037"
+          strokeLinecap="round"
         />
         <line
           x1="0.874077"
@@ -165,8 +165,8 @@ export default function DashboardDealerOverviewChart() {
           x2="551.689"
           y2="8.57771"
           stroke="#F5F5F5"
-          stroke-width="0.77037"
-          stroke-linecap="round"
+          strokeWidth="0.77037"
+          strokeLinecap="round"
         />
         <line
           x1="0.874077"
@@ -174,8 +174,8 @@ export default function DashboardDealerOverviewChart() {
           x2="551.689"
           y2="6.57575"
           stroke="#F5F5F5"
-          stroke-width="0.77037"
-          stroke-linecap="round"
+          strokeWidth="0.77037"
+          strokeLinecap="round"
         />
       </svg>
 
