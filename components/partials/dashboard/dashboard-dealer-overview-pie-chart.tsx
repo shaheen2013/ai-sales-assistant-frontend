@@ -3,13 +3,6 @@
 import { Pie, PieChart } from "recharts";
 
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/shadcn/card";
-import {
   ChartConfig,
   ChartContainer,
   ChartTooltip,
