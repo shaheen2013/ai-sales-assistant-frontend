@@ -13,6 +13,16 @@ import { Progress } from "@/components/shadcn/progress";
 import { dashboardSidebar } from "@/static/dashboard";
 import { usePathname } from "next/navigation";
 import classNames from "classnames";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuTrigger,
+} from "@/components/shadcn/dropdown-menu";
 
 export function DashboardSidebar() {
   const pathname = usePathname();
@@ -178,43 +188,65 @@ export function DashboardSidebar() {
 
           <hr className="mb-5" />
 
-          <div className="flex justify-between">
-            <div className="flex">
-              <div className="w-9 h-9 border-2 border-primary-500 p-[2px] rounded-full overflow-hidden">
-                <Image
-                  src="https://dummyimage.com/500x500"
-                  alt="user"
-                  width={40}
-                  height={40}
-                  className="w-full h-full object-cover rounded-full"
-                />
-              </div>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <div className="flex justify-between cursor-pointer">
+                <div className="flex">
+                  <div className="w-9 h-9 border-2 border-primary-500 p-[2px] rounded-full overflow-hidden">
+                    <Image
+                      src="https://dummyimage.com/500x500"
+                      alt="user"
+                      width={40}
+                      height={40}
+                      className="w-full h-full object-cover rounded-full"
+                    />
+                  </div>
 
-              <div className="grid ml-1">
-                <div className="text-gray-400 font-medium text-sm">
-                  John Doe
+                  <div className="grid ml-1">
+                    <div className="text-gray-400 font-medium text-sm">
+                      John Doe
+                    </div>
+                    <div className="text-[10px] text-gray-300">
+                      john@example.com
+                    </div>
+                  </div>
                 </div>
-                <div className="text-[10px] text-gray-300">
-                  john@example.com
+
+                <div className="flex items-center">
+                  <svg
+                    width="17"
+                    height="16"
+                    viewBox="0 0 17 16"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M6.14645 3.14645C5.95118 3.34171 5.95118 3.65829 6.14645 3.85355L10.2929 8L6.14645 12.1464C5.95118 12.3417 5.95118 12.6583 6.14645 12.8536C6.34171 13.0488 6.65829 13.0488 6.85355 12.8536L11.3536 8.35355C11.5488 8.15829 11.5488 7.84171 11.3536 7.64645L6.85355 3.14645C6.65829 2.95118 6.34171 2.95118 6.14645 3.14645Z"
+                      fill="#717882"
+                    />
+                  </svg>
                 </div>
               </div>
-            </div>
+            </DropdownMenuTrigger>
 
-            <div className="flex items-center">
-              <svg
-                width="17"
-                height="16"
-                viewBox="0 0 17 16"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M6.14645 3.14645C5.95118 3.34171 5.95118 3.65829 6.14645 3.85355L10.2929 8L6.14645 12.1464C5.95118 12.3417 5.95118 12.6583 6.14645 12.8536C6.34171 13.0488 6.65829 13.0488 6.85355 12.8536L11.3536 8.35355C11.5488 8.15829 11.5488 7.84171 11.3536 7.64645L6.85355 3.14645C6.65829 2.95118 6.34171 2.95118 6.14645 3.14645Z"
-                  fill="#717882"
-                />
-              </svg>
-            </div>
-          </div>
+            <DropdownMenuContent className="w-56">
+              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuGroup>
+                <DropdownMenuItem>Profile</DropdownMenuItem>
+                <DropdownMenuItem>Billing</DropdownMenuItem>
+                <DropdownMenuItem>Settings</DropdownMenuItem>
+                <DropdownMenuItem>Keyboard shortcuts</DropdownMenuItem>
+              </DropdownMenuGroup>
+              <DropdownMenuSeparator />
+
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>GitHub</DropdownMenuItem>
+              <DropdownMenuItem>Support</DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>Log out</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </SidebarContent>
       <SidebarFooter />
