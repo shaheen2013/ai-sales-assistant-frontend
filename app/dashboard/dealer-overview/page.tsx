@@ -1,6 +1,8 @@
 import Image from "next/image";
 import React from "react";
 
+import DashboardDealerOverviewChart from "@/components/partials/dashboard/dashboard-dealer-overview-chart";
+
 export const metadata = {
   title: "Dealer Overview | Teez",
   description: "Dealer Overview",
@@ -25,7 +27,17 @@ export default function DashboardDealerOverview() {
             How do you acquire Dealers?
           </h4>
           <hr className="mb-4" />
-          chart
+
+          {/* charts */}
+          <div className="grid-cols-12 grid">
+            {/* left */}
+            <div className="col-span-8">
+              <DashboardDealerOverviewChart />
+            </div>
+
+            {/* right */}
+            <div className="col-span-4 dev">1</div>
+          </div>
         </div>
       </div>
 
@@ -52,9 +64,9 @@ export default function DashboardDealerOverview() {
                 <path
                   d="M6 10V3M6 3L2.5 6.5M6 3L9.5 6.5"
                   stroke="#079455"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 />
               </svg>
 
@@ -70,7 +82,7 @@ export default function DashboardDealerOverview() {
             <span className="text-gray-400 font-semibold text-3xl">4,862</span>
 
             {/* badge  */}
-            <span className="flex border items-center rounded-lg shadow px-2 py-1  gap-1">
+            <span className="flex border items-center rounded-lg shadow px-2 py-1 gap-1">
               <svg
                 width="16"
                 height="16"
@@ -81,9 +93,9 @@ export default function DashboardDealerOverview() {
                 <path
                   d="M6 10V3M6 3L2.5 6.5M6 3L9.5 6.5"
                   stroke="#079455"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 />
               </svg>
 
@@ -99,7 +111,7 @@ export default function DashboardDealerOverview() {
             <span className="text-gray-400 font-semibold text-3xl">4,862</span>
 
             {/* badge  */}
-            <span className="flex border items-center rounded-lg shadow px-2 py-1  gap-1">
+            <span className="flex border items-center rounded-lg shadow px-2 py-1 gap-1">
               <svg
                 width="16"
                 height="16"
@@ -110,9 +122,9 @@ export default function DashboardDealerOverview() {
                 <path
                   d="M6 10V3M6 3L2.5 6.5M6 3L9.5 6.5"
                   stroke="#079455"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 />
               </svg>
 
@@ -130,7 +142,7 @@ export default function DashboardDealerOverview() {
           <div>
             {Array.from({ length: 5 }).map((_, index) => {
               return (
-                <div className="flex mb-6 last:mb-0 gap-2">
+                <div className="flex mb-6 last:mb-0 gap-2" key={index}>
                   <div className="flex items-center">
                     <svg
                       width="12"
@@ -178,7 +190,7 @@ export default function DashboardDealerOverview() {
 
             {Array.from({ length: 5 }).map((_, index) => {
               return (
-                <div className="flex mb-6 last:mb-0 gap-2">
+                <div className="flex mb-6 last:mb-0 gap-2" key={index}>
                   <div className="flex items-center">
                     <svg
                       width="12"

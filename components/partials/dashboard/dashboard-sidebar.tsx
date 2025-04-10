@@ -149,7 +149,7 @@ export function DashboardSidebar() {
         </div>
 
         {/* user widget */}
-        <div className="absolute bottom-0 left-[16px] right-[16px] p-3 border rounded-lg mb-4">
+        <div className="absolute bg-white bottom-0 left-[16px] right-[16px] p-3 border rounded-lg mb-4">
           <div className="flex justify-between mb-1">
             <div className="flex items-center justify-center gap-2 mb-[6px]">
               <svg
@@ -228,6 +228,20 @@ export function DashboardSidebar() {
                 </div>
               </div>
             </DropdownMenuTrigger>
+
+            <DropdownMenuContent className="w-56">
+              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuGroup>
+                <DropdownMenuItem>Profile</DropdownMenuItem>
+                <DropdownMenuItem>Billing</DropdownMenuItem>
+                <DropdownMenuItem>Settings</DropdownMenuItem>
+                <DropdownMenuItem>Keyboard shortcuts</DropdownMenuItem>
+              </DropdownMenuGroup>
+              <DropdownMenuSeparator />
+
+              <DropdownMenuItem>Log out</DropdownMenuItem>
+            </DropdownMenuContent>
           </DropdownMenu>
         </div>
       </SidebarContent>

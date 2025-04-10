@@ -35,7 +35,7 @@ export default function DashboardHeader() {
   };
 
   return (
-    <div className="top-0 sticky bg-white flex justify-between px-6 py-5 shadow">
+    <div className="top-0 sticky bg-white flex justify-between px-6 py-5 shadow z-10">
       {/* left */}
       <div>
         <h2 className="text-gray-500 font-semibold text-2xl mb-1">
