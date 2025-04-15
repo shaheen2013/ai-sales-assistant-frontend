@@ -110,13 +110,14 @@ export default function SignUp() {
           <Controller
             name="name"
             control={control}
-            rules={{ required: true }}
-            render={({ field }) => (
+            rules={{ required: "Name is required" }}
+            render={({ field, formState: { errors } }) => (
               <Input
                 type="text"
                 id="name"
                 className="h-10"
                 placeholder="Name Here"
+                error={errors?.name?.message}
                 {...field}
               />
             )}
@@ -134,13 +135,14 @@ export default function SignUp() {
           <Controller
             name="email"
             control={control}
-            rules={{ required: true }}
-            render={({ field }) => (
+            rules={{ required: "Email is required" }}
+            render={({ field, formState: { errors } }) => (
               <Input
                 type="email"
                 id="email"
                 className="h-10"
                 placeholder="Email Here"
+                error={errors?.email?.message}
                 {...field}
               />
             )}
@@ -157,14 +159,15 @@ export default function SignUp() {
           </label>
 
           <Controller
-            name="name"
+            name="password"
             control={control}
-            rules={{ required: true }}
-            render={({ field }) => (
+            rules={{ required: "Password is required" }}
+            render={({ field, formState: { errors } }) => (
               <Input
-                type="text"
+                type="password"
                 className=" h-10"
                 placeholder="Create Password"
+                error={errors?.password?.message}
                 {...field}
               />
             )}
@@ -173,19 +176,18 @@ export default function SignUp() {
 
         {/* remember me */}
         <div className="mb-6 flex items-start gap-2">
-          {/* <input type="checkbox" name="remember" id="remember" /> */}
-
           <Controller
             name="terms"
             control={control}
             rules={{ required: true }}
-            render={({ field }) => (
+            render={({ field, formState: { errors } }) => (
               <Checkbox
                 id="remember"
                 checked={field.value}
                 onChange={field.onChange}
                 onBlur={field.onBlur}
                 name={field.name}
+                error={Boolean(errors?.terms)}
                 ref={field.ref}
               />
             )}
@@ -203,12 +205,11 @@ export default function SignUp() {
         </Button>
       </form>
 
-      <Link href="/forgot-password" className="mb-2">
-        Forgot password
-      </Link>
-
-      <div>
-        <span>Already have an account?</span> <Link href="/login">Log in</Link>
+      <div className="text-center text-sm text-gray-400">
+        <span>Already have an account?</span>{" "}
+        <Link href="/login" className="text-primary-500 font-semibold">
+          Log in
+        </Link>
       </div>
     </div>
   );
