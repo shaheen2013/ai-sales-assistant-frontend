@@ -69,9 +69,9 @@ export default function DashboardDealerOverviewPieChart() {
 
       {/* labels */}
       <div>
-        <div>Organic</div>
-        <div>by Ai</div>
-        <div>Referral</div>
+        <div className="text-gray-600 text-sm">Organic</div>
+        <div className="text-gray-600 text-sm">by Ai</div>
+        <div className="text-gray-600 text-sm">Referral</div>
       </div>
     </div>
   );

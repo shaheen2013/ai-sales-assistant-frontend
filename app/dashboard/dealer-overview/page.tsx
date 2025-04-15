@@ -17,6 +17,7 @@ export default function DashboardDealerOverview() {
         <h2 className="text-xl font-semibold text-gray-400 mb-1">
           Dealers Accusation
         </h2>
+
         <h4 className="text-sm text-[#707070] mb-4">
           Track and analyze user accusations to identify sources and ensure fair
           resolution.
@@ -30,7 +31,7 @@ export default function DashboardDealerOverview() {
           <hr className="mb-4" />
 
           {/* charts */}
-          <div className="grid-cols-12 grid">
+          <div className="grid-cols-12 grid dev">
             {/* left */}
             <div className="col-span-8">
               <DashboardDealerOverviewChart />
@@ -47,7 +48,7 @@ export default function DashboardDealerOverview() {
       {/* right */}
       <div className="col-span-4">
         {/* conversions */}
-        <div className="border p-4 rounded-xl mb-5">
+        <div className="border p-4 rounded-xl mb-5 ">
           <h3 className="mb-2 text-[#535862] font-medium text-sm ">
             Total Dealers
           </h3>
