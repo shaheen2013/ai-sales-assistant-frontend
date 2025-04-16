@@ -2,20 +2,20 @@
 
 import React from "react";
 import Link from "next/link";
-// import { toast } from "sonner";
 import { useForm, Controller } from "react-hook-form";
 
 // components
 import Button from "@/components/button";
+
+import { beautifyErrors } from "@/lib/utils";
+import { useToast } from "@/hooks/useToast";
 import { Input } from "@/components/shadcn/input";
 import { Checkbox } from "@/components/shadcn/checkbox";
 import { useRegisterMutation } from "@/features/auth/authSlice";
-import { beautifyErrors } from "@/lib/utils";
-import { useToast } from "@/hooks/useToast";
 
 export default function SignupForm() {
-  const [register, { isLoading: isLoadingRegister }] = useRegisterMutation();
   const toast = useToast();
+  const [register, { isLoading: isLoadingRegister }] = useRegisterMutation();
 
   type FormValues = {
     name: string;

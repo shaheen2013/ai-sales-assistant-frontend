@@ -1,13 +1,14 @@
 "use client";
 
+import Image from "next/image";
+
+import { Button } from "@/components/shadcn/button";
+import { languages } from "@/static/dashboard";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "@/components/partials/dashboard/dashboard-dropdown";
-import { Button } from "../../shadcn/button";
-import Image from "next/image";
-import { languages } from "@/static/dashboard";
 
 export default function DashboardHeader() {
   const handleOpenChange = (open: boolean) => {
