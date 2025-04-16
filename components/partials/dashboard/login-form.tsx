@@ -269,7 +269,7 @@ export default function LoginForm() {
       <div className="text-center text-sm text-gray-400">
         <span>Don't have an account?</span>{" "}
         <Link href="/signup" className="text-primary-500 font-semibold">
-          Log in
+          Sign Up
         </Link>
       </div>
     </div>

@@ -144,7 +144,7 @@ export default function AuthLayout({
         </div>
 
         {/* content */}
-        <div className="lg:w-[360px] max-w-[360px] mx-auto">
+        <div className="lg:w-[360px] lg:max-w-[360px] w-full mx-auto">
           <div className="">{children}</div>
         </div>
       </div>
