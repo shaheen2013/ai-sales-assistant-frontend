@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { toast } from "sonner";
+// import { toast } from "sonner";
 import { useForm, Controller } from "react-hook-form";
 
 // components
@@ -11,9 +11,11 @@ import { Input } from "@/components/shadcn/input";
 import { Checkbox } from "@/components/shadcn/checkbox";
 import { useRegisterMutation } from "@/features/auth/authSlice";
 import { beautifyErrors } from "@/lib/utils";
+import { useToast } from "@/hooks/useToast";
 
 export default function SignupForm() {
-  const [register, result] = useRegisterMutation();
+  const [register, { isLoading: isLoadingRegister }] = useRegisterMutation();
+  const toast = useToast();
 
   type FormValues = {
     name: string;
@@ -44,9 +46,8 @@ export default function SignupForm() {
       const { error, data } = await register(payload);
 
       if (error) {
+        toast("error", beautifyErrors(error));
         console.log("error", beautifyErrors(error));
-
-        toast.error("Event has been created.", {});
 
         return;
       }
@@ -223,7 +224,12 @@ export default function SignupForm() {
         </div>
 
         {/* sign up button */}
-        <Button variant="primary" className="w-full mb-4">
+        <Button
+          variant="primary"
+          className="w-full mb-4"
+          loading={isLoadingRegister}
+          disabled={isLoadingRegister}
+        >
           Sign Up
         </Button>
       </form>
