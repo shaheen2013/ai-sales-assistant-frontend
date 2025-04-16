@@ -1,11 +1,11 @@
 "use client";
 
-import * as React from "react";
-import * as CheckboxPrimitive from "@radix-ui/react-checkbox";
+import React from "react";
 import { Check } from "lucide-react";
+import classNames from "classnames";
+import * as CheckboxPrimitive from "@radix-ui/react-checkbox";
 
 import { cn } from "@/lib/utils";
-import classNames from "classnames";
 
 const Checkbox = React.forwardRef<
   React.ElementRef<typeof CheckboxPrimitive.Root>,
@@ -21,8 +21,8 @@ const Checkbox = React.forwardRef<
     ref
   ) => (
     <div
-      className={classNames("flex", {
-        "rounded-sm border-2 border-red-500": error,
+      className={classNames("flex border ", {
+        "rounded-sm border border-red-500": error,
       })}
     >
       <CheckboxPrimitive.Root

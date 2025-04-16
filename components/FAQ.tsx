@@ -57,6 +57,7 @@ const FAQ = () => {
           ))}
         </div>
       </div>
+
       {/* pro seller */}
       <div className="bg-gradient-to-b p-12 flex justify-center">
         <div className="max-w-3xl bg-white rounded-lg shadow-md overflow-hidden flex flex-col sm:flex-row border-2">
