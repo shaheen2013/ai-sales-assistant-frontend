@@ -34,7 +34,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           />
 
           {postIcon && (
-            <div className="absolute right-2 top-1/2 -translate-y-1/2 bg-white">
+            <div className="absolute right-2 top-1/2 -translate-y-1/2">
               {postIcon}
             </div>
           )}
