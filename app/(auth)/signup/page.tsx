@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+
 import SignupForm from "@/components/partials/dashboard/signup-form";
 
 export const metadata: Metadata = {

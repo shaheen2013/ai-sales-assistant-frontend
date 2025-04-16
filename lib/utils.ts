@@ -14,9 +14,12 @@ export function beautifyErrors(errors: any): string {
 
   if (errors?.data) {
     for (const key in errors?.data) {
-      if (errors?.data.hasOwnProperty(key)) {
-        const errorMessage = errors?.data[key][0];
-        errorMessages.push(errorMessage);
+      if (typeof errors?.data?.[key] === "string") {
+        errorMessages.push(errors?.data?.[key]);
+      }
+
+      if (Array.isArray(errors?.data?.[key])) {
+        errorMessages.push(...errors?.data?.[key]);
       }
     }
   }

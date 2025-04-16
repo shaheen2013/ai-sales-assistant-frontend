@@ -7,15 +7,23 @@ import { useForm, Controller } from "react-hook-form";
 // components
 import Button from "@/components/button";
 
+import {
+  useRegisterMutation,
+  useRegisterWithGoogleMutation,
+} from "@/features/auth/authSlice";
+
 import { beautifyErrors } from "@/lib/utils";
 import { useToast } from "@/hooks/useToast";
-import { Input, InputPassword } from "@/components/shadcn/input";
 import { Checkbox } from "@/components/shadcn/checkbox";
-import { useRegisterMutation } from "@/features/auth/authSlice";
+
+import { Input, InputPassword } from "@/components/shadcn/input";
 
 export default function SignupForm() {
   const toast = useToast();
+
   const [register, { isLoading: isLoadingRegister }] = useRegisterMutation();
+  const [registerGoogle, { isLoading: isLoadingRegisterGoogle }] =
+    useRegisterWithGoogleMutation();
 
   type FormValues = {
     name: string;
@@ -32,6 +40,19 @@ export default function SignupForm() {
       terms: true,
     },
   });
+
+  const handleGoogleRegister = async () => {
+    const { error, data } = await registerGoogle({});
+
+    if (error) {
+      toast("error", beautifyErrors(error));
+      console.log("error", beautifyErrors(error));
+
+      return;
+    }
+
+    console.log("data", data);
+  };
 
   const onSubmit = async (formData: FormValues) => {
     console.log(formData);
@@ -52,7 +73,8 @@ export default function SignupForm() {
         return;
       }
 
-      console.log("data", data);
+      toast("success", "Account created successfully!");
+      console.log("data  => ", data);
     } catch (error) {
       console.log(error);
     }
@@ -71,6 +93,7 @@ export default function SignupForm() {
       <Button
         variant="outline-gray"
         className="w-full mb-4 !py-2 !border !font-medium"
+        onClick={handleGoogleRegister}
       >
         <svg
           width="25"
@@ -109,7 +132,7 @@ export default function SignupForm() {
           </defs>
         </svg>
 
-        <span>Sign in with Google</span>
+        <span>Sign up with Google</span>
       </Button>
 
       {/* or */}

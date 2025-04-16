@@ -12,6 +12,16 @@ export const authSlice = apiSlice.injectEndpoints({
       invalidatesTags: ["user"],
     }),
 
+    registerWithGoogle: builder.mutation({
+      query: (data) => ({
+        url: `/user-google-login`,
+        method: "POST",
+        body: data,
+        credentials: "include",
+      }),
+      invalidatesTags: ["user"],
+    }),
+
     login: builder.mutation({
       query: (data) => ({
         url: `/login`,
@@ -57,8 +67,10 @@ export const authSlice = apiSlice.injectEndpoints({
 });
 
 export const {
-  useEmailConfirmedQuery,
   useRegisterMutation,
+  useRegisterWithGoogleMutation,
+
+  useEmailConfirmedQuery,
   useLoginMutation,
   useLoginSocialMutation,
   useForgotPasswordMutation,
