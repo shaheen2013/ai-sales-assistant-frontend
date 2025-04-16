@@ -56,6 +56,18 @@
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
+
+  /* Disable the autocomplete highlight */
+  input:-webkit-autofill {
+    background-color: transparent !important;
+    box-shadow: none !important;
+    border: 1px solid #d5d7da !important; /* Adjust border color if needed */
+  }
+
+  input:-webkit-autofill:focus {
+    background-color: transparent !important;
+    box-shadow: none !important;
+  }
 }
 
 @layer base {
@@ -66,6 +78,7 @@
     @apply bg-background text-foreground;
   }
 }
-.bg-gradient-to-b {
+
+/* .bg-gradient-to-b {
   background: linear-gradient(#0a0a23 50%, #fff 0%);
-}
+} */
