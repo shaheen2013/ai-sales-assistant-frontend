@@ -1,10 +1,11 @@
 import { Metadata } from "next";
-import SignupForm from "@/components/partials/dashboard/signup-form";
+
+import LoginForm from "@/components/partials/dashboard/login-form";
 
 export const metadata: Metadata = {
-  title: "Signup | AI Sales Assistant",
+  title: "Login | AI Sales Assistant",
 };
 
 export default function SignUp() {
-  return <SignupForm />;
+  return <LoginForm />;
 }

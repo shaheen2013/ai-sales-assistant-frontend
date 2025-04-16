@@ -24,7 +24,7 @@ export const authSlice = apiSlice.injectEndpoints({
 
     login: builder.mutation({
       query: (data) => ({
-        url: `/login`,
+        url: `/access-token`,
         method: "POST",
         body: data,
         credentials: "include",
@@ -67,11 +67,11 @@ export const authSlice = apiSlice.injectEndpoints({
 });
 
 export const {
+  useLoginMutation,
   useRegisterMutation,
   useRegisterWithGoogleMutation,
 
   useEmailConfirmedQuery,
-  useLoginMutation,
   useLoginSocialMutation,
   useForgotPasswordMutation,
   useResetPasswordMutation,

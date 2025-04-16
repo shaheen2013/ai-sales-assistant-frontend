@@ -21,8 +21,8 @@ const Checkbox = React.forwardRef<
     ref
   ) => (
     <div
-      className={classNames("flex border ", {
-        "rounded-sm border border-red-500": error,
+      className={classNames("flex border rounded-md ", {
+        "border border-red-500": error,
       })}
     >
       <CheckboxPrimitive.Root
