@@ -2,29 +2,28 @@
 
 import React from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useForm, Controller } from "react-hook-form";
 import { useSession, signIn, signOut } from "next-auth/react";
 
 // components
 import Button from "@/components/button";
 
-import {
-  useLoginMutation,
-  useRegisterWithGoogleMutation,
-} from "@/features/auth/authSlice";
-
 import { beautifyErrors } from "@/lib/utils";
 import { useToast } from "@/hooks/useToast";
 import { Checkbox } from "@/components/shadcn/checkbox";
 import { Input, InputPassword } from "@/components/shadcn/input";
+import { useRegisterWithGoogleMutation } from "@/features/auth/authSlice";
 
 export default function LoginForm() {
   const toast = useToast();
-  const { data: session } = useSession();
+  const router = useRouter();
+  const { data: session, status } = useSession();
+
+  const loading = status === "loading";
 
   console.log("LoginForm session", session);
 
-  // const [login, { isLoading: isLoading }] = useLoginMutation();
   const [registerGoogle, { isLoading: isLoadingRegisterGoogle }] =
     useRegisterWithGoogleMutation();
 
@@ -58,34 +57,22 @@ export default function LoginForm() {
   };
 
   const onSubmit = async (formData: FormValues) => {
-    // console.log(formData);
-
     try {
       const payload = {
-        name: formData.name,
-        email: formData.email,
-        password: formData.password,
-        terms: formData.terms,
-      };
-      // const { error, data } = await login(payload);
-
-      // if (error) {
-      //   toast("error", beautifyErrors(error));
-      //   console.log("error", beautifyErrors(error));
-
-      //   return;
-      // }
-
-      // toast("success", "Authenticated successfully");
-      // console.log("data  => ", data);
-
-      const signInResult = await signIn("credentials", {
         email: formData.email,
         password: formData.password,
         redirect: false,
-      });
+      };
 
-      console.log("signInResult => ", signInResult);
+      const loginResponse: any = await signIn("credentials", payload);
+
+      if (!loginResponse.ok) {
+        toast("error", loginResponse.error || "Login failed");
+        return;
+      }
+
+      toast("success", "Login successful");
+      router.push("/dashboard/overview");
     } catch (error) {
       console.log(error);
     }
@@ -264,15 +251,12 @@ export default function LoginForm() {
         <Button
           variant="primary"
           className="w-full mb-3 !font-medium"
-          // loading={isLoading}
-          // disabled={isLoading}
+          loading={loading}
+          disabled={loading}
         >
           Log In
         </Button>
       </form>
-
-      {/* temp */}
-      <button onClick={() => signOut({ redirect: false })}>logout</button>
 
       <div className="text-center mb-2">
         <Link href="/forgot-password" className="text-sm font-medium">

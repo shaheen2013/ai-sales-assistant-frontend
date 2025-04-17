@@ -33,10 +33,9 @@ export const authOptions = {
             access: data.access,
             refresh: data.refresh,
             user: data.user,
-            temp_data: "heyy",
           };
         } catch (error: any) {
-          console.error("Error in authorize:", error.message);
+          console.error("Error in auth: ", error.message);
           throw new Error(error.message);
         }
       },
@@ -44,7 +43,6 @@ export const authOptions = {
   ],
   callbacks: {
     async jwt({ token, user }: any) {
-      console.log("jwt");
       if (user) {
         token.access = user.access;
         token.refresh = user.refresh;
@@ -54,10 +52,9 @@ export const authOptions = {
       return token;
     },
     async session({ session, token }: any) {
-      console.log("session");
       session.access = token.access;
       session.refresh = token.refresh;
-      session.user = token.user; // This includes your full user object
+      session.user = token.user;
 
       return session;
     },
