@@ -22,9 +22,9 @@ export default function LoginForm() {
   const toast = useToast();
   const { data: session } = useSession();
 
-  console.log("session", session);
+  console.log("LoginForm session", session);
 
-  const [login, { isLoading: isLoading }] = useLoginMutation();
+  // const [login, { isLoading: isLoading }] = useLoginMutation();
   const [registerGoogle, { isLoading: isLoadingRegisterGoogle }] =
     useRegisterWithGoogleMutation();
 
@@ -67,16 +67,16 @@ export default function LoginForm() {
         password: formData.password,
         terms: formData.terms,
       };
-      const { error, data } = await login(payload);
+      // const { error, data } = await login(payload);
 
-      if (error) {
-        toast("error", beautifyErrors(error));
-        console.log("error", beautifyErrors(error));
+      // if (error) {
+      //   toast("error", beautifyErrors(error));
+      //   console.log("error", beautifyErrors(error));
 
-        return;
-      }
+      //   return;
+      // }
 
-      toast("success", "Authenticated successfully");
+      // toast("success", "Authenticated successfully");
       // console.log("data  => ", data);
 
       const signInResult = await signIn("credentials", {
@@ -264,8 +264,8 @@ export default function LoginForm() {
         <Button
           variant="primary"
           className="w-full mb-3 !font-medium"
-          loading={isLoading}
-          disabled={isLoading}
+          // loading={isLoading}
+          // disabled={isLoading}
         >
           Log In
         </Button>

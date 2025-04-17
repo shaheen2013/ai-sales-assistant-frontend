@@ -10,12 +10,58 @@ export const authOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        return { id: "1", name: "test" };
+        try {
+          const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/access-token`;
 
-        return null;
+          const res = await fetch(url, {
+            method: "POST",
+            body: JSON.stringify(credentials),
+            headers: { "Content-Type": "application/json" },
+          });
+
+          // unauthenticated user
+          if (!res.ok) {
+            const errorData = await res.json();
+            throw new Error(errorData.detail || "Authentication failed");
+          }
+
+          // authenticated user
+          const data = await res.json();
+
+          return {
+            id: data.user.id, // Ensure the 'id' field is included
+            access: data.access,
+            refresh: data.refresh,
+            user: data.user,
+            temp_data: "heyy",
+          };
+        } catch (error: any) {
+          console.error("Error in authorize:", error.message);
+          throw new Error(error.message);
+        }
       },
     }),
   ],
+  callbacks: {
+    async jwt({ token, user }: any) {
+      console.log("jwt");
+      if (user) {
+        token.access = user.access;
+        token.refresh = user.refresh;
+        token.user = user.user;
+      }
+
+      return token;
+    },
+    async session({ session, token }: any) {
+      console.log("session");
+      session.access = token.access;
+      session.refresh = token.refresh;
+      session.user = token.user; // This includes your full user object
+
+      return session;
+    },
+  },
 };
 
 const handler = NextAuth(authOptions);
