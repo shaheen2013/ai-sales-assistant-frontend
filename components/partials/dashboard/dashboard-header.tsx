@@ -147,7 +147,7 @@ export default function DashboardHeader() {
         </div>
 
         {/* language  */}
-        <div>
+        <div className="lg:block hidden">
           <DropdownMenu onOpenChange={handleOpenChange}>
             <DropdownMenuTrigger asChild>
               <div className="cursor-pointer px-3 py-2 rounded-lg border relative flex gap-3 justify-center items-center h-[42px]">

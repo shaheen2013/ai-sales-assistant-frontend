@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useForm, Controller } from "react-hook-form";
 
 // components
@@ -20,6 +21,7 @@ import { Input, InputPassword } from "@/components/shadcn/input";
 
 export default function SignupForm() {
   const toast = useToast();
+  const router = useRouter();
 
   const [register, { isLoading: isLoadingRegister }] = useRegisterMutation();
   const [registerGoogle, { isLoading: isLoadingRegisterGoogle }] =
@@ -74,7 +76,7 @@ export default function SignupForm() {
       }
 
       toast("success", "Account created successfully!");
-      console.log("data  => ", data);
+      router.push("/dashboard/overview");
     } catch (error) {
       console.log(error);
     }
@@ -297,8 +299,6 @@ export default function SignupForm() {
           Sign Up
         </Button>
       </form>
-
-
 
       <div className="text-center text-sm text-gray-400">
         <span>Already have an account?</span>{" "}

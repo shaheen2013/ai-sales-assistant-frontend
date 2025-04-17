@@ -18,7 +18,7 @@ export default function DashboardOverview() {
   return (
     <div className="py-2">
       {/* cards */}
-      <div className="flex gap-3 mb-3">
+      <div className="grid xl:grid-cols-4 lg:grid-cols-2 grid-cols-1 gap-3 mb-3">
         {Array.from({ length: 4 }).map((_, index) => {
           return (
             <div
@@ -97,7 +97,7 @@ export default function DashboardOverview() {
       </div>
 
       {/* chart */}
-      <div>
+      <div className="">
         <DashboardOverviewChart />
       </div>
     </div>

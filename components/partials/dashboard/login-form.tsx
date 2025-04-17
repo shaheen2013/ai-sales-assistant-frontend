@@ -20,12 +20,11 @@ export default function LoginForm() {
   const router = useRouter();
   const { data: session, status } = useSession();
 
+  const [registerGoogle] = useRegisterWithGoogleMutation();
+
   const loading = status === "loading";
 
   console.log("LoginForm session", session);
-
-  const [registerGoogle, { isLoading: isLoadingRegisterGoogle }] =
-    useRegisterWithGoogleMutation();
 
   type FormValues = {
     name: string;
@@ -61,6 +60,7 @@ export default function LoginForm() {
       const payload = {
         email: formData.email,
         password: formData.password,
+        user_type: "dealer",
         redirect: false,
       };
 

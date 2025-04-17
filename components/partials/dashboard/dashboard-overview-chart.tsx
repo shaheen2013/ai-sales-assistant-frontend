@@ -114,7 +114,7 @@ export default function DashboardOverviewChart() {
   }
 
   return (
-    <div className="h-[450px] border p-6 rounded-lg bg-white shadow-sm">
+    <div className="h-[450px] border overflow-x-auto p-6 rounded-lg bg-white shadow-sm">
       <div className="flex justify-between mb-2">
         <h3 className="text-[#2A2F3D] text-xl font-semibold mb-4">
           Profile Overview
