@@ -71,7 +71,7 @@ export default function DashboardHeader() {
             </DropdownMenuTrigger>
 
             <DropdownMenuContent
-              className="w-[450px] p-4 rounded-xl mt-1"
+              className="lg:w-[450px] p-4 rounded-xl mt-1"
               align="end"
             >
               {/* title */}
