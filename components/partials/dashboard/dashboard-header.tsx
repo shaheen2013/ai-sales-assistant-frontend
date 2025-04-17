@@ -12,15 +12,7 @@ import {
 import { useSidebar } from "@/components/shadcn/sidebar";
 
 export default function DashboardHeader() {
-  const {
-    state,
-    open,
-    setOpen,
-    openMobile,
-    setOpenMobile,
-    isMobile,
-    toggleSidebar,
-  } = useSidebar();
+  const { toggleSidebar } = useSidebar();
 
   const handleOpenChange = (open: boolean) => {
     // black screen on body with tailwind
@@ -50,7 +42,7 @@ export default function DashboardHeader() {
     <div className="top-0 sticky bg-white flex justify-between px-6 py-5 shadow z-10">
       {/* left */}
       <div className="flex gap-4 items-center">
-        <div>
+        <div className="lg:block hidden">
           <svg
             width="24"
             height="24"

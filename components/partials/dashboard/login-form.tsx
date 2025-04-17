@@ -4,7 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm, Controller } from "react-hook-form";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession, signIn } from "next-auth/react";
 
 // components
 import Button from "@/components/button";
@@ -265,7 +265,7 @@ export default function LoginForm() {
       </div>
 
       <div className="text-center text-sm text-gray-400">
-        <span>Don't have an account?</span>{" "}
+        <span>Don&apos;t have an account?</span>{" "}
         <Link href="/signup" className="text-primary-500 font-semibold">
           Sign Up
         </Link>

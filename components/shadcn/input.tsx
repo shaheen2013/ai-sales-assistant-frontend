@@ -49,7 +49,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
 Input.displayName = "Input";
 
 const InputPassword = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, type, error, preIcon, postIcon, ...props }, ref) => {
+  ({ className, error, preIcon, postIcon, ...props }, ref) => {
     const [showPassword, setShowPassword] = useState(false);
 
     const togglePasswordVisibility = () => {

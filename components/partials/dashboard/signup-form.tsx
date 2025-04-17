@@ -23,9 +23,8 @@ export default function SignupForm() {
   const toast = useToast();
   const router = useRouter();
 
+  const [registerGoogle] = useRegisterWithGoogleMutation();
   const [register, { isLoading: isLoadingRegister }] = useRegisterMutation();
-  const [registerGoogle, { isLoading: isLoadingRegisterGoogle }] =
-    useRegisterWithGoogleMutation();
 
   type FormValues = {
     name: string;
@@ -66,7 +65,7 @@ export default function SignupForm() {
         password: formData.password,
         terms: formData.terms,
       };
-      const { error, data } = await register(payload);
+      const { error } = await register(payload);
 
       if (error) {
         toast("error", beautifyErrors(error));
