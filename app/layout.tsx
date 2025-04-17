@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 
+// components
 import { Toaster } from "@/components/shadcn/sonner";
 import ReduxProvider from "@/components/ReduxProvider";
+import SessionProvider from "@/components/SessionProvider";
 
 import "./globals.css";
 
@@ -27,9 +29,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${poppins.className} antialiased`}>
-        <ReduxProvider>{children}</ReduxProvider>
+        <SessionProvider>
+          <ReduxProvider>{children}</ReduxProvider>
 
-        <Toaster />
+          <Toaster />
+        </SessionProvider>
       </body>
     </html>
   );

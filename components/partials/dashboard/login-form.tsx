@@ -3,6 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { useForm, Controller } from "react-hook-form";
+import { useSession, signIn, signOut } from "next-auth/react";
 
 // components
 import Button from "@/components/button";
@@ -15,11 +16,13 @@ import {
 import { beautifyErrors } from "@/lib/utils";
 import { useToast } from "@/hooks/useToast";
 import { Checkbox } from "@/components/shadcn/checkbox";
-
 import { Input, InputPassword } from "@/components/shadcn/input";
 
 export default function LoginForm() {
   const toast = useToast();
+  const { data: session } = useSession();
+
+  console.log("session", session);
 
   const [login, { isLoading: isLoading }] = useLoginMutation();
   const [registerGoogle, { isLoading: isLoadingRegisterGoogle }] =
@@ -55,7 +58,7 @@ export default function LoginForm() {
   };
 
   const onSubmit = async (formData: FormValues) => {
-    console.log(formData);
+    // console.log(formData);
 
     try {
       const payload = {
@@ -73,8 +76,16 @@ export default function LoginForm() {
         return;
       }
 
-      toast("success", "Account created successfully!");
-      console.log("data  => ", data);
+      toast("success", "Authenticated successfully");
+      // console.log("data  => ", data);
+
+      const signInResult = await signIn("credentials", {
+        email: formData.email,
+        password: formData.password,
+        redirect: false,
+      });
+
+      console.log("signInResult => ", signInResult);
     } catch (error) {
       console.log(error);
     }
@@ -259,6 +270,9 @@ export default function LoginForm() {
           Log In
         </Button>
       </form>
+
+      {/* temp */}
+      <button onClick={() => signOut({ redirect: false })}>logout</button>
 
       <div className="text-center mb-2">
         <Link href="/forgot-password" className="text-sm font-medium">
