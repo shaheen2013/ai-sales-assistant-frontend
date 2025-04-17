@@ -9,8 +9,19 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "@/components/partials/dashboard/dashboard-dropdown";
+import { useSidebar } from "@/components/shadcn/sidebar";
 
 export default function DashboardHeader() {
+  const {
+    state,
+    open,
+    setOpen,
+    openMobile,
+    setOpenMobile,
+    isMobile,
+    toggleSidebar,
+  } = useSidebar();
+
   const handleOpenChange = (open: boolean) => {
     // black screen on body with tailwind
 
@@ -38,11 +49,33 @@ export default function DashboardHeader() {
   return (
     <div className="top-0 sticky bg-white flex justify-between px-6 py-5 shadow z-10">
       {/* left */}
-      <div>
-        <h2 className="text-gray-500 font-semibold text-2xl mb-1">
-          Hello, Kawsar!
-        </h2>
-        <p className="text-gray-300">Welcome back, let&apos;s explore now!</p>
+      <div className="flex gap-4 items-center">
+        <div>
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            onClick={() => toggleSidebar()}
+          >
+            <path
+              d="M5 7H19M5 12H19M5 17H19"
+              stroke="#000000"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            ></path>
+          </svg>
+        </div>
+        <div>
+          <h2 className="text-gray-500 font-semibold lg:text-2xl text-xl mb-1">
+            Hello, Kawsar!
+          </h2>
+          <p className="text-gray-300 lg:text-base text-sm">
+            Welcome back, let&apos;s explore now!
+          </p>
+        </div>
       </div>
 
       {/* right   */}
