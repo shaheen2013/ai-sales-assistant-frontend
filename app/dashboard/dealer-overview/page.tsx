@@ -3,6 +3,7 @@ import React from "react";
 
 import DashboardDealerOverviewChart from "@/components/partials/dashboard/dashboard-dealer-overview-chart";
 import DashboardDealerOverviewPieChart from "@/components/partials/dashboard/dashboard-dealer-overview-pie-chart";
+import { Progress } from "@/components/shadcn/progress";
 
 export const metadata = {
   title: "Dealer Overview | Teez",
@@ -24,7 +25,7 @@ export default function DashboardDealerOverview() {
         </h4>
 
         {/* dealers chart section */}
-        <div className="border rounded-lg p-4">
+        <div className="border rounded-lg p-4 mb-4">
           <h4 className="text-[#181D27] text-sm font-semibold mb-4">
             How do you acquire Dealers?
           </h4>
@@ -40,6 +41,107 @@ export default function DashboardDealerOverview() {
             {/* right */}
             <div className="col-span-4 lg:w-[300px] mx-auto w-full">
               <DashboardDealerOverviewPieChart />
+            </div>
+          </div>
+        </div>
+
+        {/* active users */}
+        <h2 className="text-xl font-semibold text-gray-400 mb-1">
+          Active users
+        </h2>
+
+        <h4 className="text-sm text-[#707070] mb-4">
+          AI-generated list of test drive appointments based on customer
+          interactions for seamless scheduling.
+        </h4>
+
+        <div className="border rounded-lg p-4 mb-4">
+          <h4 className="text-[#181D27] text-sm font-semibold mb-4">
+            Active users right now
+          </h4>
+          <hr className="mb-4" />
+
+          {/* charts */}
+          <div className="xl:flex-row flex-col flex overflow-x-auto">
+            {/* left */}
+            <div className="flex-1">map coming soon</div>
+
+            {/* right */}
+            <div className="xl:w-[300px] mx-auto w-full">
+              <h3 className="text-display-md font-semibold mb-5">10.8k</h3>
+
+              <div className="mb-3">
+                <div className="text-gray-700 font-medium text-sm mb-2">
+                  United States
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <Progress
+                    value={50}
+                    className="h-[10px]"
+                    progressColor="#2196F3"
+                  />{" "}
+                  <span className="text-gray-700 text-sm font-medium">50%</span>
+                </div>
+              </div>
+
+              <div className="mb-3">
+                <div className="text-gray-700 font-medium text-sm mb-2">
+                  Canada
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <Progress
+                    value={50}
+                    className="h-[10px]"
+                    progressColor="#FFB056"
+                  />{" "}
+                  <span className="text-gray-700 text-sm font-medium">50%</span>
+                </div>
+              </div>
+
+              <div className="mb-3">
+                <div className="text-gray-700 font-medium text-sm mb-2">UK</div>
+
+                <div className="flex items-center gap-2">
+                  <Progress
+                    value={50}
+                    className="h-[10px]"
+                    progressColor="#654CE6"
+                  />{" "}
+                  <span className="text-gray-700 text-sm font-medium">50%</span>
+                </div>
+              </div>
+
+              <div className="mb-3">
+                <div className="text-gray-700 font-medium text-sm mb-2">
+                  Germany
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <Progress
+                    value={50}
+                    className="h-[10px]"
+                    progressColor="#13C56B"
+                  />{" "}
+                  <span className="text-gray-700 text-sm font-medium">50%</span>
+                </div>
+              </div>
+
+              <div className="mb-3">
+                <div className="text-gray-700 font-medium text-sm mb-2">
+                  Bangladesh
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <Progress
+                    value={50}
+                    className="h-[10px]"
+                    progressColor="#ED5E5E"
+                  />{" "}
+                  <span className="text-gray-700 text-sm font-medium">50%</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
