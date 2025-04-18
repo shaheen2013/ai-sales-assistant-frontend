@@ -6,5 +6,5 @@ export const metadata = {
 };
 
 export default function DashboardLogout() {
-  return <div>DashboardLogout</div>;
+  return <div>Dashboard Logout</div>;
 }

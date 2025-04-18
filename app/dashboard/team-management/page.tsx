@@ -6,5 +6,5 @@ export const metadata = {
 };
 
 export default function TeamManagement() {
-  return <div>TeamManagement</div>;
+  return <div>Team Management</div>;
 }

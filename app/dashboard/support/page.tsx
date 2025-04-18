@@ -6,5 +6,5 @@ export const metadata = {
 };
 
 export default function DashboardSupport() {
-  return <div>DashboardSupport</div>;
+  return <div>Dashboard Support</div>;
 }

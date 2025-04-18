@@ -31,12 +31,14 @@ export function DashboardSidebar() {
       <SidebarContent className="">
         {/* brand */}
         <div className="flex items-center justify-center py-9 mb-6">
-          <Image
-            src="/icons/homepage/footer-brand.svg"
-            alt="Logo"
-            width={140}
-            height={32}
-          />
+          <Link href="/">
+            <Image
+              src="/icons/homepage/footer-brand.svg"
+              alt="Logo"
+              width={140}
+              height={32}
+            />
+          </Link>
         </div>
 
         {/* menu items */}

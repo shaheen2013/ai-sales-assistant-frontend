@@ -6,5 +6,5 @@ export const metadata = {
 };
 
 export default function DashboardForums() {
-  return <div>DashboardForums</div>;
+  return <div>Dashboard Forums</div>;
 }
