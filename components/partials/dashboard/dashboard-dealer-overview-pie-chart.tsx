@@ -10,36 +10,27 @@ import {
 } from "@/components/shadcn/chart";
 
 const chartData = [
-  { browser: "chrome", visitors: 275, fill: "var(--color-chrome)" },
-  { browser: "safari", visitors: 200, fill: "var(--color-safari)" },
-  { browser: "firefox", visitors: 187, fill: "var(--color-firefox)" },
-  { browser: "edge", visitors: 173, fill: "var(--color-edge)" },
-  { browser: "other", visitors: 90, fill: "var(--color-other)" },
+  { name: "organic", visitors: 275, fill: "var(--color-chrome)" },
+  { name: "safari", visitors: 200, fill: "var(--color-safari)" },
+  { name: "firefox", visitors: 187, fill: "var(--color-firefox)" },
 ];
 
 const chartConfig = {
   visitors: {
     label: "Visitors",
+    color: "#ddd",
   },
   chrome: {
-    label: "Chrome",
-    color: "hsl(var(--chart-1))",
+    label: "Organic",
+    color: "#34AD5D",
   },
   safari: {
-    label: "Safari",
-    color: "hsl(var(--chart-2))",
+    label: "by AI",
+    color: "#55BB78",
   },
   firefox: {
-    label: "Firefox",
-    color: "hsl(var(--chart-3))",
-  },
-  edge: {
-    label: "Edge",
-    color: "hsl(var(--chart-4))",
-  },
-  other: {
-    label: "Other",
-    color: "hsl(var(--chart-5))",
+    label: "Referral",
+    color: "#B5E4CE",
   },
 } satisfies ChartConfig;
 
@@ -60,7 +51,7 @@ export default function DashboardDealerOverviewPieChart() {
             <Pie
               data={chartData}
               dataKey="visitors"
-              nameKey="browser"
+              nameKey="name"
               innerRadius={60}
             />
           </PieChart>

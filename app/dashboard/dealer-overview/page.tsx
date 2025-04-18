@@ -39,7 +39,7 @@ export default function DashboardDealerOverview() {
             </div>
 
             {/* right */}
-            <div className="col-span-4 lg:w-[300px] mx-auto w-full">
+            <div className="col-span-4 lg:w-[280px] mx-auto w-full">
               <DashboardDealerOverviewPieChart />
             </div>
           </div>
