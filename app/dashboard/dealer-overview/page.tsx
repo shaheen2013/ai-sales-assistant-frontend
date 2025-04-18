@@ -13,7 +13,7 @@ export default function DashboardDealerOverview() {
   return (
     <div className="grid grid-cols-12 gap-5">
       {/* left */}
-      <div className="col-span-8 pt-2">
+      <div className="lg:col-span-8 col-span-12 pt-2">
         <h2 className="text-xl font-semibold text-gray-400 mb-1">
           Dealers Accusation
         </h2>
@@ -31,14 +31,14 @@ export default function DashboardDealerOverview() {
           <hr className="mb-4" />
 
           {/* charts */}
-          <div className="grid-cols-12 grid dev">
+          <div className="xl:flex-row flex-col-reverse flex overflow-x-auto">
             {/* left */}
-            <div className="col-span-8">
+            <div className="flex-1">
               <DashboardDealerOverviewChart />
             </div>
 
             {/* right */}
-            <div className="col-span-4">
+            <div className="col-span-4 lg:w-[300px] mx-auto w-full">
               <DashboardDealerOverviewPieChart />
             </div>
           </div>
@@ -46,7 +46,7 @@ export default function DashboardDealerOverview() {
       </div>
 
       {/* right */}
-      <div className="col-span-4">
+      <div className="lg:col-span-4 col-span-12">
         {/* conversions */}
         <div className="border p-4 rounded-xl mb-5 ">
           <h3 className="mb-2 text-[#535862] font-medium text-sm ">

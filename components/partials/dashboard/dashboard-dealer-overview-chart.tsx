@@ -107,7 +107,7 @@ export default function DashboardDealerOverviewChart() {
   }
 
   return (
-    <div className="h-[250px] bg-white ">
+    <div className="bg-white h-[250px]">
       <svg
         viewBox="0 0 553 24"
         fill="none"
@@ -170,7 +170,7 @@ export default function DashboardDealerOverviewChart() {
         />
       </svg>
 
-      <ResponsiveContainer width="100%" height="95%">
+      <ResponsiveContainer width="100%" height="85%">
         <BarChart
           data={data}
           margin={{

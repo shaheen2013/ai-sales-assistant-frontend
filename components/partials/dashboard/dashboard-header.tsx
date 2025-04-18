@@ -42,7 +42,7 @@ export default function DashboardHeader() {
     <div className="top-0 sticky bg-white flex justify-between px-6 py-5 shadow z-10">
       {/* left */}
       <div className="flex gap-4 items-center">
-        <div className="lg:block hidden">
+        <div className="lg:hidden">
           <svg
             width="24"
             height="24"
@@ -54,9 +54,9 @@ export default function DashboardHeader() {
             <path
               d="M5 7H19M5 12H19M5 17H19"
               stroke="#000000"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             ></path>
           </svg>
         </div>
