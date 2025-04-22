@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 
-import LoginForm from "@/components/partials/dashboard/login-form";
+import LoginForm from "@/components/partials/auth/general/login-form";
 
 export const metadata: Metadata = {
   title: "Login | AI Sales Assistant",

@@ -79,7 +79,7 @@ export default function LoginForm() {
   };
 
   return (
-    <div>
+    <div className="w-full">
       <h2 className="text-[#2B3545] font-semibold text-3xl text-center mb-2">
         Welcome
       </h2>
