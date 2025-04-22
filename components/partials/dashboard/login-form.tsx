@@ -266,7 +266,7 @@ export default function LoginForm() {
 
       <div className="text-center text-sm text-gray-400">
         <span>Don&apos;t have an account?</span>{" "}
-        <Link href="/signup" className="text-primary-500 font-semibold">
+        <Link href="/general/signup" className="text-primary-500 font-semibold">
           Sign Up
         </Link>
       </div>
