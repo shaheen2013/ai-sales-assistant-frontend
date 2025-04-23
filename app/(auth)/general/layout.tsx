@@ -26,10 +26,12 @@ export default function GeneralLayout({
       {/* left */}
       <div className="lg:col-span-6 col-span-12 p-4 h-screen flex flex-col">
         {/* header */}
-        <AuthHeader />
+        <div className="mb-36">
+          <AuthHeader />
+        </div>
 
         {/* content */}
-        <div className="lg:w-[360px] lg:max-w-[360px] w-full mx-auto lg:mb-20 lg:h-screen flex items-center">
+        <div className="lg:w-[360px] lg:max-w-[360px] w-full h-full mx-auto lg:mb-20 flex items-center">
           {children}
         </div>
       </div>

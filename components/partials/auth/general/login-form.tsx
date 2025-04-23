@@ -3,8 +3,8 @@
 import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useForm, Controller } from "react-hook-form";
 import { useSession, signIn } from "next-auth/react";
+import { useForm, Controller } from "react-hook-form";
 
 // components
 import Button from "@/components/button";
@@ -259,7 +259,7 @@ export default function LoginForm() {
       </form>
 
       <div className="text-center mb-2">
-        <Link href="/forgot-password" className="text-sm font-medium">
+        <Link href="/general/forgot-password" className="text-sm font-medium">
           Forgot Password?
         </Link>
       </div>
