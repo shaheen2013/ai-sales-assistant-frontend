@@ -6,6 +6,6 @@ export const metadata: Metadata = {
   title: "Login | AI Sales Assistant",
 };
 
-export default function SignUp() {
+export default function LoginPage() {
   return <LoginForm />;
 }
