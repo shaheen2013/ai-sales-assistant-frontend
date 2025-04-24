@@ -10,4 +10,4 @@ export default function EnterCodePage() {
   return <EnterCodeForm />;
 }
 
-export const dynamicPhoto = "/images/general-signup.svg";
+// export const dynamicPhoto = "/images/general-signup.svg";

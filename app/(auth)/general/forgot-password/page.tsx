@@ -10,4 +10,4 @@ export default function SignUp() {
   return <ForgotPasswordForm />;
 }
 
-export const dynamicPhoto = "/images/general-signup.svg";
+// export const dynamicPhoto = "/images/general-signup.svg";
