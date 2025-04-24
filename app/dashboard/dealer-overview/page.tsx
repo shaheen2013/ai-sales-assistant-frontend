@@ -1,16 +1,17 @@
-import Image from "next/image";
 import React from "react";
+import Image from "next/image";
 
+import withAuth from "@/hooks/useAuth";
+import { Progress } from "@/components/shadcn/progress";
 import DashboardDealerOverviewChart from "@/components/partials/dashboard/dashboard-dealer-overview-chart";
 import DashboardDealerOverviewPieChart from "@/components/partials/dashboard/dashboard-dealer-overview-pie-chart";
-import { Progress } from "@/components/shadcn/progress";
 
 export const metadata = {
   title: "Dealer Overview | Teez",
   description: "Dealer Overview",
 };
 
-export default function DashboardDealerOverview() {
+function DashboardDealerOverview() {
   return (
     <div className="grid grid-cols-12 gap-5">
       {/* left */}
@@ -347,3 +348,5 @@ export default function DashboardDealerOverview() {
     </div>
   );
 }
+
+export default DashboardDealerOverview;

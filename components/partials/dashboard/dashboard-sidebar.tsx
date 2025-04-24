@@ -11,7 +11,7 @@ import {
 import { Progress } from "@/components/shadcn/progress";
 
 import { dashboardSidebar } from "@/static/dashboard";
-import { usePathname } from "next/navigation";
+import { redirect, usePathname, useRouter } from "next/navigation";
 import classNames from "classnames";
 import {
   DropdownMenu,
@@ -22,8 +22,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/shadcn/dropdown-menu";
+import { signOut } from "next-auth/react";
 
 export function DashboardSidebar() {
+  const router = useRouter();
   const pathname = usePathname();
 
   return (
@@ -241,7 +243,15 @@ export function DashboardSidebar() {
               </DropdownMenuGroup>
               <DropdownMenuSeparator />
 
-              <DropdownMenuItem>Log out</DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => {
+                  signOut({ callbackUrl: "/dealer/login?fromLogout=true" });
+
+                  // router.push(`/dealer/login`);
+                }}
+              >
+                Log out
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>

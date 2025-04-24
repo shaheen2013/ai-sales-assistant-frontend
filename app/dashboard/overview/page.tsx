@@ -1,5 +1,6 @@
-import React from "react";
+"use client";
 
+import withAuth from "@/hooks/useAuth";
 import {
   DropdownMenu,
   DropdownMenuItem,
@@ -9,12 +10,7 @@ import {
 } from "@/components/shadcn/dropdown-menu";
 import DashboardOverviewChart from "@/components/partials/dashboard/dashboard-overview-chart";
 
-export const metadata = {
-  title: "Dashboard Overview | Teez",
-  description: "Dashboard Overview",
-};
-
-export default function DashboardOverview() {
+function DashboardOverview() {
   return (
     <div className="py-2">
       {/* cards */}
@@ -103,3 +99,5 @@ export default function DashboardOverview() {
     </div>
   );
 }
+
+export default withAuth(DashboardOverview);

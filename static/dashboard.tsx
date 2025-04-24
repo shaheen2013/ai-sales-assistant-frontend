@@ -132,7 +132,7 @@ export const dashboardSidebar: SidebarSection[] = [
         ),
       },
       {
-        label: "logout",
+        label: "Logout",
         href: "/dashboard/logout",
         icon: (
           <svg
