@@ -33,7 +33,7 @@ export default function SignupForm() {
     terms: boolean;
   };
 
-  const { handleSubmit, control } = useForm<FormValues>({
+  const { handleSubmit, control, reset } = useForm<FormValues>({
     defaultValues: {
       name: "John",
       email: "",
@@ -59,7 +59,7 @@ export default function SignupForm() {
   };
 
   const onSubmit = async (formData: FormValues) => {
-    console.log(formData);
+    // console.log(formData);
 
     try {
       const payload = {
@@ -78,7 +78,7 @@ export default function SignupForm() {
       }
 
       toast("success", "Account created successfully!");
-      router.push("/dashboard/overview");
+      router.push("/dealer/login");
     } catch (error) {
       console.log(error);
     }
@@ -302,9 +302,16 @@ export default function SignupForm() {
         </Button>
       </form>
 
+      <Link
+        href="/terms-and-privacy"
+        className="text-center block text-xs underline mb-2"
+      >
+        Terms of Use & Privacy Policy
+      </Link>
+
       <div className="text-center text-sm text-gray-400">
         <span>Already have an account?</span>{" "}
-        <Link href="/general/login" className="text-primary-500 font-semibold">
+        <Link href="/dealer/login" className="text-primary-500 font-semibold">
           Log in
         </Link>
       </div>
