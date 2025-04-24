@@ -1,7 +1,6 @@
 import React from "react";
 import Image from "next/image";
 
-import withAuth from "@/hooks/useAuth";
 import { Progress } from "@/components/shadcn/progress";
 import DashboardDealerOverviewChart from "@/components/partials/dashboard/dashboard-dealer-overview-chart";
 import DashboardDealerOverviewPieChart from "@/components/partials/dashboard/dashboard-dealer-overview-pie-chart";

@@ -9,18 +9,15 @@ import { useForm, Controller } from "react-hook-form";
 // components
 import Button from "@/components/button";
 
-import { beautifyErrors } from "@/lib/utils";
 import { useToast } from "@/hooks/useToast";
-import { Checkbox } from "@/components/shadcn/checkbox";
-import { Input, InputPassword } from "@/components/shadcn/input";
-import { useRegisterWithGoogleMutation } from "@/features/auth/authSlice";
+import { Input } from "@/components/shadcn/input";
 
 export default function ResetPasswordForm() {
   const toast = useToast();
   const router = useRouter();
   const { data: session, status } = useSession();
 
-  const [registerGoogle] = useRegisterWithGoogleMutation();
+  // const [registerGoogle] = useRegisterWithGoogleMutation();
 
   const loading = status === "loading";
 
@@ -42,18 +39,18 @@ export default function ResetPasswordForm() {
     },
   });
 
-  const handleGoogleRegister = async () => {
-    const { error, data } = await registerGoogle({ token: "123" });
+  // const handleGoogleRegister = async () => {
+  //   const { error, data } = await registerGoogle({ token: "123" });
 
-    if (error) {
-      toast("error", beautifyErrors(error));
-      console.log("error", beautifyErrors(error));
+  //   if (error) {
+  //     toast("error", beautifyErrors(error));
+  //     console.log("error", beautifyErrors(error));
 
-      return;
-    }
+  //     return;
+  //   }
 
-    console.log("data", data);
-  };
+  //   console.log("data", data);
+  // };
 
   const onSubmit = async (formData: FormValues) => {
     try {
@@ -85,7 +82,7 @@ export default function ResetPasswordForm() {
       </h2>
 
       <p className="text-[#555D6A] text-center mb-6">
-        Please create a new password that you don't use on any other site.
+        Please create a new password that you don&apos;t use on any other site.
       </p>
 
       <form onSubmit={handleSubmit(onSubmit)}>

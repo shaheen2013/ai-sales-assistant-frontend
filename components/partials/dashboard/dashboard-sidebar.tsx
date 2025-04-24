@@ -11,7 +11,7 @@ import {
 import { Progress } from "@/components/shadcn/progress";
 
 import { dashboardSidebar } from "@/static/dashboard";
-import { redirect, usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import classNames from "classnames";
 import {
   DropdownMenu,
@@ -25,7 +25,6 @@ import {
 import { signOut } from "next-auth/react";
 
 export function DashboardSidebar() {
-  const router = useRouter();
   const pathname = usePathname();
 
   return (

@@ -33,7 +33,7 @@ export default function SignupForm() {
     terms: boolean;
   };
 
-  const { handleSubmit, control, reset } = useForm<FormValues>({
+  const { handleSubmit, control } = useForm<FormValues>({
     defaultValues: {
       name: "John",
       email: "",

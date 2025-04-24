@@ -8,21 +8,17 @@ import { useForm, Controller } from "react-hook-form";
 // components
 import Button from "@/components/button";
 
-import {
-  useRegisterMutation,
-  useRegisterWithGoogleMutation,
-} from "@/features/auth/authSlice";
+import { useRegisterMutation } from "@/features/auth/authSlice";
 
 import { beautifyErrors } from "@/lib/utils";
 import { useToast } from "@/hooks/useToast";
 
-import { Input, InputPassword } from "@/components/shadcn/input";
+import { Input } from "@/components/shadcn/input";
 
 export default function EnterCodeForm() {
   const toast = useToast();
   const router = useRouter();
 
-  const [registerGoogle] = useRegisterWithGoogleMutation();
   const [register, { isLoading: isLoadingRegister }] = useRegisterMutation();
 
   type FormValues = {
@@ -41,18 +37,18 @@ export default function EnterCodeForm() {
     },
   });
 
-  const handleGoogleRegister = async () => {
-    const { error, data } = await registerGoogle({ token: "123" });
+  // const handleGoogleRegister = async () => {
+  //   const { error, data } = await registerGoogle({ token: "123" });
 
-    if (error) {
-      toast("error", beautifyErrors(error));
-      console.log("error", beautifyErrors(error));
+  //   if (error) {
+  //     toast("error", beautifyErrors(error));
+  //     console.log("error", beautifyErrors(error));
 
-      return;
-    }
+  //     return;
+  //   }
 
-    console.log("data", data);
-  };
+  //   console.log("data", data);
+  // };
 
   const onSubmit = async (formData: FormValues) => {
     console.log(formData);

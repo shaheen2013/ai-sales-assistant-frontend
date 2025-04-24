@@ -5,13 +5,6 @@ import { usePathname } from "next/navigation";
 
 import AuthHeader from "@/components/AuthHeader";
 
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/auth-dealer-carousel";
 import Image from "next/image";
 
 export default function GeneralLayout({
