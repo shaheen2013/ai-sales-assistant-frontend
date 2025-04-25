@@ -85,7 +85,7 @@ export default function SignupForm() {
     }
   };
 
-  return <DealerRegistration progress={100} />;
+  // return <DealerRegistration progress={100} />;
 
   return (
     <div className="w-full">
