@@ -18,6 +18,7 @@ import { useToast } from "@/hooks/useToast";
 import { Checkbox } from "@/components/shadcn/checkbox";
 
 import { Input, InputPassword } from "@/components/shadcn/input";
+import DealerRegistration from "@/components/partials/auth/dealer/dealer-registration";
 
 export default function SignupForm() {
   const toast = useToast();
@@ -83,6 +84,8 @@ export default function SignupForm() {
       console.log(error);
     }
   };
+
+  return <DealerRegistration progress={100} />;
 
   return (
     <div className="w-full">
