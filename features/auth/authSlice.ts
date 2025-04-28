@@ -2,9 +2,9 @@ import { apiSlice } from "../api/apiSlice";
 
 export const authSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    register: builder.mutation({
+    registerDealer: builder.mutation({
       query: (data) => ({
-        url: `/user-registration`,
+        url: `/dealer-registration`,
         method: "POST",
         body: data,
         credentials: "include",
@@ -68,7 +68,7 @@ export const authSlice = apiSlice.injectEndpoints({
 
 export const {
   useLoginMutation,
-  useRegisterMutation,
+  useRegisterDealerMutation,
   useRegisterWithGoogleMutation,
 
   useEmailConfirmedQuery,

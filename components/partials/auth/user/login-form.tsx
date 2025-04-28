@@ -72,11 +72,15 @@ export default function LoginForm() {
       }
 
       toast("success", "Login successful");
-      router.push("/dashboard/overview");
+      router.push("/dashboard/user/overview");
     } catch (error) {
       console.log(error);
     }
   };
+
+  if (status === "authenticated" && session?.user?.user_type === "user") {
+    router.push("/dashboard/user/overview");
+  }
 
   return (
     <div className="w-full">

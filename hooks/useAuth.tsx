@@ -34,10 +34,11 @@ export default function useAuth(
     const isUser = session?.user?.user_type == "user";
     const isDealer = session?.user?.user_type == "dealer";
 
-    const isUserAuthenticated = isAuthenticated && isUser;
-    const isDealerAuthenticated = isAuthenticated && isDealer;
+    const isUserAuthenticated = isUser && key === "user";
+    const isDealerAuthenticated = isDealer && key === "dealer";
 
     console.log("key => ", key);
+    console.log("user_type => ", session?.user?.user_type);
 
     if (isLoading) {
       return (
@@ -48,7 +49,17 @@ export default function useAuth(
     }
 
     if (!isAuthenticated && !isLoading) {
-      router.push(`/dealer/login`);
+      router.push(key == "dealer" ? `/dealer/login` : `/user/login`);
+      return null;
+    }
+
+    if (!isUserAuthenticated) {
+      router.push("/user/login");
+      return null;
+    }
+
+    if (!isDealerAuthenticated) {
+      router.push("/dealer/login");
       return null;
     }
 

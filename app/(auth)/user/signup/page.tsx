@@ -1,13 +1,13 @@
 import { Metadata } from "next";
 
-import ResetPasswordForm from "@/components/partials/auth/general/reset-password-form";
+import SignupForm from "@/components/partials/auth/user/signup-form";
 
 export const metadata: Metadata = {
-  title: "Reset Password | AI Sales Assistant",
+  title: "Signup | AI Sales Assistant",
 };
 
 export default function SignUp() {
-  return <ResetPasswordForm />;
+  return <SignupForm />;
 }
 
 // export const dynamicPhoto = "/images/general-signup.svg";

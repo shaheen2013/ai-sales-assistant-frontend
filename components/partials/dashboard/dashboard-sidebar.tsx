@@ -47,6 +47,7 @@ export function DashboardSidebar() {
         {/* menu items */}
         <div>
           {status !== "loading" &&
+            status == "authenticated" &&
             dashboardSidebar.map((item, index) => {
               return (
                 <div key={index}>

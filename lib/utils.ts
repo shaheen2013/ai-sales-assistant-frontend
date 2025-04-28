@@ -24,5 +24,25 @@ export function beautifyErrors(errors: any): string {
     }
   }
 
+  if (errors?.detail) {
+    if (typeof errors?.detail === "string") {
+      errorMessages.push(errors?.detail);
+    }
+
+    if (Array.isArray(errors?.detail)) {
+      errorMessages.push(...errors?.detail);
+    }
+  }
+
+  if (errors?.non_field_errors) {
+    if (typeof errors?.non_field_errors === "string") {
+      errorMessages.push(errors?.non_field_errors);
+    }
+
+    if (Array.isArray(errors?.non_field_errors)) {
+      errorMessages.push(...errors?.non_field_errors);
+    }
+  }
+
   return errorMessages.length > 0 ? errorMessages[0] : "Something went wrong!";
 }

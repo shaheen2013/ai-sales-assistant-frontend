@@ -1,3 +1,4 @@
+import { beautifyErrors } from "@/lib/utils";
 import NextAuth, { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
@@ -22,7 +23,10 @@ const authOptions: AuthOptions = {
           // unauthenticated user
           if (!res.ok) {
             const errorData = await res.json();
-            throw new Error(errorData.detail || "Authentication failed");
+            console.log("Error in auth: ", errorData);
+            throw new Error(
+              beautifyErrors(errorData) || "Authentication failed"
+            );
           }
 
           // authenticated user

@@ -9,7 +9,7 @@ import { useForm, Controller } from "react-hook-form";
 import Button from "@/components/button";
 
 import {
-  useRegisterMutation,
+  useRegisterDealerMutation,
   useRegisterWithGoogleMutation,
 } from "@/features/auth/authSlice";
 
@@ -27,7 +27,8 @@ export default function SignupForm() {
   const [registerProgress, setRegisterProgress] = useState(0);
 
   const [registerGoogle] = useRegisterWithGoogleMutation();
-  const [register, { isLoading: isLoadingRegister }] = useRegisterMutation();
+  const [register, { isLoading: isLoadingRegister }] =
+    useRegisterDealerMutation();
 
   type FormValues = {
     name: string;

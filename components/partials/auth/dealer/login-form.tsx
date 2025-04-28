@@ -72,14 +72,16 @@ export default function LoginForm() {
       }
 
       toast("success", "Login successful");
-      router.push("/dashboard/overview");
+      router.push("/dashboard/dealer/overview");
     } catch (error) {
       console.log(error);
     }
   };
 
-  if(status === "authenticated") {
-    router.push("/dashboard/overview");
+  console.log("LoginForm session", session);
+
+  if (status === "authenticated" && session?.user?.user_type === "dealer") {
+    router.push("/dashboard/dealer/overview");
   }
 
   return (
@@ -263,14 +265,14 @@ export default function LoginForm() {
       </form>
 
       <div className="text-center mb-2">
-        <Link href="/general/forgot-password" className="text-sm font-medium">
+        <Link href="/dealer/forgot-password" className="text-sm font-medium">
           Forgot Password?
         </Link>
       </div>
 
       <div className="text-center text-sm text-gray-400">
         <span>Don&apos;t have an account?</span>{" "}
-        <Link href="/general/signup" className="text-primary-500 font-semibold">
+        <Link href="/dealer/signup" className="text-primary-500 font-semibold">
           Sign Up
         </Link>
       </div>

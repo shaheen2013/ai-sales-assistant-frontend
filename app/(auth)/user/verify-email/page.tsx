@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 
-import EnterCodeForm from "@/components/partials/auth/general/enter-code-form";
+import EnterCodeForm from "@/components/partials/auth/user/enter-code-form";
 
 export const metadata: Metadata = {
   title: "Enter Code | AI Sales Assistant",
