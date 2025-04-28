@@ -1,13 +1,28 @@
 "use client";
 
+import { DefaultSession } from "next-auth";
 import { useSession } from "next-auth/react";
+
+// Extend the Session type to include user_type
+declare module "next-auth" {
+  interface Session {
+    user: {
+      user_type?: string;
+    } & DefaultSession["user"];
+  }
+}
+
+interface keyInterface {
+  key: "user" | "dealer";
+}
+
 import { useRouter } from "next/navigation";
 
-export default function withAuth(
+export default function useAuth(
   WrapperComponent: React.ComponentType,
-  options = []
+  options: keyInterface
 ) {
-  const { key }: any = options;
+  const { key = "user" } = options;
 
   return function AuthComponent(props: any) {
     const router = useRouter();
@@ -15,6 +30,14 @@ export default function withAuth(
 
     const isLoading = status === "loading";
     const isAuthenticated = status === "authenticated";
+
+    const isUser = session?.user?.user_type == "user";
+    const isDealer = session?.user?.user_type == "dealer";
+
+    const isUserAuthenticated = isAuthenticated && isUser;
+    const isDealerAuthenticated = isAuthenticated && isDealer;
+
+    console.log("key => ", key);
 
     if (isLoading) {
       return (
