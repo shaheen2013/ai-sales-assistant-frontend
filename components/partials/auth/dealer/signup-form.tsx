@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm, Controller } from "react-hook-form";
@@ -24,6 +24,8 @@ export default function SignupForm() {
   const toast = useToast();
   const router = useRouter();
 
+  const [registerProgress, setRegisterProgress] = useState(0);
+
   const [registerGoogle] = useRegisterWithGoogleMutation();
   const [register, { isLoading: isLoadingRegister }] = useRegisterMutation();
 
@@ -34,7 +36,7 @@ export default function SignupForm() {
     terms: boolean;
   };
 
-  const { handleSubmit, control } = useForm<FormValues>({
+  const { handleSubmit, control, reset } = useForm<FormValues>({
     defaultValues: {
       name: "John",
       email: "",
@@ -60,8 +62,6 @@ export default function SignupForm() {
   };
 
   const onSubmit = async (formData: FormValues) => {
-    // console.log(formData);
-
     try {
       const payload = {
         name: formData.name,
@@ -69,6 +69,7 @@ export default function SignupForm() {
         password: formData.password,
         terms: formData.terms,
       };
+
       const { error } = await register(payload);
 
       if (error) {
@@ -78,14 +79,41 @@ export default function SignupForm() {
         return;
       }
 
-      toast("success", "Account created successfully!");
-      router.push("/dealer/login");
+      // reset form
+      reset();
+
+      // simulate progress 1 to 100 with setTimeout
+      let progress = 0;
+      setRegisterProgress(0);
+
+      const interval = setInterval(() => {
+        progress += 1;
+        setRegisterProgress(progress);
+
+        if (progress >= 100) {
+          clearInterval(interval);
+          // After reaching 100, reset back to 0
+          setTimeout(() => {
+            // setRegisterProgress(0);
+          }, 3000); // small pause before reset (optional)
+        }
+      }, 30); // 20ms per update = smooth
     } catch (error) {
       console.log(error);
     }
   };
 
-  // return <DealerRegistration progress={100} />;
+  if (registerProgress > 0) {
+    return (
+      <DealerRegistration
+        progress={registerProgress}
+        onClose={() => {
+          setRegisterProgress(0);
+          router.push("/dealer/login");
+        }}
+      />
+    );
+  }
 
   return (
     <div className="w-full">

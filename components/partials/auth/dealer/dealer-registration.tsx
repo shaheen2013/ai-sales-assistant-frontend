@@ -1,11 +1,14 @@
+import { Button } from "@/components/shadcn/button";
 import { Progress } from "@/components/shadcn/progress";
 
 interface DealerRegistrationProps {
   progress: number;
+  onClose: () => void;
 }
 
 export default function DealerRegistration({
   progress = 50,
+  onClose = () => {},
 }: DealerRegistrationProps) {
   return (
     <div className="absolute top-0 left-0 right-0 bottom-0 bg-white z-10">
@@ -17,7 +20,7 @@ export default function DealerRegistration({
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
-          <g clip-path="url(#clip0_1193_20551)">
+          <g clipPath="url(#clip0_1193_20551)">
             <path
               d="M30.5036 5.19593C29.5413 4.21654 28.4175 3.66808 27.0096 4.21899C26.4244 4.27286 25.9176 4.47118 25.5723 4.97557C23.8927 6.56953 23.8804 8.51852 25.5405 10.1419C25.8245 10.5973 26.2726 10.7736 26.7672 10.8789C27.2765 11.2731 27.8788 11.1433 28.415 11.0674C29.8253 10.8715 30.7974 10.0366 31.2503 8.69726C31.6862 7.41181 31.483 6.18512 30.506 5.19348L30.5036 5.19593Z"
               fill="#016D26"
@@ -66,19 +69,61 @@ export default function DealerRegistration({
       <div className="h-[calc(100vh-100px)] flex justify-center items-center">
         <div className="w-[600px] mx-3 max-w-[600px]">
           {progress === 100 ? (
-            <div className="flex flex-col items-center justify-center h-full">
-              <h2 className="text-gray-300 text-3xl font-medium mb-9">
-                Account Created!
+            <div className="flex flex-col items-center justify-center h-full p-6 border rounded-xl relative">
+              <div
+                className="absolute top-6 right-6 h-10 w-12 border-2 shadow-sm p-2 rounded-lg flex justify-center items-center bg-white cursor-pointer select-none"
+                onClick={onClose}
+              >
+                <svg
+                  width="21"
+                  height="20"
+                  viewBox="0 0 21 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M3.00643 2.55379L3.07904 2.46967C3.34531 2.2034 3.76198 2.1792 4.05559 2.39705L4.13971 2.46967L10.6094 8.939L17.079 2.46967C17.3719 2.17678 17.8468 2.17678 18.1397 2.46967C18.4326 2.76256 18.4326 3.23744 18.1397 3.53033L11.6704 10L18.1397 16.4697C18.406 16.7359 18.4302 17.1526 18.2123 17.4462L18.1397 17.5303C17.8734 17.7966 17.4568 17.8208 17.1632 17.6029L17.079 17.5303L10.6094 11.061L4.13971 17.5303C3.84681 17.8232 3.37194 17.8232 3.07904 17.5303C2.78615 17.2374 2.78615 16.7626 3.07904 16.4697L9.54838 10L3.07904 3.53033C2.81278 3.26406 2.78857 2.8474 3.00643 2.55379L3.07904 2.46967L3.00643 2.55379Z"
+                    fill="#5D6679"
+                  />
+                </svg>
+              </div>
+
+              <div className="bg-primary-50 rounded-full p-6 mb-6">
+                <svg
+                  width="60"
+                  height="60"
+                  viewBox="0 0 60 60"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M22.5 30L27.5 35L38.75 23.75M18.3344 9.54674C20.344 9.38637 22.2518 8.59614 23.7862 7.28855C27.3668 4.23715 32.6332 4.23715 36.2138 7.28855C37.7482 8.59614 39.656 9.38637 41.6656 9.54674C46.3551 9.92097 50.079 13.6449 50.4533 18.3344C50.6136 20.344 51.4039 22.2518 52.7115 23.7862C55.7628 27.3668 55.7628 32.6332 52.7115 36.2138C51.4039 37.7482 50.6136 39.656 50.4533 41.6656C50.079 46.3551 46.3551 50.079 41.6656 50.4533C39.656 50.6136 37.7482 51.4039 36.2138 52.7115C32.6332 55.7628 27.3668 55.7628 23.7862 52.7115C22.2518 51.4039 20.344 50.6136 18.3344 50.4533C13.6449 50.079 9.92097 46.3551 9.54674 41.6656C9.38637 39.656 8.59614 37.7482 7.28855 36.2138C4.23715 32.6332 4.23715 27.3668 7.28855 23.7862C8.59614 22.2518 9.38637 20.344 9.54674 18.3344C9.92097 13.6449 13.6449 9.92097 18.3344 9.54674Z"
+                    stroke="#019935"
+                    strokeWidth="3.33333"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </div>
+
+              <h2 className="text-gray-300 text-3xl font-semibold mb-2">
+                Account Created Successfully!
               </h2>
-              <p className="text-gray-500 text-lg mb-6">
-                Your account has been successfully created.
+
+              <p className="text-gray-500 font-normal text-center text-lg mb-9">
+                Congratulations on reaching this milestone! You're one step
+                closer to your goal!
               </p>
-              <button className="bg-primary-500 text-white py-2 px-4 rounded-md">
-                Go to Dashboard
-              </button>
+
+              <Button
+                className="bg-primary-500 text-white px-4 rounded-md w-full !py-6 text-base"
+                href="/dealer/login"
+              >
+                Explore Features
+              </Button>
             </div>
           ) : (
-            <div>
+            <div className="">
               <h2 className="text-gray-300 text-3xl font-medium mb-9">
                 Creating your account is almost done!
               </h2>
