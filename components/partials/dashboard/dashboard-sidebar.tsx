@@ -2,32 +2,36 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import classNames from "classnames";
+import { usePathname } from "next/navigation";
+import { signOut, useSession } from "next-auth/react";
 
 import {
   Sidebar,
-  SidebarContent,
   SidebarFooter,
+  SidebarContent,
 } from "@/components/shadcn/sidebar";
 import { Progress } from "@/components/shadcn/progress";
+import { dashboardDealerMenu, dashboardUserMenu } from "@/static/dashboard";
 
-import { dashboardSidebar } from "@/static/dashboard";
-import { usePathname } from "next/navigation";
-import classNames from "classnames";
 import {
   DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuSeparator,
+  DropdownMenuGroup,
   DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuSeparator,
 } from "@/components/shadcn/dropdown-menu";
-import { signOut, useSession } from "next-auth/react";
 import { Skeleton } from "@/components/shadcn/skeleton";
 
 export function DashboardSidebar() {
   const pathname = usePathname();
   const { data: session, status } = useSession();
+
+  const isUser = session?.user?.user_type == "user";
+  const isDashboardReady = status !== "loading" && status == "authenticated";
+  const dashboardMenu = isUser ? dashboardUserMenu : dashboardDealerMenu;
 
   return (
     <Sidebar>
@@ -46,9 +50,8 @@ export function DashboardSidebar() {
 
         {/* menu items */}
         <div>
-          {status !== "loading" &&
-            status == "authenticated" &&
-            dashboardSidebar.map((item, index) => {
+          {isDashboardReady &&
+            dashboardMenu.map((item, index) => {
               return (
                 <div key={index}>
                   {/* label */}

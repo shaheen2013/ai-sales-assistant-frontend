@@ -38,9 +38,6 @@ export default function useAuth(
     const isDealerAuthenticated =
       isDealer && key === "dealer" && isAuthenticated;
 
-    console.log("key => ", key);
-    console.log("user_type => ", session?.user?.user_type);
-
     if (isLoading) {
       return (
         <div className="h-[calc(100vh-140px)] flex justify-center items-center ">
@@ -54,16 +51,17 @@ export default function useAuth(
       return null;
     }
 
-    if (!isUserAuthenticated) {
-      router.push("/user/login");
-      return null;
-    }
+    // if (!isUserAuthenticated) {
+    //   router.push("/user/login");
+    //   return null;
+    // }
 
-    if (!isDealerAuthenticated) {
-      router.push("/dealer/login");
-      return null;
-    }
+    // if (!isDealerAuthenticated) {
+    //   router.push("/dealer/login");
+    //   return null;
+    // }
 
-    return <WrapperComponent {...props} />;
+    return "Unauthorized";
+    // return <WrapperComponent {...props} />;
   };
 }

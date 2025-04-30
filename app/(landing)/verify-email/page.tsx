@@ -20,11 +20,6 @@ export default function VerifyEmail() {
     token: token,
   });
 
-  // if (error) {
-  //   beautifyErrors(error);
-  //   console.log("error", error);
-  // }
-
   useEffect(() => {
     if (error) {
       const errorMessage = beautifyErrors(error);
