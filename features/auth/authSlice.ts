@@ -63,6 +63,14 @@ export const authSlice = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+
+    emailVerification: builder.query({
+      query: (data) => ({
+        url: `/email-verify`,
+        method: "POST",
+        body: data,
+      }),
+    }),
   }),
 });
 
@@ -75,4 +83,5 @@ export const {
   useLoginSocialMutation,
   useForgotPasswordMutation,
   useResetPasswordMutation,
+  useEmailVerificationQuery,
 } = authSlice;

@@ -34,8 +34,9 @@ export default function useAuth(
     const isUser = session?.user?.user_type == "user";
     const isDealer = session?.user?.user_type == "dealer";
 
-    const isUserAuthenticated = isUser && key === "user";
-    const isDealerAuthenticated = isDealer && key === "dealer";
+    const isUserAuthenticated = isUser && key === "user" && isAuthenticated;
+    const isDealerAuthenticated =
+      isDealer && key === "dealer" && isAuthenticated;
 
     console.log("key => ", key);
     console.log("user_type => ", session?.user?.user_type);
