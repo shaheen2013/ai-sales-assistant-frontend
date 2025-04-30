@@ -20,8 +20,6 @@ export default function ForgotPasswordForm() {
 
   const loading = status === "loading";
 
-  console.log("LoginForm session", session);
-
   type FormValues = {
     name: string;
     email: string;

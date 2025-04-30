@@ -8,7 +8,7 @@ import { useForm, Controller } from "react-hook-form";
 // components
 import Button from "@/components/button";
 
-import { useRegisterMutation } from "@/features/auth/authSlice";
+import { useRegisterDealerMutation } from "@/features/auth/authSlice";
 
 import { beautifyErrors } from "@/lib/utils";
 import { useToast } from "@/hooks/useToast";
@@ -19,7 +19,7 @@ export default function EnterCodeForm() {
   const toast = useToast();
   const router = useRouter();
 
-  const [register, { isLoading: isLoadingRegister }] = useRegisterMutation();
+  const [register, { isLoading: isLoadingRegister }] = useRegisterDealerMutation();
 
   type FormValues = {
     name: string;

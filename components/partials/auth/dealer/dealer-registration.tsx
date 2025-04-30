@@ -111,7 +111,7 @@ export default function DealerRegistration({
               </h2>
 
               <p className="text-gray-500 font-normal text-center text-lg mb-9">
-                Congratulations on reaching this milestone! You're one step
+                Congratulations on reaching this milestone! You&apos;re one step
                 closer to your goal!
               </p>
 
