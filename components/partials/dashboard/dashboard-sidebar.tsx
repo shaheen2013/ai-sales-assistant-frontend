@@ -160,7 +160,10 @@ export function DashboardSidebar() {
             })}
 
           {status == "loading" && (
-            <div className="h-[calc(100vh-140px)] flex flex-col gap-5 justify-center items-center px-2">
+            <div className=" flex flex-col gap-5 justify-center items-center px-2">
+              <Skeleton className="w-full h-10" />
+              <Skeleton className="w-full h-10" />
+              <Skeleton className="w-full h-10" />
               <Skeleton className="w-full h-10" />
               <Skeleton className="w-full h-10" />
               <Skeleton className="w-full h-10" />

@@ -38,6 +38,11 @@ export default function useAuth(
     const isDealerAuthenticated =
       isDealer && key === "dealer" && isAuthenticated;
 
+    const roleAuthMap = {
+      user: isUserAuthenticated,
+      dealer: isDealerAuthenticated,
+    };
+
     if (isLoading) {
       return (
         <div className="h-[calc(100vh-140px)] flex justify-center items-center ">
@@ -51,17 +56,10 @@ export default function useAuth(
       return null;
     }
 
-    // if (!isUserAuthenticated) {
-    //   router.push("/user/login");
-    //   return null;
-    // }
-
-    // if (!isDealerAuthenticated) {
-    //   router.push("/dealer/login");
-    //   return null;
-    // }
+    if (roleAuthMap[key]) {
+      return <WrapperComponent {...props} />;
+    }
 
     return "Unauthorized";
-    // return <WrapperComponent {...props} />;
   };
 }
