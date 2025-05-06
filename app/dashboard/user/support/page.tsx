@@ -682,8 +682,26 @@ function SupportTable() {
       accessorKey: "status",
       header: ({ column }) => {
         return (
-          <h2 className="flex items-center text-center gap-2 cursor-pointer">
+          <h2
+            className="flex items-center text-center gap-2 cursor-pointer"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
             Status
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M4.6665 9.99935L7.99984 13.3327L11.3332 9.99935M4.6665 5.99935L7.99984 2.66602L11.3332 5.99935"
+                stroke="#111928"
+                strokeWidth="1.4"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
           </h2>
         );
       },
@@ -720,8 +738,6 @@ function SupportTable() {
         );
       },
       cell: ({ row }) => {
-        const payment = row.original;
-
         return (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
