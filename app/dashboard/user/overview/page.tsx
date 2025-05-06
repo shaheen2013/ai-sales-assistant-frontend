@@ -1,6 +1,5 @@
 "use client";
 
-import withAuth from "@/hooks/useAuth";
 
 import {
   DropdownMenu,
@@ -101,6 +100,4 @@ function DashboardOverview() {
   );
 }
 
-export default withAuth(DashboardOverview, {
-  key: "user",
-});
+export default DashboardOverview;

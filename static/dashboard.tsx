@@ -71,7 +71,7 @@ export const dashboardUserMenu: SidebarSection[] = [
     items: [
       {
         label: "Notifications",
-        href: "/dashboard/notification",
+        href: "/dashboard/user/notification",
         icon: (
           <svg
             width="24"
@@ -85,7 +85,7 @@ export const dashboardUserMenu: SidebarSection[] = [
       },
       {
         label: "Support",
-        href: "/dashboard/support",
+        href: "/dashboard/user/support",
         icon: (
           <svg
             width="24"
@@ -99,7 +99,7 @@ export const dashboardUserMenu: SidebarSection[] = [
       },
       {
         label: "Forums",
-        href: "/dashboard/forums",
+        href: "/dashboard/user/forums",
         icon: (
           <svg
             width="24"
@@ -119,7 +119,7 @@ export const dashboardUserMenu: SidebarSection[] = [
     items: [
       {
         label: "Settings",
-        href: "/dashboard/settings",
+        href: "/dashboard/user/settings",
         icon: (
           <svg
             width="20"
@@ -133,7 +133,7 @@ export const dashboardUserMenu: SidebarSection[] = [
       },
       {
         label: "Logout",
-        href: "/dashboard/logout",
+        href: "/dashboard/user/logout",
         icon: (
           <svg
             width="20"
@@ -275,7 +275,7 @@ export const dashboardDealerMenu: SidebarSection[] = [
     items: [
       {
         label: "Settings",
-        href: "/dashboard/settings",
+        href: "/dashboard/dealer/settings",
         icon: (
           <svg
             width="20"
@@ -289,7 +289,7 @@ export const dashboardDealerMenu: SidebarSection[] = [
       },
       {
         label: "Logout",
-        href: "/dashboard/logout",
+        href: "/dashboard/dealer/logout",
         icon: (
           <svg
             width="20"

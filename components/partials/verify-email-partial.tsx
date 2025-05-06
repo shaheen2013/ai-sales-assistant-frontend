@@ -24,6 +24,7 @@ export default function VerifyEmailPartial() {
     if (error) {
       const errorMessage = beautifyErrors(error);
       toast("error", errorMessage);
+      router.push("/dealer/login");
       return;
     }
 

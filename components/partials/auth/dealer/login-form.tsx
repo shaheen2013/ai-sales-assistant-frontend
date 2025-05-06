@@ -22,9 +22,9 @@ export default function LoginForm() {
 
   const [registerGoogle] = useRegisterWithGoogleMutation();
 
-  const loading = status === "loading";
+  console.log("LoginForm status", status);
 
-  console.log("LoginForm session", session);
+  const loading = status === "loading";
 
   type FormValues = {
     name: string;

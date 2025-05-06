@@ -31,7 +31,7 @@ export function DashboardSidebar() {
 
   const isUser = session?.user?.user_type == "user";
   const isDashboardReady = status !== "loading" && status == "authenticated";
-  const dashboardMenu = isUser ? dashboardUserMenu : dashboardDealerMenu;
+  const dashboardMenu = !isUser ? dashboardUserMenu : dashboardDealerMenu;
 
   return (
     <Sidebar>
@@ -270,9 +270,7 @@ export function DashboardSidebar() {
 
               <DropdownMenuItem
                 onClick={() => {
-                  signOut({ callbackUrl: "/dealer/login?fromLogout=true" });
-
-                  // router.push(`/dealer/login`);
+                  signOut({ callbackUrl: "/dealer/login" });
                 }}
               >
                 Log out
