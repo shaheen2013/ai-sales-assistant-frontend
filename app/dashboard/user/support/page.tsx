@@ -1,5 +1,18 @@
 "use client";
 
+import {
+  ColumnDef,
+  flexRender,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  useReactTable,
+  ColumnFiltersState,
+  SortingState,
+  VisibilityState,
+} from "@tanstack/react-table";
+
 import { Button } from "@/components/shadcn/button";
 import {
   Tabs,
@@ -86,16 +99,6 @@ export default function DashboardSupport() {
   );
 }
 
-// This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
-
-import {
-  ColumnDef,
-  flexRender,
-  getCoreRowModel,
-  useReactTable,
-} from "@tanstack/react-table";
-
 import {
   Table,
   TableBody,
@@ -104,21 +107,26 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/shadcn/table";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 
 import {
   DropdownMenu,
+  DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/shadcn/dropdown-menu";
+import { ChevronDown, MoreHorizontal } from "lucide-react";
+import { Input } from "@/components/shadcn/input";
+import Image from "next/image";
 
 export type Tickets = {
   id: string;
   dealer: string;
   email: string;
+  phone: string;
   topic: string;
   type: "Call" | "Email" | "Chat";
   assign: string;
@@ -174,9 +182,10 @@ export const columns: ColumnDef<Tickets>[] = [
 function SupportTable() {
   const rawData: Tickets[] = [
     {
-      id: "1",
+      id: "#1",
       dealer: "John Doe",
       email: "john@example.com",
+      phone: "+1234567890",
       topic: "Issue with product",
       type: "Call",
       assign: "Alice Smith",
@@ -184,9 +193,10 @@ function SupportTable() {
       status: "Open",
     },
     {
-      id: "2",
+      id: "#2",
       dealer: "Jane Smith",
       email: "jane@example.com",
+      phone: "+1234567890",
       topic: "Payment not processed",
       type: "Email",
       assign: "Bob Johnson",
@@ -194,9 +204,10 @@ function SupportTable() {
       status: "Closed",
     },
     {
-      id: "3",
+      id: "#3",
       dealer: "Mike Brown",
       email: "mike@example.com",
+      phone: "+1234567890",
       topic: "Account locked",
       type: "Chat",
       assign: "Alice Smith",
@@ -204,9 +215,10 @@ function SupportTable() {
       status: "Closed",
     },
     {
-      id: "4",
+      id: "#4",
       dealer: "Emily White",
       email: "emily@example.com",
+      phone: "+1234567890",
       topic: "Request refund",
       type: "Call",
       assign: "Charlie King",
@@ -214,9 +226,10 @@ function SupportTable() {
       status: "Open",
     },
     {
-      id: "5",
+      id: "#5",
       dealer: "Chris Green",
       email: "chris@example.com",
+      phone: "+1234567890",
       topic: "Delayed shipment",
       type: "Email",
       assign: "Alice Smith",
@@ -224,9 +237,10 @@ function SupportTable() {
       status: "Closed",
     },
     {
-      id: "6",
+      id: "#6",
       dealer: "Patricia Black",
       email: "patricia@example.com",
+      phone: "+1234567890",
       topic: "Cannot apply discount code",
       type: "Chat",
       assign: "Bob Johnson",
@@ -234,9 +248,10 @@ function SupportTable() {
       status: "Open",
     },
     {
-      id: "7",
+      id: "#7",
       dealer: "Robert Gray",
       email: "robert@example.com",
+      phone: "+1234567890",
       topic: "Login error",
       type: "Email",
       assign: "Charlie King",
@@ -244,9 +259,10 @@ function SupportTable() {
       status: "Closed",
     },
     {
-      id: "8",
+      id: "#8",
       dealer: "Laura Scott",
       email: "laura@example.com",
+      phone: "+1234567890",
       topic: "Wrong item received",
       type: "Call",
       assign: "Alice Smith",
@@ -254,9 +270,10 @@ function SupportTable() {
       status: "Open",
     },
     {
-      id: "9",
+      id: "#9",
       dealer: "Steven Hall",
       email: "steven@example.com",
+      phone: "+1234567890",
       topic: "Need invoice",
       type: "Email",
       assign: "Bob Johnson",
@@ -264,9 +281,10 @@ function SupportTable() {
       status: "Closed",
     },
     {
-      id: "10",
+      id: "#10",
       dealer: "Rachel Lee",
       email: "rachel@example.com",
+      phone: "+1234567890",
       topic: "Change delivery address",
       type: "Chat",
       assign: "Charlie King",
@@ -274,9 +292,10 @@ function SupportTable() {
       status: "Open",
     },
     {
-      id: "11",
+      id: "#11",
       dealer: "Daniel Young",
       email: "daniel@example.com",
+      phone: "+1234567890",
       topic: "Product damaged",
       type: "Call",
       assign: "Alice Smith",
@@ -284,9 +303,10 @@ function SupportTable() {
       status: "Closed",
     },
     {
-      id: "12",
+      id: "#12",
       dealer: "Olivia King",
       email: "olivia@example.com",
+      phone: "+1234567890",
       topic: "Warranty inquiry",
       type: "Email",
       assign: "Bob Johnson",
@@ -294,9 +314,10 @@ function SupportTable() {
       status: "Open",
     },
     {
-      id: "13",
+      id: "#13",
       dealer: "Henry Adams",
       email: "henry@example.com",
+      phone: "+1234567890",
       topic: "Reset password",
       type: "Chat",
       assign: "Charlie King",
@@ -304,9 +325,10 @@ function SupportTable() {
       status: "Closed",
     },
     {
-      id: "14",
+      id: "#14",
       dealer: "Sophia Lewis",
       email: "sophia@example.com",
+      phone: "+1234567890",
       topic: "Item not as described",
       type: "Call",
       assign: "Alice Smith",
@@ -314,9 +336,10 @@ function SupportTable() {
       status: "Open",
     },
     {
-      id: "15",
+      id: "#15",
       dealer: "Liam Turner",
       email: "liam@example.com",
+      phone: "+1234567890",
       topic: "Tracking number not working",
       type: "Email",
       assign: "Bob Johnson",
@@ -324,9 +347,10 @@ function SupportTable() {
       status: "Closed",
     },
     {
-      id: "16",
+      id: "#16",
       dealer: "Grace Parker",
       email: "grace@example.com",
+      phone: "+1234567890",
       topic: "Feedback on support",
       type: "Chat",
       assign: "Charlie King",
@@ -334,9 +358,10 @@ function SupportTable() {
       status: "Closed",
     },
     {
-      id: "17",
+      id: "#17",
       dealer: "Noah Bennett",
       email: "noah@example.com",
+      phone: "+1234567890",
       topic: "Cancel subscription",
       type: "Call",
       assign: "Alice Smith",
@@ -344,9 +369,10 @@ function SupportTable() {
       status: "Open",
     },
     {
-      id: "18",
+      id: "#18",
       dealer: "Emma Hughes",
       email: "emma@example.com",
+      phone: "+1234567890",
       topic: "Billing issue",
       type: "Email",
       assign: "Bob Johnson",
@@ -354,9 +380,10 @@ function SupportTable() {
       status: "Closed",
     },
     {
-      id: "19",
+      id: "#19",
       dealer: "James Foster",
       email: "james@example.com",
+      phone: "+1234567890",
       topic: "Upgrade plan",
       type: "Chat",
       assign: "Charlie King",
@@ -364,9 +391,10 @@ function SupportTable() {
       status: "Open",
     },
     {
-      id: "20",
+      id: "#20",
       dealer: "Ava Morgan",
       email: "ava@example.com",
+      phone: "+1234567890",
       topic: "Inquiry about features",
       type: "Call",
       assign: "Alice Smith",
@@ -375,12 +403,396 @@ function SupportTable() {
     },
   ];
 
+  const columns: ColumnDef<Tickets>[] = [
+    {
+      accessorKey: "id",
+      header: "ID",
+      cell: ({ row }) => (
+        <div className="font-medium text-gray-400">{row.getValue("id")}</div>
+      ),
+    },
+
+    {
+      accessorKey: "dealer",
+      header: "Status",
+      cell: ({ row }) => (
+        <div className="flex items-center gap-2">
+          <Image
+            src="https://dummyimage.com/40x40"
+            alt=""
+            height="30"
+            width="30"
+            className="rounded-full"
+          />
+          <span className="text-gray-400">{row.getValue("dealer")}</span>
+        </div>
+      ),
+    },
+
+    {
+      accessorKey: "email",
+      header: ({ column }) => {
+        return (
+          <h2
+            className="flex items-center gap-2 cursor-pointer"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Email & Phone
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M4.6665 9.99935L7.99984 13.3327L11.3332 9.99935M4.6665 5.99935L7.99984 2.66602L11.3332 5.99935"
+                stroke="#111928"
+                strokeWidth="1.4"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </h2>
+        );
+      },
+      cell: ({ row }) => (
+        <div className="text-gray-400">
+          <div>{row.original?.email}</div>
+          <div>{row.original?.phone}</div>
+        </div>
+      ),
+    },
+
+    {
+      accessorKey: "topic",
+      header: ({ column }) => {
+        return (
+          <h2
+            className="flex items-center gap-2 cursor-pointer"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Topic
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M4.6665 9.99935L7.99984 13.3327L11.3332 9.99935M4.6665 5.99935L7.99984 2.66602L11.3332 5.99935"
+                stroke="#111928"
+                strokeWidth="1.4"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </h2>
+        );
+      },
+      cell: ({ row }) => (
+        <div className="text-gray-400">
+          <div>{row.original?.topic}</div>
+        </div>
+      ),
+    },
+
+    {
+      accessorKey: "type",
+      header: ({ column }) => {
+        return (
+          <h2
+            className="flex items-center gap-2 cursor-pointer"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Type
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M4.6665 9.99935L7.99984 13.3327L11.3332 9.99935M4.6665 5.99935L7.99984 2.66602L11.3332 5.99935"
+                stroke="#111928"
+                strokeWidth="1.4"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </h2>
+        );
+      },
+      cell: ({ row }) => {
+        const typeColors = {
+          Call: "inline-block bg-[#F0EDFC] text-[#654CE6] px-3 py-1 text-sm rounded-xl",
+          Email:
+            "inline-block bg-[#ECF6FE] text-[#2196F3] px-3 py-1 text-sm rounded-xl",
+          Chat: "inline-block bg-[#ECF6FE] text-[#2196F3] px-3 py-1 text-sm rounded-xl",
+        };
+
+        const typeClass =
+          typeColors[row.original?.type] || "bg-gray-50 text-gray-500";
+
+        return (
+          <div className="text-gray-400">
+            <div className={typeClass}>{row.original?.type}</div>
+          </div>
+        );
+      },
+    },
+
+    {
+      accessorKey: "assign",
+      header: ({ column }) => {
+        return (
+          <h2
+            className="flex items-center gap-2 cursor-pointer"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Assign
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M4.6665 9.99935L7.99984 13.3327L11.3332 9.99935M4.6665 5.99935L7.99984 2.66602L11.3332 5.99935"
+                stroke="#111928"
+                strokeWidth="1.4"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </h2>
+        );
+      },
+      cell: ({ row }) => (
+        <div className="flex">
+          <div className="flex -space-x-2 overflow-hidden">
+            <img
+              className="inline-block h-6 w-6 rounded-full ring-2 ring-white"
+              src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+              alt=""
+            />
+            <img
+              className="inline-block h-6 w-6 rounded-full ring-2 ring-white"
+              src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+              alt=""
+            />
+            <img
+              className="inline-block h-6 w-6 rounded-full ring-2 ring-white"
+              src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80"
+              alt=""
+            />
+            <svg
+              width="26"
+              height="26"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                x="0.5"
+                y="0.5"
+                width="23"
+                height="23"
+                rx="11.5"
+                fill="#555D6A"
+              />
+              <rect
+                x="0.5"
+                y="0.5"
+                width="23"
+                height="23"
+                rx="11.5"
+                stroke="white"
+              />
+              <path
+                d="M10.6587 17.9688V6.17329H13.3349V17.9688H10.6587ZM6.09908 13.4091V10.733H17.8945V13.4091H6.09908Z"
+                fill="white"
+              />
+            </svg>
+          </div>
+        </div>
+      ),
+    },
+
+    {
+      accessorKey: "createdDate",
+      header: ({ column }) => {
+        return (
+          <h2
+            className="flex items-center text-center gap-2 cursor-pointer"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Created Date
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M4.6665 9.99935L7.99984 13.3327L11.3332 9.99935M4.6665 5.99935L7.99984 2.66602L11.3332 5.99935"
+                stroke="#111928"
+                strokeWidth="1.4"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </h2>
+        );
+      },
+      cell: ({ row }) => {
+        const date = new Date(row.original?.createdDate).toLocaleDateString(
+          "en-US",
+          {
+            day: "2-digit",
+            month: "short", // Outputs "Feb"
+            year: "numeric",
+          }
+        );
+
+        const time = new Date(row.original?.createdDate).toLocaleTimeString(
+          "en-US",
+          {
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit", // Add seconds
+            hour12: true, // Ensures AM/PM format
+          }
+        );
+
+        return (
+          <div className=" font-medium text-gray-400">
+            <div>{date}</div>
+            <div>{time}</div>
+          </div>
+        );
+      },
+    },
+
+    {
+      accessorKey: "status",
+      header: ({ column }) => {
+        return (
+          <h2 className="flex items-center text-center gap-2 cursor-pointer">
+            Status
+          </h2>
+        );
+      },
+      cell: ({ row }) => {
+        const status = row.original?.status;
+
+        return (
+          <div className="font-medium">
+            {status === "Open" && (
+              <div className="inline-flex items-center gap-2 bg-[#ECF6FE] text-[#2196F3] px-3 py-1 text-sm rounded-xl">
+                <div className="h-2 w-2 bg-[#2196F3] rounded-full"></div>
+                {status}
+              </div>
+            )}
+
+            {status === "Closed" && (
+              <div className="inline-flex items-center gap-2 bg-[#FFF5EB] text-[#FFB056] px-3 py-1 text-sm rounded-xl">
+                <div className="h-2 w-2 bg-[#FFB056] rounded-full"></div>
+                {status}
+              </div>
+            )}
+          </div>
+        );
+      },
+    },
+
+    {
+      id: "actions",
+      header: ({ column }) => {
+        return (
+          <h2 className="flex items-center text-center gap-2 cursor-pointer">
+            Action
+          </h2>
+        );
+      },
+      cell: ({ row }) => {
+        const payment = row.original;
+
+        return (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="h-8 w-8 p-0">
+                <span className="sr-only">Open menu</span>
+                <MoreHorizontal />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem>
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M17.1813 2.92689C16.0291 1.71505 14.1047 1.69077 12.9222 2.87317L3.54741 12.2475C3.21958 12.5754 2.99204 12.9899 2.89148 13.4424L2.01387 17.3923C1.97678 17.5592 2.02754 17.7335 2.14844 17.8544C2.26934 17.9753 2.44362 18.026 2.6105 17.9889L6.53689 17.1157C7.00432 17.0118 7.43243 16.7767 7.77103 16.4381L17.129 7.08003C18.27 5.939 18.2933 4.09631 17.1813 2.92689ZM13.6293 3.58029C14.4143 2.79538 15.6917 2.8115 16.4566 3.61596C17.1948 4.39225 17.1793 5.61548 16.4219 6.37293L15.7507 7.04418L12.958 4.25155L13.6293 3.58029ZM12.2509 4.95864L15.0436 7.7513L7.06391 15.731C6.85976 15.9352 6.60164 16.0769 6.31982 16.1396L3.1605 16.8421L3.86768 13.6593C3.92698 13.3924 4.06117 13.148 4.2545 12.9547L12.2509 4.95864Z"
+                    fill="#333741"
+                  />
+                </svg>
+                <span className="text-gray-500">Edit</span>
+              </DropdownMenuItem>
+
+              <DropdownMenuItem>
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M8.5 4H11.5C11.5 3.17157 10.8284 2.5 10 2.5C9.17157 2.5 8.5 3.17157 8.5 4ZM7.5 4C7.5 2.61929 8.61929 1.5 10 1.5C11.3807 1.5 12.5 2.61929 12.5 4H17.5C17.7761 4 18 4.22386 18 4.5C18 4.77614 17.7761 5 17.5 5H16.4456L15.2521 15.3439C15.0774 16.8576 13.7957 18 12.2719 18H7.72813C6.20431 18 4.92256 16.8576 4.7479 15.3439L3.55437 5H2.5C2.22386 5 2 4.77614 2 4.5C2 4.22386 2.22386 4 2.5 4H7.5ZM5.74131 15.2292C5.85775 16.2384 6.71225 17 7.72813 17H12.2719C13.2878 17 14.1422 16.2384 14.2587 15.2292L15.439 5H4.56101L5.74131 15.2292ZM8.5 7.5C8.77614 7.5 9 7.72386 9 8V14C9 14.2761 8.77614 14.5 8.5 14.5C8.22386 14.5 8 14.2761 8 14V8C8 7.72386 8.22386 7.5 8.5 7.5ZM12 8C12 7.72386 11.7761 7.5 11.5 7.5C11.2239 7.5 11 7.72386 11 8V14C11 14.2761 11.2239 14.5 11.5 14.5C11.7761 14.5 12 14.2761 12 14V8Z"
+                    fill="#D92D21"
+                  />
+                </svg>
+                <span className="font-medium text-red-500">Delete</span>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        );
+      },
+    },
+  ];
+
+  const [sorting, setSorting] = useState<SortingState>([]);
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+  const [rowSelection, setRowSelection] = useState({});
+
   const data: Tickets[] = useMemo(() => rawData, []);
 
   const table = useReactTable({
     data,
     columns,
+    onSortingChange: setSorting,
+    onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    onColumnVisibilityChange: setColumnVisibility,
+    onRowSelectionChange: setRowSelection,
+    state: {
+      sorting,
+      columnFilters,
+      columnVisibility,
+      rowSelection,
+    },
   });
 
   return (
@@ -438,55 +850,82 @@ function SupportTable() {
 
       {/* table */}
       <div className="">
-        <Table>
-          <TableHeader className="">
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead key={header.id}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
+        <div className="w-full">
+          <div className="rounded-md border">
+            <Table>
+              <TableHeader>
+                {table.getHeaderGroups().map((headerGroup) => (
+                  <TableRow key={headerGroup.id}>
+                    {headerGroup.headers.map((header) => {
+                      return (
+                        <TableHead key={header.id}>
+                          {header.isPlaceholder
+                            ? null
+                            : flexRender(
+                                header.column.columnDef.header,
+                                header.getContext()
+                              )}
+                        </TableHead>
+                      );
+                    })}
+                  </TableRow>
+                ))}
+              </TableHeader>
+              <TableBody>
+                {table.getRowModel().rows?.length ? (
+                  table.getRowModel().rows.map((row) => (
+                    <TableRow
+                      key={row.id}
+                      data-state={row.getIsSelected() && "selected"}
+                    >
+                      {row.getVisibleCells().map((cell) => (
+                        <TableCell key={cell.id}>
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext()
                           )}
-                    </TableHead>
-                  );
-                })}
-              </TableRow>
-            ))}
-          </TableHeader>
-
-          <TableBody>
-            {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
+                        </TableCell>
+                      ))}
+                    </TableRow>
+                  ))
+                ) : (
+                  <TableRow>
+                    <TableCell
+                      colSpan={columns.length}
+                      className="h-24 text-center"
+                    >
+                      No results.
                     </TableCell>
-                  ))}
-                </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className="h-24 text-center"
-                >
-                  No results.
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </div>
+          <div className="flex items-center justify-end space-x-2 py-4">
+            <div className="flex-1 text-sm text-muted-foreground">
+              {table.getFilteredSelectedRowModel().rows.length} of{" "}
+              {table.getFilteredRowModel().rows.length} row(s) selected.
+            </div>
+            <div className="space-x-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => table.previousPage()}
+                disabled={!table.getCanPreviousPage()}
+              >
+                Previous
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => table.nextPage()}
+                disabled={!table.getCanNextPage()}
+              >
+                Next
+              </Button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
