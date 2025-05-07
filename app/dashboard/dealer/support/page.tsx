@@ -77,8 +77,8 @@ function AISalesInitializer() {
       <h4 className="text-[#6B7280] text-center text-[16px] font-normal max-w-3xl mb-12">
         Teezai is where ambition meets expression. Born from the spirit of
         fearless creativity, we empower the next generation to wear their
-        vision. Every design, every drop, every detail — it's all about standing
-        out, owning your voice, and pushing boundaries.
+        vision. Every design, every drop, every detail — it&apos;s all about
+        standing out, owning your voice, and pushing boundaries.
       </h4>
 
       <div className="w-full max-w-xl">

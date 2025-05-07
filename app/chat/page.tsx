@@ -153,6 +153,7 @@ export default function AnonymousChat() {
 
   const handleEmailSubmit = () => {
     setEmail("john@example.com");
+    setSubmitted(true); // set submitted to true to show the chat app
   };
 
   const handleMessageSend = (e: any) => {
@@ -188,7 +189,7 @@ export default function AnonymousChat() {
 
       {/* middle content */}
       <div className="flex-1">
-        {submitted ? (
+        {!submitted ? (
           <>
             {/* initial UI */}
             <AISalesInitializer
@@ -288,8 +289,8 @@ function AISalesInitializer({
       <h4 className="text-[#6B7280] text-center text-[16px] font-normal max-w-3xl lg:mb-12 mb-2 px-6">
         Teezai is where ambition meets expression. Born from the spirit of
         fearless creativity, we empower the next generation to wear their
-        vision. Every design, every drop, every detail — it's all about standing
-        out, owning your voice, and pushing boundaries.
+        vision. Every design, every drop, every detail — it&apos;s all about
+        standing out, owning your voice, and pushing boundaries.
       </h4>
 
       <div className="w-full max-w-3xl grid lg:grid-cols-2 grid-cols-1 gap-5 mb-6 px-6">
@@ -624,6 +625,7 @@ function ChatApp({
                 viewBox="0 0 16 16"
                 fill="none"
                 className="mt-1 cursor-pointer"
+                onClick={onMessageSend}
               >
                 <path
                   d="M2.08722 1.08139C1.49322 0.784389 0.834721 1.34939 1.03772 1.98189L2.46672 6.42339C2.49482 6.5107 2.54639 6.5886 2.61579 6.64857C2.68519 6.70854 2.76976 6.74826 2.86022 6.76339L8.79472 7.75289C9.07322 7.79939 9.07322 8.19939 8.79472 8.24589L2.86072 9.23489C2.77016 9.24993 2.6855 9.28962 2.616 9.34959C2.5465 9.40956 2.49486 9.48751 2.46672 9.57489L1.03772 14.0179C0.834221 14.6504 1.49272 15.2154 2.08722 14.9184L14.5842 8.67089C15.1372 8.39439 15.1372 7.60589 14.5842 7.32889L2.08722 1.08139Z"

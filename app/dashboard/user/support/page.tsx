@@ -111,15 +111,13 @@ import { useMemo, useState } from "react";
 
 import {
   DropdownMenu,
-  DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/shadcn/dropdown-menu";
-import { ChevronDown, MoreHorizontal } from "lucide-react";
-import { Input } from "@/components/shadcn/input";
+import { MoreHorizontal } from "lucide-react";
 import Image from "next/image";
 
 export type Tickets = {
@@ -571,7 +569,7 @@ function SupportTable() {
           </h2>
         );
       },
-      cell: ({ row }) => (
+      cell: ({}) => (
         <div className="flex">
           <div className="flex -space-x-2 overflow-hidden">
             <img
@@ -730,14 +728,14 @@ function SupportTable() {
 
     {
       id: "actions",
-      header: ({ column }) => {
+      header: ({}) => {
         return (
           <h2 className="flex items-center text-center gap-2 cursor-pointer">
             Action
           </h2>
         );
       },
-      cell: ({ row }) => {
+      cell: ({}) => {
         return (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>

@@ -1,19 +1,19 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
+// import { useSession } from "next-auth/react";
 
 import { Button } from "@/components/shadcn/button";
 import {
   AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
+  // AlertDialogAction,
+  // AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
+  // AlertDialogTrigger,
 } from "@/components/shadcn/alert-dialog";
 import { Input } from "@/components/shadcn/input";
 
@@ -30,11 +30,11 @@ export default function DashboardLayout({
 }) {
   const router = useRouter();
 
-  const { data: session, status } = useSession();
+  // const { data: session, status } = useSession();
 
-  const isLoading = status === "loading";
-  const isAuthenticated = status === "authenticated";
-  const isDealer = session?.user?.user_type == "dealer";
+  // const isLoading = status === "loading";
+  // const isAuthenticated = status === "authenticated";
+  // const isDealer = session?.user?.user_type == "dealer";
 
   // if (!isDealer && !isAuthenticated && !isLoading) {
   //   router.push(`/dealer/login`);
@@ -64,12 +64,12 @@ export default function DashboardLayout({
 
   const onSubmit = async (formData: FormValues) => {
     try {
-      const payload = {
-        email: formData.email,
-        password: formData.password,
-        user_type: "dealer",
-        redirect: false,
-      };
+      // const payload = {
+      //   email: formData.email,
+      //   password: formData.password,
+      //   user_type: "dealer",
+      //   redirect: false,
+      // };
 
       // const loginResponse: any = await signIn("credentials", payload);
 
