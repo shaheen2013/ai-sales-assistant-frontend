@@ -1,3 +1,4 @@
+import ProfileHeader from '@/components/partials/dashboard/profile/profile-header';
 import { Badge } from '@/components/shadcn/badge';
 import { Button } from '@/components/shadcn/button';
 import {
@@ -24,59 +25,16 @@ export default function DealerProfile() {
   return (
     <div className="mx-auto bg-white rounded-lg shadow-sm overflow-hidden flex flex-col gap-6 ">
       {/* Header Section */}
-      <div className="relative h-[253px] border rounded-2xl pb-10 ">
-        <div className=" w-full bg-[#2b3545] overflow-hidden rounded-t-2xl">
-          <Image
-            src="/images/dashboard/profile/cover-img.png"
-            alt="BMW Car House Cover"
-            width={1000}
-            height={200}
-            className="w-full object-cover"
-          />
-        </div>
-        <div className="px-6 pb-4 pt-16 relative  justify-between">
-          <div className="flex  absolute -top-20 left-6">
-            <div className="  ">
-              <div className="rounded-lg overflow-hidden border-2 border-white shadow-sm w-[160px] h-[160px]">
-                <Image
-                  src="/images/dashboard/profile/bmw-car.jpg"
-                  alt="BMW Logo"
-                  width={160}
-                  height={160}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            </div>
-            <div className="pt-20 ps-3">
-              <h1 className="text-2xl font-semibold text-[#2b3545]">
-                BMW Car House
-              </h1>
-              <div className="mt-2 space-y-1">
-                <div className="flex items-center text-[#555d6a]">
-                  <Mail className="w-4 h-4 text-[#018b30] mr-2" />
-                  <span>Information 1</span>
-                </div>
-                <div className="flex items-center text-[#555d6a]">
-                  <MapPin className="w-4 h-4 text-[#018b30] mr-2" />
-                  <span>Location</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
+      <ProfileHeader />
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 ">
         <div className="md:col-span-2 space-y-6">
           {/* Short Bio Section */}
           <Card>
             <CardHeader>
-              <CardTitle className="text-xl text-[#2b3545]">
-                Short Bio
-              </CardTitle>
+              <CardTitle className="text-xl text-gray-400">Short Bio</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-[#555d6a] leading-relaxed">
+              <p className="text-gray-300 leading-relaxed">
                 At BMW Car House, we specialize in providing a premium selection
                 of new and pre-owned BMW vehicles with unbeatable deals and
                 top-tier customer service. Our expert team ensures a seamless
@@ -91,12 +49,12 @@ export default function DealerProfile() {
           {/* Services Offered Section */}
           <Card>
             <CardHeader>
-              <CardTitle className="text-xl text-[#2b3545]">
+              <CardTitle className="text-xl text-gray-400">
                 Services Offered
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-3">
                 <Badge className="bg-[#ecf6fe] text-[#2196f3] hover:bg-[#ecf6fe]/80 rounded-full px-4 py-1">
                   Sales
                 </Badge>
@@ -131,7 +89,7 @@ export default function DealerProfile() {
           {/* Card Information Section */}
           <Card>
             <CardHeader className="flex flex-row items-center justify-between">
-              <CardTitle className="text-xl text-[#2b3545]">
+              <CardTitle className="text-xl text-gray-400">
                 Card Information
               </CardTitle>
               <Button
@@ -319,26 +277,35 @@ export default function DealerProfile() {
         <div className="space-y-6">
           {/* Premium Section */}
           <Card>
-            <CardContent className="pt-6">
-              <Badge className="bg-[#e7f6ef] text-[#13c56b] hover:bg-[#e7f6ef]/80 rounded-full px-3 py-0.5 mb-2">
-                Enterprise
-              </Badge>
-              <h3 className="text-2xl font-semibold text-[#2b3545] flex items-baseline">
-                <span className="text-3xl">$10.00</span>
-                <span className="text-[#747b87] text-sm ml-1">/month</span>
-              </h3>
-              <p className="text-[#555d6a] text-sm mt-2">
-                Perfect for brands who sale new cars
-              </p>
-              <div className="mt-6">
+            <CardContent className="pt-6 ">
+              <div className="flex items-start">
+                <div>
+                  <Badge className="bg-[#e7f6ef] text-[#13c56b] hover:bg-[#e7f6ef]/80 rounded-full px-3 py-0.5 mb-2">
+                    Enterprise
+                  </Badge>
+
+                  <h2 className="text-[20px] font-semibold text-gray-400 mt-2">
+                    Premium
+                  </h2>
+                  <p className="text-gray-300 text-sm mt-2">
+                    Perfect for brands who sale new cars
+                  </p>
+                </div>
+                <h3 className="text-2xl font-semibold text-[#2b3545] flex items-baseline">
+                  <span className="text-gray-400 text-3xl">$10.00</span>
+                  <span className=" text-gray-400 text-sm ml-1">/month</span>
+                </h3>
+              </div>
+              <div className="mt-6 flex justify-between items-center gap-6">
                 <Button variant="link" className="text-[#2196f3] p-0 h-auto">
                   Learn more
                 </Button>
+
+                <Button className="w-full  bg-white text-primary-600 border border-primary-100 hover:bg-gray-50">
+                  Upgrade plan
+                  <ArrowUpRight className="ml-2 h-4 w-4" />
+                </Button>
               </div>
-              <Button className="w-full mt-4 bg-white text-[#2b3545] border border-[#d5d7da] hover:bg-gray-50">
-                Upgrade plan
-                <ArrowUpRight className="ml-2 h-4 w-4" />
-              </Button>
             </CardContent>
           </Card>
 
@@ -408,7 +375,7 @@ export default function DealerProfile() {
                 <Button variant="link" className="text-[#2196f3] p-0 h-auto">
                   Learn more
                 </Button>
-                <Button className="bg-white text-[#2b3545] border border-[#d5d7da] hover:bg-gray-50">
+                <Button className="bg-white text-primary-600 border border-primary-100 hover:bg-gray-50">
                   Copy
                   <ArrowUpRight className="ml-2 h-4 w-4" />
                 </Button>
