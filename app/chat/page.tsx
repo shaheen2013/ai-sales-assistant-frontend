@@ -1,8 +1,25 @@
 "use client";
 
-export default function DashboardSupport() {
+import Header from "@/components/header";
+import { Input } from "@/components/shadcn/input";
+import { Button } from "@/components/shadcn/button";
+
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/shadcn/select";
+
+export default function AnonymousChat() {
   return (
-    <div className="dev h-[calc(100vh-150px)] flex flex-col">
+    <div className="h-[calc(100vh)] flex flex-col justify-center">
+      {/* header */}
+      <Header />
+
       {/* middle content */}
       <div className="flex-1">
         <AISalesInitializer />
@@ -16,7 +33,7 @@ export default function DashboardSupport() {
 
 function AISalesInitializer() {
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center mt-32">
       <svg
         width="380"
         height="54"
@@ -81,22 +98,62 @@ function AISalesInitializer() {
         out, owning your voice, and pushing boundaries.
       </h4>
 
-      <div className="w-full max-w-xl">
-        <label
-          htmlFor=""
-          className="text-gray-700 font-semibold mb-2 text-center block"
-        >
-          Select your Dealer:
-        </label>
+      <div className="w-full max-w-3xl grid grid-cols-2 gap-5 mb-6">
+        {/* select your dealer */}
+        <div>
+          <label htmlFor="" className="text-gray-700 font-semibold mb-2 block">
+            Select your Dealer:
+          </label>
 
-        <select className="border border-gray-300 rounded-md p-2 mb-4 w-full">
-          <option value="">Select Dealer</option>
-          <option value="dealer1">Dealer 1</option>
-          <option value="dealer2">Dealer 2</option>
-          <option value="dealer3">Dealer 3</option>
+          <Select>
+            <SelectTrigger className="h-11 border-[#D5D7DA]">
+              <SelectValue placeholder="Select a fruit" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectItem value="continental-motors">
+                  Continental Motors
+                </SelectItem>
+                <SelectItem value="skyline-autohaus">
+                  Skyline Autohaus
+                </SelectItem>
+                <SelectItem value="ironclad-motors">Ironclad Motors</SelectItem>
+                <SelectItem value="velocity-garage">Velocity Garage</SelectItem>
+                <SelectItem value="crimson-ridge-motors">
+                  Crimson Ridge Motors
+                </SelectItem>
+                <SelectItem value="silverline-dealers">
+                  Silverline Dealers
+                </SelectItem>
+                <SelectItem value="northstar-auto-group">
+                  NorthStar Auto Group
+                </SelectItem>
+                <SelectItem value="urbancruise-motors">
+                  UrbanCruise Motors
+                </SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        </div>
 
-          <option value="dealer4">Dealer 4</option>
-        </select>
+        {/* enter your email */}
+        <div>
+          <label htmlFor="" className="text-gray-700 font-semibold mb-2 block">
+            Enter your email:
+          </label>
+
+          <Input placeholder="Enter your email" className="h-11" />
+        </div>
+      </div>
+
+      <div>
+        <Button variant="primary" className="px-12 h-11 rounded-lg">
+          Start Chat
+        </Button>
+        {/* 
+        <Button variant="primary" className="px-12 h-11 rounded-lg">
+          Start Chat
+        </Button> */}
       </div>
     </div>
   );

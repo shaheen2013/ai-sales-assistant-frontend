@@ -240,7 +240,7 @@ export const dashboardDealerMenu: SidebarSection[] = [
         ),
       },
       {
-        label: "Support",
+        label: "Ask Support",
         href: "/dashboard/dealer/support",
         icon: (
           <svg

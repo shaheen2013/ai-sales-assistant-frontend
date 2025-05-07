@@ -43,10 +43,14 @@ export interface ButtonProps
     VariantProps<typeof buttonVariants> {
   asChild?: boolean;
   href?: string;
+  loading?: boolean;
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, href, ...props }, ref) => {
+  (
+    { className, variant, size, asChild = false, href, loading, ...props },
+    ref
+  ) => {
     const Comp = asChild ? Slot : "button";
 
     if (href) {
@@ -63,8 +67,19 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       <Comp
         className={cn(buttonVariants({ variant, size, className }))}
         ref={ref}
+        disabled={loading}
         {...props}
-      />
+      >
+        {loading ? (
+          <>
+            <div className="flex items-center justify-center">
+              <div className="w-6 h-6 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+            </div>
+          </>
+        ) : (
+          <>{props.children}</>
+        )}
+      </Comp>
     );
   }
 );

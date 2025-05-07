@@ -95,10 +95,10 @@ export default function DashboardLayout({
       </main>
 
       {/* mandetory modals information */}
-      <AlertDialog open={true}>
-        <AlertDialogTrigger asChild>
+      <AlertDialog open={false}>
+        {/* <AlertDialogTrigger asChild>
           <Button variant="outline">Edit Profile</Button>
-        </AlertDialogTrigger>
+        </AlertDialogTrigger> */}
 
         <AlertDialogContent className="lg:max-w-[1000px] max-w-[400px] max-h-screen overflow-y-auto">
           {/* header */}
