@@ -67,7 +67,7 @@
   }
 
   .message-scrollbar::-webkit-scrollbar {
-    width: 13px;
+    width: 10px;
     height: 20px;
   }
 
@@ -79,7 +79,6 @@
   .message-scrollbar::-webkit-scrollbar-thumb {
     background: #4caf50; /* Primary green */
     border-radius: 100vh;
-    border: 2px solid #f6f7ed;
   }
 
   .message-scrollbar::-webkit-scrollbar-thumb:hover {
