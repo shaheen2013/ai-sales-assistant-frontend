@@ -62,7 +62,7 @@ export default function DashboardLayout({
     },
   });
 
-  const onSubmit = async (formData: FormValues) => {
+  const onSubmit = async () => {
     try {
       // const payload = {
       //   email: formData.email,

@@ -107,6 +107,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/shadcn/table";
+import Image from "next/image";
 import { useMemo, useState } from "react";
 
 import {
@@ -118,7 +119,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/shadcn/dropdown-menu";
 import { MoreHorizontal } from "lucide-react";
-import Image from "next/image";
 
 export type Tickets = {
   id: string;
@@ -572,20 +572,26 @@ function SupportTable() {
       cell: ({}) => (
         <div className="flex">
           <div className="flex -space-x-2 overflow-hidden">
-            <img
+            <Image
               className="inline-block h-6 w-6 rounded-full ring-2 ring-white"
               src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
               alt=""
+              height={30}
+              width={30}
             />
-            <img
+            <Image
               className="inline-block h-6 w-6 rounded-full ring-2 ring-white"
               src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
               alt=""
+              height={30}
+              width={30}
             />
-            <img
+            <Image
               className="inline-block h-6 w-6 rounded-full ring-2 ring-white"
               src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80"
               alt=""
+              height={30}
+              width={30}
             />
             <svg
               width="26"
