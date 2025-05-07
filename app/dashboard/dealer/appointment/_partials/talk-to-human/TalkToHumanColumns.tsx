@@ -1,8 +1,6 @@
 import Badge from '@/components/badge/Badge';
-import { Button } from '@/components/shadcn/button';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/shadcn/dropdown-menu';
 import { ColumnDef } from '@tanstack/react-table';
-import { MoreHorizontal, Phone } from 'lucide-react';
+import { Phone } from 'lucide-react';
 
 export type TalkToHumanColumnDataType = {
   id: number;

@@ -39,7 +39,7 @@ const TalkToHumanDataTable = ({
             table.getRowModel().rows.map((row) => (
               <TableRow key={row.id}>
                 {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id}>
+                  <TableCell key={cell.id} className='bg-white border-b border-[#E9EAEB]'>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </TableCell>
                 ))}
@@ -54,6 +54,8 @@ const TalkToHumanDataTable = ({
           )}
         </TableBody>
       </Table>
+
+      <div className="text-primary-500 text-base font-medium mt-5 select-none underline flex justify-end mr-4">View all</div>
     </div>
   );
 };
