@@ -65,6 +65,26 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  .message-scrollbar::-webkit-scrollbar {
+    width: 13px;
+    height: 20px;
+  }
+
+  .message-scrollbar::-webkit-scrollbar-track {
+    border-radius: 100vh;
+    background: #f7f4ed; /* Light background stays the same for contrast */
+  }
+
+  .message-scrollbar::-webkit-scrollbar-thumb {
+    background: #4caf50; /* Primary green */
+    border-radius: 100vh;
+    border: 2px solid #f6f7ed;
+  }
+
+  .message-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #388e3c; /* Darker green on hover */
+  }
 }
 
 /* .bg-gradient-to-b {
