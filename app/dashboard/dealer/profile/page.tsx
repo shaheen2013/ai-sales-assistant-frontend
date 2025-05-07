@@ -26,6 +26,7 @@ export default function DealerProfile() {
     <div className="mx-auto bg-white rounded-lg shadow-sm overflow-hidden flex flex-col gap-6 ">
       {/* Header Section */}
       <ProfileHeader />
+      {/* Main Section with Cards*/}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 ">
         <div className="md:col-span-2 space-y-6">
           {/* Short Bio Section */}
@@ -95,7 +96,7 @@ export default function DealerProfile() {
               <Button
                 variant="outline"
                 size="sm"
-                className="text-[#555d6a] border-[#d5d7da]"
+                className="text-gray-300 border-[#d5d7da]"
               >
                 <span className="mr-1">+</span> Add Card
               </Button>
@@ -104,7 +105,7 @@ export default function DealerProfile() {
               {/* Mastercard */}
               <div className="flex items-center justify-between py-3 border-b border-[#eaebec]">
                 <div className="flex items-center">
-                  <ChevronDown className="w-5 h-5 text-[#555d6a] mr-3" />
+                  <ChevronDown className="w-5 h-5 text-gray-300 mr-3" />
                   <div className="w-10 h-6 bg-[#f7f7f9] rounded flex items-center justify-center mr-3">
                     <Image
                       src="/images/dashboard/profile/mastercard.png"
@@ -115,7 +116,7 @@ export default function DealerProfile() {
                     />
                   </div>
                   <div>
-                    <p className="font-medium text-[#2b3545]">Mastercard</p>
+                    <p className="font-medium text-gray-400">Mastercard</p>
                     <p className="text-sm text-[#747b87]">Expires Apr 2028</p>
                   </div>
                 </div>
@@ -141,7 +142,7 @@ export default function DealerProfile() {
               <div className="border-b border-[#eaebec]">
                 <div className="flex items-center justify-between py-3">
                   <div className="flex items-center">
-                    <ChevronUp className="w-5 h-5 text-[#555d6a] mr-3" />
+                    <ChevronUp className="w-5 h-5 text-gray-300 mr-3" />
                     <div className="w-10 h-6 bg-[#f7f7f9] rounded flex items-center justify-center mr-3">
                       <Image
                         src="/images/dashboard/profile/american-express.png"
@@ -153,7 +154,7 @@ export default function DealerProfile() {
                     </div>
                     <div className="flex items-center">
                       <div>
-                        <p className="font-medium text-[#2b3545]">
+                        <p className="font-medium text-gray-400">
                           American Express
                         </p>
                         <p className="text-sm text-[#747b87]">
@@ -187,50 +188,48 @@ export default function DealerProfile() {
                 <div className="grid grid-cols-2 gap-4 py-4 px-12 text-sm">
                   <div>
                     <p className="text-[#747b87]">Name</p>
-                    <p className="font-medium text-[#2b3545]">Kawsar Amin</p>
+                    <p className="font-medium text-gray-400">Kawsar Amin</p>
                   </div>
                   <div>
                     <p className="text-[#747b87]">Billing Phone Number</p>
-                    <p className="font-medium text-[#2b3545]">+7634 983 637</p>
+                    <p className="font-medium text-gray-400">+7634 983 637</p>
                   </div>
                   <div>
                     <p className="text-[#747b87]">Number</p>
-                    <p className="font-medium text-[#2b3545]">**** 4487</p>
+                    <p className="font-medium text-gray-400">**** 4487</p>
                   </div>
                   <div>
                     <p className="text-[#747b87]">Email</p>
-                    <p className="font-medium text-[#2b3545]">
+                    <p className="font-medium text-gray-400">
                       vafgot@vultukir.org
                     </p>
                   </div>
                   <div>
                     <p className="text-[#747b87]">Expires</p>
-                    <p className="font-medium text-[#2b3545]">08/2028</p>
+                    <p className="font-medium text-gray-400">08/2028</p>
                   </div>
                   <div>
                     <p className="text-[#747b87]">Origin</p>
-                    <p className="font-medium text-[#2b3545]">United States</p>
+                    <p className="font-medium text-gray-400">United States</p>
                   </div>
                   <div>
                     <p className="text-[#747b87]">Type</p>
-                    <p className="font-medium text-[#2b3545]">
-                      Mastercard Card
-                    </p>
+                    <p className="font-medium text-gray-400">Mastercard Card</p>
                   </div>
                   <div>
                     <p className="text-[#747b87]">CVC check</p>
                     <div className="flex items-center">
-                      <p className="font-medium text-[#2b3545] mr-1">Passed</p>
+                      <p className="font-medium text-gray-400 mr-1">Passed</p>
                       <Check className="h-4 w-4 text-[#13c56b]" />
                     </div>
                   </div>
                   <div>
                     <p className="text-[#747b87]">Issuer</p>
-                    <p className="font-medium text-[#2b3545]">VICBANK</p>
+                    <p className="font-medium text-gray-400">VICBANK</p>
                   </div>
                   <div>
                     <p className="text-[#747b87]">ID</p>
-                    <p className="font-medium text-[#2b3545]">DH73DJ8</p>
+                    <p className="font-medium text-gray-400">DH73DJ8</p>
                   </div>
                 </div>
               </div>
@@ -238,7 +237,7 @@ export default function DealerProfile() {
               {/* Visa */}
               <div className="flex items-center justify-between py-3">
                 <div className="flex items-center">
-                  <ChevronDown className="w-5 h-5 text-[#555d6a] mr-3" />
+                  <ChevronDown className="w-5 h-5 text-gray-300 mr-3" />
                   <div className="w-10 h-6 bg-[#f7f7f9] rounded flex items-center justify-center mr-3">
                     <Image
                       src="/images/dashboard/profile/visa.png"
@@ -249,7 +248,7 @@ export default function DealerProfile() {
                     />
                   </div>
                   <div>
-                    <p className="font-medium text-[#2b3545]">Visa</p>
+                    <p className="font-medium text-gray-400">Visa</p>
                     <p className="text-sm text-[#747b87]">512 Water Plant</p>
                   </div>
                 </div>
@@ -291,7 +290,7 @@ export default function DealerProfile() {
                     Perfect for brands who sale new cars
                   </p>
                 </div>
-                <h3 className="text-2xl font-semibold text-[#2b3545] flex items-baseline">
+                <h3 className="text-2xl font-semibold text-gray-400 flex items-baseline">
                   <span className="text-gray-400 text-3xl">$10.00</span>
                   <span className=" text-gray-400 text-sm ml-1">/month</span>
                 </h3>
@@ -312,7 +311,7 @@ export default function DealerProfile() {
           {/* Contact Information */}
           <Card>
             <CardHeader>
-              <CardTitle className="text-xl text-[#2b3545]">
+              <CardTitle className="text-xl text-gray-400">
                 Contact Information
               </CardTitle>
             </CardHeader>
@@ -322,7 +321,7 @@ export default function DealerProfile() {
                   <Mail className="w-4 h-4 text-[#13c56b]" />
                 </div>
                 <div>
-                  <p className="text-[#2b3545] font-medium">
+                  <p className="text-gray-400 font-medium">
                     hellow@carhouse.com
                   </p>
                 </div>
@@ -332,7 +331,7 @@ export default function DealerProfile() {
                   <MapPin className="w-4 h-4 text-[#13c56b]" />
                 </div>
                 <div>
-                  <p className="text-[#2b3545] font-medium">
+                  <p className="text-gray-400 font-medium">
                     Modern House Suites No. 187, Toronto, CA
                   </p>
                 </div>
@@ -342,7 +341,7 @@ export default function DealerProfile() {
                   <Phone className="w-4 h-4 text-[#13c56b]" />
                 </div>
                 <div>
-                  <p className="text-[#2b3545] font-medium">+12 3456 7890</p>
+                  <p className="text-gray-400 font-medium">+12 3456 7890</p>
                 </div>
               </div>
               <div className="flex items-start">
@@ -350,7 +349,7 @@ export default function DealerProfile() {
                   <LinkIcon className="w-4 h-4 text-[#13c56b]" />
                 </div>
                 <div>
-                  <p className="text-[#2b3545] font-medium">
+                  <p className="text-gray-400 font-medium">
                     https://bmwcarhouse.com
                   </p>
                 </div>
@@ -361,12 +360,12 @@ export default function DealerProfile() {
           {/* Public Embed Code */}
           <Card>
             <CardHeader>
-              <CardTitle className="text-xl text-[#2b3545]">
+              <CardTitle className="text-xl text-gray-400">
                 Public Embed Code
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="bg-[#f7f7f9] rounded p-3 text-xs text-[#555d6a] font-mono overflow-x-auto">
+              <div className="bg-[#f7f7f9] rounded p-3 text-xs text-gray-300 font-mono overflow-x-auto">
                 {
                   '<iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="800" height="450" src="https://embed.figma.com/design/46300gwAGfGjrXTeitnpL/Ai-Sales-Assistant?node-id=57-116&embed-host=share" allowfullscreen></iframe>'
                 }
