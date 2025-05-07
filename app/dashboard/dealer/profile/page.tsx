@@ -26,7 +26,7 @@ export default function DealerProfile() {
     <div className="mx-auto bg-white rounded-lg shadow-sm overflow-hidden flex flex-col gap-6 ">
       {/* Header Section */}
       <ProfileHeader />
-      {/* Main Section with Cards*/}
+      {/* Main Section */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 ">
         <div className="md:col-span-2 space-y-6">
           {/* Short Bio Section */}
