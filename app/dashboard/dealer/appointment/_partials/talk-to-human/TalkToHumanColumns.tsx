@@ -15,36 +15,36 @@ export const talkToHumanColumns: ColumnDef<TalkToHumanColumnDataType>[] = [
     accessorKey: "name",
     header: "Name",
   },
-  {
-    accessorKey: "category",
-    header: () => <div className="text-center">Category</div>,
-    cell: ({ row }) => {
-      const categories = row.getValue("category");
-      const getCategoryVariant = (category: string) => {
-        if (category === "car_buying") {
-          return "blue";
-        } else if (category === "car_information") {
-          return "purple";
-        } else if (category === "suggestions") {
-          return "orange";
-        }
+  // {
+  //   accessorKey: "category",
+  //   header: () => <div className="text-center">Category</div>,
+  //   cell: ({ row }) => {
+  //     const categories = row.getValue("category");
+  //     const getCategoryVariant = (category: string) => {
+  //       if (category === "car_buying") {
+  //         return "blue";
+  //       } else if (category === "car_information") {
+  //         return "purple";
+  //       } else if (category === "suggestions") {
+  //         return "orange";
+  //       }
 
-        return "blue";
-      }
+  //       return "blue";
+  //     }
 
-      return (
-        <div className="flex flex-col gap-1 items-center">
-          {Array.isArray(categories) ? categories?.map((category, index) => (
-            <Badge
-              text={category.label}
-              variant={getCategoryVariant(category?.value)}
-              key={index}
-            />
-          )) : "N/A"}
-        </div>
-      );
-    }
-  },
+  //     return (
+  //       <div className="flex flex-col gap-1 items-center">
+  //         {Array.isArray(categories) ? categories?.map((category, index) => (
+  //           <Badge
+  //             text={category.label}
+  //             variant={getCategoryVariant(category?.value)}
+  //             key={index}
+  //           />
+  //         )) : "N/A"}
+  //       </div>
+  //     );
+  //   }
+  // },
   {
     accessorKey: "schedule_date",
     header: "Scheduled Date & Time",
