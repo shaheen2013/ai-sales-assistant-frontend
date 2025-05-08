@@ -6,11 +6,12 @@ import { useEffect, useRef, useState } from 'react';
 import Header from '@/components/header';
 import AISalesInitializer from '@/components/partials/chat/ai-sales-initializer';
 import ChatApp from '@/components/partials/chat/chat-interface';
+import { useToast } from '@/hooks/useToast';
 
 export default function AnonymousChat() {
+  const toast = useToast();
   const messageRef = useRef<HTMLInputElement | null>(null);
   const messagesRef = useRef<HTMLDivElement | null>(null);
-
   const [email, setEmail] = useState('');
   const [selectedDealer, setSelectedDealer] = useState('');
   const [initiateChat, setInitiateChat] = useState(false);
@@ -47,12 +48,24 @@ export default function AnonymousChat() {
   };
 
   const handleEmailSubmit = async () => {
-    if (email && selectedDealer) {
-      try {
-        setInitiateChat(true);
-      } catch (error) {
-        console.error('Email or Dealer ID Not found', error);
-      }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!email || !emailRegex.test(email)) {
+      console.log('email is invalid');
+      toast('error', 'Email is invalid');
+      return;
+    }
+
+    if (!selectedDealer) {
+      toast('error', 'Please select a dealer');
+      console.log('dealer is not selected');
+      return;
+    }
+
+    try {
+      setInitiateChat(true);
+    } catch (error) {
+      console.error('Error initiating chat', error);
     }
   };
 
