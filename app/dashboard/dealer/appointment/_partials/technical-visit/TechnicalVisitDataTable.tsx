@@ -3,17 +3,17 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/shadcn/table';
 import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import React from 'react';
-import { TalkToHumanColumnDataType } from './TalkToHumanColumns';
+import { TechnicalVisitColumnsDataType } from './TechnicalVisitColumns';
 
-interface TalkToHumanDataTableProps {
-  columns: ColumnDef<TalkToHumanColumnDataType, unknown>[];
-  data: TalkToHumanColumnDataType[];
+interface TechnicalVisitDataTableProps {
+  columns: ColumnDef<TechnicalVisitColumnsDataType, unknown>[];
+  data: TechnicalVisitColumnsDataType[];
 }
 
-const TalkToHumanDataTable = ({
+const TechnicalVisitDataTable = ({
   columns,
   data,
-}: TalkToHumanDataTableProps) => {
+}: TechnicalVisitDataTableProps) => {
   const table = useReactTable({
     data,
     columns,
@@ -60,4 +60,4 @@ const TalkToHumanDataTable = ({
   );
 };
 
-export default TalkToHumanDataTable;
+export default TechnicalVisitDataTable;

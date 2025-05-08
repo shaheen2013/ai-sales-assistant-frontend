@@ -3,66 +3,36 @@
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/components/shadcn/dropdown-menu'
 import { ArrowDownUp, ChevronDown } from 'lucide-react'
 import React from 'react'
-import TalkToHumanDataTable from './TalkToHumanDataTable';
-import { TalkToHumanColumnDataType, talkToHumanColumns } from './TalkToHumanColumns';
+import TalkToHumanDataTable from './TechnicalVisitDataTable';
+import { TechnicalVisitColumnsDataType, technicalVisitsColumns } from './TechnicalVisitColumns';
 
-const talkToHumanDummyData: TalkToHumanColumnDataType[] = [
+const technicalVisitDummyData: TechnicalVisitColumnsDataType[] = [
     {
         id: 1,
         name: 'John Doe',
-        category: [
-            {
-                label: 'Car Buying',
-                value: 'car_buying'
-            },
-            {
-                label: 'Car Information',
-                value: 'car_information'
-            }
-        ],
         schedule_date: 'Dec 1, 2025 | 4.30pm',
         priority: 'High',
     },
     {
         id: 2,
         name: 'Jane Smith',
-        category: [
-            {
-                label: 'Suggestions',
-                value: 'suggestions'
-            },
-            {
-                label: 'Suggestions',
-                value: 'suggestions'
-            }
-        ],
         schedule_date: 'Dec 1, 2025 | 4.30pm',
         priority: 'Medium',
     },
     {
         id: 3,
         name: 'Mike Brown',
-        category: [
-            {
-                label: 'Car Buying',
-                value: 'car_buying'
-            },
-            {
-                label: 'Car Information',
-                value: 'car_information'
-            }
-        ],
         schedule_date: 'Dec 1, 2025 | 4.30pm',
         priority: 'Low',
     }
 ]
 
-const TalkToHumanSection = () => {
+const TechnicalVisitSection = () => {
 
     return (
         <div>
-            <h4 className="text-gray-400 text-xl font-semibold">Chat & Talk Appointment</h4>
-            <div className="text-gray-300 text-sm font-normal mt-1">Automatically generated customer list based on AI-driven chats and calls for seamless follow-ups.</div>
+            <h4 className="text-gray-400 text-xl font-semibold">Technical Visit</h4>
+            <div className="text-gray-300 text-sm font-normal mt-1">AI-generated list of test drive appointments based on customer interactions for seamless scheduling.</div>
             <div className="p-4 rounded-2xl outline outline-1 outline-offset-[-1px] outline-gray-50 mt-4">
                 <div className='flex items-center justify-between'>
                     <div className="flex flex-col items-center gap-3">
@@ -89,11 +59,11 @@ const TalkToHumanSection = () => {
                     </DropdownMenu>
                 </div>
 
-                <TalkToHumanDataTable columns={talkToHumanColumns} data={talkToHumanDummyData} />
+                <TalkToHumanDataTable columns={technicalVisitsColumns} data={technicalVisitDummyData} />
 
             </div>
         </div>
     )
 }
 
-export default TalkToHumanSection
+export default TechnicalVisitSection

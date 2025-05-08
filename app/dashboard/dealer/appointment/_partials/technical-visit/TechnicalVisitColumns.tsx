@@ -2,48 +2,17 @@ import Badge from '@/components/badge/Badge';
 import { ColumnDef } from '@tanstack/react-table';
 import { Phone } from 'lucide-react';
 
-export type TalkToHumanColumnDataType = {
+export type TechnicalVisitColumnsDataType = {
   id: number;
   name: string;
-  category: { label: string, value: string }[];
   schedule_date: string;
   priority: string;
 }
 
-export const talkToHumanColumns: ColumnDef<TalkToHumanColumnDataType>[] = [
+export const technicalVisitsColumns: ColumnDef<TechnicalVisitColumnsDataType>[] = [
   {
     accessorKey: "name",
     header: "Name",
-  },
-  {
-    accessorKey: "category",
-    header: () => <div className="text-center">Category</div>,
-    cell: ({ row }) => {
-      const categories = row.getValue("category");
-      const getCategoryVariant = (category: string) => {
-        if (category === "car_buying") {
-          return "blue";
-        } else if (category === "car_information") {
-          return "purple";
-        } else if (category === "suggestions") {
-          return "orange";
-        }
-
-        return "blue";
-      }
-
-      return (
-        <div className="flex flex-col gap-1 items-center">
-          {Array.isArray(categories) ? categories?.map((category, index) => (
-            <Badge
-              text={category.label}
-              variant={getCategoryVariant(category?.value)}
-              key={index}
-            />
-          )) : "N/A"}
-        </div>
-      );
-    }
   },
   {
     accessorKey: "schedule_date",
