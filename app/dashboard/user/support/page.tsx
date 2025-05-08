@@ -120,7 +120,7 @@ import {
 } from "@/components/shadcn/dropdown-menu";
 import { MoreHorizontal } from "lucide-react";
 
-export type Tickets = {
+type Tickets = {
   id: string;
   dealer: string;
   email: string;
@@ -132,50 +132,50 @@ export type Tickets = {
   status: "Open" | "Closed";
 };
 
-export const columns: ColumnDef<Tickets>[] = [
-  {
-    accessorKey: "id",
-    header: "ID",
-  },
+// const columns: ColumnDef<Tickets>[] = [
+//   {
+//     accessorKey: "id",
+//     header: "ID",
+//   },
 
-  {
-    accessorKey: "dealer",
-    header: "Dealer Name",
-  },
+//   {
+//     accessorKey: "dealer",
+//     header: "Dealer Name",
+//   },
 
-  {
-    accessorKey: "",
-    header: "Email & Phone",
-  },
+//   {
+//     accessorKey: "",
+//     header: "Email & Phone",
+//   },
 
-  {
-    accessorKey: "topic",
-    header: "Topic",
-  },
+//   {
+//     accessorKey: "topic",
+//     header: "Topic",
+//   },
 
-  {
-    accessorKey: "type",
-    header: "Type",
-  },
-  {
-    accessorKey: "assign",
-    header: "Assign",
-  },
-  {
-    accessorKey: "createdDate",
-    header: "Created Date",
-  },
+//   {
+//     accessorKey: "type",
+//     header: "Type",
+//   },
+//   {
+//     accessorKey: "assign",
+//     header: "Assign",
+//   },
+//   {
+//     accessorKey: "createdDate",
+//     header: "Created Date",
+//   },
 
-  {
-    accessorKey: "status",
-    header: "Status",
-  },
+//   {
+//     accessorKey: "status",
+//     header: "Status",
+//   },
 
-  {
-    accessorKey: "action",
-    header: "Action",
-  },
-];
+//   {
+//     accessorKey: "action",
+//     header: "Action",
+//   },
+// ];
 
 function SupportTable() {
   const rawData: Tickets[] = [
