@@ -107,22 +107,20 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/shadcn/table";
+import Image from "next/image";
 import { useMemo, useState } from "react";
 
 import {
   DropdownMenu,
-  DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/shadcn/dropdown-menu";
-import { ChevronDown, MoreHorizontal } from "lucide-react";
-import { Input } from "@/components/shadcn/input";
-import Image from "next/image";
+import { MoreHorizontal } from "lucide-react";
 
-export type Tickets = {
+type Tickets = {
   id: string;
   dealer: string;
   email: string;
@@ -134,50 +132,50 @@ export type Tickets = {
   status: "Open" | "Closed";
 };
 
-export const columns: ColumnDef<Tickets>[] = [
-  {
-    accessorKey: "id",
-    header: "ID",
-  },
+// const columns: ColumnDef<Tickets>[] = [
+//   {
+//     accessorKey: "id",
+//     header: "ID",
+//   },
 
-  {
-    accessorKey: "dealer",
-    header: "Dealer Name",
-  },
+//   {
+//     accessorKey: "dealer",
+//     header: "Dealer Name",
+//   },
 
-  {
-    accessorKey: "",
-    header: "Email & Phone",
-  },
+//   {
+//     accessorKey: "",
+//     header: "Email & Phone",
+//   },
 
-  {
-    accessorKey: "topic",
-    header: "Topic",
-  },
+//   {
+//     accessorKey: "topic",
+//     header: "Topic",
+//   },
 
-  {
-    accessorKey: "type",
-    header: "Type",
-  },
-  {
-    accessorKey: "assign",
-    header: "Assign",
-  },
-  {
-    accessorKey: "createdDate",
-    header: "Created Date",
-  },
+//   {
+//     accessorKey: "type",
+//     header: "Type",
+//   },
+//   {
+//     accessorKey: "assign",
+//     header: "Assign",
+//   },
+//   {
+//     accessorKey: "createdDate",
+//     header: "Created Date",
+//   },
 
-  {
-    accessorKey: "status",
-    header: "Status",
-  },
+//   {
+//     accessorKey: "status",
+//     header: "Status",
+//   },
 
-  {
-    accessorKey: "action",
-    header: "Action",
-  },
-];
+//   {
+//     accessorKey: "action",
+//     header: "Action",
+//   },
+// ];
 
 function SupportTable() {
   const rawData: Tickets[] = [
@@ -571,23 +569,29 @@ function SupportTable() {
           </h2>
         );
       },
-      cell: ({ row }) => (
+      cell: ({}) => (
         <div className="flex">
           <div className="flex -space-x-2 overflow-hidden">
-            <img
+            <Image
               className="inline-block h-6 w-6 rounded-full ring-2 ring-white"
               src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
               alt=""
+              height={30}
+              width={30}
             />
-            <img
+            <Image
               className="inline-block h-6 w-6 rounded-full ring-2 ring-white"
               src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
               alt=""
+              height={30}
+              width={30}
             />
-            <img
+            <Image
               className="inline-block h-6 w-6 rounded-full ring-2 ring-white"
               src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80"
               alt=""
+              height={30}
+              width={30}
             />
             <svg
               width="26"
@@ -730,14 +734,14 @@ function SupportTable() {
 
     {
       id: "actions",
-      header: ({ column }) => {
+      header: ({}) => {
         return (
           <h2 className="flex items-center text-center gap-2 cursor-pointer">
             Action
           </h2>
         );
       },
-      cell: ({ row }) => {
+      cell: ({}) => {
         return (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
