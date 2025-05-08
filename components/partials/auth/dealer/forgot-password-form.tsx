@@ -16,7 +16,7 @@ import { Input } from "@/components/shadcn/input";
 export default function ForgotPasswordForm() {
   const toast = useToast();
   const router = useRouter();
-  const { data: session, status } = useSession();
+  const { status } = useSession();
 
   const loading = status === "loading";
 

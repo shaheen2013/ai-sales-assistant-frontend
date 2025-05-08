@@ -208,7 +208,7 @@ export default function Example() {
             </svg>
           </Button>
 
-          <Button href="/login" variant="primary">
+          <Button href="/chat" variant="primary">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"

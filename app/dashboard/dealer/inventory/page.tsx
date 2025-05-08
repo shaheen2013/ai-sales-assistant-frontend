@@ -1,351 +1,122 @@
-import React from "react";
-import Image from "next/image";
+"use client";
 
-import { Progress } from "@/components/shadcn/progress";
-import DashboardDealerOverviewChart from "@/components/partials/dashboard/dashboard-dealer-overview-chart";
-import DashboardDealerOverviewPieChart from "@/components/partials/dashboard/dashboard-dealer-overview-pie-chart";
+import { Button } from "@/components/shadcn/button";
 
-export const metadata = {
-  title: "Dealer Overview | Teez",
-  description: "Dealer Overview",
-};
-
-function DashboardDealerOverview() {
+function DashboardDealerInventory() {
   return (
-    <div className="grid grid-cols-12 gap-5">
-      {/* left */}
-      <div className="lg:col-span-8 col-span-12 pt-2">
-        <h2 className="text-xl font-semibold text-gray-400 mb-1">
-          Dealers Accusation
-        </h2>
+    <div className="">
+      {/* add inventory / place add pdf  */}
+      <div className="flex gap-3 mb-6">
+        <Button variant="primary" className="w-full !py-3 h-11">
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M9.88338 1.00673L10 1C10.5128 1 10.9355 1.38604 10.9933 1.88338L11 2V9H18C18.5128 9 18.9355 9.38604 18.9933 9.88338L19 10C19 10.5128 18.614 10.9355 18.1166 10.9933L18 11H11V18C11 18.5128 10.614 18.9355 10.1166 18.9933L10 19C9.48716 19 9.06449 18.614 9.00673 18.1166L9 18V11H2C1.48716 11 1.06449 10.614 1.00673 10.1166L1 10C1 9.48716 1.38604 9.06449 1.88338 9.00673L2 9H9V2C9 1.48716 9.38604 1.06449 9.88338 1.00673L10 1L9.88338 1.00673Z"
+              fill="white"
+            />
+          </svg>
+          Add Inventory
+        </Button>
 
-        <h4 className="text-sm text-[#707070] mb-4">
-          Track and analyze user accusations to identify sources and ensure fair
-          resolution.
-        </h4>
-
-        {/* dealers chart section */}
-        <div className="border rounded-lg p-4 mb-4">
-          <h4 className="text-[#181D27] text-sm font-semibold mb-4">
-            How do you acquire Dealers?
-          </h4>
-          <hr className="mb-4" />
-
-          {/* charts */}
-          <div className="xl:flex-row flex-col-reverse flex overflow-x-auto">
-            {/* left */}
-            <div className="flex-1">
-              <DashboardDealerOverviewChart />
-            </div>
-
-            {/* right */}
-            <div className="col-span-4 lg:w-[280px] mx-auto w-full">
-              <DashboardDealerOverviewPieChart />
-            </div>
-          </div>
-        </div>
-
-        {/* active users */}
-        <h2 className="text-xl font-semibold text-gray-400 mb-1">
-          Active users
-        </h2>
-
-        <h4 className="text-sm text-[#707070] mb-4">
-          AI-generated list of test drive appointments based on customer
-          interactions for seamless scheduling.
-        </h4>
-
-        <div className="border rounded-lg p-4 mb-4">
-          <h4 className="text-[#181D27] text-sm font-semibold mb-4">
-            Active users right now
-          </h4>
-          <hr className="mb-4" />
-
-          {/* charts */}
-          <div className="xl:flex-row flex-col flex overflow-x-auto">
-            {/* left */}
-            <div className="flex-1">map coming soon</div>
-
-            {/* right */}
-            <div className="xl:w-[300px] mx-auto w-full">
-              <h3 className="text-display-md font-semibold mb-5">10.8k</h3>
-
-              <div className="mb-3">
-                <div className="text-gray-700 font-medium text-sm mb-2">
-                  United States
-                </div>
-
-                <div className="flex items-center gap-2">
-                  <Progress
-                    value={50}
-                    className="h-[10px]"
-                    progressColor="#2196F3"
-                  />{" "}
-                  <span className="text-gray-700 text-sm font-medium">50%</span>
-                </div>
-              </div>
-
-              <div className="mb-3">
-                <div className="text-gray-700 font-medium text-sm mb-2">
-                  Canada
-                </div>
-
-                <div className="flex items-center gap-2">
-                  <Progress
-                    value={50}
-                    className="h-[10px]"
-                    progressColor="#FFB056"
-                  />{" "}
-                  <span className="text-gray-700 text-sm font-medium">50%</span>
-                </div>
-              </div>
-
-              <div className="mb-3">
-                <div className="text-gray-700 font-medium text-sm mb-2">UK</div>
-
-                <div className="flex items-center gap-2">
-                  <Progress
-                    value={50}
-                    className="h-[10px]"
-                    progressColor="#654CE6"
-                  />{" "}
-                  <span className="text-gray-700 text-sm font-medium">50%</span>
-                </div>
-              </div>
-
-              <div className="mb-3">
-                <div className="text-gray-700 font-medium text-sm mb-2">
-                  Germany
-                </div>
-
-                <div className="flex items-center gap-2">
-                  <Progress
-                    value={50}
-                    className="h-[10px]"
-                    progressColor="#13C56B"
-                  />{" "}
-                  <span className="text-gray-700 text-sm font-medium">50%</span>
-                </div>
-              </div>
-
-              <div className="mb-3">
-                <div className="text-gray-700 font-medium text-sm mb-2">
-                  Bangladesh
-                </div>
-
-                <div className="flex items-center gap-2">
-                  <Progress
-                    value={50}
-                    className="h-[10px]"
-                    progressColor="#ED5E5E"
-                  />{" "}
-                  <span className="text-gray-700 text-sm font-medium">50%</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <Button className="w-full h-11" variant="outline">
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M5.50269 11.0021C5.22654 11.0021 5.00269 11.2259 5.00269 11.5021V14.5021C5.00269 14.7782 5.22654 15.0021 5.50269 15.0021C5.77883 15.0021 6.00269 14.7782 6.00269 14.5021V14.0025H6.50004C7.32858 14.0025 8.00024 13.3308 8.00024 12.5023C8.00024 11.6737 7.32858 11.0021 6.50004 11.0021H5.50269ZM6.50004 13.0025H6.00269V12.0021H6.50004C6.77629 12.0021 7.00024 12.226 7.00024 12.5023C7.00024 12.7785 6.7763 13.0025 6.50004 13.0025ZM12.9977 11.5014C12.998 11.2255 13.2218 11.0021 13.4977 11.0021H15.0027C15.2788 11.0021 15.5027 11.2259 15.5027 11.5021C15.5027 11.7782 15.2788 12.0021 15.0027 12.0021H13.997L13.9958 13.0038H15.0027C15.2788 13.0038 15.5027 13.2277 15.5027 13.5038C15.5027 13.7799 15.2788 14.0038 15.0027 14.0038H13.9964L13.9977 14.5008C13.9984 14.7769 13.7751 15.0014 13.4989 15.0021C13.2228 15.0028 12.9984 14.7795 12.9977 14.5033L12.9951 13.5051L12.9951 13.5032L12.9977 11.5014ZM9.5 11.0021C9.22386 11.0021 9 11.2259 9 11.5021V14.5021C9 14.7782 9.22386 15.0021 9.5 15.0021H9.99755C11.1021 15.0021 11.9975 14.1067 11.9976 13.0021C11.9976 11.8975 11.1021 11.0021 9.99755 11.0021H9.5ZM10 14.0021V12.0021C10.5512 12.0034 10.9976 12.4506 10.9976 13.0021C10.9975 13.5535 10.5512 14.0008 10 14.0021ZM18 18V16.8358C18.5912 16.5549 19 15.9523 19 15.2542V10.75C19 10.0519 18.5912 9.44927 18 9.16841V7.828C18 7.298 17.789 6.789 17.414 6.414L11.585 0.586C11.57 0.571048 11.5531 0.55808 11.5363 0.545195C11.5238 0.535674 11.5115 0.526198 11.5 0.516C11.429 0.452 11.359 0.389 11.281 0.336C11.2557 0.318941 11.2281 0.305475 11.2005 0.292071C11.1845 0.284259 11.1685 0.276469 11.153 0.268C11.1363 0.258594 11.1197 0.248967 11.103 0.239326C11.0488 0.20797 10.9944 0.176475 10.937 0.152C10.74 0.0699999 10.528 0.0289999 10.313 0.0139999C10.2933 0.0127423 10.2738 0.0100789 10.2542 0.00740928C10.2271 0.00371057 10.1999 0 10.172 0H4C2.896 0 2 0.896 2 2V9.16841C1.40876 9.44928 1 10.0519 1 10.75V15.2542C1 15.9523 1.40876 16.5549 2 16.8358V18C2 19.104 2.896 20 4 20H16C17.104 20 18 19.104 18 18ZM16 18.5H4C3.724 18.5 3.5 18.275 3.5 18V17.0042H16.5V18C16.5 18.275 16.276 18.5 16 18.5ZM16.5 8V9H3.5V2C3.5 1.725 3.724 1.5 4 1.5H10V6C10 7.104 10.896 8 12 8H16.5ZM15.378 6.5H12C11.724 6.5 11.5 6.275 11.5 6V2.621L15.378 6.5ZM2.75 10.5H17.25C17.3881 10.5 17.5 10.6119 17.5 10.75V15.2542C17.5 15.3923 17.3881 15.5042 17.25 15.5042H2.75C2.61193 15.5042 2.5 15.3923 2.5 15.2542V10.75C2.5 10.6119 2.61193 10.5 2.75 10.5Z"
+              fill="#5D6679"
+            />
+          </svg>
+          Place/Add pdf
+        </Button>
       </div>
 
-      {/* right */}
-      <div className="lg:col-span-4 col-span-12">
-        {/* conversions */}
-        <div className="border p-4 rounded-xl mb-5 ">
-          <h3 className="mb-2 text-[#535862] font-medium text-sm ">
-            Total Dealers
-          </h3>
+      {/* recent files  */}
+      <h2 className="mb-4">Recent files</h2>
 
-          <div className="flex items-center mb-5 gap-4">
-            <span className="text-gray-400 font-semibold text-3xl">4,862</span>
+      <div className="grid grid-cols-3 gap-4">
+        {Array.from({ length: 3 }).map((_, index) => (
+          <div
+            key={index}
+            className="bg-[#F3F4F5] border border-gray-100 rounded-lg p-4 flex justify-between items-center gap-2"
+          >
+            <div>
+              <h3 className="text-base font-semibold flex items-center gap-2 mb-1">
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M5.28082 10.6092L10.5848 5.30516C10.8402 5.0498 11.1435 4.84725 11.4772 4.70908C11.8109 4.57091 12.1685 4.49982 12.5297 4.49986C12.8909 4.49991 13.2485 4.5711 13.5821 4.70935C13.9158 4.84761 14.219 5.05024 14.4743 5.30566C14.7297 5.56108 14.9322 5.86429 15.0704 6.19799C15.2086 6.53169 15.2797 6.88934 15.2796 7.25051C15.2796 7.61168 15.2084 7.96931 15.0701 8.30297C14.9319 8.63664 14.7292 8.9398 14.4738 9.19516L8.10982 15.5592C7.87524 15.7937 7.55708 15.9255 7.22532 15.9255C6.89357 15.9255 6.57541 15.7937 6.34082 15.5592C6.10624 15.3246 5.97445 15.0064 5.97445 14.6747C5.97445 14.3429 6.10624 14.0247 6.34082 13.7902L11.9978 8.13316C12.1303 7.99098 12.2024 7.80294 12.199 7.60863C12.1956 7.41433 12.1169 7.22895 11.9794 7.09153C11.842 6.95412 11.6566 6.87541 11.4623 6.87198C11.268 6.86855 11.08 6.94068 10.9378 7.07316L5.28082 12.7302C4.76498 13.246 4.47518 13.9456 4.47518 14.6752C4.47518 15.4047 4.76498 16.1043 5.28082 16.6202C5.79667 17.136 6.49631 17.4258 7.22582 17.4258C7.95534 17.4258 8.65498 17.136 9.17082 16.6202L15.5338 10.2552C16.3155 9.45503 16.7503 8.37898 16.7438 7.26041C16.7372 6.14183 16.29 5.07092 15.499 4.27995C14.7081 3.48899 13.6371 3.04174 12.5186 3.03523C11.4 3.02871 10.3239 3.46345 9.52382 4.24516L4.22082 9.54816C4.08834 9.69033 4.01622 9.87838 4.01965 10.0727C4.02308 10.267 4.10179 10.4524 4.2392 10.5898C4.37661 10.7272 4.562 10.8059 4.7563 10.8093C4.9506 10.8128 5.13865 10.7406 5.28082 10.6082"
+                    fill="#2196F3"
+                  />
+                </svg>
+                File{index + 1}.pdf
+              </h3>
+              <p className="text-gray-600 text-sm">20 MB</p>
+            </div>
 
-            {/* badge  */}
-            <span className="flex border items-center rounded-lg shadow px-2 py-1 gap-1">
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 12 13"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M6 10V3M6 3L2.5 6.5M6 3L9.5 6.5"
-                  stroke="#079455"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
+            <div className="">
+              <button className="mt-auto bg-white border-gray-50 p-2 border rounded-lg mr-3">
+                <svg
+                  width="20"
+                  height="21"
+                  viewBox="0 0 20 21"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M12.5003 10.4993C12.5003 11.8801 11.381 12.9993 10.0003 12.9993C8.61957 12.9993 7.50029 11.8801 7.50029 10.4993C7.50029 9.11864 8.61957 7.99935 10.0003 7.99935C11.381 7.99935 12.5003 9.11864 12.5003 10.4993Z"
+                    stroke="#717882"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M2.04883 10.4993C3.11072 7.11841 6.26929 4.66602 10.0007 4.66602C13.732 4.66602 16.8906 7.11844 17.9525 10.4994C16.8906 13.8803 13.732 16.3327 10.0007 16.3327C6.26929 16.3327 3.11071 13.8803 2.04883 10.4993Z"
+                    stroke="#717882"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </button>
 
-              <span className="text-[#414651] text-sm font-medium">9.2%</span>
-            </span>
+              <button className="mt-auto bg-white border-gray-50 p-2 border rounded-lg">
+                <svg
+                  width="20"
+                  height="21"
+                  viewBox="0 0 20 21"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M3.33301 13.8327L3.33301 14.666C3.33301 16.0467 4.4523 17.166 5.83301 17.166L14.1663 17.166C15.5471 17.166 16.6663 16.0467 16.6663 14.666L16.6663 13.8327M13.333 10.4993L9.99967 13.8327M9.99967 13.8327L6.66634 10.4993M9.99967 13.8327L9.99967 3.83268"
+                    stroke="#717882"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </button>
+            </div>
           </div>
-
-          <h3 className="mb-2 text-[#535862] font-medium text-sm ">
-            Paid Dealers
-          </h3>
-
-          <div className="flex items-center mb-5 gap-4">
-            <span className="text-gray-400 font-semibold text-3xl">4,862</span>
-
-            {/* badge  */}
-            <span className="flex border items-center rounded-lg shadow px-2 py-1 gap-1">
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 12 13"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M6 10V3M6 3L2.5 6.5M6 3L9.5 6.5"
-                  stroke="#079455"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-
-              <span className="text-[#414651] text-sm font-medium">9.2%</span>
-            </span>
-          </div>
-
-          <h3 className="mb-2 text-[#535862] font-medium text-sm ">
-            Paid Conversion Rate
-          </h3>
-
-          <div className="flex items-center gap-4">
-            <span className="text-gray-400 font-semibold text-3xl">4,862</span>
-
-            {/* badge  */}
-            <span className="flex border items-center rounded-lg shadow px-2 py-1 gap-1">
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 12 13"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M6 10V3M6 3L2.5 6.5M6 3L9.5 6.5"
-                  stroke="#079455"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-
-              <span className="text-[#414651] text-sm font-medium">9.2%</span>
-            </span>
-          </div>
-        </div>
-
-        {/* top dealers */}
-        <div className="border p-4 rounded-xl mb-5">
-          <h3 className="mb-6 text-[#535862] font-medium text-sm ">
-            Total Dealers
-          </h3>
-
-          <div>
-            {Array.from({ length: 5 }).map((_, index) => {
-              return (
-                <div className="flex mb-6 last:mb-0 gap-2" key={index}>
-                  <div className="flex items-center">
-                    <svg
-                      width="12"
-                      height="13"
-                      viewBox="0 0 12 13"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M6 10V3M6 3L2.5 6.5M6 3L9.5 6.5"
-                        stroke="#10A760"
-                        strokeWidth="1.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  </div>
-
-                  <div className="flex items-center">
-                    <Image
-                      src="https://dummyimage.com/36x36"
-                      alt="avatar"
-                      width={36}
-                      height={36}
-                      className="rounded-full h-9 w-9"
-                    />
-                  </div>
-
-                  <div>
-                    <div className="text-[#414651 font-medium text-sm">
-                      John Doe
-                      <span className="font-normal text-xs ml-1">Just now</span>
-                    </div>
-
-                    <div className="text-xs text-[#535862] font-normal">
-                      Member since
-                      <span className="font-medium text-[#535862] ml-1">
-                        Feb 2025
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-
-            {Array.from({ length: 5 }).map((_, index) => {
-              return (
-                <div className="flex mb-6 last:mb-0 gap-2" key={index}>
-                  <div className="flex items-center">
-                    <svg
-                      width="12"
-                      height="13"
-                      viewBox="0 0 12 13"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M6 3L6 10M6 10L9.5 6.5M6 10L2.5 6.5"
-                        stroke="#D92D21"
-                        strokeWidth="1.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  </div>
-
-                  <div className="flex items-center">
-                    <Image
-                      src="https://dummyimage.com/36x36"
-                      alt="avatar"
-                      width={36}
-                      height={36}
-                      className="rounded-full h-9 w-9"
-                    />
-                  </div>
-
-                  <div>
-                    <div className="text-[#414651 font-medium text-sm">
-                      John Doe
-                      <span className="font-normal text-xs ml-1">Just now</span>
-                    </div>
-
-                    <div className="text-xs text-[#535862] font-normal">
-                      Member since
-                      <span className="font-medium text-[#535862] ml-1">
-                        Feb 2025
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
+        ))}
       </div>
     </div>
   );
 }
 
-export default DashboardDealerOverview;
+export default DashboardDealerInventory;
