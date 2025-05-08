@@ -93,7 +93,7 @@ export default function PasswordAndSecuritySection() {
 
         <div className="flex gap-4">
           <Button
-            variant="outline"
+            variant="outline-gray"
             className="!border text-[#555d6a] px-6 rounded-md h-12"
           >
             Discard
