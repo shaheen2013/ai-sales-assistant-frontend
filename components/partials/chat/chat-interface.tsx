@@ -26,12 +26,11 @@ interface Message {
 
 interface ChatAppProps {
   isLoading: boolean;
-  parent: any;
   message: string;
-  onMessageChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  messageRef: React.RefObject<HTMLTextAreaElement | null>;
-  messagesRef: React.RefObject<HTMLDivElement | null>;
   messages: Message[];
+  onMessageChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  messageRef: React.RefObject<HTMLInputElement | null>;
+  messagesRef: React.RefObject<HTMLDivElement | null>;
   onEmojiClick: (e: any) => void;
   onMessageSend: (e: any) => void;
   selectedDealer: string;

@@ -106,11 +106,11 @@ export default function AnonymousChat() {
           <ChatApp
             isLoading={isLoading}
             message={message}
+            messages={messages}
             onMessageChange={(e) => setMessage(e.target.value)}
-            onEmojiClick={handleEmojiClick}
             messageRef={messageRef}
             messagesRef={messagesRef}
-            messages={messages}
+            onEmojiClick={handleEmojiClick}
             onMessageSend={handleMessageSend}
             selectedDealer={selectedDealer}
           />

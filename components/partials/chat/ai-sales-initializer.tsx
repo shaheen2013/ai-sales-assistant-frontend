@@ -11,6 +11,7 @@ import {
 
 interface AISalesInitializerProps {
   emailValue: string;
+  selectedDealer: string;
   onEmailChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onDealerChange: (value: string) => void;
   onEmailSubmit: () => void;
@@ -18,10 +19,12 @@ interface AISalesInitializerProps {
 
 export default function AISalesInitializer({
   emailValue,
+  selectedDealer,
   onEmailChange,
   onEmailSubmit,
   onDealerChange,
 }: AISalesInitializerProps) {
+  console.log('selected dealer', selectedDealer);
   return (
     <div className="flex flex-col items-center lg:mt-32">
       <svg

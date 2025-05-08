@@ -9,7 +9,6 @@ export const chatSlice = apiSlice.injectEndpoints({
         body: data,
         credentials: 'include',
       }),
-      providesTags: ['getChat'],
     }),
   }),
 });
