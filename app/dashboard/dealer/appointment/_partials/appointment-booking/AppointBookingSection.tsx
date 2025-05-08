@@ -1,14 +1,16 @@
 "use client";
 
 import { Calendar } from '@/components/calendar'
-import React from 'react'
+import React, { useState } from 'react'
 
 const AppointBookingSection = () => {
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
   return (
     <div>
-      <Calendar 
+      <Calendar
         mode='single'
-        // onSelect={(date) => console.log(date)}
+        selected={selectedDate}
+        onSelect={setSelectedDate}
       />
     </div>
   )

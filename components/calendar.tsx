@@ -148,12 +148,12 @@ function Calendar({
     props.rangeMiddleClassName
   )
   const _selectedClassName = cn(
-    "[&>button]:!border [&>button]:!border-primary-500 [&>button]:!font-semibold [&>button]:!text-[17px]",
+    "[&>button]:!bg-primary-500 [&>button]:!text-white [&>button]:hover:!bg-primary-500 [&>button]:hover:!text-white [&>button]:!font-semibold [&>button]:!text-[17px]",
+
     props.selectedClassName
   )
   const _todayClassName = cn(
-   
-    "[&>button]:!bg-primary-500 [&>button]:!text-white [&>button]:hover:!bg-primary-500 [&>button]:hover:!text-white [&>button]:!font-semibold [&>button]:!text-[17px]",
+    "[&>button]:!border [&>button]:!border-primary-500 [&>button]:!font-semibold [&>button]:!text-[17px]",
     props.todayClassName
   )
   const _outsideClassName = cn(
@@ -260,8 +260,8 @@ function Calendar({
               />
 
               {
-                isToday && (
-                  <div className="absolute bg-white size-3 rounded-full flex justify-center items-center -right-0.5 -top-0.5">
+                isSelected && (
+                  <div className="absolute bg-white size-3.5 rounded-full flex justify-center items-center -right-0.5 -top-0.5">
                     <div className="size-2.5 rounded-full bg-red-500"></div>
                   </div>
                 )
