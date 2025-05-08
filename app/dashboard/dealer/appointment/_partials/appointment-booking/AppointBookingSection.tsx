@@ -7,7 +7,7 @@ import UpcomingAppointmentList from './UpcomingAppointmentList';
 const AppointBookingSection = () => {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
   return (
-    <div className='p-4 rounded-2xl outline outline-1 outline-offset-[-1px] outline-gray-50'>
+    <div className='p-4 rounded-2xl outline outline-1 outline-offset-[-1px] outline-gray-50'> 
       <Calendar
         mode='single'
         selected={selectedDate}
