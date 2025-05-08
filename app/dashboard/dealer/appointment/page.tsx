@@ -4,7 +4,7 @@ import TechnicalVisitSection from "./_partials/technical-visit/TechnicalVisitSec
 import AppointBookingSection from "./_partials/appointment-booking/AppointBookingSection";
 
 export const metadata = {
-  title: "Team Management | Teez",
+  title: "Appointment Booking | Teez",
   description: "Dealer Overview",
 };
 
