@@ -1,7 +1,7 @@
 'use client';
 
 import { useStartChatMutation } from '@/features/chat/chatSlice';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import Header from '@/components/header';
 import AISalesInitializer from '@/components/partials/chat/ai-sales-initializer';
@@ -25,6 +25,13 @@ export default function AnonymousChat() {
   ]);
 
   const [startChat, { isLoading }] = useStartChatMutation();
+
+  // Scroll to bottom whenever messages change
+  useEffect(() => {
+    if (messagesRef.current) {
+      messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
+    }
+  }, [messages]);
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
@@ -78,10 +85,6 @@ export default function AnonymousChat() {
           timestamp: new Date().toISOString(),
         },
       ]);
-      messagesRef.current?.scrollTo({
-        top: messagesRef.current.scrollHeight,
-        behavior: 'smooth',
-      });
     } catch (error) {
       console.error('Failed to send message:', error);
     }

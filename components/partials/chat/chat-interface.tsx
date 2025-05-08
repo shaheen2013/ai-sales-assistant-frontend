@@ -140,6 +140,7 @@ export default function ChatApp({
             className="overflow-y-auto h-[calc(100vh-380px)] my-6 message-scrollbar"
             ref={messagesRef as unknown as React.RefObject<HTMLElement>}
           >
+            {/* All existing messages always visible */}
             {messages.map((item, index) => {
               // if the message is from the user
               if (item.isMe) {
@@ -199,20 +200,20 @@ export default function ChatApp({
                   </div>
                   <div className="flex flex-col">
                     <h2 className="text-sm text-gray-500 font-medium">Teez</h2>
-                    {!isLoading ? (
-                      <p
-                        className="max-w-[70%] p-3 rounded-lg bg-[#F3F4F5] text-gray-400"
-                        style={{
-                          wordWrap: 'break-word',
-                          whiteSpace: 'pre-wrap',
-                        }}
-                        dangerouslySetInnerHTML={{ __html: item.message }}
-                      />
-                    ) : null}
+                    <p
+                      className="max-w-[70%] p-3 rounded-lg bg-[#F3F4F5] text-gray-400"
+                      style={{
+                        wordWrap: 'break-word',
+                        whiteSpace: 'pre-wrap',
+                      }}
+                      dangerouslySetInnerHTML={{ __html: item.message }}
+                    />
                   </div>
                 </div>
               );
             })}
+
+            {/* Loading indicator that only appears while waiting for a response */}
             {isLoading && (
               <div className="flex items-start gap-3 mb-6">
                 <div className="flex-shrink-0 mt-1">
@@ -226,16 +227,8 @@ export default function ChatApp({
                 </div>
                 <div className="flex flex-col">
                   <h2 className="text-sm text-gray-500 font-medium">Teez</h2>
-                  <div className="max-w-[70%] p-3 rounded-lg bg-[#F3F4F5] flex space-x-1">
-                    <span className="w-1 h-1 bg-gray-400 rounded-full animate-pulse"></span>
-                    <span
-                      className="w-1 h-1 bg-gray-400 rounded-full animate-pulse"
-                      style={{ animationDelay: '0.2s' }}
-                    ></span>
-                    <span
-                      className="w-1 h-1 bg-gray-400 rounded-full animate-pulse"
-                      style={{ animationDelay: '0.4s' }}
-                    ></span>
+                  <div className=" w-full  py-1 mt-1 rounded-lg  animate-pulse text-gray-300">
+                    Generating response<span className="animate-ping">...</span>
                   </div>
                 </div>
               </div>
