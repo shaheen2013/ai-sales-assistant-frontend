@@ -19,8 +19,8 @@ import { Button } from "@/components/shadcn/button";
 
 import {
   DropdownMenu,
-  DropdownMenuContent,
   DropdownMenuTrigger,
+  DropdownMenuContent,
 } from "@/components/shadcn/dropdown-menu";
 
 export default function AnonymousChat() {
