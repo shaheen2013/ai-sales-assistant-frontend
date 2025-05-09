@@ -19,7 +19,7 @@ export interface UserDataType {
     is_active: boolean;
     is_verified: boolean;
     uuid: string;
-    user_type: 'admin' | 'user';
+    user_type: string;
     groups: string[];
     user_permissions: string[];
 }
