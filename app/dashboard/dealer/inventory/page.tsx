@@ -3,16 +3,16 @@
 import Image from "next/image";
 
 import {
-  ColumnDef,
   flexRender,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-  useReactTable,
-  ColumnFiltersState,
+  ColumnDef,
   SortingState,
   VisibilityState,
+  useReactTable,
+  getCoreRowModel,
+  ColumnFiltersState,
+  getSortedRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
 } from "@tanstack/react-table";
 import { useMemo, useState } from "react";
 import { MoreHorizontal } from "lucide-react";
@@ -30,11 +30,8 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/shadcn/dropdown-menu";
-
 import { Button } from "@/components/shadcn/button";
 
 export default function DashboardDealerInventory() {
@@ -566,9 +563,12 @@ export default function DashboardDealerInventory() {
         ))}
       </div>
 
-      {/* table */}
+      {/* table wrapper */}
       <div className="w-full">
         <div className="rounded-md border p-3">
+          {/* header */}
+
+          {/* table */}
           <Table>
             <TableHeader>
               {table.getHeaderGroups().map((headerGroup) => (
@@ -617,29 +617,11 @@ export default function DashboardDealerInventory() {
               )}
             </TableBody>
           </Table>
-        </div>
-        <div className="flex items-center justify-end space-x-2 py-4">
-          <div className="flex-1 text-sm text-muted-foreground">
-            {table.getFilteredSelectedRowModel().rows.length} of{" "}
-            {table.getFilteredRowModel().rows.length} row(s) selected.
-          </div>
-          <div className="space-x-2">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => table.previousPage()}
-              disabled={!table.getCanPreviousPage()}
-            >
-              Previous
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => table.nextPage()}
-              disabled={!table.getCanNextPage()}
-            >
-              Next
-            </Button>
+
+          <hr />
+
+          <div className="flex items-end justify-end pt-3">
+            <span className="text-primary-500 font-medium">View All</span>
           </div>
         </div>
       </div>
