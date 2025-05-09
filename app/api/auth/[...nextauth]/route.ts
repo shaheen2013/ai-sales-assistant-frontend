@@ -1,6 +1,40 @@
 import { beautifyErrors } from "@/lib/utils";
 import NextAuth, { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { jwtDecode } from "jwt-decode";
+import { JWT } from "next-auth/jwt";
+
+async function refreshAccessToken(token: JWT) {
+  try {
+    const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/refresh-token`;
+
+    const response = await fetch(url, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      body: JSON.stringify({ refresh: token.refresh }),
+    })
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw data
+    }
+
+    return {
+      ...token,
+      access: data.access,
+      refresh: data.refresh,
+    }
+  } catch (error) {
+    console.log(error)
+    return {
+      ...token,
+      error: "RefreshAccessTokenError",
+    }
+  }
+}
 
 const authOptions: AuthOptions = {
   providers: [
@@ -33,7 +67,7 @@ const authOptions: AuthOptions = {
           const data = await res.json();
 
           return {
-            id: data.user.id, // Ensure the 'id' field is included
+            id: data.user.id,
             access: data.access,
             refresh: data.refresh,
             user: data.user,
@@ -46,16 +80,28 @@ const authOptions: AuthOptions = {
     }),
   ],
   callbacks: {
-    async jwt({ token, user }: any) {
-      if (user) {
-        token.access = user.access;
-        token.refresh = user.refresh;
-        token.user = user.user;
+    async jwt({ token, user }) {
+      if (token.access) {
+        const decodedToken = jwtDecode(token.access);
+        token.accessTokenExpires = Number(decodedToken?.exp || 0) * 1000;
       }
 
-      return token;
+      if (user && "access" in user && "refresh" in user) {
+        return {
+          ...token,
+          access: user.access,
+          refresh: user.refresh,
+          user: user.user,
+        }
+      }
+
+      if (Date.now() < token.accessTokenExpires) {
+        return token;
+      }
+
+      return refreshAccessToken(token);
     },
-    async session({ session, token }: any) {
+    async session({ session, token }) {
       session.access = token.access;
       session.refresh = token.refresh;
       session.user = token.user;
