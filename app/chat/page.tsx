@@ -20,12 +20,13 @@ export default function AnonymousChat() {
     {
       id: '5151',
       isMe: false,
-      message: 'Hello! How can I help you?',
+      message:
+        'Hello, I am Clara, from Teez AI. How can I assist you with your vehicle parts inventory today?',
       timestamp: '2025-05-07T12:00:00Z',
     },
   ]);
 
-  const [startChat, { isLoading }] = useStartChatMutation();
+  const [startChat, { isLoading, error }] = useStartChatMutation();
 
   // Scroll to bottom whenever messages change
   useEffect(() => {
@@ -87,7 +88,7 @@ export default function AnonymousChat() {
       const response = await startChat({
         message,
         email: email,
-        dealer_id: 1, // hard coded set the dealer id for now
+        dealerid: selectedDealer || 1, // hard coded set the dealer id for now
       }).unwrap();
       setMessages((prevMessages) => [
         ...prevMessages,
@@ -118,6 +119,7 @@ export default function AnonymousChat() {
         ) : (
           <ChatApp
             isLoading={isLoading}
+            isError={!!error}
             message={message}
             messages={messages}
             onMessageChange={(e) => setMessage(e.target.value)}

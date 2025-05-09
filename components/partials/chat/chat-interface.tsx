@@ -16,6 +16,7 @@ import {
 import Picker from '@emoji-mart/react';
 import moment from 'moment';
 import Image from 'next/image';
+import { ClaraIcon } from './svg-icons';
 
 interface Message {
   id: string;
@@ -26,6 +27,7 @@ interface Message {
 
 interface ChatAppProps {
   isLoading: boolean;
+  isError: boolean;
   message: string;
   messages: Message[];
   onMessageChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -38,6 +40,7 @@ interface ChatAppProps {
 
 export default function ChatApp({
   isLoading,
+  isError,
   message,
   onMessageChange,
   messagesRef,
@@ -189,18 +192,15 @@ export default function ChatApp({
               return (
                 <div key={index} className="flex items-start gap-3 mb-6">
                   <div className="flex-shrink-0 mt-1">
-                    <Image
-                      src="https://dummyimage.com/50x50"
-                      alt="avatar"
-                      width={40}
-                      height={40}
-                      className="rounded-full"
-                    />
+                    <div className="w-[40px] h-[40px] bg-[#F3F4F5] rounded-full flex items-center justify-center shadow-md">
+                      <ClaraIcon />
+                    </div>
                   </div>
                   <div className="flex flex-col">
                     <h2 className="text-sm text-gray-500 font-medium">Teez</h2>
                     <p
-                      className="max-w-[70%] p-3 rounded-lg bg-[#F3F4F5] text-gray-400"
+                      key={index}
+                      className="max-w-[70%] p-3 rounded-lg bg-[#F3F4F5] text-gray-400 animate-in duration-100 slide-in-from-left-10"
                       style={{
                         wordWrap: 'break-word',
                         whiteSpace: 'pre-wrap',
@@ -212,22 +212,42 @@ export default function ChatApp({
               );
             })}
 
+            {/* Error message that only appears when there is an error */}
+            {isError && (
+              <div className="flex items-start gap-3 mb-6">
+                <div className="flex-shrink-0 mt-1">
+                  <div className="w-[40px] h-[40px] bg-[#F3F4F5] rounded-full flex items-center justify-center shadow-md">
+                    <ClaraIcon />
+                  </div>
+                </div>
+                <div className="flex flex-col">
+                  <h2 className="text-sm text-gray-500 font-medium">Teez</h2>
+                  <p className="max-w-[70%] p-3 rounded-lg bg-[#F3F4F5] text-red-500 animate-in duration-100 slide-in-from-left-10">
+                    Oops! Something went wrong while generating your response.
+                    Please, try again later.
+                  </p>
+                </div>
+              </div>
+            )}
+
             {/* Loading indicator that only appears while waiting for a response */}
             {isLoading && (
               <div className="flex items-start gap-3 mb-6">
                 <div className="flex-shrink-0 mt-1">
-                  <Image
-                    src="https://dummyimage.com/50x50"
-                    alt="avatar"
-                    width={40}
-                    height={40}
-                    className="rounded-full"
-                  />
+                  <div className="w-[40px] h-[40px] bg-[#F3F4F5] rounded-full flex items-center justify-center shadow-md">
+                    <ClaraIcon />
+                  </div>
                 </div>
                 <div className="flex flex-col">
                   <h2 className="text-sm text-gray-500 font-medium">Teez</h2>
-                  <div className=" w-full  py-1 mt-1 rounded-lg  animate-pulse text-gray-300">
-                    Generating response<span className="animate-ping">...</span>
+                  <div className=" w-full animate-pulse text-gray-300">
+                    <Image
+                      src="/images/typing.gif"
+                      alt="typing image"
+                      width={70}
+                      height={10}
+                      className="rounded-lg  -ms-3 -mt-2"
+                    />
                   </div>
                 </div>
               </div>
