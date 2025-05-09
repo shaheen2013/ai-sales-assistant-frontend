@@ -1,378 +1,414 @@
-import { Badge } from '@/components/shadcn/badge';
+'use client';
+
 import { Button } from '@/components/shadcn/button';
+import { Input } from '@/components/shadcn/input';
+
 import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from '@/components/shadcn/card';
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/shadcn/select';
+
 import {
-  ArrowUpRight,
-  Check,
-  ChevronDown,
-  ChevronUp,
-  Edit2,
-  LinkIcon,
-  Mail,
-  MapPin,
-  Phone,
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormMessage,
+} from '@/components/shadcn/form';
+import {
+  ChevronRight,
+  CircleHelp,
+  Pencil,
   Trash2,
+  Upload,
+  X,
 } from 'lucide-react';
-import Image from 'next/image';
-
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { PhoneInput } from './phone-input';
 export default function EditProfileSection() {
+  const [selectedServices, setSelectedServices] = useState<string[]>([
+    'Sales',
+    'Financing',
+  ]);
+  const [newService, setNewService] = useState<string>('');
+
+  const addService = (service: string) => {
+    if (service && !selectedServices.includes(service)) {
+      setSelectedServices([...selectedServices, service]);
+      setNewService('');
+    }
+  };
+
+  const removeService = (service: string) => {
+    setSelectedServices(selectedServices.filter((s) => s !== service));
+  };
+  const form = useForm();
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 rounded-2xl border border-gray-50">
-      <div className="md:col-span-2 space-y-6">
-        {/* Short Bio Section */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-xl text-gray-400">Short Bio</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-gray-300 leading-relaxed">
-              At BMW Car House, we specialize in providing a premium selection
-              of new and pre-owned BMW vehicles with unbeatable deals and
-              top-tier customer service. Our expert team ensures a seamless
-              car-buying experience, offering personalized assistance, financing
-              options, and after-sales support. Whether you&apos;re looking for
-              a luxury ride or a reliable vehicle, BMW Car House is your trusted
-              destination for finding the perfect car.
-            </p>
-          </CardContent>
-        </Card>
+    <Form {...form}>
+      <form
+        onSubmit={form.handleSubmit((data) => console.log(data))}
+        className=" p-6 bg-[#ffffff] rounded-lg border border-[#EAEBEC] shadow-sm"
+      >
+        <h1 className="text-2xl font-semibold text-[#2b3545] mb-6">
+          Update Profile
+        </h1>
 
-        {/* Services Offered Section */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-xl text-gray-400">
-              Services Offered
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="flex flex-wrap gap-3">
-              <Badge className="bg-[#ecf6fe] text-[#2196f3] hover:bg-[#ecf6fe]/80 rounded-full px-4 py-1">
-                Sales
-              </Badge>
-              <Badge className="bg-[#fff5eb] text-[#ffb056] hover:bg-[#fff5eb]/80 rounded-full px-4 py-1">
-                Financing
-              </Badge>
-              <Badge className="bg-[#f0edfc] text-[#654ce6] hover:bg-[#f0edfc]/80 rounded-full px-4 py-1">
-                Trade-In
-              </Badge>
-              <Badge className="bg-[#e7f6ef] text-[#13c56b] hover:bg-[#e7f6ef]/80 rounded-full px-4 py-1">
-                Maintenance
-              </Badge>
-              <Badge className="bg-[#fdeded] text-[#ed5e5e] hover:bg-[#fdeded]/80 rounded-full px-4 py-1">
-                Test Drive
-              </Badge>
-              <Badge className="bg-[#ecf6fe] text-[#2196f3] hover:bg-[#ecf6fe]/80 rounded-full px-4 py-1">
-                Consultation
-              </Badge>
-              <Badge className="bg-[#fff5eb] text-[#ffb056] hover:bg-[#fff5eb]/80 rounded-full px-4 py-1">
-                Offers
-              </Badge>
-              <Badge className="bg-[#f0edfc] text-[#654ce6] hover:bg-[#f0edfc]/80 rounded-full px-4 py-1">
-                Support
-              </Badge>
-              <Badge className="bg-[#e7f6ef] text-[#13c56b] hover:bg-[#e7f6ef]/80 rounded-full px-4 py-1">
-                Support
-              </Badge>
+        <div className="flex flex-col space-y-6">
+          {/* Profile Image Upload */}
+          <div className="flex items-center space-x-4">
+            <div className="size-[130px] bg-[#f5f5f5] rounded-full flex items-center justify-center">
+              <svg
+                width="40"
+                height="40"
+                viewBox="0 0 40 40"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                className="size-[100px] text-[#a4a7ae]"
+              >
+                <path
+                  d="M20 20C24.1421 20 27.5 16.6421 27.5 12.5C27.5 8.35786 24.1421 5 20 5C15.8579 5 12.5 8.35786 12.5 12.5C12.5 16.6421 15.8579 20 20 20Z"
+                  stroke="#a4a7ae"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M33.75 35C33.75 28.7868 27.7132 23.75 20 23.75C12.2868 23.75 6.25 28.7868 6.25 35"
+                  stroke="#a4a7ae"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
             </div>
-          </CardContent>
-        </Card>
 
-        {/* Card Information Section */}
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between">
-            <CardTitle className="text-xl text-gray-400">
-              Card Information
-            </CardTitle>
-            <Button
-              variant="outline"
-              size="sm"
-              className="text-gray-300 border-[#d5d7da]"
-            >
-              <span className="mr-1">+</span> Add Card
-            </Button>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            {/* Mastercard */}
-            <div className="flex items-center justify-between py-3 border-b border-[#eaebec]">
-              <div className="flex items-center">
-                <ChevronDown className="w-5 h-5 text-gray-300 mr-3" />
-                <div className="w-10 h-6 bg-[#f7f7f9] rounded flex items-center justify-center mr-3">
-                  <Image
-                    src="/images/dashboard/profile/mastercard.png"
-                    alt="Mastercard"
-                    width={40}
-                    height={24}
-                    className="w-8 h-5 object-contain"
+            <div className="flex-1 border border-[#d5d7da] rounded-lg p-4 flex flex-col items-center justify-center min-h-[120px]">
+              <Upload className="h-5 w-5 text-[#019935] mb-2" />
+              <p className="text-center">
+                <span className="text-[#019935] font-medium">
+                  Click to upload
+                </span>
+                <span className="text-[#555d6a]"> or drag and drop</span>
+              </p>
+              <p className="text-[#717882] text-sm mt-1">
+                SVG, PNG, JPG or GIF (max. 800×400px)
+              </p>
+            </div>
+          </div>
+
+          {/* Form Fields - First Row */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <label
+                htmlFor="name"
+                className="text-[#555d6a] flex items-center"
+              >
+                Name <span className="text-red-500 ml-0.5">*</span>
+              </label>
+              <Input
+                id="name"
+                placeholder="Email Here"
+                className="border-[#d5d7da] rounded-md focus:border-[#019935] focus:ring-[#019935]"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label
+                htmlFor="email"
+                className="text-[#555d6a] flex items-center"
+              >
+                Email <span className="text-red-500 ml-0.5">*</span>
+              </label>
+              <Input
+                id="email"
+                placeholder="Email Here"
+                className="border-[#d5d7da] rounded-md focus:border-[#019935] focus:ring-[#019935]"
+              />
+            </div>
+          </div>
+
+          {/* Form Fields - Second Row */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <label
+                htmlFor="phone"
+                className="text-[#555d6a] flex items-center"
+              >
+                Phone Number <span className="text-red-500 ml-0.5">*</span>
+              </label>
+
+              <FormField
+                control={form.control}
+                name="phone"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col items-start ">
+                    <FormControl className="w-full ">
+                      <PhoneInput
+                        className="w-full outline-none border"
+                        initialValueFormat="international"
+                        defaultCountry="86"
+                        placeholder="Enter a phone number"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormDescription className="text-left">
+                      Enter a phone number
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label htmlFor="street" className="text-[#555d6a]">
+                Street
+              </label>
+              <Input
+                id="street"
+                placeholder="Your Street Here"
+                className="border-[#d5d7da] rounded-md focus:border-[#019935] focus:ring-[#019935]"
+              />
+            </div>
+          </div>
+
+          {/* Form Fields - Third Row */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <label htmlFor="city" className="text-[#555d6a]">
+                City
+              </label>
+              <Input
+                id="city"
+                placeholder="Enter Your City Here"
+                className="border-[#d5d7da] rounded-md focus:border-[#019935] focus:ring-[#019935]"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label htmlFor="state" className="text-[#555d6a]">
+                State
+              </label>
+              <Input
+                id="state"
+                placeholder="Enter Your State Here"
+                className="border-[#d5d7da] rounded-md focus:border-[#019935] focus:ring-[#019935]"
+              />
+            </div>
+          </div>
+
+          {/* Form Fields - Fourth Row */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <label htmlFor="country" className="text-[#555d6a]">
+                Country
+              </label>
+              <Select>
+                <SelectTrigger className="border-[#d5d7da] rounded-md focus:border-[#019935] focus:ring-[#019935]">
+                  <SelectValue placeholder="Choose Country" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="us">United States</SelectItem>
+                  <SelectItem value="ca">Canada</SelectItem>
+                  <SelectItem value="uk">United Kingdom</SelectItem>
+                  <SelectItem value="au">Australia</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="space-y-2">
+              <label htmlFor="zip" className="text-[#555d6a]">
+                Zip Code
+              </label>
+              <Input
+                id="zip"
+                placeholder="Zip Code Here"
+                className="border-[#d5d7da] rounded-md focus:border-[#019935] focus:ring-[#019935]"
+              />
+            </div>
+          </div>
+
+          {/* Form Fields - Fifth Row */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <label htmlFor="bio" className="text-[#555d6a] flex items-center">
+                Short Bio
+                <CircleHelp className="h-4 w-4 ml-1 text-[#a4a7ae]" />
+              </label>
+              <textarea
+                id="bio"
+                placeholder="Enter your self"
+                className="border-[#d5d7da] rounded-md focus:border-[#019935] focus:ring-[#019935] min-h-[120px]"
+              />
+              <p className="text-[#717882] text-sm">
+                Enter your short bio here
+              </p>
+            </div>
+
+            <div className="space-y-2">
+              <label
+                htmlFor="services"
+                className="text-[#555d6a] flex items-center"
+              >
+                Services Offered <span className="text-red-500 ml-0.5">*</span>
+                <CircleHelp className="h-4 w-4 ml-1 text-[#a4a7ae]" />
+              </label>
+              <div className="border border-[#d5d7da] rounded-md p-2 min-h-[120px]">
+                <div className="flex flex-wrap gap-2 mb-2">
+                  {selectedServices.map((service) => (
+                    <div
+                      key={service}
+                      className="flex items-center bg-[#f5f5f5] rounded-md px-2 py-1"
+                    >
+                      <span className="text-[#555d6a]">{service}</span>
+                      <button
+                        onClick={() => removeService(service)}
+                        className="ml-1 text-[#555d6a] hover:text-[#2b3545]"
+                      >
+                        <X className="h-4 w-4" />
+                      </button>
+                    </div>
+                  ))}
+                  <Input
+                    value={newService}
+                    onChange={(e) => setNewService(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        e.preventDefault();
+                        addService(newService);
+                      }
+                    }}
+                    placeholder="Test Drive"
+                    className="border-none focus:ring-0 p-0 h-8 text-[#555d6a]"
                   />
                 </div>
-                <div>
-                  <p className="font-medium text-gray-400">Mastercard</p>
-                  <p className="text-sm text-[#747b87]">Expires Apr 2028</p>
-                </div>
               </div>
-              <div className="flex items-center space-x-2">
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="h-8 w-8 text-[#747b87]"
-                >
-                  <Edit2 className="h-4 w-4" />
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="h-8 w-8 text-[#747b87]"
-                >
-                  <Trash2 className="h-4 w-4" />
-                </Button>
-              </div>
+              <p className="text-[#717882] text-sm">Your service you offered</p>
+            </div>
+          </div>
+
+          {/* Card Information */}
+          <div className="mt-6">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-lg font-medium text-[#2b3545]">
+                Card Information
+              </h2>
+              <Button
+                variant="outline"
+                className="border-[#d5d7da] text-[#555d6a]"
+              >
+                <span className="mr-1">+</span> Add Card
+              </Button>
             </div>
 
-            {/* American Express - Expanded */}
-            <div className="border-b border-[#eaebec]">
-              <div className="flex items-center justify-between py-3">
+            {/* Mastercard */}
+            <div className="border-t border-[#d5d7da] py-4">
+              <div className="flex justify-between items-center">
                 <div className="flex items-center">
-                  <ChevronUp className="w-5 h-5 text-gray-300 mr-3" />
-                  <div className="w-10 h-6 bg-[#f7f7f9] rounded flex items-center justify-center mr-3">
-                    <Image
-                      src="/images/dashboard/profile/american-express.png"
-                      alt="American Express"
-                      width={40}
-                      height={24}
-                      className="w-8 h-5 object-contain"
-                    />
-                  </div>
-                  <div className="flex items-center">
-                    <div>
-                      <p className="font-medium text-gray-400">
-                        American Express
-                      </p>
-                      <p className="text-sm text-[#747b87]">45 Baker Terrace</p>
+                  <ChevronRight className="h-5 w-5 text-[#555d6a]" />
+                  <div className="w-10 h-6 mx-3 flex items-center justify-center">
+                    <div className="w-8 h-5 bg-[#f5f5f5] rounded flex items-center justify-center">
+                      <svg
+                        width="24"
+                        height="16"
+                        viewBox="0 0 24 16"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect width="24" height="16" rx="2" fill="white" />
+                        <circle cx="9" cy="8" r="4" fill="#EB001B" />
+                        <circle cx="15" cy="8" r="4" fill="#F79E1B" />
+                        <path
+                          fillRule="evenodd"
+                          clipRule="evenodd"
+                          d="M12 11.2C13.1046 10.3999 13.8 9.08 13.8 7.6C13.8 6.12 13.1046 4.8001 12 4C10.8954 4.8001 10.2 6.12 10.2 7.6C10.2 9.08 10.8954 10.3999 12 11.2Z"
+                          fill="#FF5F00"
+                        />
+                      </svg>
                     </div>
-                    <Badge className="ml-3 bg-[#e7f6ef] text-[#13c56b] hover:bg-[#e7f6ef]/80 rounded-full px-3 py-0.5 text-xs">
-                      Primary
-                    </Badge>
+                  </div>
+                  <div>
+                    <p className="font-medium text-[#2b3545]">Mastercard</p>
+                    <p className="text-sm text-[#717882]">Expires Apr 2028</p>
                   </div>
                 </div>
-                <div className="flex items-center space-x-2">
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="h-8 w-8 text-[#747b87]"
-                  >
-                    <Edit2 className="h-4 w-4" />
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="h-8 w-8 text-[#747b87]"
-                  >
-                    <Trash2 className="h-4 w-4" />
-                  </Button>
-                </div>
-              </div>
-
-              {/* Card Details */}
-              <div className="grid grid-cols-2 gap-4 py-4 px-12 text-sm">
-                <div>
-                  <p className="text-[#747b87]">Name</p>
-                  <p className="font-medium text-gray-400">Kawsar Amin</p>
-                </div>
-                <div>
-                  <p className="text-[#747b87]">Billing Phone Number</p>
-                  <p className="font-medium text-gray-400">+7634 983 637</p>
-                </div>
-                <div>
-                  <p className="text-[#747b87]">Number</p>
-                  <p className="font-medium text-gray-400">**** 4487</p>
-                </div>
-                <div>
-                  <p className="text-[#747b87]">Email</p>
-                  <p className="font-medium text-gray-400">
-                    vafgot@vultukir.org
-                  </p>
-                </div>
-                <div>
-                  <p className="text-[#747b87]">Expires</p>
-                  <p className="font-medium text-gray-400">08/2028</p>
-                </div>
-                <div>
-                  <p className="text-[#747b87]">Origin</p>
-                  <p className="font-medium text-gray-400">United States</p>
-                </div>
-                <div>
-                  <p className="text-[#747b87]">Type</p>
-                  <p className="font-medium text-gray-400">Mastercard Card</p>
-                </div>
-                <div>
-                  <p className="text-[#747b87]">CVC check</p>
-                  <div className="flex items-center">
-                    <p className="font-medium text-gray-400 mr-1">Passed</p>
-                    <Check className="h-4 w-4 text-[#13c56b]" />
-                  </div>
-                </div>
-                <div>
-                  <p className="text-[#747b87]">Issuer</p>
-                  <p className="font-medium text-gray-400">VICBANK</p>
-                </div>
-                <div>
-                  <p className="text-[#747b87]">ID</p>
-                  <p className="font-medium text-gray-400">DH73DJ8</p>
+                <div className="flex items-center space-x-3">
+                  <button className="text-[#555d6a]">
+                    <Pencil className="h-5 w-5" />
+                  </button>
+                  <button className="text-[#555d6a]">
+                    <Trash2 className="h-5 w-5" />
+                  </button>
                 </div>
               </div>
             </div>
 
             {/* Visa */}
-            <div className="flex items-center justify-between py-3">
-              <div className="flex items-center">
-                <ChevronDown className="w-5 h-5 text-gray-300 mr-3" />
-                <div className="w-10 h-6 bg-[#f7f7f9] rounded flex items-center justify-center mr-3">
-                  <Image
-                    src="/images/dashboard/profile/visa.png"
-                    alt="Visa"
-                    width={40}
-                    height={24}
-                    className="w-8 h-5 object-contain"
-                  />
+            <div className="border-t border-[#d5d7da] py-4">
+              <div className="flex justify-between items-center">
+                <div className="flex items-center">
+                  <ChevronRight className="h-5 w-5 text-[#555d6a]" />
+                  <div className="w-10 h-6 mx-3 flex items-center justify-center">
+                    <div className="w-8 h-5 bg-[#f5f5f5] rounded flex items-center justify-center">
+                      <svg
+                        width="24"
+                        height="8"
+                        viewBox="0 0 24 8"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path d="M9.5 1L7.5 7H5.5L7.5 1H9.5Z" fill="#00579F" />
+                        <path
+                          d="M16.5 1.1C16 1 15.2 0.9 14.2 0.9C12.2 0.9 10.8 1.9 10.8 3.3C10.8 4.4 11.8 5 12.6 5.3C13.4 5.6 13.6 5.8 13.6 6.1C13.6 6.5 13.1 6.7 12.6 6.7C11.9 6.7 11.5 6.6 10.9 6.4L10.6 6.3L10.3 7.9C10.9 8.1 11.9 8.2 12.9 8.2C15 8.2 16.4 7.2 16.4 5.7C16.4 4.8 15.8 4.1 14.6 3.7C13.9 3.4 13.5 3.2 13.5 2.9C13.5 2.6 13.8 2.3 14.5 2.3C15.1 2.3 15.5 2.4 15.9 2.5L16.1 2.6L16.5 1.1Z"
+                          fill="#00579F"
+                        />
+                        <path
+                          d="M19.5 1H18C17.5 1 17.1 1.1 16.9 1.6L14.5 7H16.6C16.6 7 16.9 6.2 17 6C17.2 6 18.8 6 19.1 6C19.2 6.3 19.3 7 19.3 7H21.2L19.5 1ZM17.5 4.5C17.7 4 18.2 2.7 18.2 2.7C18.2 2.7 18.3 2.4 18.4 2.2L18.5 2.6C18.5 2.6 18.8 4.1 18.9 4.5H17.5Z"
+                          fill="#00579F"
+                        />
+                        <path
+                          d="M4.5 1L2.6 5.2L2.4 4.3C2 3.2 1.2 2.1 0.3 1.5L2 7H4.1L7.3 1H4.5Z"
+                          fill="#00579F"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                  <div>
+                    <p className="font-medium text-[#2b3545]">Visa</p>
+                    <p className="text-sm text-[#717882]">512 Water Plant</p>
+                  </div>
                 </div>
-                <div>
-                  <p className="font-medium text-gray-400">Visa</p>
-                  <p className="text-sm text-[#747b87]">512 Water Plant</p>
+                <div className="flex items-center space-x-3">
+                  <button className="text-[#555d6a]">
+                    <Pencil className="h-5 w-5" />
+                  </button>
+                  <button className="text-[#555d6a]">
+                    <Trash2 className="h-5 w-5" />
+                  </button>
                 </div>
               </div>
-              <div className="flex items-center space-x-2">
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="h-8 w-8 text-[#747b87]"
-                >
-                  <Edit2 className="h-4 w-4" />
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="h-8 w-8 text-[#747b87]"
-                >
-                  <Trash2 className="h-4 w-4" />
-                </Button>
-              </div>
             </div>
-          </CardContent>
-        </Card>
-      </div>
+          </div>
 
-      <div className="space-y-6">
-        {/* Premium Section */}
-        <Card>
-          <CardContent className="pt-6 ">
-            <div className="flex items-start">
-              <div>
-                <Badge className="bg-[#e7f6ef] text-[#13c56b] hover:bg-[#e7f6ef]/80 rounded-full px-3 py-0.5 mb-2">
-                  Enterprise
-                </Badge>
-
-                <h2 className="text-[20px] font-semibold text-gray-400 mt-2">
-                  Premium
-                </h2>
-                <p className="text-gray-300 text-sm mt-2">
-                  Perfect for brands who sale new cars
-                </p>
-              </div>
-              <h3 className="text-2xl font-semibold text-gray-400 flex items-baseline">
-                <span className="text-gray-400 text-3xl">$10.00</span>
-                <span className=" text-gray-400 text-sm ml-1">/month</span>
-              </h3>
-            </div>
-            <div className="mt-6 flex justify-between items-center gap-6">
-              <Button variant="link" className="text-[#2196f3] p-0 h-auto">
-                Learn more
-              </Button>
-
-              <Button className="w-full  bg-white text-primary-600 border border-primary-100 hover:bg-gray-50">
-                Upgrade plan
-                <ArrowUpRight className="ml-2 h-4 w-4" />
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Contact Information */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-xl text-gray-400">
-              Contact Information
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="flex items-start">
-              <div className="w-8 h-8 rounded-full bg-[#e7f6ef] flex items-center justify-center mr-3 mt-0.5">
-                <Mail className="w-4 h-4 text-[#13c56b]" />
-              </div>
-              <div>
-                <p className="text-gray-400 font-medium">hellow@carhouse.com</p>
-              </div>
-            </div>
-            <div className="flex items-start">
-              <div className="w-8 h-8 rounded-full bg-[#e7f6ef] flex items-center justify-center mr-3 mt-0.5">
-                <MapPin className="w-4 h-4 text-[#13c56b]" />
-              </div>
-              <div>
-                <p className="text-gray-400 font-medium">
-                  Modern House Suites No. 187, Toronto, CA
-                </p>
-              </div>
-            </div>
-            <div className="flex items-start">
-              <div className="w-8 h-8 rounded-full bg-[#e7f6ef] flex items-center justify-center mr-3 mt-0.5">
-                <Phone className="w-4 h-4 text-[#13c56b]" />
-              </div>
-              <div>
-                <p className="text-gray-400 font-medium">+12 3456 7890</p>
-              </div>
-            </div>
-            <div className="flex items-start">
-              <div className="w-8 h-8 rounded-full bg-[#e7f6ef] flex items-center justify-center mr-3 mt-0.5">
-                <LinkIcon className="w-4 h-4 text-[#13c56b]" />
-              </div>
-              <div>
-                <p className="text-gray-400 font-medium">
-                  https://bmwcarhouse.com
-                </p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Public Embed Code */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-xl text-gray-400">
-              Public Embed Code
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="bg-[#f7f7f9] rounded p-3 text-xs text-gray-300 font-mono overflow-x-auto">
-              {
-                '<iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="800" height="450" src="https://embed.figma.com/design/46300gwAGfGjrXTeitnpL/Ai-Sales-Assistant?node-id=57-116&embed-host=share" allowfullscreen></iframe>'
-              }
-            </div>
-            <div className="flex justify-between items-center mt-4">
-              <Button variant="link" className="text-[#2196f3] p-0 h-auto">
-                Learn more
-              </Button>
-              <Button className="bg-white text-primary-600 border border-primary-100 hover:bg-gray-50">
-                Copy
-                <ArrowUpRight className="ml-2 h-4 w-4" />
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-    </div>
+          {/* Action Buttons */}
+          <div className="flex justify-start space-x-4 mt-4">
+            <Button
+              variant="outline"
+              className="border-[#d5d7da] text-[#555d6a]"
+            >
+              Discard
+            </Button>
+            <Button className="bg-[#019935] hover:bg-[#018a30] text-white">
+              Save Changes
+            </Button>
+          </div>
+        </div>
+      </form>
+    </Form>
   );
 }

@@ -88,7 +88,7 @@ export default function AnonymousChat() {
       const response = await startChat({
         message,
         email: email,
-        dealerid: selectedDealer || 1, // hard coded set the dealer id for now
+        dealer_id: selectedDealer || 1, // hard coded set the dealer id for now
       }).unwrap();
       setMessages((prevMessages) => [
         ...prevMessages,
