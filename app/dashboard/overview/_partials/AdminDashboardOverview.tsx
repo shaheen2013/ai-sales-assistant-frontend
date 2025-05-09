@@ -1,8 +1,9 @@
 "use client";
 import React from 'react'
-import DashboardOverviewChart from "@/components/partials/dashboard/dashboard-overview-chart";
 import { useGetAdminDashboardOverviewQuery } from '@/features/admin/adminDashboardSlice';
 import AdminDashboardOverviewCard from './AdminDashboardOverviewCard';
+import Spinner from '@/components/spinner/Spinner';
+import AdminDashboardOverviewChart from './AdminDashboardOverviewChart';
 
 const adminDashboardOverviewCardData = [
     {
@@ -34,7 +35,9 @@ const AdminDashboardOverview = () => {
         <>
             {
                 adminDashboardOverviewLoading ? (
-                    <p>loading...</p>
+                    <div className='h-full flex justify-center items-center'>
+                        <Spinner />
+                    </div>
                 ) : (
                     <div className="py-2">
                         {/* cards */}
@@ -54,7 +57,7 @@ const AdminDashboardOverview = () => {
 
                         {/* chart */}
                         <div className="">
-                            <DashboardOverviewChart />
+                            {adminDashboardOverviewData?.graph_data && <AdminDashboardOverviewChart data={adminDashboardOverviewData?.graph_data} />}
                         </div>
                     </div>
                 )

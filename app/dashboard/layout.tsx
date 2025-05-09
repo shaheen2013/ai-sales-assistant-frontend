@@ -88,10 +88,10 @@ export default function DashboardLayout({
   return (
     <SidebarProvider>
       <DashboardSidebar />
-      <main className="w-full">
+      <main className="w-full h-screen flex flex-col overflow-hidden">
         <DashboardHeader />
 
-        <div className="p-6">{children}</div>
+        <div className="p-6 overflow-auto grow">{children}</div>
       </main>
 
       {/* mandetory modals information */}
