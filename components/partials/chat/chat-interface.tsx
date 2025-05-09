@@ -1,9 +1,9 @@
-import { Button } from '@/components/shadcn/button';
+import { Button } from "@/components/shadcn/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuTrigger,
-} from '@/components/shadcn/dropdown-menu';
+} from "@/components/shadcn/dropdown-menu";
 import {
   Select,
   SelectContent,
@@ -11,12 +11,12 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/shadcn/select';
+} from "@/components/shadcn/select";
 
-import Picker from '@emoji-mart/react';
-import moment from 'moment';
-import Image from 'next/image';
-import { ClaraIcon } from './svg-icons';
+import Picker from "@emoji-mart/react";
+import moment from "moment";
+import Image from "next/image";
+import { ClaraIcon } from "./svg-icons";
 
 interface Message {
   id: string;
@@ -148,18 +148,18 @@ export default function ChatApp({
               if (item.isMe) {
                 const time = moment(item.timestamp);
                 const now = moment();
-                const diffInSeconds = now.diff(time, 'seconds');
+                const diffInSeconds = now.diff(time, "seconds");
 
                 // if the message is less than 1 minute old, show "Just now" or else show the time with format "hh:mm A"
                 const displayTime =
-                  diffInSeconds < 60 ? 'Just now' : time.format('hh:mm A');
+                  diffInSeconds < 60 ? "Just now" : time.format("hh:mm A");
 
                 return (
                   <div key={index} className="mb-6 mr-3 flex justify-end">
                     <div className="max-w-[80%]">
                       {/* time */}
                       <div className="text-xs text-end mb-1 text-gray-800">
-                        <span className="font-semibold">You</span>,{' '}
+                        <span className="font-semibold">You</span>,{" "}
                         {displayTime}
                       </div>
 
@@ -202,8 +202,8 @@ export default function ChatApp({
                       key={index}
                       className="max-w-[70%] p-3 rounded-lg bg-[#F3F4F5] text-gray-400 animate-in duration-100 slide-in-from-left-10"
                       style={{
-                        wordWrap: 'break-word',
-                        whiteSpace: 'pre-wrap',
+                        wordWrap: "break-word",
+                        whiteSpace: "pre-wrap",
                       }}
                       dangerouslySetInnerHTML={{ __html: item.message }}
                     />
@@ -279,7 +279,7 @@ export default function ChatApp({
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
                     className="cursor-pointer"
-                    onClick={() => window.alert('File Upload Coming soon!')}
+                    onClick={() => window.alert("File Upload Coming soon!")}
                   >
                     <path
                       d="M14.9993 10.8307H10.8327V14.9974C10.8327 15.2184 10.7449 15.4304 10.5886 15.5867C10.4323 15.7429 10.2204 15.8307 9.99935 15.8307C9.77834 15.8307 9.56637 15.7429 9.41009 15.5867C9.25381 15.4304 9.16602 15.2184 9.16602 14.9974V10.8307H4.99935C4.77834 10.8307 4.56637 10.7429 4.41009 10.5867C4.25381 10.4304 4.16602 10.2184 4.16602 9.9974C4.16602 9.77638 4.25381 9.56442 4.41009 9.40814C4.56637 9.25186 4.77834 9.16406 4.99935 9.16406H9.16602V4.9974C9.16602 4.77638 9.25381 4.56442 9.41009 4.40814C9.56637 4.25186 9.77834 4.16406 9.99935 4.16406C10.2204 4.16406 10.4323 4.25186 10.5886 4.40814C10.7449 4.56442 10.8327 4.77638 10.8327 4.9974V9.16406H14.9993C15.2204 9.16406 15.4323 9.25186 15.5886 9.40814C15.7449 9.56442 15.8327 9.77638 15.8327 9.9974C15.8327 10.2184 15.7449 10.4304 15.5886 10.5867C15.4323 10.7429 15.2204 10.8307 14.9993 10.8307Z"
