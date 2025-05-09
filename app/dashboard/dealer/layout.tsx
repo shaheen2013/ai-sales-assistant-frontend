@@ -1,27 +1,24 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-// import { useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
+import { Controller, useForm } from "react-hook-form";
 
+import Steps from "@/components/Steps";
 import { Button } from "@/components/shadcn/button";
 import {
   AlertDialog,
-  // AlertDialogAction,
-  // AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  // AlertDialogTrigger,
 } from "@/components/shadcn/alert-dialog";
 import { Input } from "@/components/shadcn/input";
 
 import { SidebarProvider } from "@/components/shadcn/sidebar";
 import DashboardHeader from "@/components/partials/dashboard/dashboard-header";
 import { DashboardSidebar } from "@/components/partials/dashboard/dashboard-sidebar";
-import Steps from "@/components/Steps";
-import { Controller, useForm } from "react-hook-form";
 
 export default function DashboardLayout({
   children,
@@ -30,11 +27,11 @@ export default function DashboardLayout({
 }) {
   const router = useRouter();
 
-  // const { data: session, status } = useSession();
+  const { data: session, status } = useSession();
 
-  // const isLoading = status === "loading";
-  // const isAuthenticated = status === "authenticated";
-  // const isDealer = session?.user?.user_type == "dealer";
+  const isLoading = status === "loading";
+  const isAuthenticated = status === "authenticated";
+  const isDealer = session?.user?.user_type == "dealer";
 
   // if (!isDealer && !isAuthenticated && !isLoading) {
   //   router.push(`/dealer/login`);
@@ -91,7 +88,13 @@ export default function DashboardLayout({
       <main className="w-full">
         <DashboardHeader />
 
-        <div className="p-6">{children}</div>
+        <div className="p-6">
+          {/* loading */}
+          {isLoading && <div>Loading...</div>}
+
+          {/* content */}
+          {!isLoading && isAuthenticated && children}
+        </div>
       </main>
 
       {/* mandetory modals information */}
