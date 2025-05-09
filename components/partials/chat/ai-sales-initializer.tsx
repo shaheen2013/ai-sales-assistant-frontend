@@ -88,6 +88,11 @@ export default function AISalesInitializer({
             className="h-11"
             value={emailValue}
             onChange={onEmailChange}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                onEmailSubmit();
+              }
+            }}
           />
         </div>
       </div>
