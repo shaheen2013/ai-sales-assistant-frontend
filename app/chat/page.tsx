@@ -88,7 +88,7 @@ export default function AnonymousChat() {
       const response = await startChat({
         message,
         email: email,
-        dealer_id: selectedDealer || 1, // hard coded set the dealer id for now
+        dealerid: selectedDealer || 1, // hard coded set the dealer id for now
       }).unwrap();
       setMessages((prevMessages) => [
         ...prevMessages,
@@ -119,7 +119,7 @@ export default function AnonymousChat() {
         ) : (
           <ChatApp
             isLoading={isLoading}
-            isError={error}
+            isError={!!error}
             message={message}
             messages={messages}
             onMessageChange={(e) => setMessage(e.target.value)}
