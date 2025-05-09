@@ -23,6 +23,7 @@ export default {
         "primary-800": "#01541D",
         "primary-900": "#004016",
 
+        "gray-20": "#f6f6f6",
         "gray-25": "#f2f3f5",
         "gray-50": "#eaebed",
         "gray-100": "#bfc2c8",

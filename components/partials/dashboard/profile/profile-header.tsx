@@ -1,0 +1,49 @@
+import { Mail, MapPin } from 'lucide-react';
+import Image from 'next/image';
+
+const ProfileHeader = () => {
+  return (
+    <div className="relative  border rounded-2xl h-[252px] ">
+      <div className=" w-full bg-[#2b3545] overflow-hidden rounded-t-2xl h-[100px]">
+        <Image
+          src="/images/dashboard/profile/cover-img.png"
+          alt="BMW Car House Cover"
+          width={1000}
+          height={300}
+          className="w-full object-cover"
+        />
+      </div>
+      <div className="absolute bottom-9 left-9">
+        <div className=" flex items-end gap-4 flex-row ">
+          <div className="rounded-lg overflow-hidden border-2 border-white shadow-sm w-[160px] h-[160px]">
+            <Image
+              src="/images/dashboard/profile/bmw-car.jpg"
+              alt="BMW Logo"
+              width={160}
+              height={160}
+              className="w-full h-full object-cover"
+            />
+          </div>
+
+          <div className="">
+            <h1 className="text-2xl font-semibold text-[#2b3545]">
+              BMW Car House
+            </h1>
+            <div className="mt-2 space-y-1">
+              <div className="flex items-center text-[#555d6a]">
+                <Mail className="w-4 h-4 text-[#018b30] mr-2" />
+                <span>Information 1</span>
+              </div>
+              <div className="flex items-center text-[#555d6a]">
+                <MapPin className="w-4 h-4 text-[#018b30] mr-2" />
+                <span>Location</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ProfileHeader;
