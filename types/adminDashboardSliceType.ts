@@ -11,9 +11,11 @@ type GrowthData = {
 
 
 export type AdminDashboardResponseType = {
-    dealer: GrowthData;
+  dealer: GrowthData;
   payment: GrowthData;
   visitor: GrowthData;
   call_history: GrowthData;
   graph_data: MonthlyData[];
+
+  [key: string]: any;
 }

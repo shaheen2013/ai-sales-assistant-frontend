@@ -3,7 +3,7 @@ import { apiSlice } from "../api/apiSlice";
 
 export const adminDashboardSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getAdminDashboard: builder.query<AdminDashboardResponseType, void>({
+    getAdminDashboardOverview: builder.query<AdminDashboardResponseType, void>({
       query: () => ({
         method: "GET",
         url: `/admin-dashboard/admin`,
@@ -12,4 +12,4 @@ export const adminDashboardSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useGetAdminDashboardQuery } = adminDashboardSlice;
+export const { useGetAdminDashboardOverviewQuery } = adminDashboardSlice;
