@@ -83,7 +83,6 @@ const authOptions: AuthOptions = {
     async jwt({ token, user }) {
       if (token.access) {
         const decodedToken = jwtDecode(token.access);
-        console.log(decodedToken);
         token.accessTokenExpires = Number(decodedToken?.exp || 0) * 1000;
       }
 
