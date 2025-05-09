@@ -67,7 +67,7 @@ const authOptions: AuthOptions = {
           const data = await res.json();
 
           return {
-            id: data.user.id, // Ensure the 'id' field is included
+            id: data.user.id,
             access: data.access,
             refresh: data.refresh,
             user: data.user,
@@ -80,14 +80,14 @@ const authOptions: AuthOptions = {
     }),
   ],
   callbacks: {
-    async jwt({ token, user }: any) {
+    async jwt({ token, user }) {
       if (token.access) {
         const decodedToken = jwtDecode(token.access);
         console.log(decodedToken);
         token.accessTokenExpires = Number(decodedToken?.exp || 0) * 1000;
       }
 
-      if (user) {
+      if (user && "access" in user && "refresh" in user) {
         return {
           ...token,
           access: user.access,
@@ -102,7 +102,7 @@ const authOptions: AuthOptions = {
 
       return refreshAccessToken(token);
     },
-    async session({ session, token }: any) {
+    async session({ session, token }) {
       session.access = token.access;
       session.refresh = token.refresh;
       session.user = token.user;

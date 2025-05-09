@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { getSession } from "next-auth/react";
 
 export const apiSlice = createApi({
   reducerPath: "api",
@@ -6,12 +7,18 @@ export const apiSlice = createApi({
     baseUrl: process.env.NEXT_PUBLIC_API_BASE_URL,
     mode: "cors",
     credentials: "include",
-
-    // prepareHeaders: (headers, { getState }) => {
-    //     // headers.set('authorization', `Bearer ${getState().authToken.token || localStorage.getItem('access_token')}`);
-    //     headers.set('authorization', `Bearer ${localStorage.getItem('token')}`);
-    //     return headers
-    // },
+    prepareHeaders: async (headers) => {
+      try {
+        const { access} = (await getSession()) ?? {};
+        if (access) {
+          headers.set("Authorization", `Bearer ${access}`);
+        }
+        headers.set("Accept", "application/json");
+      } catch (error) {
+        console.log(error);
+      }
+      return headers;
+    },
   }),
   tagTypes: ["user"],
   endpoints: () => ({}),
