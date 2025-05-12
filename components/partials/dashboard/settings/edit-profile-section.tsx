@@ -153,8 +153,6 @@ export default function EditProfileSection() {
                     <FormControl className="w-full ">
                       <PhoneInput
                         className="w-full outline-none rounded-md"
-                        id="phone"
-                        name="phone"
                         placeholder="Enter a phone number"
                         {...field}
                       />
