@@ -19,6 +19,7 @@ import { Input } from "@/components/shadcn/input";
 import { SidebarProvider } from "@/components/shadcn/sidebar";
 import DashboardHeader from "@/components/partials/dashboard/dashboard-header";
 import { DashboardSidebar } from "@/components/partials/dashboard/dashboard-sidebar";
+import Spinner from "@/components/spinner/Spinner";
 
 export default function DashboardLayout({
   children,
@@ -27,9 +28,9 @@ export default function DashboardLayout({
 }) {
   const router = useRouter();
 
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
 
-  // const isLoading = status === "loading";
+  const isLoading = status === "loading";
   // const isAuthenticated = status === "authenticated";
 
   // if (!isDealer && !isAuthenticated && !isLoading) {
@@ -89,9 +90,9 @@ export default function DashboardLayout({
 
         <div className="p-6 grow">
           {/* loading */}
-          {/* {isLoading && <div className='h-full flex justify-center items-center'>
+          {isLoading && <div className='h-full flex justify-center items-center'>
             <Spinner className='size-12' />
-          </div>} */}
+          </div>}
 
           {/* content */}
           {/* {!isLoading && isAuthenticated && children} */}
