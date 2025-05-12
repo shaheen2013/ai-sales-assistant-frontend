@@ -2,19 +2,19 @@
 
 import React, { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { useRouter, useSearchParams } from "next/navigation";
 
 import Steps from "@/components/Steps";
+
 import {
   AlertDialog,
   AlertDialogTitle,
   AlertDialogHeader,
   AlertDialogContent,
 } from "@/components/shadcn/alert-dialog";
-
-import { Input, InputPhoneNumber } from "@/components/shadcn/input";
-import { Button } from "@/components/shadcn/button";
-import { useRouter, useSearchParams } from "next/navigation";
 import { countryCodes } from "@/static/CountryCodes";
+import { Button } from "@/components/shadcn/button";
+import { Input, InputPhoneNumber } from "@/components/shadcn/input";
 
 export default function NewUserModal() {
   const router = useRouter();
@@ -208,7 +208,6 @@ export default function NewUserModal() {
                     rules={{ required: "Your phone required" }}
                     render={({ field, formState: { errors } }) => (
                       <InputPhoneNumber
-                        type="phone"
                         id="phone"
                         className="h-10"
                         placeholder="Your Phone Number Here"
@@ -216,6 +215,8 @@ export default function NewUserModal() {
                         countries={countryCodes}
                         {...field}
                       />
+
+                      // <PhoneInput />
                     )}
                   />
                 </div>
@@ -223,36 +224,22 @@ export default function NewUserModal() {
                 {/* street */}
                 <div className="flex flex-col">
                   <label
-                    htmlFor="email"
+                    htmlFor="street"
                     className="text-sm mb-1 text-[#414651] font-medium"
                   >
-                    Email <span className="text-primary-500">*</span>
+                    Street <span className="text-primary-500">*</span>
                   </label>
                   <Controller
-                    name="email"
+                    name="street"
                     control={control}
-                    rules={{ required: "Email is required" }}
+                    rules={{ required: "Street is required" }}
                     render={({ field, formState: { errors } }) => (
                       <Input
-                        type="email"
-                        id="email"
+                        type="street"
+                        id="street"
                         className="h-10"
-                        placeholder="Email Here"
-                        error={errors?.email?.message}
-                        preIcon={
-                          <svg
-                            width="20"
-                            height="21"
-                            viewBox="0 0 20 21"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M15.5 4.5C16.8807 4.5 18 5.61929 18 7V15C18 16.3807 16.8807 17.5 15.5 17.5H4.5C3.11929 17.5 2 16.3807 2 15V7C2 5.61929 3.11929 4.5 4.5 4.5H15.5ZM17 8.461L10.2535 12.431C10.1231 12.5077 9.96661 12.5205 9.82751 12.4693L9.74649 12.431L3 8.463V15C3 15.8284 3.67157 16.5 4.5 16.5H15.5C16.3284 16.5 17 15.8284 17 15V8.461ZM15.5 5.5H4.5C3.67157 5.5 3 6.17157 3 7V7.302L10 11.4199L17 7.301V7C17 6.17157 16.3284 5.5 15.5 5.5Z"
-                              fill="#5D6679"
-                            />
-                          </svg>
-                        }
+                        placeholder="Street Here"
+                        error={errors?.street?.message}
                         {...field}
                       />
                     )}
@@ -262,36 +249,22 @@ export default function NewUserModal() {
                 {/* city */}
                 <div className="flex flex-col">
                   <label
-                    htmlFor="email"
+                    htmlFor="city"
                     className="text-sm mb-1 text-[#414651] font-medium"
                   >
-                    Email <span className="text-primary-500">*</span>
+                    City <span className="text-primary-500">*</span>
                   </label>
                   <Controller
-                    name="email"
+                    name="city"
                     control={control}
-                    rules={{ required: "Email is required" }}
+                    rules={{ required: "City is required" }}
                     render={({ field, formState: { errors } }) => (
                       <Input
-                        type="email"
-                        id="email"
+                        type="city"
+                        id="city"
                         className="h-10"
-                        placeholder="Email Here"
-                        error={errors?.email?.message}
-                        preIcon={
-                          <svg
-                            width="20"
-                            height="21"
-                            viewBox="0 0 20 21"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M15.5 4.5C16.8807 4.5 18 5.61929 18 7V15C18 16.3807 16.8807 17.5 15.5 17.5H4.5C3.11929 17.5 2 16.3807 2 15V7C2 5.61929 3.11929 4.5 4.5 4.5H15.5ZM17 8.461L10.2535 12.431C10.1231 12.5077 9.96661 12.5205 9.82751 12.4693L9.74649 12.431L3 8.463V15C3 15.8284 3.67157 16.5 4.5 16.5H15.5C16.3284 16.5 17 15.8284 17 15V8.461ZM15.5 5.5H4.5C3.67157 5.5 3 6.17157 3 7V7.302L10 11.4199L17 7.301V7C17 6.17157 16.3284 5.5 15.5 5.5Z"
-                              fill="#5D6679"
-                            />
-                          </svg>
-                        }
+                        placeholder="City Here"
+                        error={errors?.city?.message}
                         {...field}
                       />
                     )}
@@ -301,36 +274,22 @@ export default function NewUserModal() {
                 {/* state */}
                 <div className="flex flex-col">
                   <label
-                    htmlFor="email"
+                    htmlFor="state"
                     className="text-sm mb-1 text-[#414651] font-medium"
                   >
-                    Email <span className="text-primary-500">*</span>
+                    State <span className="text-primary-500">*</span>
                   </label>
                   <Controller
-                    name="email"
+                    name="state"
                     control={control}
-                    rules={{ required: "Email is required" }}
+                    rules={{ required: "State is required" }}
                     render={({ field, formState: { errors } }) => (
                       <Input
-                        type="email"
-                        id="email"
+                        type="state"
+                        id="state"
                         className="h-10"
-                        placeholder="Email Here"
-                        error={errors?.email?.message}
-                        preIcon={
-                          <svg
-                            width="20"
-                            height="21"
-                            viewBox="0 0 20 21"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M15.5 4.5C16.8807 4.5 18 5.61929 18 7V15C18 16.3807 16.8807 17.5 15.5 17.5H4.5C3.11929 17.5 2 16.3807 2 15V7C2 5.61929 3.11929 4.5 4.5 4.5H15.5ZM17 8.461L10.2535 12.431C10.1231 12.5077 9.96661 12.5205 9.82751 12.4693L9.74649 12.431L3 8.463V15C3 15.8284 3.67157 16.5 4.5 16.5H15.5C16.3284 16.5 17 15.8284 17 15V8.461ZM15.5 5.5H4.5C3.67157 5.5 3 6.17157 3 7V7.302L10 11.4199L17 7.301V7C17 6.17157 16.3284 5.5 15.5 5.5Z"
-                              fill="#5D6679"
-                            />
-                          </svg>
-                        }
+                        placeholder="State Here"
+                        error={errors?.state?.message}
                         {...field}
                       />
                     )}
@@ -340,36 +299,22 @@ export default function NewUserModal() {
                 {/* country */}
                 <div className="flex flex-col">
                   <label
-                    htmlFor="email"
+                    htmlFor="country"
                     className="text-sm mb-1 text-[#414651] font-medium"
                   >
-                    Email <span className="text-primary-500">*</span>
+                    Country <span className="text-primary-500">*</span>
                   </label>
                   <Controller
-                    name="email"
+                    name="country"
                     control={control}
-                    rules={{ required: "Email is required" }}
+                    rules={{ required: "country is required" }}
                     render={({ field, formState: { errors } }) => (
                       <Input
-                        type="email"
-                        id="email"
+                        type="country"
+                        id="country"
                         className="h-10"
-                        placeholder="Email Here"
-                        error={errors?.email?.message}
-                        preIcon={
-                          <svg
-                            width="20"
-                            height="21"
-                            viewBox="0 0 20 21"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M15.5 4.5C16.8807 4.5 18 5.61929 18 7V15C18 16.3807 16.8807 17.5 15.5 17.5H4.5C3.11929 17.5 2 16.3807 2 15V7C2 5.61929 3.11929 4.5 4.5 4.5H15.5ZM17 8.461L10.2535 12.431C10.1231 12.5077 9.96661 12.5205 9.82751 12.4693L9.74649 12.431L3 8.463V15C3 15.8284 3.67157 16.5 4.5 16.5H15.5C16.3284 16.5 17 15.8284 17 15V8.461ZM15.5 5.5H4.5C3.67157 5.5 3 6.17157 3 7V7.302L10 11.4199L17 7.301V7C17 6.17157 16.3284 5.5 15.5 5.5Z"
-                              fill="#5D6679"
-                            />
-                          </svg>
-                        }
+                        placeholder="country Here"
+                        error={errors?.country?.message}
                         {...field}
                       />
                     )}
@@ -379,36 +324,22 @@ export default function NewUserModal() {
                 {/* zip code */}
                 <div className="flex flex-col">
                   <label
-                    htmlFor="email"
+                    htmlFor="zip"
                     className="text-sm mb-1 text-[#414651] font-medium"
                   >
-                    Email <span className="text-primary-500">*</span>
+                    Zip <span className="text-primary-500">*</span>
                   </label>
                   <Controller
-                    name="email"
+                    name="zip"
                     control={control}
-                    rules={{ required: "Email is required" }}
+                    rules={{ required: "zip is required" }}
                     render={({ field, formState: { errors } }) => (
                       <Input
-                        type="email"
-                        id="email"
+                        type="zip"
+                        id="zip"
                         className="h-10"
-                        placeholder="Email Here"
-                        error={errors?.email?.message}
-                        preIcon={
-                          <svg
-                            width="20"
-                            height="21"
-                            viewBox="0 0 20 21"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M15.5 4.5C16.8807 4.5 18 5.61929 18 7V15C18 16.3807 16.8807 17.5 15.5 17.5H4.5C3.11929 17.5 2 16.3807 2 15V7C2 5.61929 3.11929 4.5 4.5 4.5H15.5ZM17 8.461L10.2535 12.431C10.1231 12.5077 9.96661 12.5205 9.82751 12.4693L9.74649 12.431L3 8.463V15C3 15.8284 3.67157 16.5 4.5 16.5H15.5C16.3284 16.5 17 15.8284 17 15V8.461ZM15.5 5.5H4.5C3.67157 5.5 3 6.17157 3 7V7.302L10 11.4199L17 7.301V7C17 6.17157 16.3284 5.5 15.5 5.5Z"
-                              fill="#5D6679"
-                            />
-                          </svg>
-                        }
+                        placeholder="zip Here"
+                        error={errors?.zip?.message}
                         {...field}
                       />
                     )}

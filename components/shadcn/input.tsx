@@ -149,8 +149,6 @@ const InputPhoneNumber = React.forwardRef<
     { className, type, error, preIcon, postIcon, countries = [], ...props },
     ref
   ) => {
-    console.log(countries);
-
     return (
       <div>
         <div className="relative flex items-center justify-center">
@@ -160,17 +158,7 @@ const InputPhoneNumber = React.forwardRef<
             </div>
           )}
 
-          {/* <select name="" id="" className="absolute max-w-[80px] left-2 dev">
-            {countries.map((country: any) => {
-              return (
-                <option value={country.code} key={country.code}>
-                  ({country.dial_code}) {country.name}
-                </option>
-              );
-            })}
-          </select> */}
-
-          <Select>
+          {/* <Select defaultValue="US">
             <SelectTrigger
               className="w-[90px] bg-white absolute left-2 dev"
               postIcon={
@@ -194,22 +182,35 @@ const InputPhoneNumber = React.forwardRef<
               <SelectValue placeholder="" />
             </SelectTrigger>
             <SelectContent>
-              {countries.map((country: any) => {
+              {countries.map((country: any, index: number) => {
                 return (
-                  <SelectItem value={country.code} key={country.code}>
+                  <SelectItem key={index} value={country.code}>
                     {country.dial_code}
                   </SelectItem>
                 );
               })}
             </SelectContent>
-          </Select>
+          </Select> */}
+
+          <select
+            className="w-[70px] bg-white absolute left-2 text-sm outline-none"
+            defaultValue="US"
+          >
+            {countries.map((country: any, index: number) => {
+              return (
+                <option key={index} value={country.code}>
+                  {country.dial_code}
+                </option>
+              );
+            })}
+          </select>
 
           <input
             type={type || "number"}
             className={cn(
-              "flex h-9 w-full rounded-md border border-[#D5D7DA] bg-transparent px-3 text-base transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-gray-100 outline-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm dev2",
+              "flex h-9 w-full rounded-md border border-[#D5D7DA] bg-transparent px-3 text-base transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-gray-100 outline-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
               {
-                "pl-16": countries,
+                "pl-[90px]": countries.length,
                 "pl-10": preIcon,
                 "pr-10": postIcon,
               },
@@ -219,6 +220,8 @@ const InputPhoneNumber = React.forwardRef<
             {...props}
           />
         </div>
+
+        {error && <span className="text-red-500 text-sm mt-1">{error}</span>}
       </div>
     );
   }
