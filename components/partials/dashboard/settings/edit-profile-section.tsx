@@ -19,6 +19,7 @@ import {
   FormItem,
   FormMessage,
 } from '@/components/shadcn/form';
+import { Textarea } from '@/components/shadcn/textarea';
 import {
   ChevronRight,
   CircleHelp,
@@ -149,9 +150,9 @@ export default function EditProfileSection() {
                   <FormItem className="flex flex-col items-start ">
                     <FormControl className="w-full ">
                       <PhoneInput
-                        className="w-full outline-none border"
-                        initialValueFormat="international"
-                        defaultCountry="86"
+                        className="w-full outline-none rounded-md"
+                        id="phone"
+                        name="phone"
                         placeholder="Enter a phone number"
                         {...field}
                       />
@@ -240,10 +241,10 @@ export default function EditProfileSection() {
                 Short Bio
                 <CircleHelp className="h-4 w-4 ml-1 text-[#a4a7ae]" />
               </label>
-              <textarea
+              <Textarea
                 id="bio"
                 placeholder="Enter your self"
-                className="border-[#d5d7da] rounded-md focus:border-[#019935] focus:ring-[#019935] min-h-[120px]"
+                className="focus:border-[#019935] min-h-[120px]"
               />
               <p className="text-[#717882] text-sm">
                 Enter your short bio here
