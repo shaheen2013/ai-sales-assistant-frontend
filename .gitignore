@@ -5,6 +5,8 @@
 /.pnp
 .pnp.*
 
+yarn.lock
+package-lock.json
 .yarn/cache
 .yarn/unplugged
 .yarn/build-state.yml
