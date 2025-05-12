@@ -171,22 +171,36 @@ const InputPhoneNumber = React.forwardRef<
           </select> */}
 
           <Select>
-            <SelectTrigger className="w-[120px] bg-white absolute left-2 dev">
+            <SelectTrigger
+              className="w-[90px] bg-white absolute left-2 dev"
+              postIcon={
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                >
+                  <path
+                    d="M5 7.5L10 12.5L15 7.5"
+                    stroke="#A4A7AE"
+                    strokeWidth="1.66667"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              }
+            >
               <SelectValue placeholder="" />
             </SelectTrigger>
             <SelectContent>
               {countries.map((country: any) => {
                 return (
                   <SelectItem value={country.code} key={country.code}>
-                    ({country.dial_code}) {country.name}
+                    {country.dial_code}
                   </SelectItem>
                 );
               })}
-              {/* <SelectItem value="apple">Apple</SelectItem> */}
-              {/* <SelectItem value="banana">Banana</SelectItem>
-              <SelectItem value="blueberry">Blueberry</SelectItem>
-              <SelectItem value="grapes">Grapes</SelectItem>
-              <SelectItem value="pineapple">Pineapple</SelectItem> */}
             </SelectContent>
           </Select>
 
