@@ -72,7 +72,7 @@ export default function LoginForm() {
       }
 
       toast("success", "Login successful");
-      router.push("/dashboard/dealer/overview");
+      router.push("/dashboard/overview");
     } catch (error) {
       console.log(error);
     }
@@ -81,7 +81,7 @@ export default function LoginForm() {
   console.log("LoginForm session", session);
 
   if (status === "authenticated" && session?.user?.user_type === "dealer") {
-    router.push("/dashboard/dealer/overview");
+    router.push("/dashboard/overview");
   }
 
   return (
