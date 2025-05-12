@@ -1,43 +1,25 @@
 import { apiSlice } from '../api/apiSlice';
 
-interface DealerProfile {
-  id: string;
-  name: string;
-  email: string;
-  phone: string;
-  address: string;
-  website: string;
-  shortBio: string;
-  services: string[];
-  subscription: {
-    type: string;
-    price: number;
-  };
-  cards: Array<{
-    id: string;
-    type: string;
-    number: string;
-    expiryDate: string;
-    name: string;
-    billingPhone: string;
-    email: string;
-    origin: string;
-    issuer: string;
-    isPrimary: boolean;
-    address?: string;
-  }>;
-}
-
 export const dealerProfileSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getDealerProfile: builder.query<DealerProfile, void>({
+    getDealerProfile: builder.query<any, void>({
       query: () => ({
         url: `/dealer-dashboard/profile`,
         method: 'GET',
         credentials: 'include',
       }),
     }),
+
+    updateDealerProfile: builder.mutation<any, FormData>({
+      query: (formData) => ({
+        url: '/dealer-dashboard/profile',
+        method: 'POST',
+        body: formData,
+        formData: true,
+      }),
+    }),
   }),
 });
 
-export const { useGetDealerProfileQuery } = dealerProfileSlice;
+export const { useGetDealerProfileQuery, useUpdateDealerProfileMutation } =
+  dealerProfileSlice;

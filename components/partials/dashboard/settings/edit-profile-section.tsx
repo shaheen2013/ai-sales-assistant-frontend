@@ -6,13 +6,17 @@ import { Input } from '@/components/shadcn/input';
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormMessage,
 } from '@/components/shadcn/form';
 import { Textarea } from '@/components/shadcn/textarea';
-import { useGetDealerProfileQuery } from '@/features/dealer/dealerProfileSlice';
+import {
+  useGetDealerProfileQuery,
+  useUpdateDealerProfileMutation,
+} from '@/features/dealer/dealerProfileSlice';
+import { useToast } from '@/hooks/useToast';
+import { zodResolver } from '@hookform/resolvers/zod';
 import {
   ChevronRight,
   CircleHelp,
@@ -21,40 +25,119 @@ import {
   Upload,
   X,
 } from 'lucide-react';
+import Image from 'next/image';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import * as z from 'zod';
 import { CountryDropdown } from './country-list-dropdown';
 import { PhoneInput } from './phoneNo-input-with-country-list';
+
+// Form validation schema
+const formSchema = z.object({
+  name: z.string().min(1, 'Name is required'),
+  phone_number: z.string().min(1, 'Phone number is required'),
+  profile_picture: z.instanceof(File).optional(),
+  street_address: z.string().optional(),
+  city: z.string().optional(),
+  state: z.string().optional(),
+  country: z.string().optional(),
+  zip_code: z.string().optional(),
+  about: z.string().optional(),
+  // services: z.array(z.string()).min(1, 'At least one service is required'),
+});
+
+export type editDealerProfileFormValues = z.infer<typeof formSchema>;
+
 export default function EditProfileSection() {
+  const [profileImage, setProfileImage] = useState<File | null>(null);
   const [selectedServices, setSelectedServices] = useState<string[]>([
     'Sales',
     'Financing',
   ]);
   const [newService, setNewService] = useState<string>('');
-
-  const addService = (service: string) => {
-    if (service && !selectedServices.includes(service)) {
-      setSelectedServices([...selectedServices, service]);
-      setNewService('');
-    }
-  };
-
-  const removeService = (service: string) => {
-    setSelectedServices(selectedServices.filter((s) => s !== service));
-  };
-  const form = useForm();
-
+  const toast = useToast();
   const {
     data: dealerProfileData,
     isLoading,
     isError,
   } = useGetDealerProfileQuery();
-  console.log('dealerProfileData >>', dealerProfileData);
+
+  const [updateDealerProfile, { isLoading: isUpdating }] =
+    useUpdateDealerProfileMutation();
+
+  const form = useForm<editDealerProfileFormValues>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: dealerProfileData?.name || '',
+      phone_number: dealerProfileData?.phone_number || '',
+      street_address: dealerProfileData?.street_address || '',
+      city: dealerProfileData?.city || '',
+      state: dealerProfileData?.state || '',
+      country: dealerProfileData?.country || '',
+      zip_code: dealerProfileData?.zip_code || '',
+      about: dealerProfileData?.about || '',
+      // services: selectedServices,
+    },
+  });
+
+  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      setProfileImage(file);
+      form.setValue('profile_picture', file);
+    }
+  };
+
+  const addService = (service: string) => {
+    if (service && !selectedServices.includes(service)) {
+      const newServices = [...selectedServices, service];
+      setSelectedServices(newServices);
+      // form.setValue('services', newServices);
+      setNewService('');
+    }
+  };
+
+  const removeService = (service: string) => {
+    const newServices = selectedServices.filter((s) => s !== service);
+    setSelectedServices(newServices);
+    // form.setValue('services', newServices);
+  };
+
+  const onSubmit = async (data: editDealerProfileFormValues) => {
+    try {
+      const formData = new FormData();
+
+      // Append all non-file fields
+      formData.append('name', data.name);
+      formData.append('phone_number', data.phone_number);
+      formData.append('street_address', data.street_address || '');
+      formData.append('city', data.city || '');
+      formData.append('state', data.state || '');
+      formData.append('country', data.country || '');
+      formData.append('zip_code', data.zip_code || '');
+      formData.append('about', data.about || '');
+
+      // Append profile picture if exists
+      if (profileImage instanceof File) {
+        formData.append('profile_picture', profileImage);
+      }
+
+      // Call the mutation with FormData
+      const response = await updateDealerProfile(formData).unwrap();
+      if (response) {
+        toast('success', response?.detail);
+      } else {
+        toast('error', 'Failed to update profile');
+      }
+    } catch (error) {
+      toast('error', 'Failed to update profile');
+    }
+  };
 
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit((data) => console.log(data))}
+        onSubmit={form.handleSubmit(onSubmit)}
         className=" p-6 bg-[#ffffff] rounded-lg border border-[#EAEBEC] shadow-sm"
       >
         <h1 className="text-2xl font-semibold text-[#2b3545] mb-6">
@@ -65,42 +148,64 @@ export default function EditProfileSection() {
           {/* Profile Image Upload */}
           <div className="flex items-center space-x-4">
             <div className="size-[130px] bg-[#f5f5f5] rounded-full flex items-center justify-center">
-              <svg
-                width="40"
-                height="40"
-                viewBox="0 0 40 40"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                className="size-[100px] text-[#a4a7ae]"
-              >
-                <path
-                  d="M20 20C24.1421 20 27.5 16.6421 27.5 12.5C27.5 8.35786 24.1421 5 20 5C15.8579 5 12.5 8.35786 12.5 12.5C12.5 16.6421 15.8579 20 20 20Z"
-                  stroke="#a4a7ae"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
+              {profileImage ? (
+                <Image
+                  src={URL.createObjectURL(profileImage)}
+                  alt="Profile"
+                  width={130}
+                  height={130}
+                  className="w-full h-full rounded-full object-cover"
                 />
-                <path
-                  d="M33.75 35C33.75 28.7868 27.7132 23.75 20 23.75C12.2868 23.75 6.25 28.7868 6.25 35"
-                  stroke="#a4a7ae"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
+              ) : (
+                <svg
+                  width="40"
+                  height="40"
+                  viewBox="0 0 40 40"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="size-[100px] text-[#a4a7ae]"
+                >
+                  <path
+                    d="M20 20C24.1421 20 27.5 16.6421 27.5 12.5C27.5 8.35786 24.1421 5 20 5C15.8579 5 12.5 8.35786 12.5 12.5C12.5 16.6421 15.8579 20 20 20Z"
+                    stroke="#a4a7ae"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M33.75 35C33.75 28.7868 27.7132 23.75 20 23.75C12.2868 23.75 6.25 28.7868 6.25 35"
+                    stroke="#a4a7ae"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              )}
             </div>
 
             <div className="flex-1 border border-[#d5d7da] rounded-lg p-4 flex flex-col items-center justify-center min-h-[120px]">
-              <Upload className="h-5 w-5 text-[#019935] mb-2" />
-              <p className="text-center">
-                <span className="text-[#019935] font-medium">
-                  Click to upload
-                </span>
-                <span className="text-[#555d6a]"> or drag and drop</span>
-              </p>
-              <p className="text-[#717882] text-sm mt-1">
-                SVG, PNG, JPG or GIF (max. 800×400px)
-              </p>
+              <input
+                type="file"
+                id="profile_picture"
+                accept="image/*"
+                className="hidden"
+                onChange={handleImageUpload}
+              />
+              <label
+                htmlFor="profile_picture"
+                className="cursor-pointer flex flex-col items-center"
+              >
+                <Upload className="h-5 w-5 text-[#019935] mb-2" />
+                <p className="text-center">
+                  <span className="text-[#019935] font-medium">
+                    Click to upload
+                  </span>
+                  <span className="text-[#555d6a]"> or drag and drop</span>
+                </p>
+                <p className="text-[#717882] text-sm mt-1">
+                  SVG, PNG, JPG or GIF (max. 800×400px)
+                </p>
+              </label>
             </div>
           </div>
 
@@ -113,10 +218,21 @@ export default function EditProfileSection() {
               >
                 Name <span className="text-red-500 ml-0.5">*</span>
               </label>
-              <Input
-                id="name"
-                placeholder="Email Here"
-                className="border-[#d5d7da] rounded-md focus:border-[#019935] focus:ring-[#019935]"
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        placeholder="Enter your name"
+                        className="border-[#d5d7da] rounded-md focus:border-[#019935] focus:ring-[#019935]"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
             </div>
 
@@ -139,7 +255,7 @@ export default function EditProfileSection() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
               <label
-                htmlFor="phone"
+                htmlFor="phone_number"
                 className="text-[#555d6a] flex items-center"
               >
                 Phone Number <span className="text-red-500 ml-0.5">*</span>
@@ -147,19 +263,16 @@ export default function EditProfileSection() {
 
               <FormField
                 control={form.control}
-                name="phone"
+                name="phone_number"
                 render={({ field }) => (
-                  <FormItem className="flex flex-col items-start ">
-                    <FormControl className="w-full ">
+                  <FormItem>
+                    <FormControl>
                       <PhoneInput
+                        {...field}
                         className="w-full outline-none rounded-md"
                         placeholder="Enter a phone number"
-                        {...field}
                       />
                     </FormControl>
-                    <FormDescription className="text-left">
-                      Enter a phone number
-                    </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -167,13 +280,24 @@ export default function EditProfileSection() {
             </div>
 
             <div className="space-y-2">
-              <label htmlFor="street" className="text-[#555d6a]">
+              <label htmlFor="street_address" className="text-[#555d6a]">
                 Street
               </label>
-              <Input
-                id="street"
-                placeholder="Your Street Here"
-                className="border-[#d5d7da] rounded-md focus:border-[#019935] focus:ring-[#019935]"
+              <FormField
+                control={form.control}
+                name="street_address"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        placeholder="Your Street Here"
+                        className="border-[#d5d7da] rounded-md focus:border-[#019935] focus:ring-[#019935]"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
             </div>
           </div>
@@ -184,10 +308,21 @@ export default function EditProfileSection() {
               <label htmlFor="city" className="text-[#555d6a]">
                 City
               </label>
-              <Input
-                id="city"
-                placeholder="Enter Your City Here"
-                className="border-[#d5d7da] rounded-md focus:border-[#019935] focus:ring-[#019935]"
+              <FormField
+                control={form.control}
+                name="city"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        placeholder="Enter Your City Here"
+                        className="border-[#d5d7da] rounded-md focus:border-[#019935] focus:ring-[#019935]"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
             </div>
 
@@ -195,10 +330,21 @@ export default function EditProfileSection() {
               <label htmlFor="state" className="text-[#555d6a]">
                 State
               </label>
-              <Input
-                id="state"
-                placeholder="Enter Your State Here"
-                className="border-[#d5d7da] rounded-md focus:border-[#019935] focus:ring-[#019935]"
+              <FormField
+                control={form.control}
+                name="state"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        placeholder="Enter Your State Here"
+                        className="border-[#d5d7da] rounded-md focus:border-[#019935] focus:ring-[#019935]"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
             </div>
           </div>
@@ -215,10 +361,10 @@ export default function EditProfileSection() {
                 render={({ field }) => (
                   <FormItem>
                     <CountryDropdown
-                      placeholder="Select Country"
+                      placeholder="Choose Country"
                       defaultValue={field.value}
                       onChange={(country) => {
-                        field.onChange(country.alpha3);
+                        field.onChange(country.name);
                       }}
                     />
                     <FormMessage />
@@ -228,13 +374,24 @@ export default function EditProfileSection() {
             </div>
 
             <div className="space-y-2">
-              <label htmlFor="zip" className="text-[#555d6a]">
+              <label htmlFor="zip_code" className="text-[#555d6a]">
                 Zip Code
               </label>
-              <Input
-                id="zip"
-                placeholder="Zip Code Here"
-                className="border-[#d5d7da] rounded-md focus:border-[#019935] focus:ring-[#019935]"
+              <FormField
+                control={form.control}
+                name="zip_code"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        placeholder="Zip Code Here"
+                        className="border-[#d5d7da] rounded-md focus:border-[#019935] focus:ring-[#019935]"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
             </div>
           </div>
@@ -242,14 +399,28 @@ export default function EditProfileSection() {
           {/* Form Fields - Fifth Row */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
-              <label htmlFor="bio" className="text-[#555d6a] flex items-center">
+              <label
+                htmlFor="about"
+                className="text-[#555d6a] flex items-center"
+              >
                 Short Bio
                 <CircleHelp className="h-4 w-4 ml-1 text-[#a4a7ae]" />
               </label>
-              <Textarea
-                id="bio"
-                placeholder="Enter your self"
-                className="focus:border-[#019935] min-h-[120px]"
+              <FormField
+                control={form.control}
+                name="about"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Textarea
+                        {...field}
+                        placeholder="Enter your self"
+                        className="focus:border-[#019935] min-h-[120px]"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
               <p className="text-[#717882] text-sm">
                 Enter your short bio here
@@ -404,12 +575,17 @@ export default function EditProfileSection() {
           {/* Action Buttons */}
           <div className="flex justify-start space-x-4 mt-4">
             <Button
+              type="button"
               variant="outline"
               className="border-[#d5d7da] text-[#555d6a]"
+              onClick={() => form.reset()}
             >
               Discard
             </Button>
-            <Button className="bg-[#019935] hover:bg-[#018a30] text-white">
+            <Button
+              type="submit"
+              className="bg-[#019935] hover:bg-[#018a30] text-white"
+            >
               Save Changes
             </Button>
           </div>
