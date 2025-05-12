@@ -1,16 +1,6 @@
 "use client";
 
-import { DefaultSession } from "next-auth";
 import { useSession } from "next-auth/react";
-
-// Extend the Session type to include user_type
-declare module "next-auth" {
-  interface Session {
-    user: {
-      user_type?: string;
-    } & DefaultSession["user"];
-  }
-}
 
 interface keyInterface {
   key: "user" | "dealer";

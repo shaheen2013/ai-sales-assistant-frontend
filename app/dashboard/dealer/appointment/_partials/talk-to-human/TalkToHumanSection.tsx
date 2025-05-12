@@ -58,7 +58,6 @@ const talkToHumanDummyData: TalkToHumanColumnDataType[] = [
 ]
 
 const TalkToHumanSection = () => {
-
     return (
         <div>
             <h4 className="text-gray-400 text-xl font-semibold">Chat & Talk Appointment</h4>
