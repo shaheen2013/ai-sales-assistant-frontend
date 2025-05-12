@@ -12,6 +12,7 @@ import {
   FormMessage,
 } from '@/components/shadcn/form';
 import { Textarea } from '@/components/shadcn/textarea';
+import { useGetDealerProfileQuery } from '@/features/dealer/dealerProfileSlice';
 import {
   ChevronRight,
   CircleHelp,
@@ -42,6 +43,14 @@ export default function EditProfileSection() {
     setSelectedServices(selectedServices.filter((s) => s !== service));
   };
   const form = useForm();
+
+  const {
+    data: dealerProfileData,
+    isLoading,
+    isError,
+  } = useGetDealerProfileQuery();
+  console.log('dealerProfileData >>', dealerProfileData);
+
   return (
     <Form {...form}>
       <form
