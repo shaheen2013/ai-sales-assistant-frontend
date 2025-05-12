@@ -21,7 +21,7 @@ export default function Steps({ steps, currentStep }: StepsProps) {
         return (
           <div key={index} className="relative flex-1 flex items-center">
             {/* Connector Line */}
-            {!isLastStep && isCompleted && (
+            {(!isLastStep || isCompleted) && !isLastStep && (
               <div className="absolute left-0 top-1/2 w-full h-[6px] rounded-r bg-gray-50 -z-10 transform -translate-y-1/2 hidden lg:flex" />
             )}
 
@@ -31,7 +31,8 @@ export default function Steps({ steps, currentStep }: StepsProps) {
                 "z-10 h-8 w-8 flex items-center justify-center text-xl font-semibold gap-2 text-center rounded-full border transition-all bg-white",
                 {
                   "bg-gray-50 text-black": isActive,
-                  "bg-green-500 text-white border-green-500": isCompleted,
+                  "bg-[#019935] text-white border-[#019935]": isCompleted,
+                  "bg-gray-50 text-gray-500": !isCompleted && !isActive,
                 }
               )}
             >

@@ -1,6 +1,15 @@
 import React, { useState } from "react";
 
 import { cn } from "@/lib/utils";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/shadcn/select";
 
 interface InputProps extends React.ComponentProps<"input"> {
   error?: string;
@@ -132,4 +141,74 @@ const InputPassword = React.forwardRef<HTMLInputElement, InputProps>(
 
 InputPassword.displayName = "InputPassword";
 
-export { Input, InputPassword };
+const InputPhoneNumber = React.forwardRef<
+  HTMLInputElement,
+  InputProps & { countries?: any[] }
+>(
+  (
+    { className, type, error, preIcon, postIcon, countries = [], ...props },
+    ref
+  ) => {
+    console.log(countries);
+
+    return (
+      <div>
+        <div className="relative flex items-center justify-center">
+          {preIcon && (
+            <div className="absolute left-[10px] top-1/2 -translate-y-1/2">
+              {preIcon}
+            </div>
+          )}
+
+          {/* <select name="" id="" className="absolute max-w-[80px] left-2 dev">
+            {countries.map((country: any) => {
+              return (
+                <option value={country.code} key={country.code}>
+                  ({country.dial_code}) {country.name}
+                </option>
+              );
+            })}
+          </select> */}
+
+          <Select>
+            <SelectTrigger className="w-[120px] bg-white absolute left-2 dev">
+              <SelectValue placeholder="" />
+            </SelectTrigger>
+            <SelectContent>
+              {countries.map((country: any) => {
+                return (
+                  <SelectItem value={country.code} key={country.code}>
+                    ({country.dial_code}) {country.name}
+                  </SelectItem>
+                );
+              })}
+              {/* <SelectItem value="apple">Apple</SelectItem> */}
+              {/* <SelectItem value="banana">Banana</SelectItem>
+              <SelectItem value="blueberry">Blueberry</SelectItem>
+              <SelectItem value="grapes">Grapes</SelectItem>
+              <SelectItem value="pineapple">Pineapple</SelectItem> */}
+            </SelectContent>
+          </Select>
+
+          <input
+            type={type || "number"}
+            className={cn(
+              "flex h-9 w-full rounded-md border border-[#D5D7DA] bg-transparent px-3 text-base transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-gray-100 outline-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm dev2",
+              {
+                "pl-16": countries,
+                "pl-10": preIcon,
+                "pr-10": postIcon,
+              },
+              className
+            )}
+            ref={ref}
+            {...props}
+          />
+        </div>
+      </div>
+    );
+  }
+);
+InputPhoneNumber.displayName = "InputPhoneNumber";
+
+export { Input, InputPassword, InputPhoneNumber };

@@ -11,6 +11,9 @@ export default {
   theme: {
     extend: {
       colors: {
+        "solid-black": "#000000",
+        "solid-white": "#FFFFFF",
+
         "primary-25": "#EEF5F0",
         "primary-50": "#E6F5EB",
         "primary-100": "#B0DFC0",
@@ -23,18 +26,17 @@ export default {
         "primary-800": "#01541D",
         "primary-900": "#004016",
 
-        "gray-20": "#f6f6f6",
-        "gray-25": "#f2f3f5",
-        "gray-50": "#eaebed",
-        "gray-100": "#bfc2c8",
-        "gray-200": "#9fa4ad",
-        "gray-300": "#747b87",
-        "gray-400": "#596170",
-        "gray-500": "#2f3a4c",
-        "gray-600": "#2b3545",
-        "gray-700": "#212936",
-        "gray-800": "#1a202a",
-        "gray-900": "#141820",
+        "gray-25": "#F3F4F5",
+        "gray-50": "#EAEBEC",
+        "gray-100": "#BDC0C5",
+        "gray-200": "#9DA2A9",
+        "gray-300": "#717882",
+        "gray-400": "#555D6A",
+        "gray-500": "#2B3545",
+        "gray-600": "#27303F",
+        "gray-700": "#1F2631",
+        "gray-800": "#181D26",
+        "gray-900": "#12161D",
         "gray-primary": "#3B3B3B",
 
         "danger-25": "#fbf1f1",
