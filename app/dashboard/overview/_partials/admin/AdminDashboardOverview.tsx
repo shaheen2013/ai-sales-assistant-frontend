@@ -36,7 +36,7 @@ const AdminDashboardOverview = () => {
             {
                 adminDashboardOverviewLoading ? (
                     <div className='h-full flex justify-center items-center'>
-                        <Spinner />
+                        <Spinner className='size-12' />
                     </div>
                 ) : (
                     <div className="py-2">

@@ -29,9 +29,9 @@ export function DashboardSidebar() {
   const pathname = usePathname();
   const { data: session, status } = useSession();
 
-  const isUser = session?.user?.user_type == "user";
+  const isAdmin = session?.user?.user_type == "admin";
   const isDashboardReady = status !== "loading" && status == "authenticated";
-  const dashboardMenu = isUser ? dashboardUserMenu : dashboardDealerMenu;
+  const dashboardMenu = isAdmin ? dashboardUserMenu : dashboardDealerMenu;
 
   return (
     <Sidebar>

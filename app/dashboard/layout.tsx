@@ -19,6 +19,7 @@ import { Input } from "@/components/shadcn/input";
 import { SidebarProvider } from "@/components/shadcn/sidebar";
 import DashboardHeader from "@/components/partials/dashboard/dashboard-header";
 import { DashboardSidebar } from "@/components/partials/dashboard/dashboard-sidebar";
+import Spinner from "@/components/spinner/Spinner";
 
 export default function DashboardLayout({
   children,
@@ -30,8 +31,7 @@ export default function DashboardLayout({
   const { data: session, status } = useSession();
 
   const isLoading = status === "loading";
-  const isAuthenticated = status === "authenticated";
-  const isDealer = session?.user?.user_type == "dealer";
+  // const isAuthenticated = status === "authenticated";
 
   // if (!isDealer && !isAuthenticated && !isLoading) {
   //   router.push(`/dealer/login`);
@@ -76,7 +76,7 @@ export default function DashboardLayout({
       // }
 
       // toast("success", "Login successful");
-      router.push("/dashboard/dealer/overview");
+      router.push("/dashboard/overview");
     } catch (error) {
       console.log(error);
     }
@@ -85,15 +85,18 @@ export default function DashboardLayout({
   return (
     <SidebarProvider>
       <DashboardSidebar />
-      <main className="w-full">
+      <main className="w-full h-screen flex flex-col">
         <DashboardHeader />
 
-        <div className="p-6">
+        <div className="p-6 grow">
           {/* loading */}
-          {isLoading && <div>Loading...</div>}
+          {isLoading && <div className='h-full flex justify-center items-center'>
+            <Spinner className='size-12' />
+          </div>}
 
           {/* content */}
-          {!isLoading && isAuthenticated && children}
+          {/* {!isLoading && isAuthenticated && children} */}
+          {session?.access && children}
         </div>
       </main>
 

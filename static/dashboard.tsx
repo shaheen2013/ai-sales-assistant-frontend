@@ -20,7 +20,7 @@ export const dashboardUserMenu: SidebarSection[] = [
     items: [
       {
         label: "Dashboard",
-        href: "/dashboard/user/overview",
+        href: "/dashboard/overview",
         icon: (
           <svg
             width="20"
@@ -37,7 +37,7 @@ export const dashboardUserMenu: SidebarSection[] = [
       },
       {
         label: "Dealer Overview",
-        href: "/dashboard/user/dealer-overview",
+        href: "/dashboard-overview",
         icon: (
           <svg
             width="20"
@@ -51,7 +51,7 @@ export const dashboardUserMenu: SidebarSection[] = [
       },
       {
         label: "Team Management",
-        href: "/dashboard/user/team-management",
+        href: "/dashboard/team-management",
         icon: (
           <svg
             width="24"
@@ -71,7 +71,7 @@ export const dashboardUserMenu: SidebarSection[] = [
     items: [
       {
         label: "Notifications",
-        href: "/dashboard/user/notification",
+        href: "/dashboard/notification",
         icon: (
           <svg
             width="24"
@@ -85,7 +85,7 @@ export const dashboardUserMenu: SidebarSection[] = [
       },
       {
         label: "Support",
-        href: "/dashboard/user/support",
+        href: "/dashboard/support",
         icon: (
           <svg
             width="24"
@@ -99,7 +99,7 @@ export const dashboardUserMenu: SidebarSection[] = [
       },
       {
         label: "Forums",
-        href: "/dashboard/user/forums",
+        href: "/dashboard/forums",
         icon: (
           <svg
             width="24"
@@ -119,7 +119,7 @@ export const dashboardUserMenu: SidebarSection[] = [
     items: [
       {
         label: "Settings",
-        href: "/dashboard/user/settings",
+        href: "/dashboard/settings",
         icon: (
           <svg
             width="20"
@@ -133,7 +133,7 @@ export const dashboardUserMenu: SidebarSection[] = [
       },
       {
         label: "Logout",
-        href: "/dashboard/user/logout",
+        href: "/dashboard/logout",
         icon: (
           <svg
             width="20"
@@ -155,7 +155,7 @@ export const dashboardDealerMenu: SidebarSection[] = [
     items: [
       {
         label: "Overview",
-        href: "/dashboard/dealer/overview",
+        href: "/dashboard/overview",
         icon: (
           <svg
             width="20"
@@ -172,7 +172,7 @@ export const dashboardDealerMenu: SidebarSection[] = [
       },
       {
         label: "Inventory",
-        href: "/dashboard/dealer/inventory",
+        href: "/dashboard/inventory",
         icon: (
           <svg
             width="20"
@@ -186,7 +186,7 @@ export const dashboardDealerMenu: SidebarSection[] = [
       },
       {
         label: "Appointment",
-        href: "/dashboard/dealer/appointment",
+        href: "/dashboard/appointment",
         icon: (
           <svg
             width="21"
@@ -203,7 +203,7 @@ export const dashboardDealerMenu: SidebarSection[] = [
       },
       {
         label: "Trade In",
-        href: "/dashboard/dealer/trade-in",
+        href: "/dashboard/trade-in",
         icon: (
           <svg
             width="21"
@@ -227,7 +227,7 @@ export const dashboardDealerMenu: SidebarSection[] = [
     items: [
       {
         label: "Notifications",
-        href: "/dashboard/dealer/notification",
+        href: "/dashboard/notification",
         icon: (
           <svg
             width="24"
@@ -241,7 +241,7 @@ export const dashboardDealerMenu: SidebarSection[] = [
       },
       {
         label: "Ask Support",
-        href: "/dashboard/dealer/support",
+        href: "/dashboard/support",
         icon: (
           <svg
             width="24"
@@ -255,7 +255,7 @@ export const dashboardDealerMenu: SidebarSection[] = [
       },
       // {
       //   label: "Forums",
-      //   href: "/dashboard/dealer/forums",
+      //   href: "/dashboard/forums",
       //   icon: (
       //     <svg
       //       width="24"
@@ -275,7 +275,7 @@ export const dashboardDealerMenu: SidebarSection[] = [
     items: [
       {
         label: "Settings",
-        href: "/dashboard/dealer/settings",
+        href: "/dashboard/settings",
         icon: (
           <svg
             width="20"
@@ -289,7 +289,7 @@ export const dashboardDealerMenu: SidebarSection[] = [
       },
       {
         label: "Logout",
-        href: "/dashboard/dealer/logout",
+        href: "/dashboard/logout",
         icon: (
           <svg
             width="20"

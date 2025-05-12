@@ -26,7 +26,7 @@ export default function useAuth(
 
     const isUserAuthenticated = isUser && key === "user" && isAuthenticated;
     const isDealerAuthenticated =
-      isDealer && key === "dealer" && isAuthenticated;
+      isDealer && key === "dealer" && isAuthenticated; 
 
     const roleAuthMap = {
       user: isUserAuthenticated,
