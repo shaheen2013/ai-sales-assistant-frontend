@@ -37,7 +37,7 @@ export const dashboardUserMenu: SidebarSection[] = [
       },
       {
         label: "Dealer Overview",
-        href: "/dashboard-overview",
+        href: "/dashboard/dealer-overview",
         icon: (
           <svg
             width="20"

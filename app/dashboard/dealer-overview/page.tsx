@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Progress } from "@/components/shadcn/progress";
 import DashboardDealerOverviewChart from "@/components/partials/dashboard/dashboard-dealer-overview-chart";
 import DashboardDealerOverviewPieChart from "@/components/partials/dashboard/dashboard-dealer-overview-pie-chart";
+import MapChart from "./components/MapChart";
 
 export const metadata = {
   title: "Dealer Overview | Teez",
@@ -64,7 +65,9 @@ function DashboardDealerOverview() {
           {/* charts */}
           <div className="xl:flex-row flex-col flex overflow-x-auto">
             {/* left */}
-            <div className="flex-1">map coming soon</div>
+            <div className="flex-1">
+              <MapChart />
+            </div>
 
             {/* right */}
             <div className="xl:w-[300px] mx-auto w-full">
