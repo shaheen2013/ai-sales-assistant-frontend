@@ -4,14 +4,6 @@ import { Button } from '@/components/shadcn/button';
 import { Input } from '@/components/shadcn/input';
 
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/shadcn/select';
-
-import {
   Form,
   FormControl,
   FormDescription,
@@ -30,7 +22,8 @@ import {
 } from 'lucide-react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { PhoneInput } from './phone-input';
+import { CountryDropdown } from './country-list-dropdown';
+import { PhoneInput } from './phoneNo-input-with-country-list';
 export default function EditProfileSection() {
   const [selectedServices, setSelectedServices] = useState<string[]>([
     'Sales',
@@ -209,17 +202,22 @@ export default function EditProfileSection() {
               <label htmlFor="country" className="text-[#555d6a]">
                 Country
               </label>
-              <Select>
-                <SelectTrigger className="border-[#d5d7da] rounded-md focus:border-[#019935] focus:ring-[#019935]">
-                  <SelectValue placeholder="Choose Country" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="us">United States</SelectItem>
-                  <SelectItem value="ca">Canada</SelectItem>
-                  <SelectItem value="uk">United Kingdom</SelectItem>
-                  <SelectItem value="au">Australia</SelectItem>
-                </SelectContent>
-              </Select>
+              <FormField
+                control={form.control}
+                name="country"
+                render={({ field }) => (
+                  <FormItem>
+                    <CountryDropdown
+                      placeholder="Select Country"
+                      defaultValue={field.value}
+                      onChange={(country) => {
+                        field.onChange(country.alpha3);
+                      }}
+                    />
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
             </div>
 
             <div className="space-y-2">
