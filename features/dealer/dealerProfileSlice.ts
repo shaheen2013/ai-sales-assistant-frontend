@@ -4,7 +4,7 @@ export const dealerProfileSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getDealerProfile: builder.query<any, void>({
       query: () => ({
-        url: `/dealer-dashboard/profile`,
+        url: '/dealer-dashboard/profile/',
         method: 'GET',
         credentials: 'include',
       }),
@@ -12,10 +12,11 @@ export const dealerProfileSlice = apiSlice.injectEndpoints({
 
     updateDealerProfile: builder.mutation<any, FormData>({
       query: (formData) => ({
-        url: '/dealer-dashboard/profile',
-        method: 'POST',
+        url: '/update-profile',
+        method: 'PATCH',
         body: formData,
         formData: true,
+        credentials: 'include',
       }),
     }),
   }),

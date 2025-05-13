@@ -35,6 +35,7 @@ import { PhoneInput } from './phoneNo-input-with-country-list';
 // Form validation schema
 const formSchema = z.object({
   name: z.string().min(1, 'Name is required'),
+  email: z.string().email('Invalid email address').min(1, 'Email is required'),
   phone_number: z.string().min(1, 'Phone number is required'),
   profile_picture: z.instanceof(File).optional(),
   street_address: z.string().optional(),
@@ -62,6 +63,8 @@ export default function EditProfileSection() {
     isError,
   } = useGetDealerProfileQuery();
 
+  console.log('dealerProfileData >>> ', dealerProfileData);
+
   const [updateDealerProfile, { isLoading: isUpdating }] =
     useUpdateDealerProfileMutation();
 
@@ -69,6 +72,7 @@ export default function EditProfileSection() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: dealerProfileData?.name || '',
+      email: dealerProfileData?.email || '',
       phone_number: dealerProfileData?.phone_number || '',
       street_address: dealerProfileData?.street_address || '',
       city: dealerProfileData?.city || '',
@@ -109,6 +113,7 @@ export default function EditProfileSection() {
 
       // Append all non-file fields
       formData.append('name', data.name);
+      formData.append('email', data.email);
       formData.append('phone_number', data.phone_number);
       formData.append('street_address', data.street_address || '');
       formData.append('city', data.city || '');
@@ -125,6 +130,7 @@ export default function EditProfileSection() {
       // Call the mutation with FormData
       const response = await updateDealerProfile(formData).unwrap();
       if (response) {
+        console.log('successs >>> ', response.detail);
         toast('success', response?.detail);
       } else {
         toast('error', 'Failed to update profile');
@@ -226,7 +232,7 @@ export default function EditProfileSection() {
                     <FormControl>
                       <Input
                         {...field}
-                        placeholder="Enter your name"
+                        placeholder="Enter your business name"
                         className="border-[#d5d7da] rounded-md focus:border-[#019935] focus:ring-[#019935]"
                       />
                     </FormControl>
@@ -243,10 +249,21 @@ export default function EditProfileSection() {
               >
                 Email <span className="text-red-500 ml-0.5">*</span>
               </label>
-              <Input
-                id="email"
-                placeholder="Email Here"
-                className="border-[#d5d7da] rounded-md focus:border-[#019935] focus:ring-[#019935]"
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        placeholder="Email Here"
+                        className="border-[#d5d7da] rounded-md focus:border-[#019935] focus:ring-[#019935]"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
             </div>
           </div>
@@ -476,6 +493,7 @@ export default function EditProfileSection() {
                 Card Information
               </h2>
               <Button
+                type="button"
                 variant="outline"
                 className="border-[#d5d7da] text-[#555d6a]"
               >
@@ -586,7 +604,7 @@ export default function EditProfileSection() {
               type="submit"
               className="bg-[#019935] hover:bg-[#018a30] text-white"
             >
-              Save Changes
+              {isUpdating ? 'Saving...' : 'Save Changes'}
             </Button>
           </div>
         </div>
