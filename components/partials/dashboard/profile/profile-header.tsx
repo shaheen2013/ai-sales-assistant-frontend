@@ -45,7 +45,7 @@ const ProfileHeader = () => {
               </div>
               <div className="flex items-center text-[#555d6a]">
                 <MapPin className="w-4 h-4 text-[#018b30] mr-2" />
-                <span>{dealerProfileData?.city}</span>
+                <span>{dealerProfileData?.city || 'N/A'}</span>
               </div>
             </div>
           </div>

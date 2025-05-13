@@ -5,7 +5,8 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/shadcn/card';
-import { Mail } from 'lucide-react';
+import { Input } from '@/components/shadcn/input';
+import { FacebookIcon } from 'lucide-react';
 
 const InviteFreindsCard = () => {
   return (
@@ -16,19 +17,20 @@ const InviteFreindsCard = () => {
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="flex flex-col items-center text-center p-2">
-          <div className="w-12 h-12 rounded-full bg-[#ecf6fe] flex items-center justify-center mb-4">
-            <Mail className="w-6 h-6 text-[#2196f3]" />
+        <div className="flex gap-4 items-stretch w-full">
+          <div className="flex-1">
+            <Input placeholder="Enter email" />
           </div>
-          <h3 className="font-medium text-gray-400 mb-2">Share with friends</h3>
-          <p className="text-sm text-gray-300 mb-4">
-            Invite your friends to join and get premium benefits
-          </p>
-          <div className="w-full">
-            <Button className="w-full bg-primary-600 text-white hover:bg-primary-700">
-              Send Invites
-            </Button>
+          <Button variant={'primary'}>Submit</Button>
+        </div>
+        <h5 className="text-base font-semibold text-gray-400 mt-4">
+          Share The Referral Link
+        </h5>
+        <div className="flex gap-4 items-stretch w-full">
+          <div className="flex-1">
+            <Input placeholder="tezzai.com/?ref=6479" />
           </div>
+          <FacebookIcon className="w-6 h-6 text-gray-400" />
         </div>
       </CardContent>
     </Card>
