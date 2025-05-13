@@ -12,10 +12,7 @@ const ProfileHeader = () => {
     <div className="relative  border rounded-2xl h-[252px] ">
       <div className=" w-full bg-[#2b3545] overflow-hidden rounded-t-2xl h-[100px]">
         <Image
-          src={
-            dealerProfileData?.profile_picture ||
-            '/images/dashboard/profile/cover-img.png'
-          }
+          src={'/images/dashboard/profile/cover-img.png'}
           alt="BMW Car House Cover"
           width={1000}
           height={300}
@@ -26,7 +23,10 @@ const ProfileHeader = () => {
         <div className=" flex items-end gap-4 flex-row ">
           <div className="rounded-lg overflow-hidden border-2 border-white shadow-sm w-[160px] h-[160px]">
             <Image
-              src="/images/dashboard/profile/bmw-car.jpg"
+              src={
+                dealerProfileData?.profile_picture ||
+                '/images/dashboard/profile/bmw-car.jpg'
+              }
               alt="BMW Logo"
               width={160}
               height={160}

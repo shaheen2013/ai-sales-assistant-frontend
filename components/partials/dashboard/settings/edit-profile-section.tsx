@@ -606,7 +606,10 @@ export default function EditProfileSection() {
               type="button"
               variant="outline"
               className="border-[#d5d7da] text-[#555d6a]"
-              onClick={() => form.reset()}
+              onClick={() => {
+                form.reset();
+                toast('success', 'Changes removed!');
+              }}
             >
               Discard
             </Button>
