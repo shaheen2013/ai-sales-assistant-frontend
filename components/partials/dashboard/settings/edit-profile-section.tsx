@@ -26,7 +26,7 @@ import {
   X,
 } from 'lucide-react';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 import { CountryDropdown } from './country-list-dropdown';
@@ -57,13 +57,10 @@ export default function EditProfileSection() {
   ]);
   const [newService, setNewService] = useState<string>('');
   const toast = useToast();
-  const {
-    data: dealerProfileData,
-    isLoading,
-    isError,
-  } = useGetDealerProfileQuery();
-
-  console.log('dealerProfileData >>> ', dealerProfileData);
+  const { data, isLoading } = useGetDealerProfileQuery(undefined, {
+    refetchOnMountOrArgChange: true,
+  });
+  const dealerProfileData = data?.data;
 
   const [updateDealerProfile, { isLoading: isUpdating }] =
     useUpdateDealerProfileMutation();
@@ -71,18 +68,33 @@ export default function EditProfileSection() {
   const form = useForm<editDealerProfileFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: dealerProfileData?.name || '',
-      email: dealerProfileData?.email || '',
-      phone_number: dealerProfileData?.phone_number || '',
-      street_address: dealerProfileData?.street_address || '',
-      city: dealerProfileData?.city || '',
-      state: dealerProfileData?.state || '',
-      country: dealerProfileData?.country || '',
-      zip_code: dealerProfileData?.zip_code || '',
-      about: dealerProfileData?.about || '',
-      // services: selectedServices,
+      name: '',
+      email: '',
+      phone_number: '',
+      street_address: '',
+      city: '',
+      state: '',
+      country: '',
+      zip_code: '',
+      about: '',
     },
   });
+
+  useEffect(() => {
+    if (dealerProfileData) {
+      form.reset({
+        name: dealerProfileData.name,
+        email: dealerProfileData.email,
+        phone_number: dealerProfileData.phone_number,
+        street_address: dealerProfileData.street_address,
+        city: dealerProfileData.city,
+        state: dealerProfileData.state,
+        country: dealerProfileData.country,
+        zip_code: dealerProfileData.zip_code,
+        about: dealerProfileData.about,
+      });
+    }
+  }, [dealerProfileData, form]);
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -130,7 +142,6 @@ export default function EditProfileSection() {
       // Call the mutation with FormData
       const response = await updateDealerProfile(formData).unwrap();
       if (response) {
-        console.log('successs >>> ', response.detail);
         toast('success', response?.detail);
       } else {
         toast('error', 'Failed to update profile');
@@ -149,7 +160,6 @@ export default function EditProfileSection() {
         <h1 className="text-2xl font-semibold text-[#2b3545] mb-6">
           Update Profile
         </h1>
-
         <div className="flex flex-col space-y-6">
           {/* Profile Image Upload */}
           <div className="flex items-center space-x-4">
