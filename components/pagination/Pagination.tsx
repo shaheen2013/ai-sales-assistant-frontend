@@ -5,16 +5,17 @@ import ReactPaginate from 'react-paginate';
 
 type PaginationPropsType = {
     page: number;
+    totalPage: number;
     onPageChange: (page: number) => void;
     className?: string;
 }
 
-const Pagination:FC<PaginationPropsType> = ({ page, onPageChange, className }) => {
+const Pagination:FC<PaginationPropsType> = ({ page, totalPage, onPageChange, className }) => {
     return (
         <ReactPaginate
             onPageChange={(pageNumber) => onPageChange(pageNumber.selected + 1)}
             forcePage={page - 1}
-            pageCount={100}
+            pageCount={totalPage}
             pageRangeDisplayed={2}
             marginPagesDisplayed={2}
             className={
@@ -26,7 +27,7 @@ const Pagination:FC<PaginationPropsType> = ({ page, onPageChange, className }) =
             pageClassName=' flex items-center justify-center rounded-lg text-gray-300 font-medium'
             pageLinkClassName='px-3.5 py-1'
             previousLabel={<ChevronLeft className='size-5 text-inherit' />}
-            previousClassName='cursor-pointer text-gray-500 hover:text-gray-700 mr-2'
+            previousClassName='cursor-pointer text-gray-500 hover:text-gray-700'
             nextLabel={<ChevronRight className='size-5 text-inherit' />}
             nextClassName='cursor-pointer text-gray-500 hover:text-gray-700'
             activeClassName='bg-primary-500 text-white'
