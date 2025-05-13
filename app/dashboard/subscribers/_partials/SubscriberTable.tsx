@@ -2,10 +2,9 @@
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/shadcn/table';
 import { ColumnDef, flexRender, getCoreRowModel, getSortedRowModel, SortingState, useReactTable } from '@tanstack/react-table';
-import React from 'react';
+import React, { useState } from 'react';
 import { SubscriberTableColumnDataType } from './SubscriberTableColumn';
-import ReactPaginate from 'react-paginate';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import Pagination from '@/components/pagination/Pagination';
 
 interface SubscriberTableProps {
     columns: ColumnDef<SubscriberTableColumnDataType, unknown>[];
@@ -16,7 +15,9 @@ const SubscriberTable = ({
     columns,
     data,
 }: SubscriberTableProps) => {
-    const [sorting, setSorting] = React.useState<SortingState>([])
+    /*--React State--*/
+    const [sorting, setSorting] = React.useState<SortingState>([]);
+    const [page, setPage] = useState<number>(1);
 
     const table = useReactTable({
         data,
@@ -78,18 +79,10 @@ const SubscriberTable = ({
                 </TableBody>
             </Table>
 
-            <ReactPaginate
-                pageCount={100}
-                pageRangeDisplayed={2}
-                marginPagesDisplayed={2}
-                className='flex items-center mt-4 justify-end'
-                pageClassName=' flex items-center justify-center rounded-lg text-gray-300 font-medium'
-                pageLinkClassName='px-3.5 py-1'
-                previousLabel={<ChevronLeft className='size-5 text-inherit' />}
-                previousClassName='cursor-pointer text-gray-500 hover:text-gray-700 mr-2'
-                nextLabel={<ChevronRight className='size-5 text-inherit' />}
-                nextClassName='cursor-pointer text-gray-500 hover:text-gray-700'
-                activeClassName='bg-primary-500 text-white'
+            <Pagination 
+                page={page}
+                onPageChange={setPage}
+                className='justify-end mt-4'
             />
         </div>
     );

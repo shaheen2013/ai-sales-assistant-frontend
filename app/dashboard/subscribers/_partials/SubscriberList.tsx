@@ -46,18 +46,18 @@ const SubscriberList = () => {
                     <SelectTrigger
                         className='max-w-fit [&>svg]:hidden [&>span]:pointer-events-auto [&>span]:text-primary-500 [&>span]:text-sm [&>span]:font-medium gap-1.5'
                     >
-                        <SelectValue placeholder='Premium Subscribers' />
+                        <SelectValue placeholder='All Subscribers' />
                         <div>
                             <ChevronDown className='size-5 text-primary-500' />
                         </div>
                     </SelectTrigger>
                     <SelectContent>
                         <SelectGroup>
-                            <SelectItem value="continental-motors">
-                                Continental Motors
+                            <SelectItem value="basic_subscribers">
+                                Basic Subscribers
                             </SelectItem>
-                            <SelectItem value="skyline-autohaus">
-                                Skyline Autohaus
+                            <SelectItem value="premium_subscribers">
+                                Premium Subscribers
                             </SelectItem>
                         </SelectGroup>
                     </SelectContent>
