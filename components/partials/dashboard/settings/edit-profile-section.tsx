@@ -82,15 +82,15 @@ export default function EditProfileSection() {
   useEffect(() => {
     if (dealerProfileData) {
       form.reset({
-        name: dealerProfileData.name,
-        email: dealerProfileData.email,
-        phone_number: dealerProfileData.phone_number,
-        street_address: dealerProfileData.street_address,
-        city: dealerProfileData.city,
-        state: dealerProfileData.state,
-        country: dealerProfileData.country,
-        zip_code: dealerProfileData.zip_code,
-        about: dealerProfileData.about,
+        name: dealerProfileData.name || '',
+        email: dealerProfileData.email || '',
+        phone_number: dealerProfileData.phone_number || '',
+        street_address: dealerProfileData.street_address || '',
+        city: dealerProfileData.city || '',
+        state: dealerProfileData.state || '',
+        country: dealerProfileData.country || '',
+        zip_code: dealerProfileData.zip_code || '',
+        about: dealerProfileData.about || '',
       });
     }
   }, [dealerProfileData, form]);
@@ -140,15 +140,17 @@ export default function EditProfileSection() {
 
       // Call the mutation with FormData
       const response = await updateDealerProfile(formData).unwrap();
-      if (response) {
-        toast('success', response?.detail);
+      if (response.success) {
+        toast('success', response.detail || 'Profile updated successfully');
       } else {
-        toast('error', 'Failed to update profile');
+        toast('error', response.detail || 'Failed to update profile');
       }
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       toast('error', 'Failed to update profile');
     }
   };
+
   if (isLoading) return <EditProfileSectionSkeleton />;
 
   return (

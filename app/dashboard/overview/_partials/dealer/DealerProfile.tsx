@@ -24,7 +24,7 @@ export default function DealerProfile() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 ">
         {/* left side */}
         <div className="md:col-span-2 space-y-6">
-          <ShortBioSection bio={dealerProfileData?.about} />
+          <ShortBioSection bio={dealerProfileData?.about || ''} />
           <ServicesOfferedSection />
           <CardInformationSection />
         </div>

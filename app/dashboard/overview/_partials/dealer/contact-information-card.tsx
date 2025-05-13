@@ -7,10 +7,27 @@ import {
 import { DealerProfileType } from '@/types/dealer-profile';
 import { LinkIcon, Mail, MapPin, Phone } from 'lucide-react';
 
-const ContactInformationCard = ({ data }: { data: DealerProfileType }) => {
-  const { email, street_address, city, state, country, phone_number, website } =
-    data;
-  console.log('data', data);
+const ContactInformationCard = ({
+  data,
+}: {
+  data: DealerProfileType['data'] | undefined;
+}) => {
+  if (!data) {
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-xl text-gray-400">
+            Contact Information
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-gray-400 font-medium">No data available</p>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  const { email, street_address, city, state, country, phone_number } = data;
   return (
     <Card>
       <CardHeader>
@@ -42,7 +59,7 @@ const ContactInformationCard = ({ data }: { data: DealerProfileType }) => {
           </div>
         </div>
         <div className="flex items-center">
-          <div className="w-8 h-8 rounded-full bg-[#e7f6ef] flex items-center justify-center mr-3 mt-0.5">
+          <div className="w-8 h-8 rounded-full bg-[#e7f6ef] flex items-center justify-center mr-3 accomplishing mt-0.5">
             <Phone className="w-4 h-4 text-[#13c56b]" />
           </div>
           <div>
@@ -55,7 +72,7 @@ const ContactInformationCard = ({ data }: { data: DealerProfileType }) => {
           </div>
           <div>
             <p className="text-gray-400 font-medium">
-              {website || 'wwww.demowebsite.com'}
+              {'wwww.demowebsite.com'}
             </p>
           </div>
         </div>

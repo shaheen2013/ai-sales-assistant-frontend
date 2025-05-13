@@ -1,4 +1,4 @@
-import Button from '@/components/button';
+import { Button } from '@/components/shadcn/button';
 import {
   Card,
   CardContent,
@@ -50,18 +50,10 @@ const CardInformationSection = () => {
             </div>
           </div>
           <div className="flex items-center space-x-2">
-            <Button
-              variant="ghost"
-              size="icon"
-              className="h-8 w-8 text-[#747b87]"
-            >
+            <Button variant="ghost" className="h-8 w-8 text-[#747b87]">
               <Edit2 className="h-4 w-4" />
             </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="h-8 w-8 text-[#747b87]"
-            >
+            <Button variant="ghost" className="h-8 w-8 text-[#747b87]">
               <Trash2 className="h-4 w-4" />
             </Button>
           </div>
