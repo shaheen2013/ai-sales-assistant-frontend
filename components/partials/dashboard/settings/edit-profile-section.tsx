@@ -1,8 +1,5 @@
 'use client';
-
 import { Button } from '@/components/shadcn/button';
-import { Input } from '@/components/shadcn/input';
-
 import {
   Form,
   FormControl,
@@ -10,6 +7,7 @@ import {
   FormItem,
   FormMessage,
 } from '@/components/shadcn/form';
+import { Input } from '@/components/shadcn/input';
 import { Textarea } from '@/components/shadcn/textarea';
 import {
   useGetDealerProfileQuery,
@@ -29,6 +27,7 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
+import EditProfileSectionSkeleton from '../skeleton/edit-profile-section-skeleton';
 import { CountryDropdown } from './country-list-dropdown';
 import { PhoneInput } from './phoneNo-input-with-country-list';
 
@@ -150,12 +149,13 @@ export default function EditProfileSection() {
       toast('error', 'Failed to update profile');
     }
   };
+  if (isLoading) return <EditProfileSectionSkeleton />;
 
   return (
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className=" p-6 bg-[#ffffff] rounded-lg border border-[#EAEBEC] shadow-sm"
+        className="p-6 bg-[#ffffff] rounded-lg border border-[#EAEBEC] shadow-sm"
       >
         <h1 className="text-2xl font-semibold text-[#2b3545] mb-6">
           Update Profile
