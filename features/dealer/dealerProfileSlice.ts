@@ -1,8 +1,9 @@
+import { DealerProfileType } from '@/types/dealer-profile';
 import { apiSlice } from '../api/apiSlice';
 
 export const dealerProfileSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getDealerProfile: builder.query<any, void>({
+    getDealerProfile: builder.query<DealerProfileType, void>({
       query: () => ({
         url: '/dealer-dashboard/profile/',
         method: 'GET',
@@ -11,7 +12,7 @@ export const dealerProfileSlice = apiSlice.injectEndpoints({
       providesTags: ['dealerProfile'],
     }),
 
-    updateDealerProfile: builder.mutation<any, FormData>({
+    updateDealerProfile: builder.mutation<DealerProfileType, FormData>({
       query: (formData) => ({
         url: '/update-profile',
         method: 'PATCH',
