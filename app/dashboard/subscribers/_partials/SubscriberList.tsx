@@ -42,7 +42,7 @@ const SubscriberList = () => {
         <div className='p-4 rounded-2xl outline outline-1 outline-offset-[-1px] outline-[#eaebec]'>
             <div className='flex items-center justify-between'>
                 <h4 className="text-gray-500 text-2xl font-semibold">Subscribers</h4>
-                <Select>
+                <Select defaultValue='all_subscribers'>
                     <SelectTrigger
                         className='max-w-fit [&>svg]:hidden [&>span]:pointer-events-auto [&>span]:text-primary-500 [&>span]:text-sm [&>span]:font-medium gap-1.5'
                     >
@@ -53,6 +53,9 @@ const SubscriberList = () => {
                     </SelectTrigger>
                     <SelectContent>
                         <SelectGroup>
+                            <SelectItem value="all_subscribers">
+                                All Subscribers
+                            </SelectItem>
                             <SelectItem value="basic_subscribers">
                                 Basic Subscribers
                             </SelectItem>
