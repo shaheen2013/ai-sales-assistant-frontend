@@ -4,6 +4,8 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { ColumnDef, flexRender, getCoreRowModel, getSortedRowModel, SortingState, useReactTable } from '@tanstack/react-table';
 import React from 'react';
 import { SubscriberTableColumnDataType } from './SubscriberTableColumn';
+import ReactPaginate from 'react-paginate';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface SubscriberTableProps {
     columns: ColumnDef<SubscriberTableColumnDataType, unknown>[];
@@ -76,7 +78,19 @@ const SubscriberTable = ({
                 </TableBody>
             </Table>
 
-            <div className="text-primary-500 text-base font-medium mt-5 select-none underline flex justify-end mr-4">View all</div>
+            <ReactPaginate
+                pageCount={100}
+                pageRangeDisplayed={2}
+                marginPagesDisplayed={2}
+                className='flex items-center mt-4 justify-end'
+                pageClassName=' flex items-center justify-center rounded-lg text-gray-300 font-medium'
+                pageLinkClassName='px-3.5 py-1'
+                previousLabel={<ChevronLeft className='size-5 text-inherit' />}
+                previousClassName='cursor-pointer text-gray-500 hover:text-gray-700 mr-2'
+                nextLabel={<ChevronRight className='size-5 text-inherit' />}
+                nextClassName='cursor-pointer text-gray-500 hover:text-gray-700'
+                activeClassName='bg-primary-500 text-white'
+            />
         </div>
     );
 };
