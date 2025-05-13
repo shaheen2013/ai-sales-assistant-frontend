@@ -632,6 +632,16 @@ export default function DashboardDealerInventory() {
       <div className="w-full">
         <div className="rounded-md border p-3">
           {/* header */}
+          <div className="dev">
+            {/*  */}
+            <div></div>
+
+            
+            <div></div>
+
+            {/* filter/sort */}
+            <div></div>
+          </div>
 
           {/* table */}
           <Table>
@@ -705,7 +715,6 @@ export default function DashboardDealerInventory() {
           </DialogHeader>
 
           {/* body */}
-
           <div>
             <hr className="pb-8" />
 
