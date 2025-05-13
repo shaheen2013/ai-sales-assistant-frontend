@@ -46,7 +46,7 @@ const formSchema = z.object({
   // services: z.array(z.string()).min(1, 'At least one service is required'),
 });
 
-export type editDealerProfileFormValues = z.infer<typeof formSchema>;
+export type TUpdateDealerProfileValues = z.infer<typeof formSchema>;
 
 export default function EditProfileSection() {
   const [profileImage, setProfileImage] = useState<File | null>(null);
@@ -64,7 +64,7 @@ export default function EditProfileSection() {
   const [updateDealerProfile, { isLoading: isUpdating }] =
     useUpdateDealerProfileMutation();
 
-  const form = useForm<editDealerProfileFormValues>({
+  const form = useForm<TUpdateDealerProfileValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: '',
@@ -118,7 +118,7 @@ export default function EditProfileSection() {
     // form.setValue('services', newServices);
   };
 
-  const onSubmit = async (data: editDealerProfileFormValues) => {
+  const onSubmit = async (data: TUpdateDealerProfileValues) => {
     try {
       const formData = new FormData();
 

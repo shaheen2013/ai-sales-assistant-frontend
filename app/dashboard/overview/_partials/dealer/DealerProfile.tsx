@@ -1,3 +1,4 @@
+'use client';
 import ProfileHeader from '@/components/partials/dashboard/profile/profile-header';
 import { Badge } from '@/components/shadcn/badge';
 import { Button } from '@/components/shadcn/button';
@@ -7,6 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/shadcn/card';
+import { useGetDealerProfileQuery } from '@/features/dealer/dealerProfileSlice';
 import {
   ArrowUpRight,
   Check,
@@ -22,6 +24,10 @@ import {
 import Image from 'next/image';
 
 export default function DealerProfile() {
+  const { data } = useGetDealerProfileQuery(undefined, {
+    refetchOnMountOrArgChange: true,
+  });
+  const dealerProfileData = data?.data;
   return (
     <div className="mx-auto bg-white rounded-lg shadow-sm overflow-hidden flex flex-col gap-6 ">
       {/* Header Section */}
@@ -36,13 +42,7 @@ export default function DealerProfile() {
             </CardHeader>
             <CardContent>
               <p className="text-gray-300 leading-relaxed">
-                At BMW Car House, we specialize in providing a premium selection
-                of new and pre-owned BMW vehicles with unbeatable deals and
-                top-tier customer service. Our expert team ensures a seamless
-                car-buying experience, offering personalized assistance,
-                financing options, and after-sales support. Whether you&apos;re
-                looking for a luxury ride or a reliable vehicle, BMW Car House
-                is your trusted destination for finding the perfect car.
+                {dealerProfileData?.about}
               </p>
             </CardContent>
           </Card>
@@ -322,7 +322,7 @@ export default function DealerProfile() {
                 </div>
                 <div>
                   <p className="text-gray-400 font-medium">
-                    hellow@carhouse.com
+                    {dealerProfileData?.email}
                   </p>
                 </div>
               </div>
@@ -332,7 +332,9 @@ export default function DealerProfile() {
                 </div>
                 <div>
                   <p className="text-gray-400 font-medium">
-                    Modern House Suites No. 187, Toronto, CA
+                    {dealerProfileData?.street_address},{' '}
+                    {dealerProfileData?.city}, {dealerProfileData?.state},{' '}
+                    {dealerProfileData?.country}
                   </p>
                 </div>
               </div>
@@ -341,7 +343,9 @@ export default function DealerProfile() {
                   <Phone className="w-4 h-4 text-[#13c56b]" />
                 </div>
                 <div>
-                  <p className="text-gray-400 font-medium">+12 3456 7890</p>
+                  <p className="text-gray-400 font-medium">
+                    {dealerProfileData?.phone_number}
+                  </p>
                 </div>
               </div>
               <div className="flex items-start">
@@ -350,8 +354,34 @@ export default function DealerProfile() {
                 </div>
                 <div>
                   <p className="text-gray-400 font-medium">
-                    https://bmwcarhouse.com
+                    {dealerProfileData?.website || 'wwww.demowebsite.com'}
                   </p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+          {/* invite your friends */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-xl text-gray-400">
+                Invite Your Friends
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="flex flex-col items-center text-center p-2">
+                <div className="w-12 h-12 rounded-full bg-[#ecf6fe] flex items-center justify-center mb-4">
+                  <Mail className="w-6 h-6 text-[#2196f3]" />
+                </div>
+                <h3 className="font-medium text-gray-400 mb-2">
+                  Share with friends
+                </h3>
+                <p className="text-sm text-gray-300 mb-4">
+                  Invite your friends to join and get premium benefits
+                </p>
+                <div className="w-full">
+                  <Button className="w-full bg-primary-600 text-white hover:bg-primary-700">
+                    Send Invites
+                  </Button>
                 </div>
               </div>
             </CardContent>

@@ -8,7 +8,7 @@ export const dealerProfileSlice = apiSlice.injectEndpoints({
         method: 'GET',
         credentials: 'include',
       }),
-      providesTags: ['DealerProfile'],
+      providesTags: ['dealerProfile'],
     }),
 
     updateDealerProfile: builder.mutation<any, FormData>({
@@ -19,7 +19,7 @@ export const dealerProfileSlice = apiSlice.injectEndpoints({
         formData: true,
         credentials: 'include',
       }),
-      invalidatesTags: ['DealerProfile'],
+      invalidatesTags: ['dealerProfile'],
     }),
   }),
 });

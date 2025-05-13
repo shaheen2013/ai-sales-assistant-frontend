@@ -1,12 +1,21 @@
+'use client';
+import { useGetDealerProfileQuery } from '@/features/dealer/dealerProfileSlice';
 import { Mail, MapPin } from 'lucide-react';
 import Image from 'next/image';
 
 const ProfileHeader = () => {
+  const { data } = useGetDealerProfileQuery(undefined, {
+    refetchOnMountOrArgChange: true,
+  });
+  const dealerProfileData = data?.data;
   return (
     <div className="relative  border rounded-2xl h-[252px] ">
       <div className=" w-full bg-[#2b3545] overflow-hidden rounded-t-2xl h-[100px]">
         <Image
-          src="/images/dashboard/profile/cover-img.png"
+          src={
+            dealerProfileData?.profile_image ||
+            '/images/dashboard/profile/cover-img.png'
+          }
           alt="BMW Car House Cover"
           width={1000}
           height={300}
@@ -27,16 +36,16 @@ const ProfileHeader = () => {
 
           <div className="">
             <h1 className="text-2xl font-semibold text-[#2b3545]">
-              BMW Car House
+              {dealerProfileData?.name}
             </h1>
             <div className="mt-2 space-y-1">
               <div className="flex items-center text-[#555d6a]">
                 <Mail className="w-4 h-4 text-[#018b30] mr-2" />
-                <span>Information 1</span>
+                <span>{dealerProfileData?.email}</span>
               </div>
               <div className="flex items-center text-[#555d6a]">
                 <MapPin className="w-4 h-4 text-[#018b30] mr-2" />
-                <span>Location</span>
+                <span>{dealerProfileData?.city}</span>
               </div>
             </div>
           </div>
