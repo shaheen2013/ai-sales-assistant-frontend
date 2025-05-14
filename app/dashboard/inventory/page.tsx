@@ -47,16 +47,14 @@ import { Input, InputCopy } from "@/components/shadcn/input";
 import { formatFileSize } from "@/lib/utils";
 
 import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/shadcn/alert-dialog";
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/shadcn/select";
 
 export default function DashboardDealerInventory() {
   const { control, handleSubmit } = useForm({
@@ -632,15 +630,55 @@ export default function DashboardDealerInventory() {
       <div className="w-full">
         <div className="rounded-md border p-3">
           {/* header */}
-          <div className="dev">
+          <div className="flex  justify-between dev">
             {/*  */}
-            <div></div>
+            <div className="flex">
+              <h2 className="text-lg font-semibold mb-4">Inventory Car List</h2>
+              <h2 className="text-lg font-semibold mb-4">Inventory Files</h2>
+            </div>
 
-            
-            <div></div>
+            {/* search */}
+            <div>
+              <Input
+                preIcon={
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="21"
+                    height="20"
+                    viewBox="0 0 21 20"
+                    fill="none"
+                  >
+                    <path
+                      d="M10.0837 18.1243C5.37533 18.1243 1.54199 14.291 1.54199 9.58268C1.54199 4.87435 5.37533 1.04102 10.0837 1.04102C14.792 1.04102 18.6253 4.87435 18.6253 9.58268C18.6253 14.291 14.792 18.1243 10.0837 18.1243ZM10.0837 2.29102C6.05866 2.29102 2.79199 5.56602 2.79199 9.58268C2.79199 13.5993 6.05866 16.8743 10.0837 16.8743C14.1087 16.8743 17.3753 13.5993 17.3753 9.58268C17.3753 5.56602 14.1087 2.29102 10.0837 2.29102Z"
+                      fill="#A2A1A7"
+                    />
+                    <path
+                      d="M18.8335 18.9576C18.6752 18.9576 18.5169 18.8992 18.3919 18.7742L16.7252 17.1076C16.4835 16.8659 16.4835 16.4659 16.7252 16.2242C16.9669 15.9826 17.3669 15.9826 17.6085 16.2242L19.2752 17.8909C19.5169 18.1326 19.5169 18.5326 19.2752 18.7742C19.1502 18.8992 18.9919 18.9576 18.8335 18.9576Z"
+                      fill="#A2A1A7"
+                    />
+                  </svg>
+                }
+              />
+            </div>
 
             {/* filter/sort */}
-            <div></div>
+            <div className="flex gap-3">
+              <Select>
+                <SelectTrigger className="w-[180px]">
+                  <SelectValue placeholder="Select a fruit" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectLabel>Fruits</SelectLabel>
+                    <SelectItem value="apple">Apple</SelectItem>
+                    <SelectItem value="banana">Banana</SelectItem>
+                    <SelectItem value="blueberry">Blueberry</SelectItem>
+                    <SelectItem value="grapes">Grapes</SelectItem>
+                    <SelectItem value="pineapple">Pineapple</SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </div>
           </div>
 
           {/* table */}
