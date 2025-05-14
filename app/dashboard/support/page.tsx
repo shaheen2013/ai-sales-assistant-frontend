@@ -26,7 +26,7 @@ export default function DashboardSupport() {
   const [status, setStatus] = useState<string>("");
 
   /*--RTK Query--*/
-  const { data: supportTicketsData } = useGetAdminAllSupportTicketsQuery({ status });
+  const { data: supportTicketsData, isFetching: supportTicketsIsFetching } = useGetAdminAllSupportTicketsQuery({ status });
 
   return (
     <div>
@@ -94,15 +94,15 @@ export default function DashboardSupport() {
         </TabsList>
 
         <TabsContent value="">
-          <SupportTable data={supportTicketsData || []} />
+          <SupportTable data={supportTicketsData || []} loading={supportTicketsIsFetching} />
         </TabsContent>
 
         <TabsContent value="open">
-          <SupportTable data={supportTicketsData || []} />
+          <SupportTable data={supportTicketsData || []} loading={supportTicketsIsFetching} />
         </TabsContent>
 
         <TabsContent value="closed">
-          <SupportTable data={supportTicketsData || []} />
+          <SupportTable data={supportTicketsData || []} loading={supportTicketsIsFetching} />
         </TabsContent>
       </Tabs>
     </div>
@@ -132,9 +132,11 @@ import { MoreHorizontal } from "lucide-react";
 import { SupportTicketType } from "@/types/supportTicketType";
 import { useGetAdminAllSupportTicketsQuery } from "@/features/admin/adminSupportSlice";
 import AdminSupportDialog from "./_partials/AdminSupportDialog";
+import Badge from "@/components/badge/Badge";
+import TableSkeleton from "@/components/skeleton/TableSkeleton";
 
-function SupportTable({data}: {data: SupportTicketType[]}) {
-  
+function SupportTable({ data, loading }: { data: SupportTicketType[], loading: boolean }) {
+
 
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -452,24 +454,26 @@ function SupportTable({data}: {data: SupportTicketType[]}) {
         );
       },
       cell: ({ row }) => {
-        const status = row.original?.status;
+        function getStatusColor(status: string) {
+          if (status.toLowerCase() === "active") {
+            return "green";
+          } else if (status.toLowerCase() === "closed") {
+            return "red";
+          } else if (status.toLowerCase() === "in_progress") {
+            return "blue";
+          } else if (status.toLowerCase() === "resolved") {
+            return "purple";
+          }
+
+          return "blue";
+        }
+        const status = row.original?.status?.split("_").join(" ");
 
         return (
-          <div className="font-medium">
-            {status === "open" && (
-              <div className="inline-flex items-center gap-2 bg-[#ECF6FE] text-[#2196F3] px-3 py-1 text-sm rounded-xl capitalize">
-                <div className="h-2 w-2 bg-[#2196F3] rounded-full"></div>
-                {status}
-              </div>
-            )}
-
-            {status === "closed" && (
-              <div className="inline-flex items-center gap-2 bg-[#FFF5EB] text-[#FFB056] px-3 py-1 text-sm rounded-xl capitalize">
-                <div className="h-2 w-2 bg-[#FFB056] rounded-full"></div>
-                {status}
-              </div>
-            )}
-          </div>
+          <Badge
+            text={status}
+            variant={getStatusColor(status)}
+          />
         );
       },
     },
@@ -615,32 +619,41 @@ function SupportTable({data}: {data: SupportTicketType[]}) {
                 ))}
               </TableHeader>
               <TableBody>
-                {table.getRowModel().rows?.length ? (
-                  table.getRowModel().rows.map((row) => (
-                    <TableRow
-                      key={row.id}
-                      data-state={row.getIsSelected() && "selected"}
-                    >
-                      {row.getVisibleCells().map((cell) => (
-                        <TableCell key={cell.id}>
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext()
-                          )}
-                        </TableCell>
-                      ))}
-                    </TableRow>
-                  ))
-                ) : (
-                  <TableRow>
-                    <TableCell
-                      colSpan={columns.length}
-                      className="h-24 text-center"
-                    >
-                      No results.
+                {
+                  loading ? <TableRow>
+                    <TableCell colSpan={7} className='space-y-2'>
+                      <TableSkeleton />
                     </TableCell>
-                  </TableRow>
-                )}
+                  </TableRow> : <>
+                    {table.getRowModel().rows?.length ? (
+                      table.getRowModel().rows.map((row) => (
+                        <TableRow
+                          key={row.id}
+                          data-state={row.getIsSelected() && "selected"}
+                        >
+                          {row.getVisibleCells().map((cell) => (
+                            <TableCell key={cell.id}>
+                              {flexRender(
+                                cell.column.columnDef.cell,
+                                cell.getContext()
+                              )}
+                            </TableCell>
+                          ))}
+                        </TableRow>
+                      ))
+                    ) : (
+                      <TableRow>
+                        <TableCell
+                          colSpan={columns.length}
+                          className="h-24 text-center"
+                        >
+                          No results.
+                        </TableCell>
+                      </TableRow>
+                    )}
+                  </>
+                }
+
               </TableBody>
             </Table>
           </div>
@@ -673,7 +686,7 @@ function SupportTable({data}: {data: SupportTicketType[]}) {
 
 
       {/* Support Dialog */}
-      <AdminSupportDialog 
+      <AdminSupportDialog
         open={openEditModal}
         onOpenChange={setOpenEditModal}
         data={currentTicket}

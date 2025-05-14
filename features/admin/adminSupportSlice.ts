@@ -9,8 +9,17 @@ export const adminSupportSlice = apiSlice.injectEndpoints({
                 url: `/admin-dashboard/support-tickets`,
                 params: queryParams,
             }),
+            providesTags: ["getAdminAllSupportTickets"],
         }),
+        updateAdminSupportTicket: builder.mutation<SupportTicketType, Record<string, any>>({
+            query: ({ticketId, data}) => ({
+                method: "PUT",
+                url: `/admin-dashboard/support-tickets/${ticketId}/status/`,
+                body: data,
+            }),
+            invalidatesTags: ["getAdminAllSupportTickets"]
+        })
     }),
 });
 
-export const { useGetAdminAllSupportTicketsQuery } = adminSupportSlice;
+export const { useGetAdminAllSupportTicketsQuery, useUpdateAdminSupportTicketMutation } = adminSupportSlice;
