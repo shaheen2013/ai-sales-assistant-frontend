@@ -21,7 +21,9 @@ const ContactInformationCard = ({
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-gray-400 font-medium">No data available</p>
+          <p className="text-gray-400 ">
+            No data available! Please update your profile.
+          </p>
         </CardContent>
       </Card>
     );

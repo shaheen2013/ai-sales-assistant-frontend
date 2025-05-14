@@ -1,5 +1,5 @@
 export type DealerProfileType = {
-  success: boolean;
+  status?: string;
   detail?: string; //for api response
   data: {
     uuid?: string; // readOnly

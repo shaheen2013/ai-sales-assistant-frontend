@@ -28,6 +28,7 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 import EditProfileSectionSkeleton from '../skeleton/edit-profile-section-skeleton';
+import { AvatarImage } from '../svg-icons';
 import { CountryDropdown } from './country-list-dropdown';
 import { PhoneInput } from './phoneNo-input-with-country-list';
 
@@ -140,10 +141,10 @@ export default function EditProfileSection() {
 
       // Call the mutation with FormData
       const response = await updateDealerProfile(formData).unwrap();
-      if (response.success) {
+      if (response) {
         toast('success', response.detail || 'Profile updated successfully');
       } else {
-        toast('error', response.detail || 'Failed to update profile');
+        toast('error', 'Failed to update profile');
       }
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
@@ -175,33 +176,57 @@ export default function EditProfileSection() {
                   className="w-full h-full rounded-full object-cover"
                 />
               ) : (
-                <svg
-                  width="40"
-                  height="40"
-                  viewBox="0 0 40 40"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="size-[100px] text-[#a4a7ae]"
-                >
-                  <path
-                    d="M20 20C24.1421 20 27.5 16.6421 27.5 12.5C27.5 8.35786 24.1421 5 20 5C15.8579 5 12.5 8.35786 12.5 12.5C12.5 16.6421 15.8579 20 20 20Z"
-                    stroke="#a4a7ae"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M33.75 35C33.75 28.7868 27.7132 23.75 20 23.75C12.2868 23.75 6.25 28.7868 6.25 35"
-                    stroke="#a4a7ae"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
+                <AvatarImage />
               )}
             </div>
-
-            <div className="flex-1 border border-[#d5d7da] rounded-lg p-4 flex flex-col items-center justify-center min-h-[120px]">
+            <div
+              className="flex-1 border border-[#d5d7da] rounded-lg p-4 flex flex-col items-center justify-center min-h-[120px] transition-all duration-200"
+              onDragOver={(e) => {
+                e.preventDefault();
+                e.currentTarget.classList.add(
+                  'border-[#019935]',
+                  'bg-[#f0f9f2]',
+                  'border-dashed',
+                  'border-2',
+                  'scale-[1.02]'
+                );
+              }}
+              onDragEnter={(e) => {
+                e.preventDefault();
+                e.currentTarget.classList.add(
+                  'border-[#019935]',
+                  'bg-[#f0f9f2]',
+                  'border-dashed',
+                  'border-2',
+                  'scale-[1.02]'
+                );
+              }}
+              onDragLeave={(e) => {
+                e.preventDefault();
+                e.currentTarget.classList.remove(
+                  'border-[#019935]',
+                  'bg-[#f0f9f2]',
+                  'border-dashed',
+                  'border-2',
+                  'scale-[1.02]'
+                );
+              }}
+              onDrop={(e) => {
+                e.preventDefault();
+                e.currentTarget.classList.remove(
+                  'border-[#019935]',
+                  'bg-[#f0f9f2]',
+                  'border-dashed',
+                  'border-2',
+                  'scale-[1.02]'
+                );
+                const file = e.dataTransfer.files[0];
+                if (file && file.type.startsWith('image/')) {
+                  setProfileImage(file);
+                  form.setValue('profile_picture', file);
+                }
+              }}
+            >
               <input
                 type="file"
                 id="profile_picture"
@@ -221,7 +246,7 @@ export default function EditProfileSection() {
                   <span className="text-[#555d6a]"> or drag and drop</span>
                 </p>
                 <p className="text-[#717882] text-sm mt-1">
-                  SVG, PNG, JPG or GIF (max. 800×400px)
+                  PNG, JPG or GIF (max. 800×400px)
                 </p>
               </label>
             </div>
@@ -571,11 +596,7 @@ export default function EditProfileSection() {
                       >
                         <path d="M9.5 1L7.5 7H5.5L7.5 1H9.5Z" fill="#00579F" />
                         <path
-                          d="M16.5 1.1C16 1 15.2 0.9 14.2 0.9C12.2 0.9 10.8 1.9 10.8 3.3C10.8 4.4 11.8 5 12.6 5.3C13.4 5.6 13.6 5.8 13.6 6.1C13.6 6.5 13.1 6.7 12.6 6.7C11.9 6.7 11.5 6.6 10.9 6.4L10.6 6.3L10.3 7.9C10.9 8.1 11.9 8.2 12.9 8.2C15 8.2 16.4 7.2 16.4 5.7C16.4 4.8 15.8 4.1 14.6 3.7C13.9 3.4 13.5 3.2 13.5 2.9C13.5 2.6 13.8 2.3 14.5 2.3C15.1 2.3 15.5 2.4 15.9 2.5L16.1 2.6L16.5 1.1Z"
-                          fill="#00579F"
-                        />
-                        <path
-                          d="M19.5 1H18C17.5 1 17.1 1.1 16.9 1.6L14.5 7H16.6C16.6 7 16.9 6.2 17 6C17.2 6 18.8 6 19.1 6C19.2 6.3 19.3 7 19.3 7H21.2L19.5 1ZM17.5 4.5C17.7 4 18.2 2.7 18.2 2.7C18.2 2.7 18.3 2.4 18.4 2.2L18.5 2.6C18.5 2.6 18.8 4.1 18.9 4.5H17.5Z"
+                          d="M16.5 1.1C16 1 15.2 0.9 14.2 0.9C12.2 0.9 10.8 1.9 10.8 3.3C10.8 4.4 11.8 5 12.6 5.3C13.4 5.6 13.6 5.8 13.6 6.1C13.6 6.5 13.1 6.7 12.6 6.7C11.9 6.7 11.5 6.6 10.9 6.4L10.6 6.3L10.3 7.9C10.9 8.1 11.9 8.2 12.9 8.2C15 8.2 16.4 7.2 16.4 5.7C16.4 4.8 15.8 4.1 14.6 3.7C13.9 3.4 13.5 3.2 13.5 2.9C13.5 2.6 13.8 2.3 14.5 2.3C15.1 2.3 15.5 2.4 15.9 2.5L16.1 2.6L16.5 1.1ZM17.5 4.5C17.7 4 18.2 2.7 18.2 2.7C18.2 2.7 18.3 2.4 18.4 2.2L18.5 2.6C18.5 2.6 18.8 4.1 18.9 4.5H17.5Z"
                           fill="#00579F"
                         />
                         <path
