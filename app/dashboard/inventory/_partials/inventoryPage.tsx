@@ -189,7 +189,7 @@ export default function DashboardDealerInventory() {
         <div className="w-full">
           <div className="rounded-md border p-3">
             {/* header */}
-            <div className="flex justify-between items-center mb-4 dev">
+            <div className="flex justify-between items-center mb-4">
               {/*  */}
               <div className="flex items-center  gap-3">
                 <h2
