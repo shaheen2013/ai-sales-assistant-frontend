@@ -18,8 +18,15 @@ export const adminSupportSlice = apiSlice.injectEndpoints({
                 body: data,
             }),
             invalidatesTags: ["getAdminAllSupportTickets"]
+        }),
+        deleteAdminSupportTicket: builder.mutation<SupportTicketType, string>({
+            query: (ticketId) => ({
+                method: "DELETE",
+                url: `/admin-dashboard/support-tickets/${ticketId}/delete/`,
+            }),
+            invalidatesTags: ["getAdminAllSupportTickets"]
         })
     }),
 });
 
-export const { useGetAdminAllSupportTicketsQuery, useUpdateAdminSupportTicketMutation } = adminSupportSlice;
+export const { useGetAdminAllSupportTicketsQuery, useUpdateAdminSupportTicketMutation, useDeleteAdminSupportTicketMutation } = adminSupportSlice;

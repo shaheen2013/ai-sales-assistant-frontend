@@ -27,9 +27,9 @@ export default function DashboardSupport() {
   const [sortBy, setSortBy] = useState<string>("");
 
   /*--RTK Query--*/
-  const { data: supportTicketsData, isFetching: supportTicketsIsFetching } = useGetAdminAllSupportTicketsQuery({ 
+  const { data: supportTicketsData, isFetching: supportTicketsIsFetching } = useGetAdminAllSupportTicketsQuery({
     status,
-    ...(sortBy && {sort_by: sortBy}) 
+    ...(sortBy && { sort_by: sortBy })
   });
 
   return (
@@ -134,20 +134,40 @@ import {
 } from "@/components/shadcn/dropdown-menu";
 import { MoreHorizontal } from "lucide-react";
 import { SupportTicketType } from "@/types/supportTicketType";
-import { useGetAdminAllSupportTicketsQuery } from "@/features/admin/adminSupportSlice";
+import { useDeleteAdminSupportTicketMutation, useGetAdminAllSupportTicketsQuery } from "@/features/admin/adminSupportSlice";
 import AdminSupportDialog from "./_partials/AdminSupportDialog";
 import Badge from "@/components/badge/Badge";
 import TableSkeleton from "@/components/skeleton/TableSkeleton";
 import SimpleSelect from "@/components/select/SimpleSelect";
+import { useToast } from "@/hooks/useToast";
+import { beautifyErrors, cn } from "@/lib/utils";
 
 function SupportTable({ data, loading, sortBy, setSortBy }: { data: SupportTicketType[], loading: boolean, sortBy: string, setSortBy: (sort: string) => void }) {
+  /*--Custom Hooks--*/
+  const toast = useToast();
+
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = useState({});
   const [openEditModal, setOpenEditModal] = useState(false);
   const [currentTicket, setCurrentTicket] = useState<SupportTicketType | null>(null);
-  
+  const [openActionDropdown, setOpenActionDropdown] = useState<number | null>(null);
+
+  /*--RTK Query--*/
+  const [deleteSupportTicket, { isLoading: deleteTicketLoading }] = useDeleteAdminSupportTicketMutation();
+
+  /*--Functions--*/
+  const handleDeleteTicket = async (id: string) => {
+    try {
+      await deleteSupportTicket(id);
+      // setOpenActionDropdown(null);
+      toast("success", "Ticket deleted successfully!");
+    } catch (err) {
+      toast("error", beautifyErrors(err));
+    }
+  };
+
 
   const columns: ColumnDef<SupportTicketType>[] = [
     {
@@ -493,7 +513,7 @@ function SupportTable({ data, loading, sortBy, setSortBy }: { data: SupportTicke
       },
       cell: ({ row }) => {
         return (
-          <DropdownMenu>
+          <DropdownMenu open={openActionDropdown === row.original.id} onOpenChange={(open) => setOpenActionDropdown(open ? row.original.id : null)}>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="h-8 w-8 p-0">
                 <span className="sr-only">Open menu</span>
@@ -520,7 +540,14 @@ function SupportTable({ data, loading, sortBy, setSortBy }: { data: SupportTicke
                 <span className="text-gray-500">Edit</span>
               </DropdownMenuItem>
 
-              <DropdownMenuItem>
+              <div onClick={() => handleDeleteTicket(row.original.ticket_id)}
+                className={
+                  cn(
+                    "relative flex cursor-default select-none items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&>svg]:size-4 [&>svg]:shrink-0 hover:bg-neutral-100",
+                    deleteTicketLoading && "cursor-not-allowed opacity-70 pointer-events-none",
+                  )
+                }
+              >
                 <svg
                   width="20"
                   height="20"
@@ -534,7 +561,7 @@ function SupportTable({ data, loading, sortBy, setSortBy }: { data: SupportTicke
                   />
                 </svg>
                 <span className="font-medium text-red-500">Delete</span>
-              </DropdownMenuItem>
+              </div>
             </DropdownMenuContent>
           </DropdownMenu>
         );
@@ -568,18 +595,18 @@ function SupportTable({ data, loading, sortBy, setSortBy }: { data: SupportTicke
         <h2 className="font-semibold text-lg text-gray-300">Support Tickets</h2>
 
         <div className="flex gap-2">
-         <SimpleSelect
-          options={[
-            {
-              label: "Time",
-              value: "created_at",
-            }
-          ]}
-          placeholder="Sort By"
-          triggerClassName="[&>span]:text-primary-500 [&>div>svg]:text-primary-500"
-          value={sortBy}
-          onChange={setSortBy}
-         />
+          <SimpleSelect
+            options={[
+              {
+                label: "Time",
+                value: "created_at",
+              }
+            ]}
+            placeholder="Sort By"
+            triggerClassName="[&>span]:text-primary-500 [&>div>svg]:text-primary-500"
+            value={sortBy}
+            onChange={setSortBy}
+          />
         </div>
       </div>
 
