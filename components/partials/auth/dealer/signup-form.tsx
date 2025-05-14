@@ -26,7 +26,7 @@ export default function SignupForm() {
 
   const [registerProgress, setRegisterProgress] = useState(0);
 
-  const [registerGoogle] = useRegisterWithGoogleMutation();
+  const [registerWithGoogle] = useRegisterWithGoogleMutation();
   const [register, { isLoading: isLoadingRegister }] =
     useRegisterDealerMutation();
 
@@ -47,10 +47,10 @@ export default function SignupForm() {
   });
 
   const handleGoogleRegister = async () => {
-    toast("error", "Google Authentication coming soon");
-    return;
+    // toast("error", "Google Authentication coming soon");
+    // return;
 
-    const { error, data } = await registerGoogle({ token: "123" });
+    const { error, data } = await registerWithGoogle({ token: "123" });
 
     if (error) {
       toast("error", beautifyErrors(error));

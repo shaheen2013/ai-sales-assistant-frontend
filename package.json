@@ -50,7 +50,7 @@
     "react": "^19.0.0",
     "react-circle-flags": "^0.0.23",
     "react-day-picker": "^9.6.7",
-    "react-dom": "^19.1.0",
+    "react-dom": "^19.0.0",
     "react-hook-form": "^7.56.3",
     "react-paginate": "^8.3.0",
     "react-phone-number-input": "^3.4.12",
