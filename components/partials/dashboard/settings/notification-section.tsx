@@ -65,7 +65,7 @@ export default function NotificationSection() {
       const response = await updateNotificationSettings(values).unwrap();
       console.log(response, 'response');
       toast('success', 'Notification settings updated successfully');
-    } catch (error) {
+    } catch (error: any) {
       toast(
         'error',
         error.data.detail || 'Failed to update notification settings'

@@ -61,7 +61,7 @@ export default function PasswordAndSecuritySection() {
         toast('success', 'Password updated successfully');
         form.reset();
       }
-    } catch (error) {
+    } catch (error: any) {
       toast('error', error.data?.detail || 'Failed to update password');
     }
   };

@@ -143,7 +143,7 @@ export default function EditProfileSection() {
       if (response) {
         toast('success', response.detail || 'Profile updated successfully');
       }
-    } catch (error) {
+    } catch (error: any) {
       toast('error', error.data.detail || 'Failed to update profile');
     }
   };
