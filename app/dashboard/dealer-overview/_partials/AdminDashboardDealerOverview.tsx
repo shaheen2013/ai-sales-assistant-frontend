@@ -178,7 +178,7 @@ function AdminDashboardDealerOverview() {
                             </h3>
 
                             <div className="flex items-center gap-4">
-                                <span className="text-gray-400 font-semibold text-3xl">4,862</span>
+                                <span className="text-gray-400 font-semibold text-3xl">{data?.paid_conversion_rate?.last_month_total || 0}</span>
 
                                 {/* badge  */}
                                 <span className="flex border items-center rounded-lg shadow px-2 py-1 gap-1">
@@ -198,7 +198,7 @@ function AdminDashboardDealerOverview() {
                                         />
                                     </svg>
 
-                                    <span className="text-[#414651] text-sm font-medium">9.2%</span>
+                                    <span className="text-[#414651] text-sm font-medium">{data?.paid_conversion_rate?.growth || 0}%</span>
                                 </span>
                             </div>
                         </div>
