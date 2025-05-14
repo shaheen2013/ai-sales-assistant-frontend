@@ -1,0 +1,133 @@
+"use client";
+
+import Button from '@/components/button';
+import SimpleSelect from '@/components/select/SimpleSelect';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/shadcn/dialog'
+import { Input, InputCopy } from '@/components/shadcn/input'
+import { Textarea } from '@/components/shadcn/textarea';
+import { SupportTicketType } from '@/types/supportTicketType';
+import moment from 'moment';
+import React, { FC } from 'react'
+
+type AdminSupportDialogPropsType = {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  data: SupportTicketType | null;
+}
+
+const AdminSupportDialog:FC<AdminSupportDialogPropsType> = ({ data, onOpenChange, open }) => {
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className='max-w-[700px] max-h-[90vh] overflow-hidden flex flex-col p-4'>
+        <DialogHeader className='text-[#717882] text-xl font-semibold flex items-center flex-row justify-between border-b border-[#eff4fa] pb-4 mb-4'>
+          <DialogTitle>Dealer Support Details</DialogTitle>
+        </DialogHeader>
+
+        <div className='overflow-auto h-full grid grid-cols-1 xl:grid-cols-2 gap-4'>
+          <div className='xl:col-span-2 grid grid-cols-12 gap-4 border-b border-[#eff4fa] pb-4'>
+            <InputCopy
+              type="input"
+              id="dealerId"
+              label='Dealer ID'
+              value={data?.dealer?.id}
+              copyText={String(data?.dealer?.id)}
+              disabled
+              wrapperClassName='col-span-12 xl:col-span-6'
+            />
+            <InputCopy
+              type="problemId"
+              id="problemId"
+              label='Problem ID'
+              value={data?.ticket_id}
+              disabled
+              wrapperClassName='col-span-12 xl:col-span-6'
+              copyText={data?.ticket_id}
+            />
+          </div>
+
+          <Input
+            placeholder={"e.g. John Doe"}
+            label='Dealer Name'
+            className='rounded-lg h-11'
+            wrapperClassName='xl:col-span-2'
+            disabled
+            value={data?.dealer?.name}
+          />
+
+          <Input
+            className='rounded-lg h-11'
+            placeholder='dealer@teez.com'
+            label='Email'
+            disabled
+            value={data?.dealer?.email}
+          />
+
+          <Input
+            className='rounded-lg h-11'
+            placeholder='+001 654 265'
+            label='Phone'
+            disabled
+            value={data?.dealer?.phone}
+          />
+          <Input
+            className='rounded-lg h-11'
+            placeholder='Today 22 Otc, 2025'
+            label='Created Date'
+            disabled
+            value={moment(data?.created_at)?.format("DD MMM, YYYY")}
+          />
+          <Input
+            className='rounded-lg h-11'
+            placeholder='06 : 00 AM'
+            label='Created Time'
+            disabled
+            value={moment(data?.created_at)?.format("hh:mm A")}
+          />
+          <Textarea
+            label='Problem Summary'
+            placeholder="Problem description"
+            className="min-h-[98px]"
+            wrapperClassName="xl:col-span-2 pb-4 border-b border-[#eff4fa]"
+            message='This is a hint text to help user.'
+            value={data?.description}
+          />
+
+          <SimpleSelect
+            options={[
+              {
+                label: "Open",
+                value: "open"
+              },
+              {
+                label: "Close",
+                value: "closed"
+              },
+              {
+                label: "In Progress",
+                value: "in_progress"
+              },
+              {
+                label: "Resolved",
+                value: "resolved"
+              }
+            ]}
+            label='Status'
+            wrapperClassName='xl:col-span-2'
+            triggerClassName='max-w-full'
+            placeholder='Select Status'
+            value={data?.status}
+          />
+        </div>
+
+        <Button
+          variant='primary'
+          className='mt-[50px] text-sm !font-medium max-w-fit [&>svg]:m-0 ml-auto'
+        >
+          Update Information
+        </Button>
+      </DialogContent>
+    </Dialog>
+  )
+}
+
+export default AdminSupportDialog
