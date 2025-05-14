@@ -122,7 +122,6 @@ export default function EditProfileSection() {
   const onSubmit = async (data: TUpdateDealerProfileValues) => {
     try {
       const formData = new FormData();
-
       // Append all non-file fields
       formData.append('name', data.name);
       formData.append('email', data.email);
@@ -143,12 +142,9 @@ export default function EditProfileSection() {
       const response = await updateDealerProfile(formData).unwrap();
       if (response) {
         toast('success', response.detail || 'Profile updated successfully');
-      } else {
-        toast('error', 'Failed to update profile');
       }
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
-      toast('error', 'Failed to update profile');
+      toast('error', error.data.detail || 'Failed to update profile');
     }
   };
 

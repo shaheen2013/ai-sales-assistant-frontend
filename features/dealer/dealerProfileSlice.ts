@@ -1,4 +1,8 @@
-import { DealerProfileType } from '@/types/dealer-profile';
+import {
+  DealerProfileType,
+  DealerUpdatePasswordType,
+} from '@/types/dealerProfileSliceType';
+
 import { apiSlice } from '../api/apiSlice';
 
 export const dealerProfileSlice = apiSlice.injectEndpoints({
@@ -22,8 +26,20 @@ export const dealerProfileSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['dealerProfile'],
     }),
+
+    updateDealerPassword: builder.mutation<DealerUpdatePasswordType, void>({
+      query: (data) => ({
+        url: '/password-change',
+        method: 'POST',
+        body: data,
+        credentials: 'include',
+      }),
+    }),
   }),
 });
 
-export const { useGetDealerProfileQuery, useUpdateDealerProfileMutation } =
-  dealerProfileSlice;
+export const {
+  useGetDealerProfileQuery,
+  useUpdateDealerProfileMutation,
+  useUpdateDealerPasswordMutation,
+} = dealerProfileSlice;

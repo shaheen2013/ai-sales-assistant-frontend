@@ -4,7 +4,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/shadcn/card';
-import { DealerProfileType } from '@/types/dealer-profile';
+import { DealerProfileType } from '@/types/dealerProfileSliceType';
 import { LinkIcon, Mail, MapPin, Phone } from 'lucide-react';
 
 const ContactInformationCard = ({
