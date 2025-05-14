@@ -3,17 +3,16 @@
 import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useSession, signIn } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { useForm, Controller } from "react-hook-form";
 
 // components
 import Button from "@/components/button";
 
+import { beautifyErrors } from "@/lib/utils";
 import { useToast } from "@/hooks/useToast";
 import { Input } from "@/components/shadcn/input";
 import { useForgotPasswordMutation } from "@/features/auth/authSlice";
-import { beautifyErrors } from "@/lib/utils";
-// import { useRegisterWithGoogleMutation } from "@/features/auth/authSlice";
 
 export default function ForgotPasswordForm() {
   const toast = useToast();
@@ -82,9 +81,6 @@ export default function ForgotPasswordForm() {
         toast("success", "Password reset link sent to your email");
         console.log("data", data);
       }
-
-      // toast("success", "Login successful");
-      // router.push("/dashboard/overview");
     } catch (error) {
       console.log(error);
       toast("error", "Something went wrong");
