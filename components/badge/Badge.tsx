@@ -55,7 +55,7 @@ const Badge: FC<BadgePropsType> = ({ variant, text, isDot = true }) => {
             }
             <div className={
                 cn(
-                    "text-xs font-medium",
+                    "text-xs font-medium capitalize",
                     colors[variant].textColor
                 )
             }>{text}</div>
