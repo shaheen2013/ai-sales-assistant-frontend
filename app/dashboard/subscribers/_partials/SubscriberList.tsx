@@ -18,14 +18,19 @@ const SubscriberList = () => {
     const [subscriberType, setSubscriberType] = useState<string>('all_subscribers');
 
     /*--RTK Query--*/
-    const { data: dealersData, isLoading: dealersLoading, isFetching: dealersFetching } = useGetDealersQuery({ offset: (page - 1) * 10, limit: 10, search, subscription_name: subscriberType });
+    const { data: dealersData, isLoading: dealersLoading, isFetching: dealersFetching } = useGetDealersQuery({
+        offset: (page - 1) * 10,
+        limit: 10,
+        search,
+        ...(subscriberType !== 'all_subscribers' && { subscription_name: subscriberType })
+    });
 
     /*--Funcions--*/
     const handleDebounceSearch = debounce((value: string) => {
         setSearch(value);
     }, 400);
 
-    console.log("dealersData?.results ", dealersData?.results )
+    console.log("dealersData?.results ", dealersData?.results)
 
     return (
         <div className='p-4 rounded-2xl outline outline-1 outline-offset-[-1px] outline-[#eaebec]'>
@@ -45,10 +50,10 @@ const SubscriberList = () => {
                             <SelectItem value="all_subscribers">
                                 All Subscribers
                             </SelectItem>
-                            <SelectItem value="basic_subscribers">
+                            <SelectItem value="basic">
                                 Basic Subscribers
                             </SelectItem>
-                            <SelectItem value="premium_subscribers">
+                            <SelectItem value="enterprise">
                                 Premium Subscribers
                             </SelectItem>
                         </SelectGroup>
