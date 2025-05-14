@@ -1,5 +1,5 @@
 export type DealerProfileType = {
-  success: boolean;
+  status?: string;
   detail?: string; //for api response
   data: {
     uuid?: string; // readOnly
@@ -29,3 +29,27 @@ export type DealerProfileType = {
     };
   };
 };
+
+export type DealerUpdatePasswordType = {
+  old_password: string;
+  new_password: string;
+};
+
+export type NotificationMethodType =
+  | 'send_email_notification'
+  | 'once_an_hour_at_most'
+  | 'never';
+export type SignInNotificationMethodType =
+  | 'most_secure'
+  | 'standard'
+  | 'dont_send';
+
+export interface DealerNotificationSettingsType {
+  notification_method: NotificationMethodType;
+  is_send_tips_and_tricks: boolean;
+  is_send_offers_and_promotions: boolean;
+  is_send_research_opportunities: boolean;
+  is_send_developer_newsletters: boolean;
+  is_send_platform_changelogs: boolean;
+  sign_in_notification_method: SignInNotificationMethodType;
+}
