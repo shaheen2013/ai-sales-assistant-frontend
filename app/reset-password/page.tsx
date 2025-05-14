@@ -5,11 +5,7 @@ export const metadata: Metadata = {
   title: "Reset Password | AI Sales Assistant",
 };
 
-export default function ResetRedirect({
-  searchParams,
-}: {
-  searchParams: { [key: string]: string };
-}) {
+export default function ResetRedirect({ searchParams }: any) {
   const { uid, token } = searchParams;
 
   // You can determine the role dynamically if needed (e.g., from cookies/session).

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 
 export const metadata = {
   title: "Team Management | Teez",
@@ -6,5 +6,9 @@ export const metadata = {
 };
 
 export default function DashboardLogout() {
-  return <div>Dashboard Logout</div>;
+  return (
+    <Suspense>
+      <div>Dashboard Logout</div>
+    </Suspense>
+  );
 }
