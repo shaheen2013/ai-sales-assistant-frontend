@@ -19,3 +19,27 @@ export type AdminDashboardResponseType = {
 
   [key: string]: any;
 }
+
+interface CountryData {
+  country: string;
+  percentage: number;
+  count: number;
+}
+
+interface DealerData {
+  last_month_total: number;
+  growth: number;
+}
+
+interface TopDealer {
+  business_name: string | null;
+  created_at: string;
+  image: string;
+}
+
+export type AdminDashboardDealerOverviewResponseType = {
+  country: CountryData[];
+  dealer: DealerData;
+  paid_dealer: DealerData;
+  top_dealer: TopDealer[];
+}

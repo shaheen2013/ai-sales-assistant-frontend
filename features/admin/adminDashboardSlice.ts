@@ -1,4 +1,4 @@
-import { AdminDashboardResponseType } from "@/types/adminDashboardSliceType";
+import { AdminDashboardDealerOverviewResponseType, AdminDashboardResponseType } from "@/types/adminDashboardSliceType";
 import { apiSlice } from "../api/apiSlice";
 
 export const adminDashboardSlice = apiSlice.injectEndpoints({
@@ -9,7 +9,13 @@ export const adminDashboardSlice = apiSlice.injectEndpoints({
         url: `/admin-dashboard/admin`,
       }),
     }),
+    getAdminDashboardDealerOverview: builder.query<AdminDashboardDealerOverviewResponseType, void>({
+      query: () => ({
+        method: "GET",
+        url: `/admin-dashboard/dealer/dealer-overview/`,
+      }),
+    })
   }),
 });
 
-export const { useGetAdminDashboardOverviewQuery } = adminDashboardSlice;
+export const { useGetAdminDashboardOverviewQuery, useGetAdminDashboardDealerOverviewQuery } = adminDashboardSlice;

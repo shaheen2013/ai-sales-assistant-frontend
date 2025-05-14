@@ -52,14 +52,13 @@ export default function AnonymousChat() {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (!email || !emailRegex.test(email)) {
-      console.log('email is invalid');
       toast('error', 'Email is invalid');
       return;
     }
 
     if (!selectedDealer) {
       toast('error', 'Please select a dealer');
-      console.log('dealer is not selected');
+
       return;
     }
 
