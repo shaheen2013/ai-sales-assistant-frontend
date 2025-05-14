@@ -1,24 +1,24 @@
-'use client';
+"use client";
 
-import { useStartChatMutation } from '@/features/chat/chatSlice';
-import { useEffect, useRef, useState } from 'react';
+import { useStartChatMutation } from "@/features/chat/chatSlice";
+import { Suspense, useEffect, useRef, useState } from "react";
 
-import ChatApp from '@/components/partials/chat/chat-interface';
+import ChatApp from "@/components/partials/chat/chat-interface";
 
 export default function AnonymousChat() {
   const messageRef = useRef<HTMLInputElement | null>(null);
   const messagesRef = useRef<HTMLDivElement | null>(null);
-  const [email, setEmail] = useState('');
-  const [selectedDealer, setSelectedDealer] = useState('');
+  const [email, setEmail] = useState("");
+  const [selectedDealer, setSelectedDealer] = useState("");
 
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([
     {
-      id: '5151',
+      id: "5151",
       isMe: false,
       message:
-        'Hello, I am Clara, from Teez AI. How can I assist you with your vehicle parts inventory today?',
-      timestamp: '2025-05-07T12:00:00Z',
+        "Hello, I am Clara, from Teez AI. How can I assist you with your vehicle parts inventory today?",
+      timestamp: "2025-05-07T12:00:00Z",
     },
   ]);
 
@@ -37,9 +37,9 @@ export default function AnonymousChat() {
 
   const handleMessageSend = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (message.trim() === '') return;
+    if (message.trim() === "") return;
     // clear the input field
-    setMessage('');
+    setMessage("");
     const newMessage = {
       id: Date.now().toString(),
       isMe: true,
@@ -52,8 +52,8 @@ export default function AnonymousChat() {
     try {
       const response = await startChat({
         message,
-        email: email || 'example@gmail.com',
-        dealer_id: 1 || 'selectedDealer', // hard coded set the dealer id for now
+        email: email || "example@gmail.com",
+        dealer_id: 1 || "selectedDealer", // hard coded set the dealer id for now
       }).unwrap();
       setMessages((prevMessages) => [
         ...prevMessages,
@@ -65,26 +65,28 @@ export default function AnonymousChat() {
         },
       ]);
     } catch (error) {
-      console.error('Failed to send message:', error);
+      console.error("Failed to send message:", error);
     }
   };
 
   return (
-    <div className="h-[calc(100vh-150px)] overflow-hidden flex flex-col justify-center">
-      <div className="flex-1">
-        <ChatApp
-          isLoading={isLoading}
-          isError={!!error}
-          message={message}
-          messages={messages}
-          onMessageChange={(e) => setMessage(e.target.value)}
-          messageRef={messageRef}
-          messagesRef={messagesRef}
-          onEmojiClick={handleEmojiClick}
-          onMessageSend={handleMessageSend}
-          selectedDealer={selectedDealer}
-        />
+    <Suspense>
+      <div className="h-[calc(100vh-150px)] overflow-hidden flex flex-col justify-center">
+        <div className="flex-1">
+          <ChatApp
+            isLoading={isLoading}
+            isError={!!error}
+            message={message}
+            messages={messages}
+            onMessageChange={(e) => setMessage(e.target.value)}
+            messageRef={messageRef}
+            messagesRef={messagesRef}
+            onEmojiClick={handleEmojiClick}
+            onMessageSend={handleMessageSend}
+            selectedDealer={selectedDealer}
+          />
+        </div>
       </div>
-    </div>
+    </Suspense>
   );
 }
