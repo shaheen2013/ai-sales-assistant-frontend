@@ -1,7 +1,5 @@
 "use client";
 
-import Image from "next/image";
-
 import {
   flexRender,
   ColumnDef,
@@ -15,46 +13,47 @@ import {
   getPaginationRowModel,
 } from "@tanstack/react-table";
 
+import Image from "next/image";
 import { MoreHorizontal } from "lucide-react";
 import { useMemo, useRef, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 
 import {
   Table,
-  TableBody,
   TableCell,
+  TableRow,
+  TableBody,
   TableHead,
   TableHeader,
-  TableRow,
 } from "@/components/shadcn/table";
 
 import {
   DropdownMenu,
-  DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  DropdownMenuContent,
 } from "@/components/shadcn/dropdown-menu";
 import { Button } from "@/components/shadcn/button";
 
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/shadcn/dialog";
-import { Input, InputCopy } from "@/components/shadcn/input";
-import { formatFileSize } from "@/lib/utils";
-
-import {
   Select,
-  SelectContent,
-  SelectGroup,
   SelectItem,
   SelectLabel,
-  SelectTrigger,
   SelectValue,
+  SelectGroup,
+  SelectTrigger,
+  SelectContent,
 } from "@/components/shadcn/select";
+
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogHeader,
+  DialogDescription,
+} from "@/components/shadcn/dialog";
+import { formatFileSize } from "@/lib/utils";
+import { Input, InputCopy } from "@/components/shadcn/input";
 
 export default function DashboardDealerInventory() {
   const { control, handleSubmit } = useForm({
@@ -630,7 +629,7 @@ export default function DashboardDealerInventory() {
       <div className="w-full">
         <div className="rounded-md border p-3">
           {/* header */}
-          <div className="flex  justify-between dev">
+          <div className="flex  justify-between">
             {/*  */}
             <div className="flex">
               <h2 className="text-lg font-semibold mb-4">Inventory Car List</h2>
