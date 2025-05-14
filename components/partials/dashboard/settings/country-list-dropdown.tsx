@@ -72,7 +72,7 @@ const CountryDropdownComponent = (
   useEffect(() => {
     if (defaultValue) {
       const initialCountry = options.find(
-        (country) => country.alpha3 === defaultValue
+        (country) => country.name === defaultValue
       );
       if (initialCountry) {
         setSelectedCountry(initialCountry);
@@ -97,7 +97,7 @@ const CountryDropdownComponent = (
   );
 
   const triggerClasses = cn(
-    'flex h-9 w-full items-center justify-between whitespace-nowrap rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:border-[#019935]  disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1',
+    'flex h-9 w-full items-center  justify-between whitespace-nowrap rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:border-[#019935]  disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1',
     slim === true && 'w-20'
   );
 
@@ -124,7 +124,7 @@ const CountryDropdownComponent = (
             )}
           </div>
         ) : (
-          <span>
+          <span className="text-gray-100">
             {slim === false ? (
               placeholder || setSelectedCountry.name
             ) : (
