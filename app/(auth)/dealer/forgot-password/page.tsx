@@ -6,8 +6,6 @@ export const metadata: Metadata = {
   title: "Forgot Password | AI Sales Assistant",
 };
 
-export default function SignUp() {
+export default function ForgotPassword() {
   return <ForgotPasswordForm />;
 }
-
-// export const dynamicPhoto = "/images/general-signup.svg";
