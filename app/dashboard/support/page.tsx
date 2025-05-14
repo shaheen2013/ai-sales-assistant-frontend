@@ -24,9 +24,13 @@ import {
 export default function DashboardSupport() {
   /*--React State--*/
   const [status, setStatus] = useState<string>("");
+  const [sortBy, setSortBy] = useState<string>("");
 
   /*--RTK Query--*/
-  const { data: supportTicketsData, isFetching: supportTicketsIsFetching } = useGetAdminAllSupportTicketsQuery({ status });
+  const { data: supportTicketsData, isFetching: supportTicketsIsFetching } = useGetAdminAllSupportTicketsQuery({ 
+    status,
+    ...(sortBy && {sort_by: sortBy}) 
+  });
 
   return (
     <div>
@@ -94,15 +98,15 @@ export default function DashboardSupport() {
         </TabsList>
 
         <TabsContent value="">
-          <SupportTable data={supportTicketsData || []} loading={supportTicketsIsFetching} />
+          <SupportTable data={supportTicketsData || []} loading={supportTicketsIsFetching} sortBy={sortBy} setSortBy={setSortBy} />
         </TabsContent>
 
         <TabsContent value="open">
-          <SupportTable data={supportTicketsData || []} loading={supportTicketsIsFetching} />
+          <SupportTable data={supportTicketsData || []} loading={supportTicketsIsFetching} sortBy={sortBy} setSortBy={setSortBy} />
         </TabsContent>
 
         <TabsContent value="closed">
-          <SupportTable data={supportTicketsData || []} loading={supportTicketsIsFetching} />
+          <SupportTable data={supportTicketsData || []} loading={supportTicketsIsFetching} sortBy={sortBy} setSortBy={setSortBy} />
         </TabsContent>
       </Tabs>
     </div>
@@ -134,16 +138,16 @@ import { useGetAdminAllSupportTicketsQuery } from "@/features/admin/adminSupport
 import AdminSupportDialog from "./_partials/AdminSupportDialog";
 import Badge from "@/components/badge/Badge";
 import TableSkeleton from "@/components/skeleton/TableSkeleton";
+import SimpleSelect from "@/components/select/SimpleSelect";
 
-function SupportTable({ data, loading }: { data: SupportTicketType[], loading: boolean }) {
-
-
+function SupportTable({ data, loading, sortBy, setSortBy }: { data: SupportTicketType[], loading: boolean, sortBy: string, setSortBy: (sort: string) => void }) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = useState({});
   const [openEditModal, setOpenEditModal] = useState(false);
   const [currentTicket, setCurrentTicket] = useState<SupportTicketType | null>(null);
+  
 
   const columns: ColumnDef<SupportTicketType>[] = [
     {
@@ -564,34 +568,18 @@ function SupportTable({ data, loading }: { data: SupportTicketType[], loading: b
         <h2 className="font-semibold text-lg text-gray-300">Support Tickets</h2>
 
         <div className="flex gap-2">
-          <DropdownMenu>
-            <DropdownMenuTrigger>
-              <div className="border flex justify-center items-center gap-2 rounded-md px-3 py-2 text-sm text-gray-300 cursor-pointer hover:bg-gray-100 transition-colors">
-                <span>Sort by</span>
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 20 20"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M2.21967 6.46967C2.51256 6.17678 2.98744 6.17678 3.28033 6.46967L10 13.1893L16.7197 6.46967C17.0126 6.17678 17.4874 6.17678 17.7803 6.46967C18.0732 6.76256 18.0732 7.23744 17.7803 7.53033L10.5303 14.7803C10.2374 15.0732 9.76256 15.0732 9.46967 14.7803L2.21967 7.53033C1.92678 7.23744 1.92678 6.76256 2.21967 6.46967Z"
-                    fill="#019935"
-                  />
-                </svg>
-              </div>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>Profile</DropdownMenuItem>
-              <DropdownMenuItem>Billing</DropdownMenuItem>
-              <DropdownMenuItem>Team</DropdownMenuItem>
-              <DropdownMenuItem>Subscription</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-
+         <SimpleSelect
+          options={[
+            {
+              label: "Time",
+              value: "created_at",
+            }
+          ]}
+          placeholder="Sort By"
+          triggerClassName="[&>span]:text-primary-500 [&>div>svg]:text-primary-500"
+          value={sortBy}
+          onChange={setSortBy}
+         />
         </div>
       </div>
 
