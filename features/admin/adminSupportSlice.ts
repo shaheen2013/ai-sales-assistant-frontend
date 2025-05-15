@@ -1,9 +1,10 @@
-import { SupportTicketType } from "@/types/supportTicketType";
+import { SupportStatusCountType, SupportTicketType } from "@/types/supportTicketType";
 import { apiSlice } from "../api/apiSlice";
+import { PaginatedResponse } from "@/types/paginatedType";
 
 export const adminSupportSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
-        getAdminAllSupportTickets: builder.query<SupportTicketType[], Record<string, any>>({
+        getAdminAllSupportTickets: builder.query<PaginatedResponse<SupportTicketType> & SupportStatusCountType, Record<string, any>>({
             query: (queryParams) => ({
                 method: "GET",
                 url: `/admin-dashboard/support-tickets`,

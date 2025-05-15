@@ -5,7 +5,7 @@ import SimpleSelect from '@/components/select/SimpleSelect';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/shadcn/dialog'
 import { Input, InputCopy } from '@/components/shadcn/input'
 import { Textarea } from '@/components/shadcn/textarea';
-import { useUpdateAdminSupportTicketMutation } from '@/features/admin/adminSupportSlice';
+import { useDeleteAdminSupportTicketMutation, useUpdateAdminSupportTicketMutation } from '@/features/admin/adminSupportSlice';
 import { useToast } from '@/hooks/useToast';
 import { beautifyErrors } from '@/lib/utils';
 import { SupportTicketType } from '@/types/supportTicketType';
@@ -36,11 +36,22 @@ const AdminSupportDialog: FC<AdminSupportDialogPropsType> = ({ data, onOpenChang
 
   /*--RTK Query--*/
   const [updateSupportTicket, { isLoading: updateSupportTicketLoading }] = useUpdateAdminSupportTicketMutation();
+  const [deleteSupportTicket, { isLoading: deleteTicketLoading }] = useDeleteAdminSupportTicketMutation();
 
   /*--Functions--*/
+  const handleDeleteTicket = async (id: string) => {
+    try {
+      await deleteSupportTicket(id);
+      toast("success", "Ticket deleted successfully!");
+      onOpenChange(false);
+    } catch (err) {
+      toast("error", beautifyErrors(err));
+    }
+  };
+
   const onSubmit = async (formData: FormDataType) => {
     try {
-      const response = await updateSupportTicket({ticketId: data?.ticket_id, data: formData}).unwrap();
+      const response = await updateSupportTicket({ ticketId: data?.ticket_id, data: formData }).unwrap();
       if (response) {
         toast("success", "Ticket updated successfully!");
         onOpenChange(false);
@@ -162,14 +173,26 @@ const AdminSupportDialog: FC<AdminSupportDialogPropsType> = ({ data, onOpenChang
               />
             </div>
 
-            <Button
-              variant='primary'
-              className='mt-[50px] text-sm !font-medium max-w-fit [&>svg]:m-0 ml-auto'
-              loading={updateSupportTicketLoading}
-              disabled={updateSupportTicketLoading}
-            >
-              Update Information
-            </Button>
+            <div className='flex items-center justify-end gap-4 mt-[50px] '>
+              <Button
+                variant='red'
+                className='text-sm !font-medium max-w-fit [&>svg]:m-0 min-w-[85px]'
+                loading={deleteTicketLoading}
+                disabled={deleteTicketLoading}
+                type="button"
+                onClick={() => handleDeleteTicket(data?.ticket_id || "")}
+              >
+                Delete
+              </Button>
+              <Button
+                variant='primary'
+                className='text-sm !font-medium max-w-fit [&>svg]:m-0 min-w-[187px]'
+                loading={updateSupportTicketLoading}
+                disabled={updateSupportTicketLoading}
+              >
+                Update Information
+              </Button>
+            </div>
           </form>
         </div>
       </DialogContent>

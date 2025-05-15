@@ -13,3 +13,12 @@ export interface SupportTicketType {
     created_at: Date,
     updated_at: Date
 }
+
+export interface SupportStatusCountType {
+    status_counter: {
+        open_count: number,
+        closed_count: number,
+        in_progress_count: number,
+        resolved_count: number
+    }
+}
