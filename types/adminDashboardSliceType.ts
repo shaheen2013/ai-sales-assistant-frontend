@@ -27,7 +27,7 @@ interface CountryData {
 }
 
 interface DealerData {
-  last_month_total: number;
+  count: number;
   growth: number;
 }
 
@@ -39,8 +39,10 @@ interface TopDealer {
 
 export type AdminDashboardDealerOverviewResponseType = {
   country: CountryData[];
-  dealer: DealerData;
   top_dealer: TopDealer[];
-  paid_dealer: DealerData;
-  paid_conversion_rate: DealerData;
+  dealer_statistics: {
+    total_dealers: DealerData;
+    paid_dealers: DealerData;
+    paid_conversion_rate: DealerData
+  }
 }
