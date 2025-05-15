@@ -21,14 +21,24 @@ import Button from "../button";
 
 interface InputProps extends React.ComponentProps<"input"> {
   error?: string;
+  label?: string;
+  wrapperClassName?: string;
   preIcon?: React.ReactNode;
   postIcon?: React.ReactNode;
 }
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, type, error, preIcon, postIcon, ...props }, ref) => {
+  ({ className, wrapperClassName, label, type, error, preIcon, postIcon, ...props }, ref) => {
     return (
-      <div>
+      <div className={wrapperClassName}>
+        {
+          label && <label
+            htmlFor={label}
+            className="text-sm mb-1.5 text-[#414651] font-medium"
+          >
+            {label}
+          </label>
+        }
         <div className="relative flex items-center justify-center">
           {preIcon && (
             <div className="absolute left-[10px] top-1/2 -translate-y-1/2">
@@ -240,8 +250,10 @@ const InputCopy = React.forwardRef<
   HTMLInputElement,
   InputProps & {
     copyText?: string;
+    label?: string;
+    wrapperClassName?: string;
   }
->(({ className, type, error, preIcon, postIcon, copyText, ...props }, ref) => {
+>(({ className, wrapperClassName, type, error, preIcon, postIcon, copyText, label, ...props }, ref) => {
   const [isCopied, setIsCopied] = useState(false);
 
   const handleCopy = () => {
@@ -253,7 +265,15 @@ const InputCopy = React.forwardRef<
   };
 
   return (
-    <div>
+    <div className={wrapperClassName}>
+      {
+        label && <label
+          htmlFor={label}
+          className="text-sm mb-1.5 text-[#414651] font-medium"
+        >
+          {label}
+        </label>
+      }
       <div className="relative flex items-center justify-center">
         <input
           type={type}

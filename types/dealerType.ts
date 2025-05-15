@@ -10,3 +10,14 @@ export interface Dealer {
     user: number;
     total_spend: number;
 }
+
+interface DealerStatisticType {
+    count: number;
+    growth: number;
+}
+
+export interface DealerStatisticsResponseType {
+    total_dealers: DealerStatisticType;
+    paid_dealers: DealerStatisticType;
+    paid_conversion_rate: DealerStatisticType
+}

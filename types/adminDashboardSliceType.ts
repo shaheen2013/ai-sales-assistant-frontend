@@ -40,6 +40,7 @@ interface TopDealer {
 export type AdminDashboardDealerOverviewResponseType = {
   country: CountryData[];
   dealer: DealerData;
-  paid_dealer: DealerData;
   top_dealer: TopDealer[];
+  paid_dealer: DealerData;
+  paid_conversion_rate: DealerData;
 }
