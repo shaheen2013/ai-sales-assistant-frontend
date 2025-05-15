@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 
 import AdminDashboardDealerOverview from "./_partials/AdminDashboardDealerOverview";
 
@@ -9,8 +9,10 @@ export const metadata = {
 
 const DealerOverviewPage = () => {
   return (
-    <AdminDashboardDealerOverview />
-  )
-}
+    <Suspense>
+      <AdminDashboardDealerOverview />
+    </Suspense>
+  );
+};
 
 export default DealerOverviewPage;

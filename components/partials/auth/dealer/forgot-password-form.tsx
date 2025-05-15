@@ -3,20 +3,23 @@
 import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useSession, signIn } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { useForm, Controller } from "react-hook-form";
 
 // components
 import Button from "@/components/button";
 
+import { beautifyErrors } from "@/lib/utils";
 import { useToast } from "@/hooks/useToast";
 import { Input } from "@/components/shadcn/input";
-// import { useRegisterWithGoogleMutation } from "@/features/auth/authSlice";
+import { useForgotPasswordMutation } from "@/features/auth/authSlice";
 
 export default function ForgotPasswordForm() {
   const toast = useToast();
   const router = useRouter();
   const { status } = useSession();
+
+  const [forgotPassword, { isLoading }] = useForgotPasswordMutation();
 
   const loading = status === "loading";
 
@@ -53,22 +56,34 @@ export default function ForgotPasswordForm() {
     try {
       const payload = {
         email: formData.email,
-        password: formData.password,
-        user_type: "dealer",
-        redirect: false,
+        // password: formData.password,
+        // user_type: "dealer",
+        // redirect: false,
       };
 
-      const loginResponse: any = await signIn("credentials", payload);
+      // const loginResponse: any = await signIn("credentials", payload);
 
-      if (!loginResponse.ok) {
-        toast("error", loginResponse.error || "Login failed");
+      // if (!loginResponse.ok) {
+      //   toast("error", loginResponse.error || "Login failed");
+      //   return;
+      // }
+
+      const { error, data } = await forgotPassword(payload);
+
+      if (error) {
+        toast("error", beautifyErrors(error));
+        console.log("error", error);
+
         return;
       }
 
-      toast("success", "Login successful");
-      router.push("/dashboard/overview");
+      if (data) {
+        toast("success", "Password reset link sent to your email");
+        console.log("data", data);
+      }
     } catch (error) {
       console.log(error);
+      toast("error", "Something went wrong");
     }
   };
 
@@ -127,8 +142,8 @@ export default function ForgotPasswordForm() {
         <Button
           variant="primary"
           className="w-full mb-3 !font-medium"
-          loading={loading}
-          disabled={loading}
+          loading={loading || isLoading}
+          disabled={loading || isLoading}
         >
           Log In
         </Button>

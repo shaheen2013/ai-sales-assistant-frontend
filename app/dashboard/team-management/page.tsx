@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 
 export const metadata = {
   title: "Team Management | Teez",
@@ -6,5 +6,9 @@ export const metadata = {
 };
 
 export default function TeamManagement() {
-  return <div>Team Management</div>;
+  return (
+    <Suspense>
+      <div>Team Management</div>
+    </Suspense>
+  );
 }

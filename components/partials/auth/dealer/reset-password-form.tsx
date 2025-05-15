@@ -2,39 +2,41 @@
 
 import React from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useSession, signIn } from "next-auth/react";
+
+import { useSession } from "next-auth/react";
 import { useForm, Controller } from "react-hook-form";
+import { useRouter, useSearchParams } from "next/navigation";
 
 // components
 import Button from "@/components/button";
 
+import { beautifyErrors } from "@/lib/utils";
 import { useToast } from "@/hooks/useToast";
 import { Input } from "@/components/shadcn/input";
-// import { useRegisterWithGoogleMutation } from "@/features/auth/authSlice";
+import { useResetPasswordMutation } from "@/features/auth/authSlice";
 
 export default function ResetPasswordForm() {
   const toast = useToast();
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { data: session, status } = useSession();
+
+  const uid = searchParams.get("uid");
+  const token = searchParams.get("token");
+
+  const [resetPassword, { isLoading }] = useResetPasswordMutation();
 
   const loading = status === "loading";
 
-  console.log("LoginForm session", session);
-
   type FormValues = {
-    name: string;
-    email: string;
     password: string;
-    terms: boolean;
+    cpassword: string;
   };
 
-  const { handleSubmit, control } = useForm<FormValues>({
+  const { handleSubmit, control, getValues } = useForm<FormValues>({
     defaultValues: {
-      name: "John",
-      email: "",
       password: "",
-      terms: true,
+      cpassword: "",
     },
   });
 
@@ -54,21 +56,35 @@ export default function ResetPasswordForm() {
   const onSubmit = async (formData: FormValues) => {
     try {
       const payload = {
-        email: formData.email,
-        password: formData.password,
-        user_type: "dealer",
-        redirect: false,
+        uid: uid,
+        token: token,
+        new_password: formData.password,
       };
 
-      const loginResponse: any = await signIn("credentials", payload);
+      const { error, data } = await resetPassword(payload);
 
-      if (!loginResponse.ok) {
-        toast("error", loginResponse.error || "Login failed");
+      if (error) {
+        toast("error", beautifyErrors(error));
+        console.log("error", error);
+
         return;
       }
 
-      toast("success", "Login successful");
-      router.push("/dashboard/overview");
+      if (data) {
+        toast("success", data?.message || "Password reset successful");
+        router.push("/dealer/login");
+        console.log("data", data);
+      }
+
+      // const loginResponse: any = await signIn("credentials", payload);
+
+      // if (!loginResponse.ok) {
+      //   toast("error", loginResponse.error || "Login failed");
+      //   return;
+      // }
+
+      // toast("success", "Login successful");
+      // router.push("/dashboard/overview");
     } catch (error) {
       console.log(error);
     }
@@ -85,25 +101,25 @@ export default function ResetPasswordForm() {
       </p>
 
       <form onSubmit={handleSubmit(onSubmit)}>
-        {/* Password */}
+        {/* password */}
         <div className="flex flex-col mb-3">
           <label
-            htmlFor="email"
+            htmlFor="password"
             className="text-sm mb-1 text-[#414651] font-medium"
           >
             Password<span className="text-primary-500">*</span>
           </label>
           <Controller
-            name="email"
+            name="password"
             control={control}
-            rules={{ required: "Email is required" }}
+            rules={{ required: "Password is required" }}
             render={({ field, formState: { errors } }) => (
               <Input
-                type="email"
-                id="email"
+                type="password"
+                id="password"
                 className="h-10"
                 placeholder="Create new password"
-                error={errors?.email?.message}
+                error={errors?.password?.message}
                 preIcon={
                   <svg
                     width="20"
@@ -124,24 +140,34 @@ export default function ResetPasswordForm() {
           />
         </div>
 
+        {/* cpassword */}
         <div className="flex flex-col mb-3">
           <label
-            htmlFor="email"
+            htmlFor="password"
             className="text-sm mb-1 text-[#414651] font-medium"
           >
             Confirm Password<span className="text-primary-500">*</span>
           </label>
           <Controller
-            name="email"
+            name="cpassword"
             control={control}
-            rules={{ required: "Email is required" }}
+            rules={{
+              required: "Confirm Password is required",
+
+              validate: (value) => {
+                if (value !== getValues("password")) {
+                  return "Passwords do not match";
+                }
+                return true;
+              },
+            }}
             render={({ field, formState: { errors } }) => (
               <Input
-                type="email"
-                id="email"
+                type="password"
+                id="password"
                 className="h-10"
-                placeholder="Confirm new password"
-                error={errors?.email?.message}
+                placeholder="Create new password"
+                error={errors?.cpassword?.message}
                 preIcon={
                   <svg
                     width="20"
@@ -166,8 +192,8 @@ export default function ResetPasswordForm() {
         <Button
           variant="primary"
           className="w-full mb-3 !font-medium"
-          loading={loading}
-          disabled={loading}
+          loading={loading || isLoading}
+          disabled={loading || isLoading}
         >
           Setup New Password
         </Button>
