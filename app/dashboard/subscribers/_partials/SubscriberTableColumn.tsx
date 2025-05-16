@@ -48,7 +48,13 @@ export const subscriberTableColumns: ColumnDef<Dealer>[] = [
     },
     {
         accessorKey: "plan_name",
-        header: "Plan Name",
+        header: () => <div className="text-center">Plan Name</div>,
+        cell: ({ row }) => {
+            const planName: string = row.getValue("plan_name");
+            return (
+                <div className="text-[#555d6a] text-sm font-semibold text-center">{planName || "N/A"}</div>
+            )
+        }
     },
     {
         accessorKey: "total_spend",

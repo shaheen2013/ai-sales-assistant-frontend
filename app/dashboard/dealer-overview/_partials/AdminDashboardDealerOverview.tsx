@@ -120,7 +120,7 @@ function AdminDashboardDealerOverview() {
                             </h3>
 
                             <div className="flex items-center mb-5 gap-4">
-                                <span className="text-gray-400 font-semibold text-3xl">{data?.dealer?.last_month_total}</span>
+                                <span className="text-gray-400 font-semibold text-3xl">{data?.dealer_statistics?.total_dealers?.count}</span>
 
                                 {/* badge  */}
                                 <span className="flex border items-center rounded-lg shadow px-2 py-1 gap-1">
@@ -140,7 +140,7 @@ function AdminDashboardDealerOverview() {
                                         />
                                     </svg>
 
-                                    <span className="text-[#414651] text-sm font-medium">{data?.dealer?.growth}%</span>
+                                    <span className="text-[#414651] text-sm font-medium">{data?.dealer_statistics?.total_dealers?.growth}%</span>
                                 </span>
                             </div>
 
@@ -149,7 +149,7 @@ function AdminDashboardDealerOverview() {
                             </h3>
 
                             <div className="flex items-center mb-5 gap-4">
-                                <span className="text-gray-400 font-semibold text-3xl">{data?.paid_dealer?.last_month_total}</span>
+                                <span className="text-gray-400 font-semibold text-3xl">{data?.dealer_statistics?.paid_dealers?.count}</span>
 
                                 {/* badge  */}
                                 <span className="flex border items-center rounded-lg shadow px-2 py-1 gap-1">
@@ -169,7 +169,7 @@ function AdminDashboardDealerOverview() {
                                         />
                                     </svg>
 
-                                    <span className="text-[#414651] text-sm font-medium">{data?.paid_dealer?.growth}%</span>
+                                    <span className="text-[#414651] text-sm font-medium">{data?.dealer_statistics?.paid_dealers?.growth}%</span>
                                 </span>
                             </div>
 
@@ -178,7 +178,7 @@ function AdminDashboardDealerOverview() {
                             </h3>
 
                             <div className="flex items-center gap-4">
-                                <span className="text-gray-400 font-semibold text-3xl">4,862</span>
+                                <span className="text-gray-400 font-semibold text-3xl">{data?.dealer_statistics?.paid_conversion_rate?.count}</span>
 
                                 {/* badge  */}
                                 <span className="flex border items-center rounded-lg shadow px-2 py-1 gap-1">
@@ -198,7 +198,7 @@ function AdminDashboardDealerOverview() {
                                         />
                                     </svg>
 
-                                    <span className="text-[#414651] text-sm font-medium">9.2%</span>
+                                    <span className="text-[#414651] text-sm font-medium">{data?.dealer_statistics?.paid_conversion_rate?.growth}%</span>
                                 </span>
                             </div>
                         </div>

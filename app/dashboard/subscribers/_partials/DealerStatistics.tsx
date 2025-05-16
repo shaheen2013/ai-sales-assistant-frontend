@@ -1,8 +1,12 @@
+"use client";
+
+import { useGetDealerStatisticsQuery } from '@/features/dealer/dealerSlice'
 import React from 'react'
 
-// type Props = {}
-
 const DealerStatistics = () => {
+    /*--RTK Query--*/
+    const { data: dealerStatistics } = useGetDealerStatisticsQuery();
+
     return (
         <div>
             {/* conversions */}
@@ -12,7 +16,7 @@ const DealerStatistics = () => {
                 </h3>
 
                 <div className="flex items-center mb-5 gap-4">
-                    <span className="text-gray-400 font-semibold text-3xl">10</span>
+                    <span className="text-gray-400 font-semibold text-3xl">{dealerStatistics?.total_dealers?.count}</span>
 
                     {/* badge  */}
                     <span className="flex border items-center rounded-lg shadow px-2 py-1 gap-1">
@@ -32,7 +36,7 @@ const DealerStatistics = () => {
                             />
                         </svg>
 
-                        <span className="text-[#414651] text-sm font-medium">12%</span>
+                        <span className="text-[#414651] text-sm font-medium">{dealerStatistics?.total_dealers?.growth}%</span>
                     </span>
                 </div>
 
@@ -41,7 +45,7 @@ const DealerStatistics = () => {
                 </h3>
 
                 <div className="flex items-center mb-5 gap-4">
-                    <span className="text-gray-400 font-semibold text-3xl">13</span>
+                    <span className="text-gray-400 font-semibold text-3xl">{dealerStatistics?.paid_dealers?.count}</span>
 
                     {/* badge  */}
                     <span className="flex border items-center rounded-lg shadow px-2 py-1 gap-1">
@@ -61,7 +65,7 @@ const DealerStatistics = () => {
                             />
                         </svg>
 
-                        <span className="text-[#414651] text-sm font-medium">13%</span>
+                        <span className="text-[#414651] text-sm font-medium">{dealerStatistics?.paid_dealers?.growth}%</span>
                     </span>
                 </div>
 
@@ -70,7 +74,7 @@ const DealerStatistics = () => {
                 </h3>
 
                 <div className="flex items-center gap-4">
-                    <span className="text-gray-400 font-semibold text-3xl">4,862</span>
+                    <span className="text-gray-400 font-semibold text-3xl">{dealerStatistics?.paid_conversion_rate?.count}</span>
 
                     {/* badge  */}
                     <span className="flex border items-center rounded-lg shadow px-2 py-1 gap-1">
@@ -90,7 +94,7 @@ const DealerStatistics = () => {
                             />
                         </svg>
 
-                        <span className="text-[#414651] text-sm font-medium">9.2%</span>
+                        <span className="text-[#414651] text-sm font-medium">{dealerStatistics?.paid_conversion_rate?.growth}%</span>
                     </span>
                 </div>
             </div>

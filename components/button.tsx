@@ -9,7 +9,8 @@ interface ButtonInterface {
     | "secondary"
     | "outline-primary"
     | "outline-black"
-    | "outline-gray";
+    | "outline-gray"
+    | "red";
   className?: string;
   disabled?: boolean;
 
@@ -29,6 +30,7 @@ export default function Button({
   const clx = classNames(
     "rounded-lg cursor-pointer py-[10px] px-6 hover:opacity-75 transition-opacity active:scale-95 transform duration-75 flex gap-2 items-center justify-center text-base font-semibold",
     { "bg-primary-500 text-white": variant === "primary" },
+    { "bg-[#d92d21] text-white": variant === "red" },
 
     { "border-2 border-primary-500": variant === "outline-primary" },
     { "border-2 border-gray-500 text-gray-500": variant === "outline-black" },
