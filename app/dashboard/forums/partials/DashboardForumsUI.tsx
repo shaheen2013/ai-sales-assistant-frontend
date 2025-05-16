@@ -98,7 +98,7 @@ export default function DashboardForumsUI() {
             <Controller
               name="newsletter"
               control={control}
-              rules={{ required: "Subject is required" }}
+              rules={{ required: "Newsletter is required" }}
               render={({ field, formState: { errors } }) => (
                 <div className="">
                   <textarea
@@ -107,7 +107,7 @@ export default function DashboardForumsUI() {
                   ></textarea>
 
                   {errors?.newsletter?.message && (
-                    <span className="text-red-500 text-sm mt-1">
+                    <span className="text-red-500 text-sm">
                       {errors?.newsletter?.message}
                     </span>
                   )}
