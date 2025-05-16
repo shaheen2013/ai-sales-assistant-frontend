@@ -14,7 +14,10 @@ const nextConfig: NextConfig = {
         hostname: "10.0.0.191",
       },
       {
-        hostname: "backend.teezai.com",
+        hostname: '147.93.144.14',
+      },
+      {
+        hostname: 'backend.teezai.com',
       },
     ],
   },

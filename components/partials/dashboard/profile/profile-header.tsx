@@ -25,7 +25,7 @@ const ProfileHeader = () => {
             <Image
               src={
                 dealerProfileData?.profile_picture ||
-                '/images/dashboard/profile/bmw-car.jpg'
+                'https://dummyimage.com/160x160/000/fff'
               }
               alt="BMW Logo"
               width={160}
@@ -36,16 +36,16 @@ const ProfileHeader = () => {
 
           <div className="">
             <h1 className="text-2xl font-semibold text-[#2b3545]">
-              {dealerProfileData?.name}
+              {dealerProfileData?.name || 'Your Business Name'}
             </h1>
             <div className="mt-2 space-y-1">
               <div className="flex items-center text-[#555d6a]">
                 <Mail className="w-4 h-4 text-[#018b30] mr-2" />
-                <span>{dealerProfileData?.email}</span>
+                <span>{dealerProfileData?.email || 'Your Business Email'}</span>
               </div>
               <div className="flex items-center text-[#555d6a]">
                 <MapPin className="w-4 h-4 text-[#018b30] mr-2" />
-                <span>{dealerProfileData?.city || 'N/A'}</span>
+                <span>{dealerProfileData?.city || 'Your Business City'}</span>
               </div>
             </div>
           </div>
