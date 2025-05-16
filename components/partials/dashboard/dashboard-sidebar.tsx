@@ -37,7 +37,7 @@ export function DashboardSidebar() {
 
   return (
     <Sidebar>
-      <SidebarContent className="">
+      <SidebarContent className="pb-[150px]">
         {/* brand */}
         <div className="flex items-center justify-center py-9 mb-6">
           <Link href="/">
