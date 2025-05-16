@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSession, signIn } from "next-auth/react";
 import { useForm, Controller } from "react-hook-form";
@@ -15,13 +16,13 @@ import { Input, InputPassword } from "@/components/shadcn/input";
 import { useRegisterWithGoogleMutation } from "@/features/auth/authSlice";
 
 export default function LoginForm() {
+  const [submitting, setSubmitting] = useState(false);
+
   const toast = useToast();
   const router = useRouter();
   const { data: session, status } = useSession();
 
   const [registerGoogle] = useRegisterWithGoogleMutation();
-
-  console.log("LoginForm status", status);
 
   const loading = status === "loading";
 
@@ -56,6 +57,8 @@ export default function LoginForm() {
 
   const onSubmit = async (formData: FormValues) => {
     try {
+      setSubmitting(true);
+
       const payload = {
         email: formData.email,
         password: formData.password,
@@ -74,10 +77,10 @@ export default function LoginForm() {
       router.push("/dashboard/overview");
     } catch (error) {
       console.log(error);
+    } finally {
+      setSubmitting(false);
     }
   };
-
-  console.log("LoginForm session", session);
 
   if (status === "authenticated" && session?.user?.user_type === "dealer") {
     router.push("/dashboard/overview");
@@ -256,8 +259,8 @@ export default function LoginForm() {
         <Button
           variant="primary"
           className="w-full mb-3 !font-medium"
-          loading={loading}
-          disabled={loading}
+          loading={loading || submitting}
+          disabled={loading || submitting}
         >
           Log In
         </Button>
