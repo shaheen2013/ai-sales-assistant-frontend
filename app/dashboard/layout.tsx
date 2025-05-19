@@ -25,7 +25,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
   // const isAuthenticated = status === "authenticated";
 
   // if (!isDealer && !isAuthenticated && !isLoading) {
-  //   router.push(`/dealer/login`);
+  //   router.push(`/login`);
   //   return null;
   // }
 

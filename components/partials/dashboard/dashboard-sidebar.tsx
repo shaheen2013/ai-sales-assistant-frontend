@@ -287,7 +287,7 @@ export function DashboardSidebar() {
 
               <DropdownMenuItem
                 onClick={() => {
-                  signOut({ callbackUrl: "/dealer/login" });
+                  signOut({ callbackUrl: "/login" });
                 }}
               >
                 Log out

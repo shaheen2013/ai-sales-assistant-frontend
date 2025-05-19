@@ -117,7 +117,7 @@ export default function DealerRegistration({
 
               <Button
                 className="bg-primary-500 text-white px-4 rounded-md w-full !py-6 text-base"
-                href="/dealer/login"
+                href="/login"
               >
                 Explore Features
               </Button>

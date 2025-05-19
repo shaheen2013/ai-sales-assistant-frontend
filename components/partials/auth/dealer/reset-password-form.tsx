@@ -72,7 +72,7 @@ export default function ResetPasswordForm() {
 
       if (data) {
         toast("success", data?.message || "Password reset successful");
-        router.push("/dealer/login");
+        router.push("/login");
         console.log("data", data);
       }
 

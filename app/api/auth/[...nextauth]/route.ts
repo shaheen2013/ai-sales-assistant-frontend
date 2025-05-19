@@ -200,7 +200,7 @@ const authOptions: AuthOptions = {
     },
   },
   pages: {
-    signIn: "/dealer/login",
+    signIn: "/login",
   },
 };
 

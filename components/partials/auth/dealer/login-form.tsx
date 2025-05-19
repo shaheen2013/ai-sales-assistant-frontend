@@ -42,7 +42,7 @@ export default function LoginForm() {
   const handleGoogleRegister = async () => {
     const data = await signIn("google", {
       redirect: false,
-      callbackUrl: `${window.location.origin}/dealer/login`,
+      callbackUrl: `${window.location.origin}/login`,
     });
 
     console.log("data", data);
@@ -267,7 +267,7 @@ export default function LoginForm() {
 
       <div className="text-center text-sm text-gray-400">
         <span>Don&apos;t have an account?</span>{" "}
-        <Link href="/dealer/signup" className="text-primary-500 font-semibold">
+        <Link href="/signup" className="text-primary-500 font-semibold">
           Sign Up
         </Link>
       </div>

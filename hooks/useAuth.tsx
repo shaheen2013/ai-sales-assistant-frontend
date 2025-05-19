@@ -42,7 +42,7 @@ export default function useAuth(
     }
 
     if (!isAuthenticated && !isLoading) {
-      router.push(key == "dealer" ? `/dealer/login` : `/user/login`);
+      router.push(key == "dealer" ? `/login` : `/user/login`);
       return null;
     }
 

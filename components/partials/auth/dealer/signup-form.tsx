@@ -51,7 +51,7 @@ export default function SignupForm() {
   const handleGoogleRegister = async () => {
     const data = await signIn("google", {
       redirect: false,
-      callbackUrl: `${window.location.origin}/dealer/signup`,
+      callbackUrl: `${window.location.origin}/signup`,
     });
 
     console.log("data", data);
@@ -119,7 +119,7 @@ export default function SignupForm() {
         progress={registerProgress}
         onClose={() => {
           setRegisterProgress(0);
-          router.push("/dealer/login");
+          router.push("/login");
         }}
       />
     );
@@ -352,7 +352,7 @@ export default function SignupForm() {
 
       <div className="text-center text-sm text-gray-400">
         <span>Already have an account?</span>{" "}
-        <Link href="/dealer/login" className="text-primary-500 font-semibold">
+        <Link href="/login" className="text-primary-500 font-semibold">
           Log in
         </Link>
       </div>
