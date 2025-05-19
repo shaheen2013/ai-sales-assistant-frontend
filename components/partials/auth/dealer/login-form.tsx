@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useSession, signIn } from "next-auth/react";
+import { useSession, signIn, signOut } from "next-auth/react";
 import { useForm, Controller } from "react-hook-form";
 
 // components
@@ -13,7 +13,6 @@ import { beautifyErrors } from "@/lib/utils";
 import { useToast } from "@/hooks/useToast";
 import { Checkbox } from "@/components/shadcn/checkbox";
 import { Input, InputPassword } from "@/components/shadcn/input";
-import { useRegisterWithGoogleMutation } from "@/features/auth/authSlice";
 
 export default function LoginForm() {
   const [submitting, setSubmitting] = useState(false);
@@ -21,8 +20,6 @@ export default function LoginForm() {
   const toast = useToast();
   const router = useRouter();
   const { data: session, status } = useSession();
-
-  const [registerGoogle] = useRegisterWithGoogleMutation();
 
   const loading = status === "loading";
 
@@ -43,14 +40,10 @@ export default function LoginForm() {
   });
 
   const handleGoogleRegister = async () => {
-    const { error, data } = await registerGoogle({ token: "123" });
-
-    if (error) {
-      toast("error", beautifyErrors(error));
-      console.log("error", beautifyErrors(error));
-
-      return;
-    }
+    const data = await signIn("google", {
+      redirect: false,
+      callbackUrl: `${window.location.origin}/dealer/login`,
+    });
 
     console.log("data", data);
   };

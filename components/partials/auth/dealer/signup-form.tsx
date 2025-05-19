@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
 import Link from "next/link";
+import { useState } from "react";
+import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useForm, Controller } from "react-hook-form";
 
@@ -23,6 +24,7 @@ import DealerRegistration from "@/components/partials/auth/dealer/dealer-registr
 export default function SignupForm() {
   const toast = useToast();
   const router = useRouter();
+  const { data: session } = useSession();
 
   const [registerProgress, setRegisterProgress] = useState(0);
 
@@ -47,19 +49,26 @@ export default function SignupForm() {
   });
 
   const handleGoogleRegister = async () => {
+    const data = await signIn("google", {
+      redirect: false,
+      callbackUrl: `${window.location.origin}/dealer/signup`,
+    });
+
+    console.log("data", data);
+
     // toast("error", "Google Authentication coming soon");
     // return;
 
-    const { error, data } = await registerWithGoogle({ token: "123" });
+    // const { error, data } = await registerWithGoogle({ token: "123" });
 
-    if (error) {
-      toast("error", beautifyErrors(error));
-      console.log("error", beautifyErrors(error));
+    // if (error) {
+    //   toast("error", beautifyErrors(error));
+    //   console.log("error", beautifyErrors(error));
 
-      return;
-    }
+    //   return;
+    // }
 
-    console.log("data", data);
+    // console.log("data", data);
   };
 
   const onSubmit = async (formData: FormValues) => {

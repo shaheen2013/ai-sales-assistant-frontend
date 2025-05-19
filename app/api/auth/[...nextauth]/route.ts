@@ -1,8 +1,37 @@
+import { JWT } from "next-auth/jwt";
 import { beautifyErrors } from "@/lib/utils";
 import NextAuth, { AuthOptions } from "next-auth";
+
+import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { jwtDecode } from "jwt-decode";
-import { JWT } from "next-auth/jwt";
+
+interface Token {
+  access: string;
+  refresh: string;
+  user: {
+    id: number;
+    last_login: string | null;
+    created_at: string;
+    updated_at: string;
+    street_address: string;
+    zip_code: string;
+    city: string;
+    state: string;
+    country: string;
+    lat: string;
+    lng: string;
+    county: string;
+    email: string;
+    name: string;
+    phone_number: string | null;
+    about: string | null;
+    profile_picture: string | null;
+    is_active: boolean;
+    is_verified: boolean;
+    uuid: string;
+    user_type: string;
+  };
+}
 
 async function refreshAccessToken(token: JWT) {
   try {
@@ -14,25 +43,61 @@ async function refreshAccessToken(token: JWT) {
       },
       method: "POST",
       body: JSON.stringify({ refresh: token.refresh }),
-    })
+    });
 
     const data = await response.json();
 
     if (!response.ok) {
-      throw data
+      throw data;
     }
 
     return {
       ...token,
       access: data.access,
       refresh: data.refresh,
-    }
-  } catch (error) {
-    console.log(error)
+    };
+  } catch (error: any) {
+    console.log("RefreshAccessTokenError => ", error.message);
     return {
       ...token,
       error: "RefreshAccessTokenError",
+    };
+  }
+}
+
+async function googleAccessToken(token: string) {
+  try {
+    const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/user-google-login`;
+
+    const response = await fetch(url, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      body: JSON.stringify({ token }),
+    });
+
+    const data = await response.json();
+
+    // console.log("data => ", data, " \n");
+    // console.log("response => ", response, " \n");
+
+    if (!response.ok) {
+      // Handle specific error status
+      console.log("GoogleAccessToken failed response =>", data);
+      return Promise.reject({
+        error: "GoogleAccessTokenFailed",
+        status: response.status,
+        data,
+      });
     }
+
+    return data;
+  } catch (error: any) {
+    console.log("GoogleAccessTokenError => ", error);
+    return {
+      error: "GoogleAccessTokenError",
+    };
   }
 }
 
@@ -78,12 +143,31 @@ const authOptions: AuthOptions = {
         }
       },
     }),
+
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID as string,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+      authorization: {
+        params: {
+          prompt: "consent",
+          access_type: "offline",
+          response_type: "code",
+        },
+      },
+    }),
   ],
   callbacks: {
-    async jwt({ token, user }) {
-      if (token.access) {
-        const decodedToken = jwtDecode(token.access);
-        token.accessTokenExpires = Number(decodedToken?.exp || 0) * 1000;
+    async jwt({ token, user, account, profile, trigger }) {
+      // Google sign-in
+      if (account?.provider === "google" && user) {
+        const response = await googleAccessToken(account?.id_token as string);
+
+        return {
+          ...token,
+          access: response.access_token,
+          refresh: response.refresh_token,
+          user: response.user,
+        };
       }
 
       if (user && "access" in user && "refresh" in user) {
@@ -92,14 +176,20 @@ const authOptions: AuthOptions = {
           access: user.access,
           refresh: user.refresh,
           user: user.user,
-        }
+        };
       }
 
-      if (Date.now() < token.accessTokenExpires) {
-        return token;
+      // Refresh only for credentials-based tokens
+      if (
+        token.access &&
+        token.refresh &&
+        token.accessTokenExpires &&
+        Date.now() > token.accessTokenExpires
+      ) {
+        return refreshAccessToken(token);
       }
 
-      return refreshAccessToken(token);
+      return token;
     },
     async session({ session, token }) {
       session.access = token.access;
@@ -108,6 +198,9 @@ const authOptions: AuthOptions = {
 
       return session;
     },
+  },
+  pages: {
+    signIn: "/dealer/login",
   },
 };
 
