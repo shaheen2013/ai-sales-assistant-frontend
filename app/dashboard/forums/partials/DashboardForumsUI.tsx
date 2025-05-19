@@ -7,7 +7,7 @@ import { useSendNewsletterMutation } from '@/features/admin/adminDashboardSlice'
 import { useToast } from '@/hooks/useToast';
 import { cn } from '@/lib/utils';
 import { Paperclip, XCircle } from 'lucide-react';
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
 type FormValues = {
@@ -35,10 +35,40 @@ export default function DashboardForumsUI() {
   const [files, setFiles] = React.useState<File[]>([]);
   const [fileError, setFileError] = React.useState<string>('');
 
+  // Add useEffect to monitor files array
+  useEffect(() => {
+    // Clear file error when no files are present
+    if (files.length === 0) {
+      setFileError('');
+    }
+  }, [files]); // Dependency on files array
+
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = event.target.files;
     if (selectedFiles) {
       const filesArray = Array.from(selectedFiles);
+
+      // Check for duplicate files
+      const duplicateFiles = filesArray.filter((newFile) =>
+        files.some(
+          (existingFile) =>
+            existingFile.name === newFile.name &&
+            existingFile.size === newFile.size
+        )
+      );
+
+      if (duplicateFiles.length > 0) {
+        setFileError(
+          `Files already selected: ${duplicateFiles
+            .map((f) => f.name)
+            .join(', ')}`
+        );
+        if (fileInputRef.current) {
+          fileInputRef.current.value = '';
+        }
+        return;
+      }
+
       setFiles((prevFiles) => [...prevFiles, ...filesArray]);
       setFileError(''); // Clear any previous file error
     }
@@ -48,7 +78,10 @@ export default function DashboardForumsUI() {
   };
 
   const handleFileRemove = (fileToRemove: File) => {
-    setFiles((prevFiles) => prevFiles.filter((file) => file !== fileToRemove));
+    setFiles((prevFiles) => {
+      const updatedFiles = prevFiles.filter((file) => file !== fileToRemove);
+      return updatedFiles;
+    });
   };
 
   const onSubmit = async (formData: FormValues) => {
@@ -60,52 +93,38 @@ export default function DashboardForumsUI() {
       }
 
       const payload = new FormData();
-
-      // Append text fields
       payload.append('subject', formData.subject);
-      if (formData.summary) {
-        payload.append('summary', formData.summary);
-      }
+      payload.append('summary', formData.summary);
 
-      // Append files - IMPORTANT: Use the same key name for all files
+      // Append files
       for (let i = 0; i < files.length; i++) {
-        payload.append(`files`, files[i]);
+        payload.append('files', files[i]);
       }
 
-      // Debug log to see what's being sent
-      console.log('Payload contents:');
-      for (const [key, value] of payload.entries()) {
-        if (value instanceof File) {
-          console.log(key, ':', {
-            name: value.name,
-            type: value.type,
-            size: value.size,
-          });
+      try {
+        await sendNewsletter(payload).unwrap();
+        toast('success', 'Newsletter sent successfully!');
+        reset();
+        setFiles([]);
+        setFileError('');
+      } catch (apiError: any) {
+        console.log('API Error:', apiError);
+        // Detailed error logging
+        if (apiError.data) {
+          const errorMessages = [];
+          for (const [key, value] of Object.entries(apiError.data)) {
+            errorMessages.push(`${key}: ${value}`);
+          }
+          toast('error', errorMessages.join(', '));
         } else {
-          console.log(key, ':', value);
+          console.log('Unknown Error:', apiError);
+          toast('error', apiError?.message || 'Failed to send newsletter');
         }
       }
-
-      const response = await sendNewsletter(payload).unwrap();
-      toast('success', 'Newsletter sent successfully!');
-      console.log(response, 'response');
-      // Reset form and files after successful submission
-      reset();
-      setFiles([]);
-      setFileError('');
-    } catch (error: any) {
-      console.error('Error details:', error);
-
-      // More detailed error handling
-      if (error.data) {
-        const errorMessages = [];
-        for (const [key, value] of Object.entries(error.data)) {
-          errorMessages.push(`${key}: ${value}`);
-        }
-        toast('error', errorMessages.join(', '));
-      } else {
-        toast('error', error?.message || 'Failed to send newsletter');
-      }
+    } catch (error) {
+      // This catch block handles any other errors (like FormData creation errors)
+      console.error('Unexpected Error:', error);
+      toast('error', 'An unexpected error occurred');
     }
   };
 
