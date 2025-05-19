@@ -47,6 +47,27 @@ export const dealerProfileSlice = apiSlice.injectEndpoints({
         credentials: 'include',
       }),
     }),
+    getDealerPricingPlans: builder.query<any, void>({
+      query: () => ({
+        url: '/stripe/subscriptions/available_plans/',
+        method: 'GET',
+      }),
+    }),
+    getCurrentSubscriptionPlan: builder.query<any, void>({
+      query: () => ({
+        url: '/stripe/subscriptions/current_subscription/',
+        method: 'GET',
+        credentials: 'include',
+      }),
+    }),
+    upgradeSubscription: builder.mutation<any, any>({
+      query: (data) => ({
+        url: '/stripe/subscriptions/upgrade_subscription/',
+        method: 'PATCH',
+        body: data,
+        credentials: 'include',
+      }),
+    }),
   }),
 });
 
@@ -55,4 +76,7 @@ export const {
   useUpdateDealerProfileMutation,
   useUpdateNotificationSettingsMutation,
   useUpdateDealerPasswordMutation,
+  useGetDealerPricingPlansQuery,
+  useGetCurrentSubscriptionPlanQuery,
+  useUpgradeSubscriptionMutation,
 } = dealerProfileSlice;
