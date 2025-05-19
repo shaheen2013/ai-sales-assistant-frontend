@@ -1,21 +1,39 @@
-import { AdminDashboardDealerOverviewResponseType, AdminDashboardResponseType } from "@/types/adminDashboardSliceType";
-import { apiSlice } from "../api/apiSlice";
+import {
+  AdminDashboardDealerOverviewResponseType,
+  AdminDashboardResponseType,
+} from '@/types/adminDashboardSliceType';
+import { apiSlice } from '../api/apiSlice';
 
 export const adminDashboardSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getAdminDashboardOverview: builder.query<AdminDashboardResponseType, void>({
       query: () => ({
-        method: "GET",
+        method: 'GET',
         url: `/admin-dashboard/admin`,
       }),
     }),
-    getAdminDashboardDealerOverview: builder.query<AdminDashboardDealerOverviewResponseType, void>({
+    getAdminDashboardDealerOverview: builder.query<
+      AdminDashboardDealerOverviewResponseType,
+      void
+    >({
       query: () => ({
-        method: "GET",
+        method: 'GET',
         url: `/admin-dashboard/dealer/dealer-overview/`,
       }),
-    })
+    }),
+    sendNewsletter: builder.mutation<void, FormData>({
+      query: (formData) => ({
+        method: 'POST',
+        url: `/admin-dashboard/newsletter/`,
+        data: formData,
+        credentials: 'include',
+      }),
+    }),
   }),
 });
 
-export const { useGetAdminDashboardOverviewQuery, useGetAdminDashboardDealerOverviewQuery } = adminDashboardSlice;
+export const {
+  useGetAdminDashboardOverviewQuery,
+  useGetAdminDashboardDealerOverviewQuery,
+  useSendNewsletterMutation,
+} = adminDashboardSlice;

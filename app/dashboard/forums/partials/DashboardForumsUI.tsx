@@ -1,31 +1,31 @@
-"use client";
+'use client';
 
-import { useRouter } from "next/navigation";
-import { useSession, signIn } from "next-auth/react";
-import { useForm, Controller } from "react-hook-form";
+import { Controller, useForm } from 'react-hook-form';
 
-import { useToast } from "@/hooks/useToast";
-import { Input, InputPassword } from "@/components/shadcn/input";
-import { Checkbox } from "@/components/shadcn/checkbox";
-import { Button } from "@/components/shadcn/button";
+import { Button } from '@/components/shadcn/button';
+import { Input } from '@/components/shadcn/input';
+import { Textarea } from '@/components/shadcn/textarea';
+import { useSendNewsletterMutation } from '@/features/admin/adminDashboardSlice';
+import { useToast } from '@/hooks/useToast';
 
 export default function DashboardForumsUI() {
   const toast = useToast();
-  const router = useRouter();
-  const { data: session, status } = useSession();
+
+  const [sendNewsletter, { isLoading }] = useSendNewsletterMutation();
 
   type FormValues = {
     subject: string;
-    newsletter: string;
+    summary: string;
   };
 
   const { handleSubmit, control } = useForm<FormValues>({
     defaultValues: {
-      subject: "",
-      newsletter: "",
+      subject: '',
+      summary: '',
     },
   });
   const onSubmit = async (formData: FormValues) => {
+    console.log({ formData });
     try {
       const payload = {};
     } catch (error) {
@@ -50,12 +50,12 @@ export default function DashboardForumsUI() {
             <Controller
               name="subject"
               control={control}
-              rules={{ required: "Subject is required" }}
+              rules={{ required: 'Subject is required' }}
               render={({ field, formState: { errors } }) => (
                 <Input
                   type="text"
                   id="email"
-                  className="h-10"
+                  className="h-10 focus:border-primary-500 "
                   placeholder="Your subject Here..."
                   error={errors?.subject?.message}
                   {...field}
@@ -96,19 +96,19 @@ export default function DashboardForumsUI() {
             </label>
 
             <Controller
-              name="newsletter"
+              name="summary"
               control={control}
-              rules={{ required: "Newsletter is required" }}
+              rules={{ required: 'Newsletter is required' }}
               render={({ field, formState: { errors } }) => (
                 <div className="">
-                  <textarea
-                    className="border rounded-lg border-[#D5D7DA] h-[300px] p-3 text-sm w-full"
+                  <Textarea
+                    className="border rounded-lg  focus:border-primary-500 h-[300px] p-3 text-sm w-full"
                     placeholder="Newsletter description here..."
-                  ></textarea>
-
-                  {errors?.newsletter?.message && (
+                    {...field}
+                  />
+                  {errors?.summary?.message && (
                     <span className="text-red-500 text-sm">
-                      {errors?.newsletter?.message}
+                      {errors?.summary?.message}
                     </span>
                   )}
                 </div>
@@ -122,7 +122,7 @@ export default function DashboardForumsUI() {
         {/* sign up button */}
         <div className="bg-gray-50 p-5 rounded-b-xl flex items-end justify-end">
           <Button variant="primary" className="!font-medium">
-            Send Newsletter{" "}
+            Send Newsletter{' '}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="20"
