@@ -24,8 +24,9 @@ export const adminDashboardSlice = apiSlice.injectEndpoints({
     sendNewsletter: builder.mutation<void, FormData>({
       query: (formData) => ({
         method: 'POST',
-        url: `/admin-dashboard/newsletter/`,
-        data: formData,
+        url: `/admin-dashboard/news-letter/`,
+        body: formData,
+        formData: true,
         credentials: 'include',
       }),
     }),
