@@ -154,15 +154,15 @@ export default function EditProfileSection() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="p-6 bg-[#ffffff] rounded-lg border border-[#EAEBEC] shadow-sm"
+        className="p-3 sm:p-6 bg-[#ffffff] rounded-lg border border-[#EAEBEC] shadow-sm"
       >
-        <h1 className="text-2xl font-semibold text-[#2b3545] mb-6">
+        <h1 className="text-xl sm:text-2xl font-semibold text-[#2b3545] mb-4 sm:mb-6">
           Update Profile
         </h1>
-        <div className="flex flex-col space-y-6">
+        <div className="flex flex-col space-y-4 sm:space-y-6">
           {/* Profile Image Upload */}
-          <div className="flex items-center space-x-4">
-            <div className="size-[130px] bg-[#f5f5f5] rounded-full flex items-center justify-center">
+          <div className="flex flex-col sm:flex-row items-center gap-4">
+            <div className="size-[100px] sm:size-[130px] bg-[#f5f5f5] rounded-full flex items-center justify-center">
               {profileImage ? (
                 <Image
                   src={URL.createObjectURL(profileImage)}
@@ -176,7 +176,7 @@ export default function EditProfileSection() {
               )}
             </div>
             <div
-              className="flex-1 border border-[#d5d7da] rounded-lg p-4 flex flex-col items-center justify-center min-h-[120px] transition-all duration-200"
+              className="flex-1 w-full border border-[#d5d7da] rounded-lg p-3 sm:p-4 flex flex-col items-center justify-center min-h-[100px] sm:min-h-[120px] transition-all duration-200"
               onDragOver={(e) => {
                 e.preventDefault();
                 e.currentTarget.classList.add(
@@ -235,13 +235,13 @@ export default function EditProfileSection() {
                 className="cursor-pointer flex flex-col items-center"
               >
                 <Upload className="h-5 w-5 text-[#019935] mb-2" />
-                <p className="text-center">
+                <p className="text-center text-sm sm:text-base">
                   <span className="text-[#019935] font-medium">
                     Click to upload
                   </span>
                   <span className="text-[#555d6a]"> or drag and drop</span>
                 </p>
-                <p className="text-[#717882] text-sm mt-1">
+                <p className="text-[#717882] text-xs sm:text-sm mt-1">
                   PNG, JPG or GIF (max. 800×400px)
                 </p>
               </label>
@@ -249,11 +249,11 @@ export default function EditProfileSection() {
           </div>
 
           {/* Form Fields - First Row */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-2">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+            <div className="space-y-1 sm:space-y-2">
               <label
                 htmlFor="name"
-                className="text-[#555d6a] flex items-center"
+                className="text-[#555d6a] flex items-center text-sm sm:text-base"
               >
                 Name <span className="text-red-500 ml-0.5">*</span>
               </label>
@@ -275,10 +275,10 @@ export default function EditProfileSection() {
               />
             </div>
 
-            <div className="space-y-2">
+            <div className="space-y-1 sm:space-y-2">
               <label
                 htmlFor="email"
-                className="text-[#555d6a] flex items-center"
+                className="text-[#555d6a] flex items-center text-sm sm:text-base"
               >
                 Email <span className="text-red-500 ml-0.5">*</span>
               </label>
@@ -302,11 +302,11 @@ export default function EditProfileSection() {
           </div>
 
           {/* Form Fields - Second Row */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-2">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+            <div className="space-y-1 sm:space-y-2">
               <label
                 htmlFor="phone_number"
-                className="text-[#555d6a] flex items-center"
+                className="text-[#555d6a] flex items-center text-sm sm:text-base"
               >
                 Phone Number <span className="text-red-500 ml-0.5">*</span>
               </label>
@@ -329,8 +329,11 @@ export default function EditProfileSection() {
               />
             </div>
 
-            <div className="space-y-2">
-              <label htmlFor="street_address" className="text-[#555d6a]">
+            <div className="space-y-1 sm:space-y-2">
+              <label
+                htmlFor="street_address"
+                className="text-[#555d6a] text-sm sm:text-base"
+              >
                 Street
               </label>
               <FormField
@@ -353,9 +356,12 @@ export default function EditProfileSection() {
           </div>
 
           {/* Form Fields - Third Row */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-2">
-              <label htmlFor="city" className="text-[#555d6a]">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+            <div className="space-y-1 sm:space-y-2">
+              <label
+                htmlFor="city"
+                className="text-[#555d6a] text-sm sm:text-base"
+              >
                 City
               </label>
               <FormField
@@ -376,8 +382,11 @@ export default function EditProfileSection() {
               />
             </div>
 
-            <div className="space-y-2">
-              <label htmlFor="state" className="text-[#555d6a]">
+            <div className="space-y-1 sm:space-y-2">
+              <label
+                htmlFor="state"
+                className="text-[#555d6a] text-sm sm:text-base"
+              >
                 State
               </label>
               <FormField
@@ -400,9 +409,12 @@ export default function EditProfileSection() {
           </div>
 
           {/* Form Fields - Fourth Row */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-2">
-              <label htmlFor="country" className="text-[#555d6a]">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+            <div className="space-y-1 sm:space-y-2">
+              <label
+                htmlFor="country"
+                className="text-[#555d6a] text-sm sm:text-base"
+              >
                 Country
               </label>
               <FormField
@@ -423,8 +435,11 @@ export default function EditProfileSection() {
               />
             </div>
 
-            <div className="space-y-2">
-              <label htmlFor="zip_code" className="text-[#555d6a]">
+            <div className="space-y-1 sm:space-y-2">
+              <label
+                htmlFor="zip_code"
+                className="text-[#555d6a] text-sm sm:text-base"
+              >
                 Zip Code
               </label>
               <FormField
@@ -447,11 +462,11 @@ export default function EditProfileSection() {
           </div>
 
           {/* Form Fields - Fifth Row */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-2">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+            <div className="space-y-1 sm:space-y-2">
               <label
                 htmlFor="about"
-                className="text-[#555d6a] flex items-center"
+                className="text-[#555d6a] flex items-center text-sm sm:text-base"
               >
                 Short Bio
                 <CircleHelp className="h-4 w-4 ml-1 text-[#a4a7ae]" />
@@ -465,39 +480,41 @@ export default function EditProfileSection() {
                       <Textarea
                         {...field}
                         placeholder="Enter your self"
-                        className="focus:border-[#019935] min-h-[120px]"
+                        className="focus:border-[#019935] min-h-[100px] sm:min-h-[120px]"
                       />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              <p className="text-[#717882] text-sm">
+              <p className="text-[#717882] text-xs sm:text-sm">
                 Enter your short bio here
               </p>
             </div>
 
-            <div className="space-y-2">
+            <div className="space-y-1 sm:space-y-2">
               <label
                 htmlFor="services"
-                className="text-[#555d6a] flex items-center"
+                className="text-[#555d6a] flex items-center text-sm sm:text-base"
               >
                 Services Offered <span className="text-red-500 ml-0.5">*</span>
                 <CircleHelp className="h-4 w-4 ml-1 text-[#a4a7ae]" />
               </label>
-              <div className="border border-[#d5d7da] rounded-md p-2 min-h-[120px]">
+              <div className="border border-[#d5d7da] rounded-md p-2 min-h-[100px] sm:min-h-[120px]">
                 <div className="flex flex-wrap gap-2 mb-2">
                   {selectedServices.map((service) => (
                     <div
                       key={service}
                       className="flex items-center bg-[#f5f5f5] rounded-md px-2 py-1"
                     >
-                      <span className="text-[#555d6a]">{service}</span>
+                      <span className="text-[#555d6a] text-xs sm:text-sm">
+                        {service}
+                      </span>
                       <button
                         onClick={() => removeService(service)}
                         className="ml-1 text-[#555d6a] hover:text-[#2b3545]"
                       >
-                        <X className="h-4 w-4" />
+                        <X className="h-3 w-3 sm:h-4 sm:w-4" />
                       </button>
                     </div>
                   ))}
@@ -511,42 +528,45 @@ export default function EditProfileSection() {
                       }
                     }}
                     placeholder="Test Drive"
-                    className="border-none focus:ring-0 p-0 h-8 text-[#555d6a]"
+                    className="border-none focus:ring-0 p-0 h-8 text-[#555d6a] text-xs sm:text-sm"
                   />
                 </div>
               </div>
-              <p className="text-[#717882] text-sm">Your service you offered</p>
+              <p className="text-[#717882] text-xs sm:text-sm">
+                Your service you offered
+              </p>
             </div>
           </div>
 
           {/* Card Information */}
-          <div className="mt-6">
+          <div className="mt-4 sm:mt-6">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-lg font-medium text-[#2b3545]">
+              <h2 className="text-base sm:text-lg font-medium text-[#2b3545]">
                 Card Information
               </h2>
               <Button
                 type="button"
                 variant="outline"
-                className="border-[#d5d7da] text-[#555d6a]"
+                className="border-[#d5d7da] text-[#555d6a] text-xs sm:text-sm px-2 sm:px-4 py-1 sm:py-2"
               >
                 <span className="mr-1">+</span> Add Card
               </Button>
             </div>
 
             {/* Mastercard */}
-            <div className="border-t border-[#d5d7da] py-4">
+            <div className="border-t border-[#d5d7da] py-3 sm:py-4">
               <div className="flex justify-between items-center">
                 <div className="flex items-center">
-                  <ChevronRight className="h-5 w-5 text-[#555d6a]" />
-                  <div className="w-10 h-6 mx-3 flex items-center justify-center">
-                    <div className="w-8 h-5 bg-[#f5f5f5] rounded flex items-center justify-center">
+                  <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5 text-[#555d6a]" />
+                  <div className="w-8 h-5 sm:w-10 sm:h-6 mx-2 sm:mx-3 flex items-center justify-center">
+                    <div className="w-6 h-4 sm:w-8 sm:h-5 bg-[#f5f5f5] rounded flex items-center justify-center">
                       <svg
                         width="24"
                         height="16"
                         viewBox="0 0 24 16"
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"
+                        className="w-5 h-3 sm:w-6 sm:h-4"
                       >
                         <rect width="24" height="16" rx="2" fill="white" />
                         <circle cx="9" cy="8" r="4" fill="#EB001B" />
@@ -561,34 +581,39 @@ export default function EditProfileSection() {
                     </div>
                   </div>
                   <div>
-                    <p className="font-medium text-[#2b3545]">Mastercard</p>
-                    <p className="text-sm text-[#717882]">Expires Apr 2028</p>
+                    <p className="font-medium text-[#2b3545] text-xs sm:text-base">
+                      Mastercard
+                    </p>
+                    <p className="text-xs sm:text-sm text-[#717882]">
+                      Expires Apr 2028
+                    </p>
                   </div>
                 </div>
-                <div className="flex items-center space-x-3">
+                <div className="flex items-center space-x-2 sm:space-x-3">
                   <button className="text-[#555d6a]">
-                    <Pencil className="h-5 w-5" />
+                    <Pencil className="h-4 w-4 sm:h-5 sm:w-5" />
                   </button>
                   <button className="text-[#555d6a]">
-                    <Trash2 className="h-5 w-5" />
+                    <Trash2 className="h-4 w-4 sm:h-5 sm:w-5" />
                   </button>
                 </div>
               </div>
             </div>
 
             {/* Visa */}
-            <div className="border-t border-[#d5d7da] py-4">
+            <div className="border-t border-[#d5d7da] py-3 sm:py-4">
               <div className="flex justify-between items-center">
                 <div className="flex items-center">
-                  <ChevronRight className="h-5 w-5 text-[#555d6a]" />
-                  <div className="w-10 h-6 mx-3 flex items-center justify-center">
-                    <div className="w-8 h-5 bg-[#f5f5f5] rounded flex items-center justify-center">
+                  <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5 text-[#555d6a]" />
+                  <div className="w-8 h-5 sm:w-10 sm:h-6 mx-2 sm:mx-3 flex items-center justify-center">
+                    <div className="w-6 h-4 sm:w-8 sm:h-5 bg-[#f5f5f5] rounded flex items-center justify-center">
                       <svg
                         width="24"
                         height="8"
                         viewBox="0 0 24 8"
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"
+                        className="w-5 h-2 sm:w-6 sm:h-3"
                       >
                         <path d="M9.5 1L7.5 7H5.5L7.5 1H9.5Z" fill="#00579F" />
                         <path
@@ -603,16 +628,20 @@ export default function EditProfileSection() {
                     </div>
                   </div>
                   <div>
-                    <p className="font-medium text-[#2b3545]">Visa</p>
-                    <p className="text-sm text-[#717882]">512 Water Plant</p>
+                    <p className="font-medium text-[#2b3545] text-xs sm:text-base">
+                      Visa
+                    </p>
+                    <p className="text-xs sm:text-sm text-[#717882]">
+                      512 Water Plant
+                    </p>
                   </div>
                 </div>
-                <div className="flex items-center space-x-3">
+                <div className="flex items-center space-x-2 sm:space-x-3">
                   <button className="text-[#555d6a]">
-                    <Pencil className="h-5 w-5" />
+                    <Pencil className="h-4 w-4 sm:h-5 sm:w-5" />
                   </button>
                   <button className="text-[#555d6a]">
-                    <Trash2 className="h-5 w-5" />
+                    <Trash2 className="h-4 w-4 sm:h-5 sm:w-5" />
                   </button>
                 </div>
               </div>
@@ -620,11 +649,11 @@ export default function EditProfileSection() {
           </div>
 
           {/* Action Buttons */}
-          <div className="flex justify-start space-x-4 mt-4">
+          <div className="flex justify-start space-x-3 sm:space-x-4 mt-4">
             <Button
               type="button"
               variant="outline"
-              className="border-[#d5d7da] text-[#555d6a]"
+              className="border-[#d5d7da] text-[#555d6a] text-xs sm:text-sm px-2 sm:px-4 py-1 sm:py-2"
               onClick={() => {
                 form.reset();
                 toast('success', 'Changes removed!');
@@ -634,7 +663,7 @@ export default function EditProfileSection() {
             </Button>
             <Button
               type="submit"
-              className="bg-[#019935] hover:bg-[#018a30] text-white"
+              className="bg-[#019935] hover:bg-[#018a30] text-white text-xs sm:text-sm px-2 sm:px-4 py-1 sm:py-2"
             >
               {isUpdating ? 'Saving...' : 'Save Changes'}
             </Button>
