@@ -36,20 +36,25 @@ import {
 } from "@/components/shadcn/dropdown-menu";
 import { Button } from "@/components/shadcn/button";
 
-export default function InventoryCarList() {
+export default function InventoryCarList({ getVehicleList }: any) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = useState({});
 
   type Inventory = {
-    stockId: string;
-    createdDate: string;
+    id: string;
+    created_at: string;
     brand: string;
     vin: string;
-    model: string;
-    mileage: string;
     year: string;
+    // stockId: string;
+    // createdDate: string;
+    // brand: string;
+    // vin: string;
+    // model: string;
+    // mileage: string;
+    // year: string;
   };
 
   const inventoryData: Inventory[] = [
@@ -112,7 +117,7 @@ export default function InventoryCarList() {
       },
       cell: ({ row }) => (
         <div className="text-gray-400">
-          <div>{row.original?.stockId}</div>
+          <div>{row.original?.id}</div>
         </div>
       ),
     },
@@ -145,7 +150,7 @@ export default function InventoryCarList() {
         );
       },
       cell: ({ row }) => {
-        const date = new Date(row.original?.createdDate).toLocaleDateString(
+        const date = new Date(row.original?.created_at).toLocaleDateString(
           "en-US",
           {
             day: "2-digit",
@@ -153,7 +158,7 @@ export default function InventoryCarList() {
             year: "numeric",
           }
         );
-        const time = new Date(row.original?.createdDate).toLocaleTimeString(
+        const time = new Date(row.original?.created_at).toLocaleTimeString(
           "en-US",
           {
             hour: "2-digit",
@@ -202,7 +207,7 @@ export default function InventoryCarList() {
       cell: ({ row }) => (
         <div className="flex items-center gap-2">
           <Image
-            src="https://dummyimage.com/40x40"
+            src={`https://picsum.photos/40/40`}
             alt=""
             height="30"
             width="30"
@@ -241,29 +246,26 @@ export default function InventoryCarList() {
         );
       },
       cell: ({ row }) => {
-        const date = new Date(row.original?.createdDate).toLocaleDateString(
-          "en-US",
-          {
-            day: "2-digit",
-            month: "short", // Outputs "Feb"
-            year: "numeric",
-          }
-        );
+        // const date = new Date(row.original?.vin).toLocaleDateString("en-US", {
+        //   day: "2-digit",
+        //   month: "short", // Outputs "Feb"
+        //   year: "numeric",
+        // });
 
-        const time = new Date(row.original?.createdDate).toLocaleTimeString(
-          "en-US",
-          {
-            hour: "2-digit",
-            minute: "2-digit",
-            second: "2-digit", // Add seconds
-            hour12: true, // Ensures AM/PM format
-          }
-        );
+        // const time = new Date(row.original?.createdDate).toLocaleTimeString(
+        //   "en-US",
+        //   {
+        //     hour: "2-digit",
+        //     minute: "2-digit",
+        //     second: "2-digit", // Add seconds
+        //     hour12: true, // Ensures AM/PM format
+        //   }
+        // );
 
         return (
           <div className=" font-medium text-gray-400">
-            <div>{date}</div>
-            <div>{time}</div>
+            {row.original?.vin}
+            {/* <div>{time}</div> */}
           </div>
         );
       },
@@ -432,7 +434,7 @@ export default function InventoryCarList() {
     },
   ];
 
-  const data: Inventory[] = useMemo(() => inventoryData, []);
+  const data: Inventory[] = useMemo(() => getVehicleList?.results, []);
 
   const table = useReactTable({
     data,
@@ -457,7 +459,7 @@ export default function InventoryCarList() {
     <>
       <Table>
         <TableHeader>
-          {table.getHeaderGroups().map((headerGroup) => (
+          {table?.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
               {headerGroup.headers.map((header) => {
                 return (
@@ -475,8 +477,8 @@ export default function InventoryCarList() {
           ))}
         </TableHeader>
         <TableBody>
-          {table.getRowModel().rows?.length ? (
-            table.getRowModel().rows.map((row) => (
+          {table?.getRowModel()?.rows?.length ? (
+            table?.getRowModel()?.rows.map((row) => (
               <TableRow
                 key={row.id}
                 data-state={row.getIsSelected() && "selected"}
