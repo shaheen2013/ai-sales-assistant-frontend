@@ -57,3 +57,29 @@ export function formatFileSize(bytes: number): string {
 
   return `${size.toFixed(1)} ${sizes[i]}`;
 }
+
+type QueryParams = Record<string, string | number | boolean | null | undefined>;
+
+interface QuerySettings {
+  removeNullish?: boolean;
+}
+
+export function createQueryParams(
+  params: QueryParams = {},
+  settings: QuerySettings = {}
+): string {
+  const { removeNullish = true } = settings;
+
+  const queryParams = new URLSearchParams();
+
+  Object.entries(params).forEach(([key, value]) => {
+    const shouldInclude =
+      !removeNullish || (value !== null && value !== undefined && value !== "");
+      
+    if (shouldInclude) {
+      queryParams.append(key, String(value));
+    }
+  });
+
+  return queryParams.toString();
+}

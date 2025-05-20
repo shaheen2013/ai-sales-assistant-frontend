@@ -1,7 +1,9 @@
 "use client";
 
+import { Suspense, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { Suspense, useMemo, useRef, useState } from "react";
+
+import { cn } from "@/lib/utils";
 
 import {
   Select,
@@ -22,12 +24,12 @@ import {
 } from "@/components/shadcn/dialog";
 
 import { Button } from "@/components/shadcn/button";
+import { Input, InputCopy } from "@/components/shadcn/input";
 
-import { cn } from "@/lib/utils";
 import InventoryCarList from "./inventoryCarList";
 import InventoryFilesList from "./inventoryFilesList";
 import DragAndDropUploader from "./DragAndDropUploader";
-import { Input, InputCopy } from "@/components/shadcn/input";
+import { useGetVehicleInventoryQuery } from "@/features/inventory/inventorySlice";
 
 export default function DashboardDealerInventory() {
   const { control, handleSubmit } = useForm({
@@ -56,6 +58,14 @@ export default function DashboardDealerInventory() {
     addInventory: false,
     addPdf: false,
   });
+
+  const {
+    data: getVehicleList,
+    error: errorGetVehicle,
+    isFetching: isFetchingGetVehicle,
+  } = useGetVehicleInventoryQuery({ search: "a", page: 1, limit: false });
+
+  // console.log("getVehicleList => ", getVehicleList);
 
   const onSubmit = (data: any) => {
     console.log(data);
