@@ -1,5 +1,5 @@
-import { clsx, type ClassValue } from "clsx";
-import { twMerge } from "tailwind-merge";
+import { clsx, type ClassValue } from 'clsx';
+import { twMerge } from 'tailwind-merge';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -14,7 +14,7 @@ export function beautifyErrors(errors: any): string {
 
   if (errors?.data) {
     for (const key in errors?.data) {
-      if (typeof errors?.data?.[key] === "string") {
+      if (typeof errors?.data?.[key] === 'string') {
         errorMessages.push(errors?.data?.[key]);
       }
 
@@ -25,7 +25,7 @@ export function beautifyErrors(errors: any): string {
   }
 
   if (errors?.detail) {
-    if (typeof errors?.detail === "string") {
+    if (typeof errors?.detail === 'string') {
       errorMessages.push(errors?.detail);
     }
 
@@ -35,7 +35,7 @@ export function beautifyErrors(errors: any): string {
   }
 
   if (errors?.non_field_errors) {
-    if (typeof errors?.non_field_errors === "string") {
+    if (typeof errors?.non_field_errors === 'string') {
       errorMessages.push(errors?.non_field_errors);
     }
 
@@ -44,14 +44,14 @@ export function beautifyErrors(errors: any): string {
     }
   }
 
-  return errorMessages.length > 0 ? errorMessages[0] : "Something went wrong!";
+  return errorMessages.length > 0 ? errorMessages[0] : 'Something went wrong!';
 }
 
 export function formatFileSize(bytes: number): string {
-  if (bytes === 0) return "0 Bytes";
+  if (bytes === 0) return '0 Bytes';
 
   const k = 1024;
-  const sizes = ["Bytes", "KB", "MB", "GB", "TB"];
+  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
   const i = Math.floor(Math.log(bytes) / Math.log(k));
   const size = bytes / Math.pow(k, i);
 
@@ -70,6 +70,7 @@ export function createQueryParams(
 ): string {
   const { excludeFaulty = true } = config;
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const entries = Object.entries(params).filter(([_, value]) => {
     if (!excludeFaulty) return true;
 
@@ -77,7 +78,7 @@ export function createQueryParams(
     return (
       value !== null &&
       value !== undefined &&
-      value !== "" &&
+      value !== '' &&
       value !== false &&
       value !== 0 &&
       !Number.isNaN(value)
