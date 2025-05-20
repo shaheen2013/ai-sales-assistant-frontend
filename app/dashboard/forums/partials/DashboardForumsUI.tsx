@@ -131,7 +131,6 @@ export default function DashboardForumsUI() {
   return (
     <div>
       <h2 className="text-gray-400 text-2xl font-semibold mb-6">Newsletters</h2>
-
       <form onSubmit={handleSubmit(onSubmit)} className="border rounded-xl">
         <div className="p-6 flex flex-col gap-6">
           {/* subject */}
