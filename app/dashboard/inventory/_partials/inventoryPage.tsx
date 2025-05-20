@@ -32,6 +32,8 @@ import InventoryFilesList from "./inventoryFilesList";
 import DragAndDropUploader from "./DragAndDropUploader";
 import {
   useCreateVehicleInventoryMutation,
+  useDeleteVehicleInventoryMutation,
+  useGetInventoryFilesQuery,
   useGetVehicleInventoryQuery,
 } from "@/features/inventory/inventorySlice";
 import moment from "moment";
@@ -43,8 +45,8 @@ export default function DashboardDealerInventory() {
 
   const { control, handleSubmit } = useForm({
     defaultValues: {
-      stockId: "021-25-364",
-      vin: "#0001",
+      stockId: "",
+      vin: "",
       brand: "",
       model: "",
       year: "",
@@ -81,15 +83,38 @@ export default function DashboardDealerInventory() {
     error: errorGetVehicle,
     isFetching: isFetchingGetVehicle,
     refetch: refetchGetVehicle,
-  } = useGetVehicleInventoryQuery({ search: "a", page: 1, limit: "false" });
+  } = useGetVehicleInventoryQuery({});
+
+  const {
+    data: dataGetInventoryFiles,
+    error: errorGetInventoryFiles,
+    isFetching: isFetchingGetInventoryFiles,
+    refetch: refetchGetInventoryFiles,
+  } = useGetInventoryFilesQuery({});
 
   const [createVehicleInventory, { isLoading: isLoadingCreateVehicle }] =
     useCreateVehicleInventoryMutation();
+  const [deleteVehicleInventory, { isLoading: isLoadingDeleteVehicle }] =
+    useDeleteVehicleInventoryMutation();
 
-  console.log("errorGetVehicle => ", errorGetVehicle);
-  console.log("getVehicleList => ", getVehicleList);
+  console.log("errorGetVehicle => ", errorGetInventoryFiles);
+  console.log("getVehicleList => ", dataGetInventoryFiles);
 
-  const onSubmit = async (formData: any) => {
+  const handleInventoryDelete = async (id: string) => {
+    console.log("delete id => ", id);
+
+    const { data, error } = await deleteVehicleInventory({ id: id });
+
+    if (error) {
+      console.log(error);
+      toast("error", beautifyErrors(error));
+      return;
+    }
+
+    console.log("data => ", data);
+  };
+
+  const handleAddInventory = async (formData: any) => {
     console.log(formData);
 
     const payload = {
@@ -402,7 +427,10 @@ export default function DashboardDealerInventory() {
             </div>
 
             {selectedPanel == "list" ? (
-              <InventoryCarList getVehicleList={getVehicleList} />
+              <InventoryCarList
+                getVehicleList={getVehicleList}
+                handleInventoryDelete={handleInventoryDelete}
+              />
             ) : (
               <InventoryFilesList />
             )}
@@ -464,7 +492,7 @@ export default function DashboardDealerInventory() {
               <hr className="pb-8" />
 
               {/* form */}
-              <form onSubmit={handleSubmit(onSubmit)} className="">
+              <form onSubmit={handleSubmit(handleAddInventory)} className="">
                 <div className="grid grid-cols-2 gap-x-4 mb-6 ">
                   {/* stock id */}
                   <div>

@@ -1,42 +1,43 @@
-"use client";
+'use client';
 
 import {
-  flexRender,
   ColumnDef,
+  ColumnFiltersState,
   SortingState,
   VisibilityState,
-  useReactTable,
+  flexRender,
   getCoreRowModel,
-  ColumnFiltersState,
-  getSortedRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
-} from "@tanstack/react-table";
+  getSortedRowModel,
+  useReactTable,
+} from '@tanstack/react-table';
 
-import { Controller, useForm } from "react-hook-form";
-import { Suspense, useMemo, useRef, useState } from "react";
+import { useMemo, useState } from 'react';
 
-import Image from "next/image";
-import { MoreHorizontal } from "lucide-react";
+import { MoreHorizontal } from 'lucide-react';
 
 import {
   Table,
-  TableCell,
-  TableRow,
   TableBody,
+  TableCell,
   TableHead,
   TableHeader,
-} from "@/components/shadcn/table";
+  TableRow,
+} from '@/components/shadcn/table';
 
+import { Button } from '@/components/shadcn/button';
 import {
   DropdownMenu,
+  DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-  DropdownMenuContent,
-} from "@/components/shadcn/dropdown-menu";
-import { Button } from "@/components/shadcn/button";
+} from '@/components/shadcn/dropdown-menu';
 
-export default function InventoryCarList({ getVehicleList }: any) {
+export default function InventoryCarList({
+  getVehicleList,
+  handleInventoryDelete,
+}: any) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
@@ -84,12 +85,12 @@ export default function InventoryCarList({ getVehicleList }: any) {
 
   const columns: ColumnDef<Inventory>[] = [
     {
-      accessorKey: "id",
+      accessorKey: 'id',
       header: ({ column }) => {
         return (
           <h2
             className="flex items-center gap-2 cursor-pointer"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+            onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
           >
             Stock Id
             <svg
@@ -118,12 +119,12 @@ export default function InventoryCarList({ getVehicleList }: any) {
     },
 
     {
-      accessorKey: "createdDate",
+      accessorKey: 'createdDate',
       header: ({ column }) => {
         return (
           <h2
             className="flex items-center text-center gap-2 cursor-pointer"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+            onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
           >
             Created Date
             <svg
@@ -146,19 +147,19 @@ export default function InventoryCarList({ getVehicleList }: any) {
       },
       cell: ({ row }) => {
         const date = new Date(row.original?.created_at).toLocaleDateString(
-          "en-US",
+          'en-US',
           {
-            day: "2-digit",
-            month: "short", // Outputs "Feb"
-            year: "numeric",
+            day: '2-digit',
+            month: 'short', // Outputs "Feb"
+            year: 'numeric',
           }
         );
         const time = new Date(row.original?.created_at).toLocaleTimeString(
-          "en-US",
+          'en-US',
           {
-            hour: "2-digit",
-            minute: "2-digit",
-            second: "2-digit", // Add seconds
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit', // Add seconds
             hour12: true, // Ensures AM/PM format
           }
         );
@@ -173,12 +174,12 @@ export default function InventoryCarList({ getVehicleList }: any) {
     },
 
     {
-      accessorKey: "brand",
+      accessorKey: 'brand',
       header: ({ column }) => {
         return (
           <h2
             className="flex items-center text-center gap-2 cursor-pointer"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+            onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
           >
             Brand
             <svg
@@ -214,12 +215,12 @@ export default function InventoryCarList({ getVehicleList }: any) {
     },
 
     {
-      accessorKey: "vin",
+      accessorKey: 'vin',
       header: ({ column }) => {
         return (
           <h2
             className="flex items-center text-center gap-2 cursor-pointer"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+            onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
           >
             VIN Number
             <svg
@@ -267,12 +268,12 @@ export default function InventoryCarList({ getVehicleList }: any) {
     },
 
     {
-      accessorKey: "model",
+      accessorKey: 'model',
       header: ({ column }) => {
         return (
           <h2
             className="flex items-center text-center gap-2 cursor-pointer"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+            onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
           >
             Model Number
             <svg
@@ -303,12 +304,12 @@ export default function InventoryCarList({ getVehicleList }: any) {
     },
 
     {
-      accessorKey: "mileage",
+      accessorKey: 'mileage',
       header: ({ column }) => {
         return (
           <h2
             className="flex items-center text-center gap-2 cursor-pointer"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+            onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
           >
             Mileage
             <svg
@@ -339,12 +340,12 @@ export default function InventoryCarList({ getVehicleList }: any) {
     },
 
     {
-      accessorKey: "year",
+      accessorKey: 'year',
       header: ({ column }) => {
         return (
           <h2
             className="flex items-center text-center gap-2 cursor-pointer"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+            onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
           >
             Year
             <svg
@@ -373,7 +374,7 @@ export default function InventoryCarList({ getVehicleList }: any) {
     },
 
     {
-      id: "actions",
+      id: 'actions',
       header: ({}) => {
         return (
           <h2 className="flex items-center text-center gap-2 cursor-pointer">
@@ -381,7 +382,7 @@ export default function InventoryCarList({ getVehicleList }: any) {
           </h2>
         );
       },
-      cell: ({}) => {
+      cell: ({ row }) => {
         return (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -407,7 +408,19 @@ export default function InventoryCarList({ getVehicleList }: any) {
                 <span className="text-gray-500">Edit</span>
               </DropdownMenuItem>
 
-              <DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => {
+                  console.log(row?.original?.id);
+                }}
+                // console log to fix error :: TODO
+                // onClick={() => {
+
+                //   window.confirm(
+                //     'Are you sure you want to delete this vehicle?'
+                //   ) && handleInventoryDelete(row?.original?.id);
+
+                // }}
+              >
                 <svg
                   width="20"
                   height="20"
@@ -476,7 +489,7 @@ export default function InventoryCarList({ getVehicleList }: any) {
             table?.getRowModel()?.rows.map((row) => (
               <TableRow
                 key={row.id}
-                data-state={row.getIsSelected() && "selected"}
+                data-state={row.getIsSelected() && 'selected'}
               >
                 {row.getVisibleCells().map((cell) => (
                   <TableCell key={cell.id}>
