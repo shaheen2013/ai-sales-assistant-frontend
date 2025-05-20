@@ -30,8 +30,11 @@ import InventoryCarList from "./inventoryCarList";
 import InventoryFilesList from "./inventoryFilesList";
 import DragAndDropUploader from "./DragAndDropUploader";
 import { useGetVehicleInventoryQuery } from "@/features/inventory/inventorySlice";
+import { useSearchParams } from "next/navigation";
 
 export default function DashboardDealerInventory() {
+  const searchParams = useSearchParams();
+
   const { control, handleSubmit } = useForm({
     defaultValues: {
       stockId: "021-25-364",
@@ -59,11 +62,15 @@ export default function DashboardDealerInventory() {
     addPdf: false,
   });
 
+  const search = searchParams.get("search");
+  const filter = searchParams.get("filter");
+  const sort = searchParams.get("sort");
+
   const {
     data: getVehicleList,
     error: errorGetVehicle,
     isFetching: isFetchingGetVehicle,
-  } = useGetVehicleInventoryQuery({ search: "a", page: 1, limit: false });
+  } = useGetVehicleInventoryQuery({ search: "a", page: 1, limit: "false" });
 
   // console.log("getVehicleList => ", getVehicleList);
 

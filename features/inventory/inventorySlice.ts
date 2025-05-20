@@ -15,14 +15,10 @@ export const inventorySlice = apiSlice.injectEndpoints({
 
     getVehicleInventory: builder.query({
       query: (data) => {
-        const { page, limit, ...rest } = data;
-
-        const params = createQueryParams(data, { removeNullish: true });
-
-        console.log(params);
+        const params = createQueryParams(data);
 
         return {
-          url: `/v1/dealer/vehicle-inventory`,
+          url: `/v1/dealer/vehicle-inventory?=${params}`,
           method: "GET",
           credentials: "include",
         };

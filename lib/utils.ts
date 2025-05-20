@@ -58,28 +58,37 @@ export function formatFileSize(bytes: number): string {
   return `${size.toFixed(1)} ${sizes[i]}`;
 }
 
-type QueryParams = Record<string, string | number | boolean | null | undefined>;
+type QueryParamsInput = Record<string, any>;
 
-interface QuerySettings {
-  removeNullish?: boolean;
+interface QueryParamsConfig {
+  excludeFaulty?: boolean; // default: true
 }
 
 export function createQueryParams(
-  params: QueryParams = {},
-  settings: QuerySettings = {}
+  params: QueryParamsInput,
+  config: QueryParamsConfig = {}
 ): string {
-  const { removeNullish = true } = settings;
+  const { excludeFaulty = true } = config;
 
-  const queryParams = new URLSearchParams();
+  const entries = Object.entries(params).filter(([_, value]) => {
+    if (!excludeFaulty) return true;
 
-  Object.entries(params).forEach(([key, value]) => {
-    const shouldInclude =
-      !removeNullish || (value !== null && value !== undefined && value !== "");
-      
-    if (shouldInclude) {
-      queryParams.append(key, String(value));
-    }
+    // Faulty values: null, undefined, '', false, 0, NaN
+    return (
+      value !== null &&
+      value !== undefined &&
+      value !== "" &&
+      value !== false &&
+      value !== 0 &&
+      !Number.isNaN(value)
+    );
   });
 
-  return queryParams.toString();
+  const searchParams = new URLSearchParams();
+
+  for (const [key, value] of entries) {
+    searchParams.append(key, String(value));
+  }
+
+  return searchParams.toString();
 }
