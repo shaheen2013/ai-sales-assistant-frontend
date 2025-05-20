@@ -241,7 +241,7 @@ export default function EditProfileSection() {
                   </span>
                   <span className="text-[#555d6a]"> or drag and drop</span>
                 </p>
-                <p className="text-[#717882] text-xs sm:text-sm mt-1">
+                <p className="text-[#717882] text-xs sm:text-sm mt-1 text-center">
                   PNG, JPG or GIF (max. 800×400px)
                 </p>
               </label>
