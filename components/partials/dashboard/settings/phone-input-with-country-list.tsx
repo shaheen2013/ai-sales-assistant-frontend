@@ -49,17 +49,14 @@ const PhoneInput: React.ForwardRefExoticComponent<PhoneInputProps> =
       }, []);
 
       // Handle country selection and value changes
-      const handleChange = (
-        newValue: RPNInput.Value,
-        country: RPNInput.Country | undefined
-      ) => {
-        if (country) {
-          // If input is empty or just has a plus, replace with country code
-          if (!newValue || newValue === '+') {
-            const countryCode = `+${RPNInput.getCountryCallingCode(country)}`;
-            onChange?.(countryCode as RPNInput.Value);
-            return;
-          }
+      const handleChange = (newValue: RPNInput.Value) => {
+        // If input is empty or just has a plus, use the default country code
+        if (!newValue || newValue === '+') {
+          const countryCode = `+${RPNInput.getCountryCallingCode(
+            defaultCountry
+          )}`;
+          onChange?.(countryCode as RPNInput.Value);
+          return;
         }
 
         onChange?.(newValue || ('' as RPNInput.Value));

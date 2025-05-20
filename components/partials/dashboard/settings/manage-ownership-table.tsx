@@ -28,12 +28,14 @@ import { useState } from 'react';
 export type OwnershipData = {
   id: number;
   name: string;
-  role: string;
+  role: any;
   phone: string;
 };
 
+// todo: fix type here for role and color
+
 // Function to determine badge color based on role
-const getRoleBadgeColor = (role: string): string => {
+const getRoleBadgeColor = (role: any): any => {
   switch (role) {
     case 'Finance Advisor':
       return 'orange';

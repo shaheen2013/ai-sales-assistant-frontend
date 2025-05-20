@@ -1,4 +1,4 @@
-import Button from '@/components/button';
+import { Button } from '@/components/shadcn/button';
 import { Plus } from 'lucide-react';
 import { useState } from 'react';
 import AddDepartmentModal from './add-department-modal';
@@ -14,7 +14,7 @@ const ManageOwnershipSection = () => {
           Add member and role
         </h2>
         <Button
-          variant="outline-gray"
+          variant="outline"
           size="sm"
           className="text-gray-400"
           onClick={() => setOpenModal(true)}
@@ -30,7 +30,7 @@ const ManageOwnershipSection = () => {
       <div className="flex justify-start space-x-3 sm:space-x-4 mt-4">
         <Button
           type="button"
-          variant="outline-gray"
+          variant="outline"
           className="border-[#d5d7da] text-gray-500 text-xs sm:text-sm px-2 sm:px-4 py-1 sm:py-2"
           onClick={() => {
             // form.reset();
