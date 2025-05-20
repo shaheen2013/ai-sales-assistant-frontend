@@ -4,7 +4,7 @@ import { Suspense, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
 
-import { cn } from "@/lib/utils";
+import { beautifyErrors, cn } from "@/lib/utils";
 
 import {
   Select,
@@ -30,9 +30,15 @@ import { Input, InputCopy } from "@/components/shadcn/input";
 import InventoryCarList from "./inventoryCarList";
 import InventoryFilesList from "./inventoryFilesList";
 import DragAndDropUploader from "./DragAndDropUploader";
-import { useGetVehicleInventoryQuery } from "@/features/inventory/inventorySlice";
+import {
+  useCreateVehicleInventoryMutation,
+  useGetVehicleInventoryQuery,
+} from "@/features/inventory/inventorySlice";
+import moment from "moment";
+import { useToast } from "@/hooks/useToast";
 
 export default function DashboardDealerInventory() {
+  const toast = useToast();
   const searchParams = useSearchParams();
 
   const { control, handleSubmit } = useForm({
@@ -74,13 +80,49 @@ export default function DashboardDealerInventory() {
     data: getVehicleList,
     error: errorGetVehicle,
     isFetching: isFetchingGetVehicle,
+    refetch: refetchGetVehicle,
   } = useGetVehicleInventoryQuery({ search: "a", page: 1, limit: "false" });
+
+  const [createVehicleInventory, { isLoading: isLoadingCreateVehicle }] =
+    useCreateVehicleInventoryMutation();
 
   console.log("errorGetVehicle => ", errorGetVehicle);
   console.log("getVehicleList => ", getVehicleList);
 
-  const onSubmit = (data: any) => {
-    console.log(data);
+  const onSubmit = async (formData: any) => {
+    console.log(formData);
+
+    const payload = {
+      price: formData.price,
+      mileage: formData.mileage,
+      brand: formData.brand,
+      model: formData.model,
+      year: formData.year,
+      vin: formData.vin,
+      stock_id: formData.stockId,
+      plate_no: formData.numberPlate,
+      body_style: formData.bodyStyle,
+      engine_type: formData.engineType,
+      fuel_type: formData.fuelType,
+      odometer: formData.odometer,
+      color: formData.color,
+      consign: formData.consign,
+      date_in: moment(formData.dateIn).format("YYYY-MM-DD"),
+      date_out: moment(formData.dateOut).format("YYYY-MM-DD"),
+    };
+
+    const { data, error } = await createVehicleInventory(payload);
+
+    if (error) {
+      console.log(error);
+      toast("error", beautifyErrors(error));
+      return;
+    }
+
+    setModals({ ...modals, addInventory: false });
+    await refetchGetVehicle();
+
+    console.log("data => ", data);
   };
 
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
@@ -441,7 +483,6 @@ export default function DashboardDealerInventory() {
                           id="stockId"
                           error={errors.stockId?.message}
                           copyText={field.value}
-                          disabled
                           {...field}
                         />
                       )}
@@ -465,7 +506,7 @@ export default function DashboardDealerInventory() {
                           id="vin"
                           error={errors.vin?.message}
                           copyText={field.value}
-                          disabled
+                          // disabled
                           {...field}
                         />
                       )}
@@ -561,7 +602,7 @@ export default function DashboardDealerInventory() {
                       rules={{ required: "Mileage is required" }}
                       render={({ field, formState: { errors } }) => (
                         <Input
-                          type="mileage"
+                          type="number"
                           id="mileage"
                           className="h-11"
                           placeholder="Mileage"
@@ -840,7 +881,7 @@ export default function DashboardDealerInventory() {
                     variant={"primary"}
                     type={"submit"}
                     className="h-11 rounded-lg"
-                    loading={false}
+                    loading={isLoadingCreateVehicle}
                   >
                     Save Changes
                   </Button>

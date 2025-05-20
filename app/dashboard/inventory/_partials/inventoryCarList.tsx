@@ -48,44 +48,39 @@ export default function InventoryCarList({ getVehicleList }: any) {
     brand: string;
     vin: string;
     year: string;
-    // stockId: string;
-    // createdDate: string;
-    // brand: string;
-    // vin: string;
-    // model: string;
-    // mileage: string;
-    // year: string;
+    mileage: string;
+    model: string;
   };
 
-  const inventoryData: Inventory[] = [
-    {
-      stockId: "STK-001",
-      createdDate: "2023-10-01",
-      brand: "Toyota",
-      vin: "1HGCM82633A004352",
-      model: "Camry",
-      mileage: "45000",
-      year: "2020",
-    },
-    {
-      stockId: "STK-002",
-      createdDate: "2023-10-02",
-      brand: "Honda",
-      vin: "2HGFB2F59CH512345",
-      model: "Civic",
-      mileage: "38000",
-      year: "2019",
-    },
-    {
-      stockId: "STK-003",
-      createdDate: "2023-10-03",
-      brand: "Ford",
-      vin: "1FAHP3FN8AW123456",
-      model: "Focus",
-      mileage: "51000",
-      year: "2018",
-    },
-  ];
+  // const inventoryData: Inventory[] = [
+  //   {
+  //     stockId: "STK-001",
+  //     createdDate: "2023-10-01",
+  //     brand: "Toyota",
+  //     vin: "1HGCM82633A004352",
+  //     model: "Camry",
+  //     mileage: "45000",
+  //     year: "2020",
+  //   },
+  //   {
+  //     stockId: "STK-002",
+  //     createdDate: "2023-10-02",
+  //     brand: "Honda",
+  //     vin: "2HGFB2F59CH512345",
+  //     model: "Civic",
+  //     mileage: "38000",
+  //     year: "2019",
+  //   },
+  //   {
+  //     stockId: "STK-003",
+  //     createdDate: "2023-10-03",
+  //     brand: "Ford",
+  //     vin: "1FAHP3FN8AW123456",
+  //     model: "Focus",
+  //     mileage: "51000",
+  //     year: "2018",
+  //   },
+  // ];
 
   const columns: ColumnDef<Inventory>[] = [
     {
@@ -206,13 +201,13 @@ export default function InventoryCarList({ getVehicleList }: any) {
       },
       cell: ({ row }) => (
         <div className="flex items-center gap-2">
-          <Image
+          {/* <Image
             src={`https://picsum.photos/40/40`}
             alt=""
             height="30"
             width="30"
             className="rounded-full"
-          />
+          /> */}
           <span className="text-gray-400">{row.original?.brand}</span>
         </div>
       ),
