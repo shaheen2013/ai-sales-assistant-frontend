@@ -51,7 +51,7 @@ export default function SignupForm() {
   const handleGoogleRegister = async () => {
     const data = await signIn("google", {
       redirect: false,
-      callbackUrl: `${window.location.origin}/signup`,
+      callbackUrl: `${window.location.origin}/login`,
     });
 
     console.log("data", data);
