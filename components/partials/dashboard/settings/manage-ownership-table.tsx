@@ -126,25 +126,25 @@ const ManageOwnershipTable = () => {
       id: 1,
       name: 'Kawsar Amin',
       role: 'Finance Advisor',
-      phone: '(250) 555-0199',
+      phone: '+2507885550199',
     },
     {
       id: 2,
       name: 'Irfan H Sajid',
       role: 'Sales Representative',
-      phone: '(250) 555-0199',
+      phone: '+2507885550199',
     },
     {
       id: 3,
       name: 'Toukir',
       role: 'Technical Advisor',
-      phone: '(250) 555-0122',
+      phone: '+2507885550199',
     },
     {
       id: 4,
       name: 'Molla',
       role: 'Customer Support Agent',
-      phone: '(250) 555-0133',
+      phone: '+2507885550199',
     },
   ]);
 

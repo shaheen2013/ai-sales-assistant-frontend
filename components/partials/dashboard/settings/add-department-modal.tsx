@@ -2,6 +2,7 @@ import { Button } from '@/components/shadcn/button';
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
 } from '@/components/shadcn/dialog';
@@ -22,7 +23,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/shadcn/select';
+import { useAddDepartmentMutation } from '@/features/dealer/dealerProfileSlice';
 import { useToast } from '@/hooks/useToast';
+import { beautifyErrors } from '@/lib/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -37,10 +40,6 @@ const formSchema = z.object({
     .email('Invalid email format')
     .min(1, 'Department email is required'),
   employee_name: z.string().min(1, 'Employee name is required'),
-  employee_email: z
-    .string()
-    .email('Invalid email format')
-    .min(1, 'Employee email is required'),
   employee_phone: z.string().min(1, 'Employee phone is required'),
 });
 
@@ -64,20 +63,35 @@ const AddDepartmentModal = ({
     'Finance Advisor',
   ]);
 
+  const [addDepartment, { isLoading }] = useAddDepartmentMutation();
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       department_name: '',
       department_email: '',
       employee_name: '',
-      employee_email: '',
       employee_phone: '',
     },
   });
 
-  const onSubmit = (data: FormData) => {
-    console.log('Form submitted with data:', data);
-    toast('success', 'Department added successfully');
+  const onSubmit = async (data: FormData) => {
+    const payload = {
+      department_name: data.department_name,
+      department_email: data.department_email,
+      employees: [
+        {
+          name: data.employee_name,
+          phone_number: data.employee_phone,
+        },
+      ],
+    };
+    try {
+      await addDepartment(payload).unwrap();
+      toast('success', 'Department added successfully');
+    } catch (error: any) {
+      const errorMessage = beautifyErrors(error);
+      toast('error', errorMessage);
+    }
     form.reset();
     onOpenChange(false);
   };
@@ -108,6 +122,7 @@ const AddDepartmentModal = ({
             Add Department & Assign People
           </DialogTitle>
         </DialogHeader>
+        <DialogDescription className="hidden"></DialogDescription>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <div className="flex flex-col gap-4 border-t border-b border-[#EFF4FA] py-4">
@@ -202,13 +217,14 @@ const AddDepartmentModal = ({
                   )}
                 />
               </div>
-              {/* Employee name*/}
-              <div>
+
+              {/* Employee email & phone */}
+              <div className="flex flex-col md:flex-row gap-3 items-start md:items-center w-full justify-between">
                 <FormField
                   control={form.control}
                   name="employee_name"
                   render={({ field }) => (
-                    <FormItem>
+                    <FormItem className="w-full">
                       <FormLabel className="text-sm text-gray-700 font-medium">
                         Employee Name
                       </FormLabel>
@@ -216,29 +232,6 @@ const AddDepartmentModal = ({
                         <Input
                           {...field}
                           placeholder="Write employee name"
-                          className="border-[#d5d7da] rounded-md focus:border-[#019935] focus:ring-[#019935]"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-              {/* Employee email & phone */}
-              <div className="flex flex-col md:flex-row gap-3 items-start md:items-center w-full justify-between">
-                <FormField
-                  control={form.control}
-                  name="employee_email"
-                  render={({ field }) => (
-                    <FormItem className="w-full">
-                      <FormLabel className="text-sm text-gray-700 font-medium">
-                        Employee Email
-                      </FormLabel>
-                      <FormControl>
-                        <Input
-                          type="email"
-                          {...field}
-                          placeholder="Enter employee email"
                           className="border-[#d5d7da] rounded-md focus:border-[#019935] focus:ring-[#019935]"
                         />
                       </FormControl>
@@ -256,7 +249,7 @@ const AddDepartmentModal = ({
                       </FormLabel>
                       <FormControl>
                         <PhoneInput
-                          defaultCountry="BD"
+                          defaultCountry="US"
                           {...field}
                           placeholder="Enter phone number"
                           className="border-[#d5d7da] rounded-md focus:border-[#019935] focus:ring-[#019935]"
@@ -271,7 +264,10 @@ const AddDepartmentModal = ({
             <div className="flex justify-end gap-3 pt-2">
               <Button
                 type="button"
-                onClick={() => onOpenChange(false)}
+                onClick={() => {
+                  form.reset();
+                  onOpenChange(false);
+                }}
                 variant="outline"
                 className="bg-red-500 text-white"
               >
@@ -279,9 +275,10 @@ const AddDepartmentModal = ({
               </Button>
               <Button
                 type="submit"
+                disabled={isLoading}
                 className="bg-[#019935] hover:bg-[#018a30] text-white"
               >
-                Add Department
+                {isLoading ? 'Adding...' : 'Add Department'}
               </Button>
             </div>
           </form>
