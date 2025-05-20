@@ -36,7 +36,10 @@ import {
 } from "@/components/shadcn/dropdown-menu";
 import { Button } from "@/components/shadcn/button";
 
-export default function InventoryCarList({ getVehicleList }: any) {
+export default function InventoryCarList({
+  getVehicleList,
+  handleInventoryDelete,
+}: any) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
@@ -381,7 +384,7 @@ export default function InventoryCarList({ getVehicleList }: any) {
           </h2>
         );
       },
-      cell: ({}) => {
+      cell: ({ row }) => {
         return (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -407,7 +410,13 @@ export default function InventoryCarList({ getVehicleList }: any) {
                 <span className="text-gray-500">Edit</span>
               </DropdownMenuItem>
 
-              <DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => {
+                  window.confirm(
+                    "Are you sure you want to delete this vehicle?"
+                  ) && handleInventoryDelete(row?.original?.id);
+                }}
+              >
                 <svg
                   width="20"
                   height="20"
