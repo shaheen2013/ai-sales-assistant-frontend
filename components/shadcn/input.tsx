@@ -28,17 +28,29 @@ interface InputProps extends React.ComponentProps<"input"> {
 }
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, wrapperClassName, label, type, error, preIcon, postIcon, ...props }, ref) => {
+  (
+    {
+      className,
+      wrapperClassName,
+      label,
+      type,
+      error,
+      preIcon,
+      postIcon,
+      ...props
+    },
+    ref
+  ) => {
     return (
       <div className={wrapperClassName}>
-        {
-          label && <label
+        {label && (
+          <label
             htmlFor={label}
             className="text-sm mb-1.5 text-[#414651] font-medium"
           >
             {label}
           </label>
-        }
+        )}
         <div className="relative flex items-center justify-center">
           {preIcon && (
             <div className="absolute left-[10px] top-1/2 -translate-y-1/2">
@@ -253,80 +265,97 @@ const InputCopy = React.forwardRef<
     label?: string;
     wrapperClassName?: string;
   }
->(({ className, wrapperClassName, type, error, preIcon, postIcon, copyText, label, ...props }, ref) => {
-  const [isCopied, setIsCopied] = useState(false);
+>(
+  (
+    {
+      className,
+      wrapperClassName,
+      type,
+      error,
+      preIcon,
+      postIcon,
+      copyText,
+      label,
+      disabled,
+      ...props
+    },
+    ref
+  ) => {
+    const [isCopied, setIsCopied] = useState(false);
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(copyText as string);
-    setIsCopied(true);
-    setTimeout(() => {
-      setIsCopied(false);
-    }, 2000);
-  };
+    const handleCopy = () => {
+      navigator.clipboard.writeText(copyText as string);
+      setIsCopied(true);
+      setTimeout(() => {
+        setIsCopied(false);
+      }, 2000);
+    };
 
-  return (
-    <div className={wrapperClassName}>
-      {
-        label && <label
-          htmlFor={label}
-          className="text-sm mb-1.5 text-[#414651] font-medium"
-        >
-          {label}
-        </label>
-      }
-      <div className="relative flex items-center justify-center">
-        <input
-          type={type}
-          className={cn(
-            "flex h-11 w-full rounded-lg border border-[#D5D7DA] bg-[#FAFAFA] px-3 text-base transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-gray-100 outline-none md:text-sm",
-            {
-              "pl-10": preIcon,
-              "pr-10": postIcon,
-            },
-            className
-          )}
-          ref={ref}
-          {...props}
-        />
+    return (
+      <div className={wrapperClassName}>
+        {label && (
+          <label
+            htmlFor={label}
+            className="text-sm mb-1.5 text-[#414651] font-medium"
+          >
+            {label}
+          </label>
+        )}
+        <div className="relative flex items-center justify-center">
+          <input
+            type={type}
+            className={cn(
+              "flex h-11 w-full rounded-lg border border-[#D5D7DA] px-3 text-base transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-gray-100 outline-none md:text-sm",
+              {
+                "pl-10": preIcon,
+                "pr-10": postIcon,
+                "bg-[#FAFAFA]": disabled,
+              },
+              className
+            )}
+            ref={ref}
+            {...props}
+          />
 
-        {/* copy */}
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <div
-                onClick={handleCopy}
-                className="absolute right-0 top-1/2 -translate-y-1/2 cursor-pointer select-none flex gap-2 h-11 justify-center items-center bg-white border border-[#D5D7DA] rounded-r-lg px-3"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="21"
-                  viewBox="0 0 20 21"
-                  fill="none"
+          {/* copy */}
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <div
+                  onClick={handleCopy}
+                  className="absolute right-0 top-1/2 -translate-y-1/2 cursor-pointer select-none flex gap-2 h-11 justify-center items-center bg-white border border-[#D5D7DA] rounded-r-lg px-3"
                 >
-                  <path
-                    d="M4.16699 13.2493C3.39042 13.2493 3.00214 13.2493 2.69585 13.1225C2.28747 12.9533 1.96302 12.6289 1.79386 12.2205C1.66699 11.9142 1.66699 11.5259 1.66699 10.7493V5.08268C1.66699 4.14926 1.66699 3.68255 1.84865 3.32603C2.00844 3.01243 2.2634 2.75746 2.57701 2.59767C2.93353 2.41602 3.40024 2.41602 4.33366 2.41602H10.0003C10.7769 2.41602 11.1652 2.41602 11.4715 2.54288C11.8798 2.71204 12.2043 3.0365 12.3735 3.44488C12.5003 3.75116 12.5003 4.13945 12.5003 4.91602M10.167 19.0827H15.667C16.6004 19.0827 17.0671 19.0827 17.4236 18.901C17.7372 18.7412 17.9922 18.4863 18.152 18.1727C18.3337 17.8161 18.3337 17.3494 18.3337 16.416V10.916C18.3337 9.98259 18.3337 9.51588 18.152 9.15937C17.9922 8.84576 17.7372 8.59079 17.4236 8.43101C17.0671 8.24935 16.6004 8.24935 15.667 8.24935H10.167C9.23357 8.24935 8.76686 8.24935 8.41034 8.43101C8.09674 8.59079 7.84177 8.84576 7.68198 9.15937C7.50033 9.51588 7.50033 9.9826 7.50033 10.916V16.416C7.50033 17.3494 7.50033 17.8161 7.68198 18.1727C7.84177 18.4863 8.09674 18.7412 8.41034 18.901C8.76686 19.0827 9.23357 19.0827 10.167 19.0827Z"
-                    stroke="#414651"
-                    strokeWidth="1.66667"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="21"
+                    viewBox="0 0 20 21"
+                    fill="none"
+                  >
+                    <path
+                      d="M4.16699 13.2493C3.39042 13.2493 3.00214 13.2493 2.69585 13.1225C2.28747 12.9533 1.96302 12.6289 1.79386 12.2205C1.66699 11.9142 1.66699 11.5259 1.66699 10.7493V5.08268C1.66699 4.14926 1.66699 3.68255 1.84865 3.32603C2.00844 3.01243 2.2634 2.75746 2.57701 2.59767C2.93353 2.41602 3.40024 2.41602 4.33366 2.41602H10.0003C10.7769 2.41602 11.1652 2.41602 11.4715 2.54288C11.8798 2.71204 12.2043 3.0365 12.3735 3.44488C12.5003 3.75116 12.5003 4.13945 12.5003 4.91602M10.167 19.0827H15.667C16.6004 19.0827 17.0671 19.0827 17.4236 18.901C17.7372 18.7412 17.9922 18.4863 18.152 18.1727C18.3337 17.8161 18.3337 17.3494 18.3337 16.416V10.916C18.3337 9.98259 18.3337 9.51588 18.152 9.15937C17.9922 8.84576 17.7372 8.59079 17.4236 8.43101C17.0671 8.24935 16.6004 8.24935 15.667 8.24935H10.167C9.23357 8.24935 8.76686 8.24935 8.41034 8.43101C8.09674 8.59079 7.84177 8.84576 7.68198 9.15937C7.50033 9.51588 7.50033 9.9826 7.50033 10.916V16.416C7.50033 17.3494 7.50033 17.8161 7.68198 18.1727C7.84177 18.4863 8.09674 18.7412 8.41034 18.901C8.76686 19.0827 9.23357 19.0827 10.167 19.0827Z"
+                      stroke="#414651"
+                      strokeWidth="1.66667"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
 
-                <span>{isCopied ? "Copied!" : "Copy"}</span>
-              </div>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>{"Click to copy"}</p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
+                  <span>{isCopied ? "Copied!" : "Copy"}</span>
+                </div>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>{"Click to copy"}</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </div>
+
+        {error && <span className="text-red-500 text-sm mt-1">{error}</span>}
       </div>
-
-      {error && <span className="text-red-500 text-sm mt-1">{error}</span>}
-    </div>
-  );
-});
+    );
+  }
+);
 InputCopy.displayName = "InputCopy";
 
 export { Input, InputPassword, InputPhoneNumber, InputCopy };

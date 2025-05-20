@@ -1,7 +1,10 @@
 "use client";
 
+import { Suspense, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
-import { Suspense, useMemo, useRef, useState } from "react";
+
+import { beautifyErrors, cn } from "@/lib/utils";
 
 import {
   Select,
@@ -22,14 +25,22 @@ import {
 } from "@/components/shadcn/dialog";
 
 import { Button } from "@/components/shadcn/button";
+import { Input, InputCopy } from "@/components/shadcn/input";
 
-import { cn } from "@/lib/utils";
 import InventoryCarList from "./inventoryCarList";
 import InventoryFilesList from "./inventoryFilesList";
 import DragAndDropUploader from "./DragAndDropUploader";
-import { Input, InputCopy } from "@/components/shadcn/input";
+import {
+  useCreateVehicleInventoryMutation,
+  useGetVehicleInventoryQuery,
+} from "@/features/inventory/inventorySlice";
+import moment from "moment";
+import { useToast } from "@/hooks/useToast";
 
 export default function DashboardDealerInventory() {
+  const toast = useToast();
+  const searchParams = useSearchParams();
+
   const { control, handleSubmit } = useForm({
     defaultValues: {
       stockId: "021-25-364",
@@ -57,11 +68,68 @@ export default function DashboardDealerInventory() {
     addPdf: false,
   });
 
-  const onSubmit = (data: any) => {
-    console.log(data);
+  const search = searchParams.get("search");
+  const filter = searchParams.get("filter");
+  const sort = searchParams.get("sort");
+
+  const files_search = searchParams.get("file_search");
+  const files_filter = searchParams.get("file_filter");
+  const files_sort = searchParams.get("file_sort");
+
+  const {
+    data: getVehicleList,
+    error: errorGetVehicle,
+    isFetching: isFetchingGetVehicle,
+    refetch: refetchGetVehicle,
+  } = useGetVehicleInventoryQuery({ search: "a", page: 1, limit: "false" });
+
+  const [createVehicleInventory, { isLoading: isLoadingCreateVehicle }] =
+    useCreateVehicleInventoryMutation();
+
+  console.log("errorGetVehicle => ", errorGetVehicle);
+  console.log("getVehicleList => ", getVehicleList);
+
+  const onSubmit = async (formData: any) => {
+    console.log(formData);
+
+    const payload = {
+      price: formData.price,
+      mileage: formData.mileage,
+      brand: formData.brand,
+      model: formData.model,
+      year: formData.year,
+      vin: formData.vin,
+      stock_id: formData.stockId,
+      plate_no: formData.numberPlate,
+      body_style: formData.bodyStyle,
+      engine_type: formData.engineType,
+      fuel_type: formData.fuelType,
+      odometer: formData.odometer,
+      color: formData.color,
+      consign: formData.consign,
+      date_in: moment(formData.dateIn).format("YYYY-MM-DD"),
+      date_out: moment(formData.dateOut).format("YYYY-MM-DD"),
+    };
+
+    const { data, error } = await createVehicleInventory(payload);
+
+    if (error) {
+      console.log(error);
+      toast("error", beautifyErrors(error));
+      return;
+    }
+
+    setModals({ ...modals, addInventory: false });
+    await refetchGetVehicle();
+
+    console.log("data => ", data);
   };
 
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
+
+  if (isFetchingGetVehicle) {
+    return "Loading...";
+  }
 
   return (
     <Suspense>
@@ -250,12 +318,33 @@ export default function DashboardDealerInventory() {
               <div className="flex gap-3">
                 {/* filter */}
                 <Select>
-                  <SelectTrigger className="w-[180px]">
-                    <SelectValue placeholder="Select a fruit" />
+                  <SelectTrigger
+                    className="w-[80px]"
+                    postIcon={<div></div>}
+                    preIcon={
+                      <svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 20 20"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M9.11634 18.875C8.71634 18.875 8.32467 18.775 7.95801 18.575C7.22467 18.1667 6.78301 17.425 6.78301 16.5917V12.175C6.78301 11.7583 6.50801 11.1333 6.24967 10.8167L3.13301 7.51667C2.60801 6.99167 2.20801 6.09167 2.20801 5.41667V3.5C2.20801 2.16667 3.21634 1.125 4.49967 1.125H15.4997C16.7663 1.125 17.7913 2.15 17.7913 3.41667V5.25C17.7913 6.125 17.2663 7.11667 16.7747 7.60833L13.1663 10.8C12.8163 11.0917 12.5413 11.7333 12.5413 12.25V15.8333C12.5413 16.575 12.0747 17.4333 11.4913 17.7833L10.3413 18.525C9.96634 18.7583 9.54134 18.875 9.11634 18.875ZM4.49967 2.375C3.91634 2.375 3.45801 2.86667 3.45801 3.5V5.41667C3.45801 5.725 3.70801 6.325 4.02467 6.64167L7.19967 9.98333C7.62467 10.5083 8.04134 11.3833 8.04134 12.1667V16.5833C8.04134 17.125 8.41634 17.3917 8.57467 17.475C8.92467 17.6667 9.34967 17.6667 9.67467 17.4667L10.833 16.725C11.0663 16.5833 11.2997 16.1333 11.2997 15.8333V12.25C11.2997 11.3583 11.733 10.375 12.358 9.85L15.9247 6.69167C16.208 6.40833 16.5497 5.73333 16.5497 5.24167V3.41667C16.5497 2.84167 16.083 2.375 15.508 2.375H4.49967Z"
+                          fill="#A2A1A7"
+                        />
+                        <path
+                          d="M5.00006 8.95741C4.88339 8.95741 4.77506 8.92408 4.66672 8.86575C4.37506 8.68241 4.28339 8.29075 4.46672 7.99908L8.57506 1.41575C8.75839 1.12408 9.14172 1.03241 9.43339 1.21575C9.72506 1.39908 9.81672 1.78241 9.63339 2.07408L5.52506 8.65741C5.40839 8.84908 5.20839 8.95741 5.00006 8.95741Z"
+                          fill="#A2A1A7"
+                        />
+                      </svg>
+                    }
+                  >
+                    <SelectValue placeholder="Filter" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectGroup>
-                      <SelectLabel>Fruits</SelectLabel>
+                      <SelectLabel>Filter</SelectLabel>
                       <SelectItem value="apple">Apple</SelectItem>
                       <SelectItem value="banana">Banana</SelectItem>
                       <SelectItem value="blueberry">Blueberry</SelectItem>
@@ -267,12 +356,40 @@ export default function DashboardDealerInventory() {
 
                 {/* date sort */}
                 <Select>
-                  <SelectTrigger className="w-[180px]">
-                    <SelectValue placeholder="Select a fruit" />
+                  <SelectTrigger
+                    className="w-[120px]"
+                    preIcon={
+                      <svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 20 20"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M8.70868 6.22498C8.55035 6.22498 8.39199 6.16667 8.26699 6.04167L5.60866 3.38333L2.95032 6.04167C2.70866 6.28333 2.30866 6.28333 2.06699 6.04167C1.82533 5.8 1.82533 5.4 2.06699 5.15834L5.16702 2.05831C5.28369 1.94164 5.44199 1.875 5.60866 1.875C5.77533 1.875 5.93368 1.94164 6.05035 2.05831L9.15033 5.15834C9.39199 5.4 9.39199 5.8 9.15033 6.04167C9.02533 6.16667 8.86702 6.22498 8.70868 6.22498Z"
+                          fill="#A2A1A7"
+                        />
+                        <path
+                          d="M5.6084 18.125C5.26673 18.125 4.9834 17.8417 4.9834 17.5V2.5C4.9834 2.15833 5.26673 1.875 5.6084 1.875C5.95007 1.875 6.2334 2.15833 6.2334 2.5V17.5C6.2334 17.8417 5.95007 18.125 5.6084 18.125Z"
+                          fill="#A2A1A7"
+                        />
+                        <path
+                          d="M14.3997 18.1253C14.233 18.1253 14.0747 18.0586 13.958 17.942L10.858 14.8419C10.6163 14.6003 10.6163 14.2003 10.858 13.9586C11.0997 13.7169 11.4997 13.7169 11.7413 13.9586L14.3997 16.6169L17.058 13.9586C17.2996 13.7169 17.6997 13.7169 17.9413 13.9586C18.183 14.2003 18.183 14.6003 17.9413 14.8419L14.8413 17.942C14.7246 18.0586 14.558 18.1253 14.3997 18.1253Z"
+                          fill="#A2A1A7"
+                        />
+                        <path
+                          d="M14.3916 18.125C14.0499 18.125 13.7666 17.8417 13.7666 17.5V2.5C13.7666 2.15833 14.0499 1.875 14.3916 1.875C14.7333 1.875 15.0166 2.15833 15.0166 2.5V17.5C15.0166 17.8417 14.7416 18.125 14.3916 18.125Z"
+                          fill="#A2A1A7"
+                        />
+                      </svg>
+                    }
+                  >
+                    <SelectValue placeholder="Sort By" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectGroup>
-                      <SelectLabel>Fruits</SelectLabel>
+                      <SelectLabel>Filter</SelectLabel>
                       <SelectItem value="apple">Apple</SelectItem>
                       <SelectItem value="banana">Banana</SelectItem>
                       <SelectItem value="blueberry">Blueberry</SelectItem>
@@ -285,7 +402,7 @@ export default function DashboardDealerInventory() {
             </div>
 
             {selectedPanel == "list" ? (
-              <InventoryCarList />
+              <InventoryCarList getVehicleList={getVehicleList} />
             ) : (
               <InventoryFilesList />
             )}
@@ -366,7 +483,6 @@ export default function DashboardDealerInventory() {
                           id="stockId"
                           error={errors.stockId?.message}
                           copyText={field.value}
-                          disabled
                           {...field}
                         />
                       )}
@@ -390,7 +506,7 @@ export default function DashboardDealerInventory() {
                           id="vin"
                           error={errors.vin?.message}
                           copyText={field.value}
-                          disabled
+                          // disabled
                           {...field}
                         />
                       )}
@@ -486,7 +602,7 @@ export default function DashboardDealerInventory() {
                       rules={{ required: "Mileage is required" }}
                       render={({ field, formState: { errors } }) => (
                         <Input
-                          type="mileage"
+                          type="number"
                           id="mileage"
                           className="h-11"
                           placeholder="Mileage"
@@ -765,7 +881,7 @@ export default function DashboardDealerInventory() {
                     variant={"primary"}
                     type={"submit"}
                     className="h-11 rounded-lg"
-                    loading={false}
+                    loading={isLoadingCreateVehicle}
                   >
                     Save Changes
                   </Button>

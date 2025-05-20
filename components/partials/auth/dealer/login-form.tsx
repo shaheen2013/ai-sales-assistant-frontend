@@ -3,13 +3,12 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession, signIn } from "next-auth/react";
 import { useForm, Controller } from "react-hook-form";
 
 // components
 import Button from "@/components/button";
 
-import { beautifyErrors } from "@/lib/utils";
 import { useToast } from "@/hooks/useToast";
 import { Checkbox } from "@/components/shadcn/checkbox";
 import { Input, InputPassword } from "@/components/shadcn/input";

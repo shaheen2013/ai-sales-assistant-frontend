@@ -1,8 +1,10 @@
+import { createQueryParams } from "@/lib/utils";
 import { apiSlice } from "../api/apiSlice";
 
 export const inventorySlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    inventoryUpload: builder.mutation({
+    // v1
+    vehicleInventoryUpload: builder.mutation({
       query: (data) => ({
         url: `/v1/dealer-vehicle-inventory-upload`,
         method: "POST",
@@ -11,7 +13,26 @@ export const inventorySlice = apiSlice.injectEndpoints({
       }),
     }),
 
-    
+    getVehicleInventory: builder.query({
+      query: (data) => {
+        const params = createQueryParams(data);
+
+        return {
+          url: `/v1/dealer/vehicle-inventory?=${params}`,
+          method: "GET",
+          credentials: "include",
+        };
+      },
+    }),
+
+    createVehicleInventory: builder.mutation({
+      query: (data) => ({
+        url: `/v1/dealer/vehicle-inventory`,
+        method: "POST",
+        body: data,
+        credentials: "include",
+      }),
+    }),
 
     getVehicles: builder.query({
       query: (data) => ({
@@ -24,4 +45,10 @@ export const inventorySlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useGetVehiclesQuery } = inventorySlice;
+export const {
+  useVehicleInventoryUploadMutation,
+  useGetVehicleInventoryQuery,
+  useCreateVehicleInventoryMutation,
+
+  useGetVehiclesQuery,
+} = inventorySlice;

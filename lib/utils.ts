@@ -57,3 +57,38 @@ export function formatFileSize(bytes: number): string {
 
   return `${size.toFixed(1)} ${sizes[i]}`;
 }
+
+type QueryParamsInput = Record<string, any>;
+
+interface QueryParamsConfig {
+  excludeFaulty?: boolean; // default: true
+}
+
+export function createQueryParams(
+  params: QueryParamsInput,
+  config: QueryParamsConfig = {}
+): string {
+  const { excludeFaulty = true } = config;
+
+  const entries = Object.entries(params).filter(([_, value]) => {
+    if (!excludeFaulty) return true;
+
+    // Faulty values: null, undefined, '', false, 0, NaN
+    return (
+      value !== null &&
+      value !== undefined &&
+      value !== "" &&
+      value !== false &&
+      value !== 0 &&
+      !Number.isNaN(value)
+    );
+  });
+
+  const searchParams = new URLSearchParams();
+
+  for (const [key, value] of entries) {
+    searchParams.append(key, String(value));
+  }
+
+  return searchParams.toString();
+}
