@@ -35,7 +35,7 @@ export default function LoginForm() {
 
   const { handleSubmit, control } = useForm<FormValues>({
     defaultValues: {
-      name: "John",
+      name: "",
       email: "",
       password: "",
       terms: true,

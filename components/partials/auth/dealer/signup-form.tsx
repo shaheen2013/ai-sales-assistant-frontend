@@ -41,7 +41,7 @@ export default function SignupForm() {
 
   const { handleSubmit, control, reset } = useForm<FormValues>({
     defaultValues: {
-      name: "John",
+      name: "",
       email: "",
       password: "",
       terms: true,
