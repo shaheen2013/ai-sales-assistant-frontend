@@ -1,4 +1,5 @@
 import { clsx, type ClassValue } from 'clsx';
+import moment from 'moment';
 import { twMerge } from 'tailwind-merge';
 
 export function cn(...inputs: ClassValue[]) {
@@ -92,4 +93,22 @@ export function createQueryParams(
   }
 
   return searchParams.toString();
+}
+
+export function formatShortTimeAgo(date: string): string {
+  const duration = moment.duration(moment().diff(moment(date)));
+
+  if (duration.asSeconds() < 60) {
+    return `${Math.floor(duration.asSeconds())}s`;
+  } else if (duration.asMinutes() < 60) {
+    return `${Math.floor(duration.asMinutes())}m`;
+  } else if (duration.asHours() < 24) {
+    return `${Math.floor(duration.asHours())}h`;
+  } else if (duration.asDays() < 30) {
+    return `${Math.floor(duration.asDays())}d`;
+  } else if (duration.asMonths() < 12) {
+    return `${Math.floor(duration.asMonths())}mo`;
+  } else {
+    return `${Math.floor(duration.asYears())}y`;
+  }
 }
