@@ -156,6 +156,10 @@ export default function DashboardDealerInventory() {
     return "Loading...";
   }
 
+  if (errorGetVehicle) {
+    return JSON.stringify(errorGetVehicle);
+  }
+
   return (
     <Suspense>
       <div className="">
