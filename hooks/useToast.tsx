@@ -63,7 +63,7 @@ export const useToast = () => {
           </svg>
         ),
         title: <div className="ml-2">{message}</div>,
-
+        description: <div>{options?.description}</div>,
         ...options,
       });
     }

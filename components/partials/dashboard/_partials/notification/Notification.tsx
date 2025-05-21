@@ -6,9 +6,17 @@ import { useGetNotificationsQuery, useGetNotificationunreadCountQuery } from '@/
 import NotificationSkeleton from './NotificationSkeleton';
 import { formatShortTimeAgo } from '@/lib/utils';
 import Link from 'next/link';
+import { useSession } from 'next-auth/react';
+import { useToast } from '@/hooks/useToast';
 
 
 const Notification = () => {
+    /*--Session--*/
+    const { data: session } = useSession();
+
+    /*--Custom Hooks--*/
+    const toast = useToast();
+
     /*--React State--*/
     const [open, setOpen] = useState(false);
     const [totalUnread, setTotalUnread] = useState(0);
@@ -30,6 +38,45 @@ const Notification = () => {
             setTotalUnread(notificationUnreadCountData?.total_count);
         }
     }, [notificationUnreadCountData]);
+
+    useEffect(() => {
+        const socketRef = { current: null as WebSocket | null };
+        if (session?.access && !socketRef.current) {
+            const socket = new WebSocket(`wss://${process.env.NEXT_PUBLIC_API_BASE_DOMAIN}/ws/notification?token=${session?.access}`);
+
+            socketRef.current = socket;
+
+            socket.onopen = () => {
+                console.log('WebSocket connected');
+            };
+
+            socket.onmessage = (event) => {
+                const data = JSON.parse(event.data);
+                if (!data?.error) {
+                    toast("success", data?.message);
+                    setTotalUnread(data?.unread_count);
+                    setNotifications((prevNotifications) => [data, ...prevNotifications?.slice(0, 4)]);
+                } else {
+                    toast("error", data?.error);
+                }
+            };
+
+            socket.onerror = (error) => {
+                console.error('WebSocket error:', error);
+            };
+
+            socket.onclose = (event) => {
+                console.log('WebSocket closed:', event);
+            };
+        }
+
+        return () => {
+            if (socketRef.current) {
+                socketRef.current.close();
+                console.log('WebSocket cleaned up');
+            }
+        };
+    }, [session?.access, toast])
 
     return (
         <div>
@@ -70,9 +117,12 @@ const Notification = () => {
                     align="end"
                 >
                     {/* title */}
-                    <h2 className="text-gray-300 text-2xl font-semibold mb-5">
-                        Notification
-                    </h2>
+                    <div className='flex items-center justify-between mb-5'>
+                        <h2 className="text-gray-300 text-2xl font-semiboldx">
+                            Notification
+                        </h2>
+                        <div className="justify-start text-gray-200 text-sm font-medium select-none cursor-pointer">Mark all as read</div>
+                    </div>
 
                     {/* content */}
                     <div className="mb-6">
