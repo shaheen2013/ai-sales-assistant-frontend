@@ -1,11 +1,11 @@
-import { Button } from '@/components/shadcn/button';
-import { Plus } from 'lucide-react';
-import { useState } from 'react';
-import AddDepartmentModal from './add-department-modal';
-import ManageOwnershipTable from './manage-ownership-table';
+import { Button } from "@/components/shadcn/button";
+import { Plus } from "lucide-react";
+import { useState } from "react";
+import AddDepartmentModal from "./add-department-modal";
+import ManageOwnershipTable from "./manage-ownership-table";
 
 const ManageOwnershipSection = () => {
-  const [isUpdating, setIsUpdating] = useState(false);
+  const [isUpdating] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   return (
     <div className="flex flex-col gap-6 rounded-2xl border border-[#EAEBEC] p-6">
@@ -35,7 +35,7 @@ const ManageOwnershipSection = () => {
           onClick={() => {
             // form.reset();
             // toast('success', 'Changes removed!');
-            console.log('discard');
+            console.log("discard");
           }}
         >
           Discard
@@ -44,7 +44,7 @@ const ManageOwnershipSection = () => {
           type="submit"
           className="bg-[#019935] hover:bg-[#018a30] text-white text-xs sm:text-sm px-2 sm:px-4 py-1 sm:py-2"
         >
-          {isUpdating ? 'Saving...' : 'Save Changes'}
+          {isUpdating ? "Saving..." : "Save Changes"}
         </Button>
       </div>
       {/* Dialog */}

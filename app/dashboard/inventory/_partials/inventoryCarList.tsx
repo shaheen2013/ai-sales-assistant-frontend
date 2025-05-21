@@ -46,8 +46,8 @@ import { Input, InputCopy } from "@/components/shadcn/input";
 export default function InventoryCarList({
   handleInventoryEdit,
   getVehicleList,
-  handleInventoryDelete,
-}: any) {
+}: // handleInventoryDelete,
+any) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
@@ -457,7 +457,10 @@ export default function InventoryCarList({
     },
   ];
 
-  const data: Inventory[] = useMemo(() => getVehicleList?.results, []);
+  const data: Inventory[] = useMemo(
+    () => getVehicleList?.results,
+    [getVehicleList?.results]
+  );
 
   const table = useReactTable({
     data,

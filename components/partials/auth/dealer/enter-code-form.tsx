@@ -7,12 +7,7 @@ import { useForm, Controller } from "react-hook-form";
 
 // components
 import Button from "@/components/button";
-
-// import {  } from "@/features/auth/authSlice";
-
-import { beautifyErrors } from "@/lib/utils";
 import { useToast } from "@/hooks/useToast";
-
 import { Input } from "@/components/shadcn/input";
 
 export default function EnterCodeForm() {
@@ -38,10 +33,10 @@ export default function EnterCodeForm() {
 
   const onSubmit = async (formData: FormValues) => {
     try {
-      const payload = {
-        uid: uid,
-        token: token,
-      };
+      // const payload = {
+      //   uid: uid,
+      //   token: token,
+      // };
       // const { error, data } = await emailConfirmation(payload);
 
       // if (error) {

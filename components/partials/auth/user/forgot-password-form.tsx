@@ -2,7 +2,6 @@
 
 import React from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useSession, signIn } from "next-auth/react";
 import { useForm, Controller } from "react-hook-form";
 
@@ -16,8 +15,7 @@ import { beautifyErrors } from "@/lib/utils";
 
 export default function ForgotPasswordForm() {
   const toast = useToast();
-  const router = useRouter();
-  const { data: session, status } = useSession();
+  const { status } = useSession();
 
   const [forgotPassword, { isLoading }] = useForgotPasswordMutation();
 

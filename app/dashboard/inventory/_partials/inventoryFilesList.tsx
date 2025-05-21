@@ -13,8 +13,8 @@ import {
   getPaginationRowModel,
 } from "@tanstack/react-table";
 
-import { Controller, useForm } from "react-hook-form";
-import { Suspense, useMemo, useRef, useState } from "react";
+// import { Controller, useForm } from "react-hook-form";
+import { useMemo, useState } from "react";
 
 import Image from "next/image";
 import { MoreHorizontal } from "lucide-react";
@@ -419,7 +419,7 @@ export default function InventoryFilesList() {
     },
   ];
 
-  const data: Inventory[] = useMemo(() => inventoryData, []);
+  const data: Inventory[] = useMemo(() => inventoryData, [inventoryData]);
 
   const table = useReactTable({
     data,

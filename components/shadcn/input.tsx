@@ -1,15 +1,6 @@
 import React, { useState } from "react";
 
 import { cn } from "@/lib/utils";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/shadcn/select";
 
 import {
   Tooltip,
@@ -17,7 +8,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/shadcn/tooltip";
-import Button from "../button";
 
 interface InputProps extends React.ComponentProps<"input"> {
   error?: string;

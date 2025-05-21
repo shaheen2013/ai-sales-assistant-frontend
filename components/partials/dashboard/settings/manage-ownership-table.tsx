@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import Badge from '@/components/badge/Badge';
-import { Button } from '@/components/shadcn/button';
+import Badge from "@/components/badge/Badge";
+import { Button } from "@/components/shadcn/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@/components/shadcn/dropdown-menu';
+} from "@/components/shadcn/dropdown-menu";
 import {
   Table,
   TableBody,
@@ -15,15 +15,15 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/shadcn/table';
+} from "@/components/shadcn/table";
 import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
   useReactTable,
-} from '@tanstack/react-table';
-import { MoreVertical, Pencil, Trash } from 'lucide-react';
-import { useState } from 'react';
+} from "@tanstack/react-table";
+import { MoreVertical, Pencil, Trash } from "lucide-react";
+import { useState } from "react";
 
 export type OwnershipData = {
   id: number;
@@ -37,47 +37,47 @@ export type OwnershipData = {
 // Function to determine badge color based on role
 const getRoleBadgeColor = (role: any): any => {
   switch (role) {
-    case 'Finance Advisor':
-      return 'orange';
-    case 'Sales Representative':
-      return 'blue';
-    case 'Technical Advisor':
-      return 'purple';
-    case 'Customer Support Agent':
-      return 'green';
+    case "Finance Advisor":
+      return "orange";
+    case "Sales Representative":
+      return "blue";
+    case "Technical Advisor":
+      return "purple";
+    case "Customer Support Agent":
+      return "green";
     default:
-      return 'gray';
+      return "gray";
   }
 };
 
 // Column definitions
 export const ownershipColumns: ColumnDef<OwnershipData>[] = [
   {
-    accessorKey: 'name',
-    header: 'Name',
+    accessorKey: "name",
+    header: "Name",
     cell: ({ row }) => {
       return (
-        <div className="font-medium text-[#374151]">{row.getValue('name')}</div>
+        <div className="font-medium text-[#374151]">{row.getValue("name")}</div>
       );
     },
   },
   {
-    accessorKey: 'role',
-    header: 'Role',
+    accessorKey: "role",
+    header: "Role",
     cell: ({ row }) => {
-      const role: string = row.getValue('role');
+      const role: string = row.getValue("role");
       return <Badge text={role} variant={getRoleBadgeColor(role)} />;
     },
   },
   {
-    accessorKey: 'phone',
-    header: 'Phone',
+    accessorKey: "phone",
+    header: "Phone",
     cell: ({ row }) => {
-      return <div className="text-[#374151]">{row.getValue('phone')}</div>;
+      return <div className="text-[#374151]">{row.getValue("phone")}</div>;
     },
   },
   {
-    id: 'actions',
+    id: "actions",
     header: () => <div className="text-right">Action</div>,
     cell: ({ row }) => {
       const owner = row.original;
@@ -123,30 +123,30 @@ export const ownershipColumns: ColumnDef<OwnershipData>[] = [
 ];
 
 const ManageOwnershipTable = () => {
-  const [owners, setOwners] = useState<OwnershipData[]>([
+  const [owners] = useState<OwnershipData[]>([
     {
       id: 1,
-      name: 'Kawsar Amin',
-      role: 'Finance Advisor',
-      phone: '+2507885550199',
+      name: "Kawsar Amin",
+      role: "Finance Advisor",
+      phone: "+2507885550199",
     },
     {
       id: 2,
-      name: 'Irfan H Sajid',
-      role: 'Sales Representative',
-      phone: '+2507885550199',
+      name: "Irfan H Sajid",
+      role: "Sales Representative",
+      phone: "+2507885550199",
     },
     {
       id: 3,
-      name: 'Toukir',
-      role: 'Technical Advisor',
-      phone: '+2507885550199',
+      name: "Toukir",
+      role: "Technical Advisor",
+      phone: "+2507885550199",
     },
     {
       id: 4,
-      name: 'Molla',
-      role: 'Customer Support Agent',
-      phone: '+2507885550199',
+      name: "Molla",
+      role: "Customer Support Agent",
+      phone: "+2507885550199",
     },
   ]);
 

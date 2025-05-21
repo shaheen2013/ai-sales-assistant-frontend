@@ -1,7 +1,7 @@
 "use client";
 
 import { Suspense, useState } from "react";
-import { useSearchParams } from "next/navigation";
+// import { useSearchParams } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
 
 import { beautifyErrors, cn } from "@/lib/utils";
@@ -41,7 +41,7 @@ import { useToast } from "@/hooks/useToast";
 
 export default function DashboardDealerInventory() {
   const toast = useToast();
-  const searchParams = useSearchParams();
+  // const searchParams = useSearchParams();
 
   const { control, handleSubmit } = useForm({
     defaultValues: {
@@ -70,13 +70,13 @@ export default function DashboardDealerInventory() {
     addPdf: false,
   });
 
-  const search = searchParams.get("search");
-  const filter = searchParams.get("filter");
-  const sort = searchParams.get("sort");
+  // const search = searchParams.get("search");
+  // const filter = searchParams.get("filter");
+  // const sort = searchParams.get("sort");
 
-  const files_search = searchParams.get("file_search");
-  const files_filter = searchParams.get("file_filter");
-  const files_sort = searchParams.get("file_sort");
+  // const files_search = searchParams.get("file_search");
+  // const files_filter = searchParams.get("file_filter");
+  // const files_sort = searchParams.get("file_sort");
 
   const {
     data: getVehicleList,
@@ -88,21 +88,24 @@ export default function DashboardDealerInventory() {
   const {
     data: dataGetInventoryFiles,
     error: errorGetInventoryFiles,
-    isFetching: isFetchingGetInventoryFiles,
-    refetch: refetchGetInventoryFiles,
+    // isFetching: isFetchingGetInventoryFiles,
+    // refetch: refetchGetInventoryFiles,
   } = useGetInventoryFilesQuery({});
 
   const [createVehicleInventory, { isLoading: isLoadingCreateVehicle }] =
     useCreateVehicleInventoryMutation();
-  const [deleteVehicleInventory, { isLoading: isLoadingDeleteVehicle }] =
-    useDeleteVehicleInventoryMutation();
+  const [
+    deleteVehicleInventory,
+    // , { isLoading: isLoadingDeleteVehicle }
+  ] = useDeleteVehicleInventoryMutation();
 
   console.log("errorGetVehicle => ", errorGetInventoryFiles);
   console.log("getVehicleList => ", dataGetInventoryFiles);
 
   const handleInventoryEdit = async (formData: any, id: any) => {
-
-  }
+    console.log("edit id => ", id);
+    console.log("edit formData => ", formData);
+  };
 
   const handleInventoryDelete = async (id: string) => {
     console.log("delete id => ", id);
