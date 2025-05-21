@@ -259,7 +259,7 @@ export default function LoginForm() {
       </form>
 
       <div className="text-center mb-2">
-        <Link href="/dealer/forgot-password" className="text-sm font-medium">
+        <Link href="/forgot-password" className="text-sm font-medium">
           Forgot Password?
         </Link>
       </div>
