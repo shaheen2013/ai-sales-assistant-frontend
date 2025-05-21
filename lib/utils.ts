@@ -112,3 +112,14 @@ export function formatShortTimeAgo(date: string): string {
     return `${Math.floor(duration.asYears())}y`;
   }
 }
+
+export function getYears() {
+  const currentYear = moment().year();
+  const years = [];
+
+  for (let i = currentYear; i >= 2025; i--) {
+    years.push(i);
+  }
+
+  return years;
+}

@@ -1,89 +1,84 @@
 "use client";
 
+import { DealerRegistrationSourceMonthlyData } from "@/types/dealerType";
 import { BarChart, Bar, XAxis, Tooltip, ResponsiveContainer } from "recharts";
 
-export default function DashboardDealerOverviewChart() {
-  interface Data {
-    name: string;
-    organic: number;
-    byAi: number;
-    byReferral: number;
-  }
+export default function DashboardDealerOverviewChart({data}: {data: DealerRegistrationSourceMonthlyData[]}) {
 
-  const data: Data[] = [
-    {
-      name: "Jan",
-      organic: 3800,
-      byAi: 2100,
-      byReferral: 1900,
-    },
-    {
-      name: "Feb",
-      organic: 4200,
-      byAi: 1600,
-      byReferral: 2500,
-    },
-    {
-      name: "Mar",
-      organic: 3000,
-      byAi: 2800,
-      byReferral: 2200,
-    },
-    {
-      name: "Apr",
-      organic: 4500,
-      byAi: 2400,
-      byReferral: 2100,
-    },
-    {
-      name: "May",
-      organic: 3300,
-      byAi: 2900,
-      byReferral: 2700,
-    },
-    {
-      name: "Jun",
-      organic: 3900,
-      byAi: 2600,
-      byReferral: 2300,
-    },
-    {
-      name: "Jul",
-      organic: 4100,
-      byAi: 2000,
-      byReferral: 2800,
-    },
-    {
-      name: "Aug",
-      organic: 3700,
-      byAi: 2500,
-      byReferral: 2400,
-    },
-    {
-      name: "Sep",
-      organic: 3400,
-      byAi: 3000,
-      byReferral: 2200,
-    },
-    {
-      name: "Oct",
-      organic: 3200,
-      byAi: 2700,
-      byReferral: 2600,
-    },
-    {
-      name: "Nob",
-      organic: 3600,
-      byAi: 2300,
-      byReferral: 2500,
-    },
-    {
-      name: "Dec",
-      organic: 4000,
-      byAi: 1800,
-      byReferral: 2900,
-    },
-  ];
+  // const data: Data[] = [
+  //   {
+  //     name: "Jan",
+  //     organic: 3800,
+  //     byAi: 2100,
+  //     byReferral: 1900,
+  //   },
+  //   {
+  //     name: "Feb",
+  //     organic: 4200,
+  //     byAi: 1600,
+  //     byReferral: 2500,
+  //   },
+  //   {
+  //     name: "Mar",
+  //     organic: 3000,
+  //     byAi: 2800,
+  //     byReferral: 2200,
+  //   },
+  //   {
+  //     name: "Apr",
+  //     organic: 4500,
+  //     byAi: 2400,
+  //     byReferral: 2100,
+  //   },
+  //   {
+  //     name: "May",
+  //     organic: 3300,
+  //     byAi: 2900,
+  //     byReferral: 2700,
+  //   },
+  //   {
+  //     name: "Jun",
+  //     organic: 3900,
+  //     byAi: 2600,
+  //     byReferral: 2300,
+  //   },
+  //   {
+  //     name: "Jul",
+  //     organic: 4100,
+  //     byAi: 2000,
+  //     byReferral: 2800,
+  //   },
+  //   {
+  //     name: "Aug",
+  //     organic: 3700,
+  //     byAi: 2500,
+  //     byReferral: 2400,
+  //   },
+  //   {
+  //     name: "Sep",
+  //     organic: 3400,
+  //     byAi: 3000,
+  //     byReferral: 2200,
+  //   },
+  //   {
+  //     name: "Oct",
+  //     organic: 3200,
+  //     byAi: 2700,
+  //     byReferral: 2600,
+  //   },
+  //   {
+  //     name: "Nob",
+  //     organic: 3600,
+  //     byAi: 2300,
+  //     byReferral: 2500,
+  //   },
+  //   {
+  //     name: "Dec",
+  //     organic: 4000,
+  //     byAi: 1800,
+  //     byReferral: 2900,
+  //   },
+  // ];
 
   function CustomTooltip({ payload }: any) {
     return (
@@ -180,7 +175,7 @@ export default function DashboardDealerOverviewChart() {
         >
           {/* <CartesianGrid strokeDasharray="3 3" /> */}
           <XAxis
-            dataKey="name"
+            dataKey="month"
             orientation="top"
             tick={{ fill: "#535862", fontSize: 10, fontWeight: 500, dy: 0 }}
             axisLine={{ stroke: "#fff" }}
@@ -212,19 +207,19 @@ export default function DashboardDealerOverviewChart() {
             radius={[6, 6, 0, 0]}
           />
           <Bar
-            dataKey="byAi"
+            dataKey="by_ai"
             stackId="a"
             fill="#8AD0A2"
             barSize={26}
             radius={[6, 6, 0, 0]}
           />
-          <Bar
+          {/* <Bar
             dataKey="byReferral"
             stackId="a"
             fill="#E6F5EB"
             barSize={26}
             radius={[6, 6, 0, 0]}
-          />
+          /> */}
         </BarChart>
       </ResponsiveContainer>
     </div>

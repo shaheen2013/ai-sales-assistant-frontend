@@ -1,6 +1,6 @@
 import { PaginatedResponse } from "@/types/paginatedType";
 import { apiSlice } from "../api/apiSlice";
-import { Dealer, DealerStatisticsResponseType } from "@/types/dealerType";
+import { Dealer, DealerRegistrationSourceCount, DealerStatisticsResponseType } from "@/types/dealerType";
 
 export const dealerSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
@@ -16,8 +16,15 @@ export const dealerSlice = apiSlice.injectEndpoints({
                 method: "GET",
                 url: `/admin-dashboard/dealer/subscription/statistics/`,
             }),
+        }),
+        getDealerRegistrationCount: builder.query<DealerRegistrationSourceCount, Record<string, any>>({
+            query: (queryParams) => ({
+                method: "GET",
+                url: `/admin-dashboard/dealer-registration-source-count/`,
+                params: queryParams,
+            })
         })
     }),
 });
 
-export const { useGetDealersQuery, useGetDealerStatisticsQuery } = dealerSlice;
+export const { useGetDealersQuery, useGetDealerStatisticsQuery, useGetDealerRegistrationCountQuery } = dealerSlice;
