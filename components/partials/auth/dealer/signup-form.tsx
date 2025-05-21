@@ -89,10 +89,6 @@ export default function SignupForm() {
         return;
       }
 
-      console.log("data", data);
-
-      toast("success", data?.detail || "Registration successful");
-      // return;
       // reset form
       reset();
 
@@ -107,9 +103,8 @@ export default function SignupForm() {
         if (progress >= 100) {
           clearInterval(interval);
           // After reaching 100, reset back to 0
-          setTimeout(() => {
-            // setRegisterProgress(0);
-          }, 3000); // small pause before reset (optional)
+          toast("success", data?.detail || "Registration successful");
+          setTimeout(() => {}, 3000); // small pause before reset (optional)
         }
       }, 30); // 20ms per update = smooth
     } catch (error) {
