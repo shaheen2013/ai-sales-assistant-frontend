@@ -11,13 +11,13 @@ export const dealerSlice = apiSlice.injectEndpoints({
                 params: queryParams,
             }),
         }),
-        getNotificationCount: builder.query<{ total_count: number }, void>({
+        getNotificationunreadCount: builder.query<{ total_count: number }, void>({
             query: () => ({
                 method: "GET",
-                url: `/v1/notifications/count`,
+                url: `/v1/notifications/unread-count`,
             }),
         })
     }),
 });
 
-export const { useGetNotificationsQuery, useGetNotificationCountQuery } = dealerSlice;
+export const { useGetNotificationsQuery, useGetNotificationunreadCountQuery } = dealerSlice;

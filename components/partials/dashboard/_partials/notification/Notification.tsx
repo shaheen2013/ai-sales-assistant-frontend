@@ -2,9 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuPortal, DropdownMenuTrigger } from '../../dashboard-dropdown';
 import { Button } from '@/components/shadcn/button';
 import { NotificationDataType } from '@/types/notificationSliceType';
-import { useGetNotificationCountQuery, useGetNotificationsQuery } from '@/features/notification/notificationSlice';
+import { useGetNotificationsQuery, useGetNotificationunreadCountQuery } from '@/features/notification/notificationSlice';
 import NotificationSkeleton from './NotificationSkeleton';
-import moment from 'moment';
 import { formatShortTimeAgo } from '@/lib/utils';
 import Link from 'next/link';
 
@@ -17,7 +16,7 @@ const Notification = () => {
 
     /*--RTK Query--*/
     const { data: notificationsData, isLoading: notificationsLoading } = useGetNotificationsQuery({ limit: 5 }, { skip: !open });
-    const { data: notificationCountData } = useGetNotificationCountQuery();
+    const { data: notificationUnreadCountData } = useGetNotificationunreadCountQuery();
 
     /*--UseEffect--*/
     useEffect(() => {
@@ -27,10 +26,10 @@ const Notification = () => {
     }, [notificationsData?.results]);
 
     useEffect(() => {
-        if (notificationCountData) {
-            setTotalUnread(notificationCountData?.total_count);
+        if (notificationUnreadCountData) {
+            setTotalUnread(notificationUnreadCountData?.total_count);
         }
-    }, [notificationCountData]);
+    }, [notificationUnreadCountData]);
 
     return (
         <div>
@@ -52,7 +51,7 @@ const Notification = () => {
 
                         {/* dot */}
                         {totalUnread > 0 && (
-                            <div className="absolute -top-1 -right-1 w-6 h-6 bg-red-500 rounded-full border border-white text-xs text-white flex items-center justify-center
+                            <div className="absolute top-0 right-0 w-5 h-5 bg-red-500 rounded-full border border-white text-[10px] text-white flex items-center justify-center
                             ">
                                 {totalUnread}
                             </div>
