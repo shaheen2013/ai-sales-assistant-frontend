@@ -100,6 +100,10 @@ export default function DashboardDealerInventory() {
   console.log("errorGetVehicle => ", errorGetInventoryFiles);
   console.log("getVehicleList => ", dataGetInventoryFiles);
 
+  const handleInventoryEdit = async (formData: any, id: any) => {
+
+  }
+
   const handleInventoryDelete = async (id: string) => {
     console.log("delete id => ", id);
 
@@ -429,6 +433,7 @@ export default function DashboardDealerInventory() {
             {selectedPanel == "list" ? (
               <InventoryCarList
                 getVehicleList={getVehicleList}
+                handleInventoryEdit={handleInventoryEdit}
                 handleInventoryDelete={handleInventoryDelete}
               />
             ) : (
