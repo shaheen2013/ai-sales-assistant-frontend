@@ -3,16 +3,16 @@ enum RoutingType {
   OFFICE = 'OFFICE',
 }
 
-interface Employee {
+interface EmployeeDataType {
   id: number;
   name: string;
   routing_type: RoutingType;
   phone_number: string;
 }
 
-export interface DepartmentType {
+export interface DepartmentDataType {
   id: number;
   department_name: string;
   department_email: string;
-  employees: Employee[];
+  employees: EmployeeDataType[];
 }

@@ -15,6 +15,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/shadcn/table';
+import { EmployeeDataType } from '@/types/dealerManagementSliceType';
 import {
   ColumnDef,
   flexRender,
@@ -23,22 +24,8 @@ import {
 } from '@tanstack/react-table';
 import { MoreVertical, Pencil, Trash } from 'lucide-react';
 
-interface Employee {
-  id: number;
-  name: string;
-  routing_type: 'MOBILE' | 'OFFICE';
-  phone_number: string;
-}
-
-export type DepartmentData = {
-  id: number;
-  name: string;
-  routing_type: 'MOBILE' | 'OFFICE';
-  phone_number: string;
-};
-
 // Column definitions
-export const departmentColumns: ColumnDef<DepartmentData>[] = [
+export const departmentColumns: ColumnDef<EmployeeDataType>[] = [
   {
     accessorKey: 'name',
     header: 'Employee Name',
@@ -115,7 +102,7 @@ export const departmentColumns: ColumnDef<DepartmentData>[] = [
 ];
 
 interface DepartmentDetailsTableProps {
-  departmentEmployees: Employee[];
+  departmentEmployees: EmployeeDataType[];
 }
 
 const DepartmentDetailsTable = ({

@@ -1,23 +1,23 @@
-import { DepartmentType } from '@/types/dealerManagementSliceType';
+import { DepartmentDataType } from '@/types/dealerManagementSliceType';
 import { apiSlice } from '../api/apiSlice';
 
 export const dealerManagementSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getDepartments: builder.query<DepartmentType[], void>({
+    getDepartments: builder.query<DepartmentDataType[], void>({
       query: () => ({
         url: '/departments/',
         method: 'GET',
         credentials: 'include',
       }),
     }),
-    getDepartmentById: builder.query<DepartmentType, string>({
+    getDepartmentById: builder.query<DepartmentDataType, string>({
       query: (id) => ({
         url: `/departments/${id}/`,
         method: 'GET',
         credentials: 'include',
       }),
     }),
-    addDepartment: builder.mutation<any, DepartmentType>({
+    addDepartment: builder.mutation<any, DepartmentDataType>({
       query: (department) => ({
         url: '/departments/',
         method: 'POST',

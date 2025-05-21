@@ -1,6 +1,7 @@
 'use client';
 import DepartmentDetailsTable from '@/components/partials/dashboard/management/department-details-table';
 import { Button } from '@/components/shadcn/button';
+import { Skeleton } from '@/components/shadcn/skeleton';
 import { useGetDepartmentByIdQuery } from '@/features/dealer/dealerManagementSlice';
 import { ChevronLeft } from 'lucide-react';
 import Link from 'next/link';
@@ -12,8 +13,6 @@ const DepartmentDetailsPage = () => {
 
   const { data: department, isLoading, error } = useGetDepartmentByIdQuery(id);
 
-  console.log('department', department);
-  console.log('error', error);
   return (
     <div className="flex flex-col gap-6 border rounded-2xl p-4 border-[#EAEBEC]">
       <Link href="/dashboard/management">
@@ -37,7 +36,11 @@ const DepartmentDetailsPage = () => {
       </div>
       <div className="">
         {isLoading ? (
-          <div>Loading department details...</div>
+          <div>
+            <Skeleton className="h-8 w-full" />
+            <Skeleton className="h-8 w-full" />
+            <Skeleton className="h-8 w-full" />
+          </div>
         ) : error ? (
           <div className="text-red-500 text-sm font-medium">
             {error.data.message + '!!' || 'Error Loading Department Details'}

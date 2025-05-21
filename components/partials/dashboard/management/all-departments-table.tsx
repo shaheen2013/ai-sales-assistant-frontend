@@ -15,6 +15,9 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/shadcn/table';
+import TableSkeleton from '@/components/skeleton/TableSkeleton';
+import { useGetDepartmentsQuery } from '@/features/dealer/dealerManagementSlice';
+import { DepartmentDataType } from '@/types/dealerManagementSliceType';
 import {
   ColumnDef,
   flexRender,
@@ -23,35 +26,9 @@ import {
 } from '@tanstack/react-table';
 import { Eye, MoreVertical, Trash } from 'lucide-react';
 import Link from 'next/link';
-import { useState } from 'react';
-
-export type DepartmentData = {
-  id: number;
-  name: string;
-  role: any;
-  phone: string;
-};
-
-// todo: fix type here for role and color
-
-// Function to determine badge color based on role
-const getRoleBadgeColor = (role: any): any => {
-  switch (role) {
-    case 'Finance Advisor':
-      return 'orange';
-    case 'Sales Representative':
-      return 'blue';
-    case 'Technical Advisor':
-      return 'purple';
-    case 'Customer Support Agent':
-      return 'green';
-    default:
-      return 'gray';
-  }
-};
 
 // Column definitions
-export const departmentColumns: ColumnDef<DepartmentData>[] = [
+export const departmentColumns: ColumnDef<DepartmentDataType>[] = [
   {
     accessorKey: 'department_name',
     header: 'Department Name',
@@ -72,13 +49,13 @@ export const departmentColumns: ColumnDef<DepartmentData>[] = [
     },
   },
   {
-    accessorKey: 'number_of_employees',
+    accessorKey: 'employees',
     header: 'Number of Employees',
     headerClassName: 'text-center ',
     cell: ({ row }) => {
       return (
         <div className="text-[#374151] text-center">
-          {row.getValue('number_of_employees')}
+          {row.getValue('employees').length}
         </div>
       );
     },
@@ -124,35 +101,37 @@ export const departmentColumns: ColumnDef<DepartmentData>[] = [
 ];
 
 const AllDepartmentsTable = () => {
-  const [departments, setDepartments] = useState<DepartmentData[]>([
-    {
-      id: 1,
-      department_name: 'Sales',
-      department_email: 'sales@gmail.com',
-      number_of_employees: '2',
-    },
-    {
-      id: 2,
-      department_name: 'Finance',
-      department_email: 'finance@gmail.com',
-      number_of_employees: '20',
-    },
-    {
-      id: 3,
-      department_name: 'Customer Support',
-      department_email: 'customer_support@gmail.com',
-      number_of_employees: '12',
-    },
-    {
-      id: 4,
-      department_name: 'Technical',
-      department_email: 'technical@gmail.com',
-      number_of_employees: '10',
-    },
-  ]);
+  const { data: departmentsData, isLoading, error } = useGetDepartmentsQuery();
+  console.log('departments', departmentsData);
+  //   const [departments, setDepartments] = useState<DepartmentData[]>([
+  //     {
+  //       id: 1,
+  //       department_name: 'Sales',
+  //       department_email: 'sales@gmail.com',
+  //       number_of_employees: '2',
+  //     },
+  //     {
+  //       id: 2,
+  //       department_name: 'Finance',
+  //       department_email: 'finance@gmail.com',
+  //       number_of_employees: '20',
+  //     },
+  //     {
+  //       id: 3,
+  //       department_name: 'Customer Support',
+  //       department_email: 'customer_support@gmail.com',
+  //       number_of_employees: '12',
+  //     },
+  //     {
+  //       id: 4,
+  //       department_name: 'Technical',
+  //       department_email: 'technical@gmail.com',
+  //       number_of_employees: '10',
+  //     },
+  //   ]);
 
   const table = useReactTable({
-    data: departments,
+    data: departmentsData?.data || [],
     columns: departmentColumns,
     getCoreRowModel: getCoreRowModel(),
   });
@@ -182,7 +161,17 @@ const AllDepartmentsTable = () => {
               </TableRow>
             ))}
           </TableHeader>
+
           <TableBody className="bg-white">
+            {/* if loading */}
+            {isLoading && (
+              <TableRow>
+                <TableCell colSpan={7} className="space-y-2">
+                  <TableSkeleton />
+                </TableCell>
+              </TableRow>
+            )}
+            {/* if data found */}
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow key={row.id} className="border-b border-[#E9EAEB]">
@@ -198,11 +187,12 @@ const AllDepartmentsTable = () => {
               ))
             ) : (
               <TableRow>
+                {/* if error || no data found */}
                 <TableCell
                   colSpan={departmentColumns.length}
-                  className="h-24 text-center"
+                  className="h-24 text-center animate-pulse text-red-500 font-medium"
                 >
-                  No results.
+                  {error?.data?.message}
                 </TableCell>
               </TableRow>
             )}
