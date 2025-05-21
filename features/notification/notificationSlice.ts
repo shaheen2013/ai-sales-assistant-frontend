@@ -11,7 +11,13 @@ export const dealerSlice = apiSlice.injectEndpoints({
                 params: queryParams,
             }),
         }),
+        getNotificationCount: builder.query<{ total_count: number }, void>({
+            query: () => ({
+                method: "GET",
+                url: `/v1/notifications/count`,
+            }),
+        })
     }),
 });
 
-export const { useGetNotificationsQuery } = dealerSlice;
+export const { useGetNotificationsQuery, useGetNotificationCountQuery } = dealerSlice;

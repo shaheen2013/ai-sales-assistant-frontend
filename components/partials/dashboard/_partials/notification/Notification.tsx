@@ -1,45 +1,23 @@
 import React, { useEffect, useState } from 'react'
-import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '../../dashboard-dropdown';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuPortal, DropdownMenuTrigger } from '../../dashboard-dropdown';
 import { Button } from '@/components/shadcn/button';
 import { NotificationDataType } from '@/types/notificationSliceType';
-import { useGetNotificationsQuery } from '@/features/notification/notificationSlice';
+import { useGetNotificationCountQuery, useGetNotificationsQuery } from '@/features/notification/notificationSlice';
 import NotificationSkeleton from './NotificationSkeleton';
 import moment from 'moment';
 import { formatShortTimeAgo } from '@/lib/utils';
+import Link from 'next/link';
 
 
 const Notification = () => {
     /*--React State--*/
     const [open, setOpen] = useState(false);
+    const [totalUnread, setTotalUnread] = useState(0);
     const [notifications, setNotifications] = useState<NotificationDataType[]>([]);
 
     /*--RTK Query--*/
     const { data: notificationsData, isLoading: notificationsLoading } = useGetNotificationsQuery({ limit: 5 }, { skip: !open });
-
-    /*--Functions--*/
-    const handleOpenChange = (open: boolean) => {
-        setOpen(open);
-
-        // create a new div element
-        const overlay = document.createElement("div");
-
-        // set unique id for the overlay div
-        overlay.id = "overlay";
-
-        // set the class name to the overlay div
-        overlay.className = "fixed inset-0 bg-black opacity-50 z-50";
-
-        if (open) {
-            // append the overlay div to the body
-            document.body.appendChild(overlay);
-        } else {
-            // remove the overlay div from the body
-            const overlayDiv = document.getElementById("overlay");
-            if (overlayDiv) {
-                document.body.removeChild(overlayDiv);
-            }
-        }
-    };
+    const { data: notificationCountData } = useGetNotificationCountQuery();
 
     /*--UseEffect--*/
     useEffect(() => {
@@ -48,9 +26,15 @@ const Notification = () => {
         }
     }, [notificationsData?.results]);
 
+    useEffect(() => {
+        if (notificationCountData) {
+            setTotalUnread(notificationCountData?.total_count);
+        }
+    }, [notificationCountData]);
+
     return (
         <div>
-            <DropdownMenu onOpenChange={handleOpenChange}>
+            <DropdownMenu open={open} onOpenChange={setOpen}>
                 <DropdownMenuTrigger asChild>
                     <div className="cursor-pointer p-2 rounded-lg border relative">
                         <svg
@@ -67,9 +51,20 @@ const Notification = () => {
                         </svg>
 
                         {/* dot */}
-                        <div className="absolute top-[5px] right-[10px] w-2 h-2 bg-red-500 rounded-full border border-white"></div>
+                        {totalUnread > 0 && (
+                            <div className="absolute -top-1 -right-1 w-6 h-6 bg-red-500 rounded-full border border-white text-xs text-white flex items-center justify-center
+                            ">
+                                {totalUnread}
+                            </div>
+                        )}
                     </div>
                 </DropdownMenuTrigger>
+
+                {open && (
+                    <DropdownMenuPortal>
+                        <div className="fixed inset-0 bg-black opacity-50 z-50" onClick={() => setOpen(false)} />
+                    </DropdownMenuPortal>
+                )}
 
                 <DropdownMenuContent
                     className="lg:w-[450px] p-4 rounded-xl mt-1"
@@ -140,12 +135,13 @@ const Notification = () => {
                     </div>
 
                     {/* see all notification */}
-                    <Button
-                        variant="outline"
-                        className="w-full !py-6 !font-medium text-primary-500 !border !border-gray-100 rounded-lg"
-                    >
-                        See All Notification
-                    </Button>
+                    <Link href={"/dashboard/notification"} onClick={() => setOpen(false)}>
+                        <Button
+                            variant="outline"
+                            className="w-full !py-6 !font-medium text-primary-500 !border !border-gray-100 rounded-lg"
+                        >
+                            See All Notification
+                        </Button></Link>
                 </DropdownMenuContent>
             </DropdownMenu>
         </div>
