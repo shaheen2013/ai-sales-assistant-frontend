@@ -176,7 +176,7 @@ export default function ResetPasswordForm() {
 
       <div className="text-center text-sm text-gray-400">
         <span>Just remember?</span>{" "}
-        <Link href="/general/login" className="text-primary-500 font-semibold">
+        <Link href="/user/login" className="text-primary-500 font-semibold">
           Log In
         </Link>
       </div>

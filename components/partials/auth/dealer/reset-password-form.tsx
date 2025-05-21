@@ -19,7 +19,7 @@ export default function ResetPasswordForm() {
   const toast = useToast();
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { data: session, status } = useSession();
+  const { status } = useSession();
 
   const uid = searchParams.get("uid");
   const token = searchParams.get("token");
@@ -39,19 +39,6 @@ export default function ResetPasswordForm() {
       cpassword: "",
     },
   });
-
-  // const handleGoogleRegister = async () => {
-  //   const { error, data } = await registerGoogle({ token: "123" });
-
-  //   if (error) {
-  //     toast("error", beautifyErrors(error));
-  //     console.log("error", beautifyErrors(error));
-
-  //     return;
-  //   }
-
-  //   console.log("data", data);
-  // };
 
   const onSubmit = async (formData: FormValues) => {
     try {
@@ -201,7 +188,7 @@ export default function ResetPasswordForm() {
 
       <div className="text-center text-sm text-gray-400">
         <span>Just remember?</span>{" "}
-        <Link href="/general/login" className="text-primary-500 font-semibold">
+        <Link href="/login" className="text-primary-500 font-semibold">
           Log In
         </Link>
       </div>

@@ -10,4 +10,3 @@ export default function SignUp() {
   return <SignupForm />;
 }
 
-// export const dynamicPhoto = "/images/general-signup.svg";

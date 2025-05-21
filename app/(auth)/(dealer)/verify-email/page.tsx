@@ -9,5 +9,3 @@ export const metadata: Metadata = {
 export default function EnterCodePage() {
   return <EnterCodeForm />;
 }
-
-// export const dynamicPhoto = "/images/general-signup.svg";
