@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
   ColumnDef,
@@ -11,11 +11,18 @@ import {
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
-} from '@tanstack/react-table';
+} from "@tanstack/react-table";
 
-import { useMemo, useState } from 'react';
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogHeader,
+} from "@/components/shadcn/dialog";
 
-import { MoreHorizontal } from 'lucide-react';
+import { useMemo, useState } from "react";
+
+import { MoreHorizontal } from "lucide-react";
 
 import {
   Table,
@@ -24,17 +31,20 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/shadcn/table';
+} from "@/components/shadcn/table";
 
-import { Button } from '@/components/shadcn/button';
 import {
   DropdownMenu,
-  DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@/components/shadcn/dropdown-menu';
+  DropdownMenuContent,
+} from "@/components/shadcn/dropdown-menu";
+import { Button } from "@/components/shadcn/button";
+import { Controller, useForm } from "react-hook-form";
+import { Input, InputCopy } from "@/components/shadcn/input";
 
 export default function InventoryCarList({
+  handleInventoryEdit,
   getVehicleList,
   handleInventoryDelete,
 }: any) {
@@ -52,6 +62,11 @@ export default function InventoryCarList({
     mileage: string;
     model: string;
   };
+
+  const [modals, setModals] = useState({
+    addInventory: false,
+    addPdf: false,
+  });
 
   // const inventoryData: Inventory[] = [
   //   {
@@ -85,12 +100,12 @@ export default function InventoryCarList({
 
   const columns: ColumnDef<Inventory>[] = [
     {
-      accessorKey: 'id',
+      accessorKey: "id",
       header: ({ column }) => {
         return (
           <h2
             className="flex items-center gap-2 cursor-pointer"
-            onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
             Stock Id
             <svg
@@ -119,12 +134,12 @@ export default function InventoryCarList({
     },
 
     {
-      accessorKey: 'createdDate',
+      accessorKey: "createdDate",
       header: ({ column }) => {
         return (
           <h2
             className="flex items-center text-center gap-2 cursor-pointer"
-            onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
             Created Date
             <svg
@@ -147,19 +162,19 @@ export default function InventoryCarList({
       },
       cell: ({ row }) => {
         const date = new Date(row.original?.created_at).toLocaleDateString(
-          'en-US',
+          "en-US",
           {
-            day: '2-digit',
-            month: 'short', // Outputs "Feb"
-            year: 'numeric',
+            day: "2-digit",
+            month: "short", // Outputs "Feb"
+            year: "numeric",
           }
         );
         const time = new Date(row.original?.created_at).toLocaleTimeString(
-          'en-US',
+          "en-US",
           {
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit', // Add seconds
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit", // Add seconds
             hour12: true, // Ensures AM/PM format
           }
         );
@@ -174,12 +189,12 @@ export default function InventoryCarList({
     },
 
     {
-      accessorKey: 'brand',
+      accessorKey: "brand",
       header: ({ column }) => {
         return (
           <h2
             className="flex items-center text-center gap-2 cursor-pointer"
-            onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
             Brand
             <svg
@@ -215,12 +230,12 @@ export default function InventoryCarList({
     },
 
     {
-      accessorKey: 'vin',
+      accessorKey: "vin",
       header: ({ column }) => {
         return (
           <h2
             className="flex items-center text-center gap-2 cursor-pointer"
-            onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
             VIN Number
             <svg
@@ -268,12 +283,12 @@ export default function InventoryCarList({
     },
 
     {
-      accessorKey: 'model',
+      accessorKey: "model",
       header: ({ column }) => {
         return (
           <h2
             className="flex items-center text-center gap-2 cursor-pointer"
-            onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
             Model Number
             <svg
@@ -304,12 +319,12 @@ export default function InventoryCarList({
     },
 
     {
-      accessorKey: 'mileage',
+      accessorKey: "mileage",
       header: ({ column }) => {
         return (
           <h2
             className="flex items-center text-center gap-2 cursor-pointer"
-            onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
             Mileage
             <svg
@@ -340,12 +355,12 @@ export default function InventoryCarList({
     },
 
     {
-      accessorKey: 'year',
+      accessorKey: "year",
       header: ({ column }) => {
         return (
           <h2
             className="flex items-center text-center gap-2 cursor-pointer"
-            onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
             Year
             <svg
@@ -374,7 +389,7 @@ export default function InventoryCarList({
     },
 
     {
-      id: 'actions',
+      id: "actions",
       header: ({}) => {
         return (
           <h2 className="flex items-center text-center gap-2 cursor-pointer">
@@ -463,6 +478,27 @@ export default function InventoryCarList({
     },
   });
 
+  const { control, handleSubmit } = useForm({
+    defaultValues: {
+      stockId: "",
+      vin: "",
+      brand: "",
+      model: "",
+      year: "",
+      mileage: "",
+      numberPlate: "",
+      bodyStyle: "",
+      engineType: "",
+      fuelType: "",
+      odometer: "",
+      color: "",
+      consign: "",
+      price: "",
+      dateIn: "",
+      dateOut: "",
+    },
+  });
+
   return (
     <>
       <Table>
@@ -489,7 +525,7 @@ export default function InventoryCarList({
             table?.getRowModel()?.rows.map((row) => (
               <TableRow
                 key={row.id}
-                data-state={row.getIsSelected() && 'selected'}
+                data-state={row.getIsSelected() && "selected"}
               >
                 {row.getVisibleCells().map((cell) => (
                   <TableCell key={cell.id}>
@@ -507,6 +543,482 @@ export default function InventoryCarList({
           )}
         </TableBody>
       </Table>
+
+      {/* add inventory modal */}
+      <Dialog
+        open={modals.addInventory}
+        onOpenChange={(e) => {
+          console.log(e);
+          setModals((prev) => ({
+            ...prev,
+            addInventory: !prev.addInventory,
+          }));
+        }}
+      >
+        <DialogContent className="sm:max-w-[700px] max-h-full overflow-auto">
+          <DialogHeader>
+            <DialogTitle>Inventory Details</DialogTitle>
+          </DialogHeader>
+
+          {/* body */}
+          <div>
+            <hr className="pb-8" />
+
+            {/* search */}
+            <div className="max-w-[320px] mx-auto mb-6">
+              <Input
+                className="h-11 rounded-xl"
+                placeholder="Search"
+                preIcon={
+                  <svg
+                    width="20"
+                    height="21"
+                    viewBox="0 0 20 21"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M9.58366 18.8743C4.87533 18.8743 1.04199 15.041 1.04199 10.3327C1.04199 5.62435 4.87533 1.79102 9.58366 1.79102C14.292 1.79102 18.1253 5.62435 18.1253 10.3327C18.1253 15.041 14.292 18.8743 9.58366 18.8743ZM9.58366 3.04102C5.55866 3.04102 2.29199 6.31602 2.29199 10.3327C2.29199 14.3493 5.55866 17.6243 9.58366 17.6243C13.6087 17.6243 16.8753 14.3493 16.8753 10.3327C16.8753 6.31602 13.6087 3.04102 9.58366 3.04102Z"
+                      fill="#A2A1A7"
+                    />
+                    <path
+                      d="M18.3335 19.7076C18.1752 19.7076 18.0169 19.6492 17.8919 19.5242L16.2252 17.8576C15.9835 17.6159 15.9835 17.2159 16.2252 16.9742C16.4669 16.7326 16.8669 16.7326 17.1085 16.9742L18.7752 18.6409C19.0169 18.8826 19.0169 19.2826 18.7752 19.5242C18.6502 19.6492 18.4919 19.7076 18.3335 19.7076Z"
+                      fill="#A2A1A7"
+                    />
+                  </svg>
+                }
+              />
+            </div>
+
+            <hr className="pb-8" />
+
+            {/* form */}
+            <form onSubmit={handleSubmit(handleInventoryEdit)} className="">
+              <div className="grid grid-cols-2 gap-x-4 mb-6 ">
+                {/* stock id */}
+                <div>
+                  <label
+                    htmlFor="stockId"
+                    className="text-sm mb-1 text-[#414651] font-medium"
+                  >
+                    Stock id
+                  </label>
+                  <Controller
+                    name="stockId"
+                    control={control}
+                    render={({ field, formState: { errors } }) => (
+                      <InputCopy
+                        type="stockId"
+                        id="stockId"
+                        error={errors.stockId?.message}
+                        copyText={field.value}
+                        {...field}
+                      />
+                    )}
+                  />
+                </div>
+
+                {/* vin number */}
+                <div className="flex flex-col mb-3">
+                  <label
+                    htmlFor="email"
+                    className="text-sm mb-1 text-[#414651] font-medium"
+                  >
+                    VIN Number
+                  </label>
+                  <Controller
+                    name="vin"
+                    control={control}
+                    render={({ field, formState: { errors } }) => (
+                      <InputCopy
+                        type="vin"
+                        id="vin"
+                        error={errors.vin?.message}
+                        copyText={field.value}
+                        // disabled
+                        {...field}
+                      />
+                    )}
+                  />
+                </div>
+
+                {/* brand */}
+                <div className="flex flex-col mb-3">
+                  <label
+                    htmlFor="email"
+                    className="text-sm mb-1 text-[#414651] font-medium"
+                  >
+                    Brand
+                  </label>
+                  <Controller
+                    name="brand"
+                    control={control}
+                    rules={{ required: "Brand is required" }}
+                    render={({ field, formState: { errors } }) => (
+                      <Input
+                        type="brand"
+                        id="brand"
+                        className="h-11"
+                        placeholder="Brand"
+                        error={errors?.brand?.message}
+                        {...field}
+                      />
+                    )}
+                  />
+                </div>
+
+                {/* model */}
+                <div className="flex flex-col mb-3">
+                  <label
+                    htmlFor="email"
+                    className="text-sm mb-1 text-[#414651] font-medium"
+                  >
+                    Model
+                  </label>
+                  <Controller
+                    name="model"
+                    control={control}
+                    rules={{ required: "Model is required" }}
+                    render={({ field, formState: { errors } }) => (
+                      <Input
+                        type="model"
+                        id="model"
+                        className="h-11"
+                        placeholder="Model"
+                        error={errors?.model?.message}
+                        {...field}
+                      />
+                    )}
+                  />
+                </div>
+
+                {/* model */}
+                <div className="flex flex-col mb-3">
+                  <label
+                    htmlFor="email"
+                    className="text-sm mb-1 text-[#414651] font-medium"
+                  >
+                    Year
+                  </label>
+                  <Controller
+                    name="year"
+                    control={control}
+                    rules={{ required: "Year is required" }}
+                    render={({ field, formState: { errors } }) => (
+                      <Input
+                        type="year"
+                        id="year"
+                        className="h-11"
+                        placeholder="Year"
+                        error={errors?.year?.message}
+                        {...field}
+                      />
+                    )}
+                  />
+                </div>
+
+                {/* mileage */}
+                <div className="flex flex-col mb-3">
+                  <label
+                    htmlFor="email"
+                    className="text-sm mb-1 text-[#414651] font-medium"
+                  >
+                    Mileage
+                  </label>
+                  <Controller
+                    name="mileage"
+                    control={control}
+                    rules={{ required: "Mileage is required" }}
+                    render={({ field, formState: { errors } }) => (
+                      <Input
+                        type="number"
+                        id="mileage"
+                        className="h-11"
+                        placeholder="Mileage"
+                        error={errors?.mileage?.message}
+                        {...field}
+                      />
+                    )}
+                  />
+                </div>
+
+                {/* number plate */}
+                <div className="flex flex-col mb-3">
+                  <label
+                    htmlFor="email"
+                    className="text-sm mb-1 text-[#414651] font-medium"
+                  >
+                    Number Plate
+                  </label>
+                  <Controller
+                    name="numberPlate"
+                    control={control}
+                    rules={{ required: "Number Plate is required" }}
+                    render={({ field, formState: { errors } }) => (
+                      <Input
+                        type="numberPlate"
+                        id="numberPlate"
+                        className="h-11"
+                        placeholder="Number Plate"
+                        error={errors?.numberPlate?.message}
+                        {...field}
+                      />
+                    )}
+                  />
+                </div>
+
+                {/* body style */}
+                <div className="flex flex-col mb-3">
+                  <label
+                    htmlFor="bodyStyle"
+                    className="text-sm mb-1 text-[#414651] font-medium"
+                  >
+                    Body Style
+                  </label>
+                  <Controller
+                    name="bodyStyle"
+                    control={control}
+                    rules={{ required: " Body Style is required" }}
+                    render={({ field, formState: { errors } }) => (
+                      <Input
+                        type="bodyStyle"
+                        id="bodyStyle"
+                        className="h-11"
+                        placeholder=" Body Style"
+                        error={errors?.bodyStyle?.message}
+                        {...field}
+                      />
+                    )}
+                  />
+                </div>
+
+                {/* engine type */}
+                <div className="flex flex-col mb-3">
+                  <label
+                    htmlFor="engineType"
+                    className="text-sm mb-1 text-[#414651] font-medium"
+                  >
+                    Engine Type
+                  </label>
+                  <Controller
+                    name="engineType"
+                    control={control}
+                    rules={{ required: "Engine Type is required" }}
+                    render={({ field, formState: { errors } }) => (
+                      <Input
+                        type="engineType"
+                        id="engineType"
+                        className="h-11"
+                        placeholder="Engine Type"
+                        error={errors?.engineType?.message}
+                        {...field}
+                      />
+                    )}
+                  />
+                </div>
+
+                {/* fuel type */}
+                <div className="flex flex-col mb-3">
+                  <label
+                    htmlFor="fuelType"
+                    className="text-sm mb-1 text-[#414651] font-medium"
+                  >
+                    Fuel Type
+                  </label>
+                  <Controller
+                    name="fuelType"
+                    control={control}
+                    rules={{ required: "Fuel Type is required" }}
+                    render={({ field, formState: { errors } }) => (
+                      <Input
+                        type="fuelType"
+                        id="fuelType"
+                        className="h-11"
+                        placeholder="Fuel Type"
+                        error={errors?.fuelType?.message}
+                        {...field}
+                      />
+                    )}
+                  />
+                </div>
+
+                {/* odometer */}
+                <div className="flex flex-col mb-3">
+                  <label
+                    htmlFor="engineType"
+                    className="text-sm mb-1 text-[#414651] font-medium"
+                  >
+                    Odometer
+                  </label>
+                  <Controller
+                    name="odometer"
+                    control={control}
+                    rules={{ required: "Odometer is required" }}
+                    render={({ field, formState: { errors } }) => (
+                      <Input
+                        type="odometer"
+                        id="odometer"
+                        className="h-11"
+                        placeholder="Odometer"
+                        error={errors?.odometer?.message}
+                        {...field}
+                      />
+                    )}
+                  />
+                </div>
+
+                {/* color */}
+                <div className="flex flex-col mb-3">
+                  <label
+                    htmlFor="color"
+                    className="text-sm mb-1 text-[#414651] font-medium"
+                  >
+                    Color
+                  </label>
+                  <Controller
+                    name="color"
+                    control={control}
+                    rules={{ required: "Color is required" }}
+                    render={({ field, formState: { errors } }) => (
+                      <Input
+                        type="text"
+                        id="color"
+                        className="h-11"
+                        placeholder="Color"
+                        error={errors?.color?.message}
+                        {...field}
+                      />
+                    )}
+                  />
+                </div>
+
+                {/* consign */}
+                <div className="flex flex-col mb-3">
+                  <label
+                    htmlFor="engineType"
+                    className="text-sm mb-1 text-[#414651] font-medium"
+                  >
+                    Consign
+                  </label>
+                  <Controller
+                    name="consign"
+                    control={control}
+                    rules={{ required: "Consign is required" }}
+                    render={({ field, formState: { errors } }) => (
+                      <Input
+                        type="consign"
+                        id="consign"
+                        className="h-11"
+                        placeholder="Consign"
+                        error={errors?.consign?.message}
+                        {...field}
+                      />
+                    )}
+                  />
+                </div>
+
+                {/* price */}
+                <div className="flex flex-col mb-3">
+                  <label
+                    htmlFor="price"
+                    className="text-sm mb-1 text-[#414651] font-medium"
+                  >
+                    Price
+                  </label>
+                  <Controller
+                    name="price"
+                    control={control}
+                    rules={{ required: "Price is required" }}
+                    render={({ field, formState: { errors } }) => (
+                      <Input
+                        type="text"
+                        id="price"
+                        className="h-11"
+                        placeholder="Price"
+                        error={errors?.price?.message}
+                        {...field}
+                      />
+                    )}
+                  />
+                </div>
+
+                {/* date in */}
+                <div className="flex flex-col mb-3">
+                  <label
+                    htmlFor="dateIn"
+                    className="text-sm mb-1 text-[#414651] font-medium"
+                  >
+                    Date In
+                  </label>
+                  <Controller
+                    name="dateIn"
+                    control={control}
+                    rules={{ required: "Date In is required" }}
+                    render={({ field, formState: { errors } }) => (
+                      <Input
+                        type="text"
+                        id="dateIn"
+                        className="h-11"
+                        placeholder="Date In"
+                        error={errors?.dateIn?.message}
+                        {...field}
+                      />
+                    )}
+                  />
+                </div>
+
+                {/* date out */}
+                <div className="flex flex-col mb-3">
+                  <label
+                    htmlFor="dateOut"
+                    className="text-sm mb-1 text-[#414651] font-medium"
+                  >
+                    Date Out
+                  </label>
+                  <Controller
+                    name="dateOut"
+                    control={control}
+                    rules={{ required: "Date Out is required" }}
+                    render={({ field, formState: { errors } }) => (
+                      <Input
+                        type="text"
+                        id="dateOut"
+                        className="h-11"
+                        placeholder="Date Out"
+                        error={errors?.dateOut?.message}
+                        {...field}
+                      />
+                    )}
+                  />
+                </div>
+              </div>
+
+              {/* buttons */}
+              <div className="flex justify-end gap-3">
+                <Button
+                  variant={"destructive"}
+                  className="h-11 rounded-lg"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setModals({ ...modals, addInventory: false });
+                  }}
+                >
+                  Cancel
+                </Button>
+
+                <Button
+                  variant={"primary"}
+                  type={"submit"}
+                  className="h-11 rounded-lg"
+                  // loading={isLoadingCreateVehicle}
+                >
+                  Update Changes
+                </Button>
+              </div>
+            </form>
+          </div>
+        </DialogContent>
+      </Dialog>
     </>
   );
 }
