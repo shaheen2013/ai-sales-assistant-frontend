@@ -1,6 +1,5 @@
 'use client';
 
-import Badge from '@/components/badge/Badge';
 import { Button } from '@/components/shadcn/button';
 import {
   DropdownMenu,
@@ -25,7 +24,7 @@ import {
 import { MoreVertical, Pencil, Trash } from 'lucide-react';
 import { useState } from 'react';
 
-export type OwnershipData = {
+export type DepartmentData = {
   id: number;
   name: string;
   role: any;
@@ -51,29 +50,36 @@ const getRoleBadgeColor = (role: any): any => {
 };
 
 // Column definitions
-export const ownershipColumns: ColumnDef<OwnershipData>[] = [
+export const departmentColumns: ColumnDef<DepartmentData>[] = [
   {
-    accessorKey: 'name',
-    header: 'Name',
+    accessorKey: 'department_name',
+    header: 'Department Name',
     cell: ({ row }) => {
       return (
-        <div className="font-medium text-[#374151]">{row.getValue('name')}</div>
+        <div className="font-medium text-[#374151]">
+          {row.getValue('department_name')}
+        </div>
       );
     },
   },
   {
-    accessorKey: 'role',
-    header: 'Role',
+    accessorKey: 'department_email',
+    header: 'Department Email',
     cell: ({ row }) => {
-      const role: string = row.getValue('role');
-      return <Badge text={role} variant={getRoleBadgeColor(role)} />;
+      const department_email: string = row.getValue('department_email');
+      return <div className="text-[#374151]">{department_email}</div>;
     },
   },
   {
-    accessorKey: 'phone',
-    header: 'Phone',
+    accessorKey: 'number_of_employees',
+    header: 'Number of Employees',
+    headerClassName: 'text-center',
     cell: ({ row }) => {
-      return <div className="text-[#374151]">{row.getValue('phone')}</div>;
+      return (
+        <div className="text-[#374151] text-center">
+          {row.getValue('number_of_employees')}
+        </div>
+      );
     },
   },
   {
@@ -122,37 +128,37 @@ export const ownershipColumns: ColumnDef<OwnershipData>[] = [
   },
 ];
 
-const ManageOwnershipTable = () => {
-  const [owners, setOwners] = useState<OwnershipData[]>([
+const AllDepartmentsTable = () => {
+  const [departments, setDepartments] = useState<DepartmentData[]>([
     {
       id: 1,
-      name: 'Kawsar Amin',
-      role: 'Finance Advisor',
-      phone: '+2507885550199',
+      department_name: 'Sales',
+      department_email: 'sales@gmail.com',
+      number_of_employees: '2',
     },
     {
       id: 2,
-      name: 'Irfan H Sajid',
-      role: 'Sales Representative',
-      phone: '+2507885550199',
+      department_name: 'Finance',
+      department_email: 'finance@gmail.com',
+      number_of_employees: '20',
     },
     {
       id: 3,
-      name: 'Toukir',
-      role: 'Technical Advisor',
-      phone: '+2507885550199',
+      department_name: 'Customer Support',
+      department_email: 'customer_support@gmail.com',
+      number_of_employees: '12',
     },
     {
       id: 4,
-      name: 'Molla',
-      role: 'Customer Support Agent',
-      phone: '+2507885550199',
+      department_name: 'Technical',
+      department_email: 'technical@gmail.com',
+      number_of_employees: '10',
     },
   ]);
 
   const table = useReactTable({
-    data: owners,
-    columns: ownershipColumns,
+    data: departments,
+    columns: departmentColumns,
     getCoreRowModel: getCoreRowModel(),
   });
 
@@ -166,7 +172,9 @@ const ManageOwnershipTable = () => {
                 {headerGroup.headers.map((header) => (
                   <TableHead
                     key={header.id}
-                    className="font-medium text-[#6b7280] border-b border-[#E9EAEB]"
+                    className={`font-medium text-[#6b7280] border-b border-[#E9EAEB] ${
+                      header.column.columnDef.headerClassName || ''
+                    }`}
                   >
                     {header.isPlaceholder
                       ? null
@@ -196,7 +204,7 @@ const ManageOwnershipTable = () => {
             ) : (
               <TableRow>
                 <TableCell
-                  colSpan={ownershipColumns.length}
+                  colSpan={departmentColumns.length}
                   className="h-24 text-center"
                 >
                   No results.
@@ -210,4 +218,4 @@ const ManageOwnershipTable = () => {
   );
 };
 
-export default ManageOwnershipTable;
+export default AllDepartmentsTable;

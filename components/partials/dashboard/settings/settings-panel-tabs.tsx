@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import EditProfileSection from './edit-profile-section';
-import ManageOwnershipSection from './manage-ownership-section';
 import NotificationSection from './notification-section';
 import PasswordAndSecuritySection from './password-security-section';
 import PricingPlanSection from './pricing-plan-section';
@@ -12,7 +11,6 @@ const tabs = [
   'Notifications',
   'Your Plan',
   'Password & Security',
-  'Manage Ownership',
 ];
 
 export default function SettingsPanelTabs() {
@@ -41,7 +39,6 @@ export default function SettingsPanelTabs() {
         {activeTab === 'Notifications' && <NotificationSection />}
         {activeTab === 'Your Plan' && <PricingPlanSection />}
         {activeTab === 'Password & Security' && <PasswordAndSecuritySection />}
-        {activeTab === 'Manage Ownership' && <ManageOwnershipSection />}
       </div>
     </div>
   );
