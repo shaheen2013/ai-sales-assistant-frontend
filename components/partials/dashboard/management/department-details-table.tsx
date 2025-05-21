@@ -22,62 +22,48 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 import { MoreVertical, Pencil, Trash } from 'lucide-react';
-import { useState } from 'react';
+
+interface Employee {
+  id: number;
+  name: string;
+  routing_type: 'MOBILE' | 'OFFICE';
+  phone_number: string;
+}
 
 export type DepartmentData = {
   id: number;
   name: string;
-  role: any;
-  phone: string;
-};
-
-// todo: fix type here for role and color
-
-// Function to determine badge color based on role
-const getRoleBadgeColor = (role: any): any => {
-  switch (role) {
-    case 'Finance Advisor':
-      return 'orange';
-    case 'Sales Representative':
-      return 'blue';
-    case 'Technical Advisor':
-      return 'purple';
-    case 'Customer Support Agent':
-      return 'green';
-    default:
-      return 'gray';
-  }
+  routing_type: 'MOBILE' | 'OFFICE';
+  phone_number: string;
 };
 
 // Column definitions
 export const departmentColumns: ColumnDef<DepartmentData>[] = [
   {
-    accessorKey: 'department_name',
-    header: 'Department Name',
+    accessorKey: 'name',
+    header: 'Employee Name',
     cell: ({ row }) => {
       return (
-        <div className="font-medium text-[#374151]">
-          {row.getValue('department_name')}
-        </div>
+        <div className="font-medium text-[#374151]">{row.getValue('name')}</div>
       );
     },
   },
   {
-    accessorKey: 'department_email',
-    header: 'Department Email',
+    accessorKey: 'routing_type',
+    header: 'Routing Type',
     cell: ({ row }) => {
-      const department_email: string = row.getValue('department_email');
-      return <div className="text-[#374151]">{department_email}</div>;
+      const routing_type: string = row.getValue('routing_type');
+      return <div className="text-[#374151]">{routing_type}</div>;
     },
   },
   {
-    accessorKey: 'number_of_employees',
-    header: 'Number of Employees',
+    accessorKey: 'phone_number',
+    header: 'Phone Number',
     headerClassName: 'text-center',
     cell: ({ row }) => {
       return (
         <div className="text-[#374151] text-center">
-          {row.getValue('number_of_employees')}
+          {row.getValue('phone_number')}
         </div>
       );
     },
@@ -86,15 +72,15 @@ export const departmentColumns: ColumnDef<DepartmentData>[] = [
     id: 'actions',
     header: () => <div className="text-right">Action</div>,
     cell: ({ row }) => {
-      const owner = row.original;
+      const employee = row.original;
 
       // These functions would be passed as props in a real implementation
-      const handleEditOwner = () => {
-        console.log(`Edit owner ${owner.id}`);
+      const handleEditEmployee = () => {
+        console.log(`Edit employee ${employee.id}`);
       };
 
-      const handleRemoveOwner = () => {
-        console.log(`Remove owner ${owner.id}`);
+      const handleRemoveEmployee = () => {
+        console.log(`Remove employee ${employee.id}`);
       };
 
       return (
@@ -107,14 +93,14 @@ export const departmentColumns: ColumnDef<DepartmentData>[] = [
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuItem
-                onClick={handleEditOwner}
+                onClick={handleEditEmployee}
                 className="cursor-pointer text-sm font-semibold"
               >
                 <Pencil className="h-4 w-4 mr-2" />
                 Edit
               </DropdownMenuItem>
               <DropdownMenuItem
-                onClick={handleRemoveOwner}
+                onClick={handleRemoveEmployee}
                 className="cursor-pointer text-red-500 text-sm font-semibold"
               >
                 <Trash className="h-4 w-4 mr-2" />
@@ -128,36 +114,15 @@ export const departmentColumns: ColumnDef<DepartmentData>[] = [
   },
 ];
 
-const DepartmentDetailsTable = () => {
-  const [departments, setDepartments] = useState<DepartmentData[]>([
-    {
-      id: 1,
-      department_name: 'Sales',
-      department_email: 'sales@gmail.com',
-      number_of_employees: '2',
-    },
-    {
-      id: 2,
-      department_name: 'Finance',
-      department_email: 'finance@gmail.com',
-      number_of_employees: '20',
-    },
-    {
-      id: 3,
-      department_name: 'Customer Support',
-      department_email: 'customer_support@gmail.com',
-      number_of_employees: '12',
-    },
-    {
-      id: 4,
-      department_name: 'Technical',
-      department_email: 'technical@gmail.com',
-      number_of_employees: '10',
-    },
-  ]);
+interface DepartmentDetailsTableProps {
+  departmentEmployees: Employee[];
+}
 
+const DepartmentDetailsTable = ({
+  departmentEmployees = [],
+}: DepartmentDetailsTableProps) => {
   const table = useReactTable({
-    data: departments,
+    data: departmentEmployees,
     columns: departmentColumns,
     getCoreRowModel: getCoreRowModel(),
   });
@@ -207,7 +172,7 @@ const DepartmentDetailsTable = () => {
                   colSpan={departmentColumns.length}
                   className="h-24 text-center"
                 >
-                  No results.
+                  No employees found in this department.
                 </TableCell>
               </TableRow>
             )}

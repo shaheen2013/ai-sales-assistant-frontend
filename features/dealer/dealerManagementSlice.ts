@@ -10,6 +10,13 @@ export const dealerManagementSlice = apiSlice.injectEndpoints({
         credentials: 'include',
       }),
     }),
+    getDepartmentById: builder.query<DepartmentType, string>({
+      query: (id) => ({
+        url: `/departments/${id}/`,
+        method: 'GET',
+        credentials: 'include',
+      }),
+    }),
     addDepartment: builder.mutation<any, DepartmentType>({
       query: (department) => ({
         url: '/departments/',
@@ -21,5 +28,8 @@ export const dealerManagementSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useGetDepartmentsQuery, useAddDepartmentMutation } =
-  dealerManagementSlice;
+export const {
+  useGetDepartmentsQuery,
+  useGetDepartmentByIdQuery,
+  useAddDepartmentMutation,
+} = dealerManagementSlice;
