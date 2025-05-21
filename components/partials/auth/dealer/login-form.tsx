@@ -18,7 +18,7 @@ export default function LoginForm() {
 
   const toast = useToast();
   const router = useRouter();
-  const { data: session, status } = useSession();
+  const { status } = useSession();
 
   const loading = status === "loading";
 
@@ -74,7 +74,7 @@ export default function LoginForm() {
     }
   };
 
-  if (status === "authenticated" && session?.user?.user_type === "dealer") {
+  if (status === "authenticated") {
     router.push("/dashboard/overview");
   }
 

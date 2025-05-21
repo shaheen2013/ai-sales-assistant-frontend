@@ -24,7 +24,7 @@ import DealerRegistration from "@/components/partials/auth/dealer/dealer-registr
 export default function SignupForm() {
   const toast = useToast();
   const router = useRouter();
-  const { data: session } = useSession();
+  const { status } = useSession();
 
   const [registerProgress, setRegisterProgress] = useState(0);
 
@@ -80,7 +80,7 @@ export default function SignupForm() {
         terms: formData.terms,
       };
 
-      const { error } = await register(payload);
+      const { error, data } = await register(payload);
 
       if (error) {
         toast("error", beautifyErrors(error));
@@ -89,6 +89,10 @@ export default function SignupForm() {
         return;
       }
 
+      console.log("data", data);
+
+      toast("success", data?.detail || "Registration successful");
+      // return;
       // reset form
       reset();
 
@@ -112,6 +116,10 @@ export default function SignupForm() {
       console.log(error);
     }
   };
+
+  if (status === "authenticated") {
+    router.push("/dashboard/overview");
+  }
 
   if (registerProgress > 0) {
     return (
