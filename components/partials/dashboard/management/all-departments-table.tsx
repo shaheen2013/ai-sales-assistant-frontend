@@ -21,7 +21,8 @@ import {
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import { MoreVertical, Pencil, Trash } from 'lucide-react';
+import { Eye, MoreVertical, Trash } from 'lucide-react';
+import Link from 'next/link';
 import { useState } from 'react';
 
 export type DepartmentData = {
@@ -73,7 +74,7 @@ export const departmentColumns: ColumnDef<DepartmentData>[] = [
   {
     accessorKey: 'number_of_employees',
     header: 'Number of Employees',
-    headerClassName: 'text-center',
+    headerClassName: 'text-center ',
     cell: ({ row }) => {
       return (
         <div className="text-[#374151] text-center">
@@ -86,15 +87,10 @@ export const departmentColumns: ColumnDef<DepartmentData>[] = [
     id: 'actions',
     header: () => <div className="text-right">Action</div>,
     cell: ({ row }) => {
-      const owner = row.original;
+      const department = row.original;
 
-      // These functions would be passed as props in a real implementation
-      const handleEditOwner = () => {
-        console.log(`Edit owner ${owner.id}`);
-      };
-
-      const handleRemoveOwner = () => {
-        console.log(`Remove owner ${owner.id}`);
+      const handleRemoveDeptInfo = () => {
+        console.log(`Remove department ${department.id}`);
       };
 
       return (
@@ -106,15 +102,14 @@ export const departmentColumns: ColumnDef<DepartmentData>[] = [
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
+              <Link href={`/dashboard/management/${department.id}`}>
+                <DropdownMenuItem className="cursor-pointer text-sm font-semibold">
+                  <Eye className="h-4 w-4 mr-2" />
+                  View Details
+                </DropdownMenuItem>
+              </Link>
               <DropdownMenuItem
-                onClick={handleEditOwner}
-                className="cursor-pointer text-sm font-semibold"
-              >
-                <Pencil className="h-4 w-4 mr-2" />
-                Edit
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                onClick={handleRemoveOwner}
+                onClick={handleRemoveDeptInfo}
                 className="cursor-pointer text-red-500 text-sm font-semibold"
               >
                 <Trash className="h-4 w-4 mr-2" />
