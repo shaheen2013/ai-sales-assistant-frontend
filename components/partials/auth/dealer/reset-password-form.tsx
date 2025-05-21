@@ -58,7 +58,7 @@ export default function ResetPasswordForm() {
       }
 
       if (data) {
-        toast("success", data?.message || "Password reset successful");
+        toast("success", data?.detail || "Password reset successful");
         router.push("/login");
         console.log("data", data);
       }
@@ -130,7 +130,7 @@ export default function ResetPasswordForm() {
         {/* cpassword */}
         <div className="flex flex-col mb-3">
           <label
-            htmlFor="password"
+            htmlFor="password2"
             className="text-sm mb-1 text-[#414651] font-medium"
           >
             Confirm Password<span className="text-primary-500">*</span>
@@ -151,7 +151,7 @@ export default function ResetPasswordForm() {
             render={({ field, formState: { errors } }) => (
               <Input
                 type="password"
-                id="password"
+                id="password2"
                 className="h-10"
                 placeholder="Create new password"
                 error={errors?.cpassword?.message}
