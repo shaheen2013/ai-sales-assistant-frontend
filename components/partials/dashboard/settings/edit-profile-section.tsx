@@ -30,7 +30,7 @@ import * as z from 'zod';
 import EditProfileSectionSkeleton from '../skeleton/edit-profile-section-skeleton';
 import { AvatarImage } from '../svg-icons';
 import { CountryDropdown } from './country-list-dropdown';
-import { PhoneInput } from './phoneNo-input-with-country-list';
+import { PhoneInput } from './phone-input-with-country-list';
 
 // Form validation schema
 const formSchema = z.object({
@@ -241,7 +241,7 @@ export default function EditProfileSection() {
                   </span>
                   <span className="text-[#555d6a]"> or drag and drop</span>
                 </p>
-                <p className="text-[#717882] text-xs sm:text-sm mt-1">
+                <p className="text-[#717882] text-xs sm:text-sm mt-1 text-center">
                   PNG, JPG or GIF (max. 800×400px)
                 </p>
               </label>
@@ -321,6 +321,7 @@ export default function EditProfileSection() {
                         {...field}
                         className="w-full outline-none rounded-md"
                         placeholder="Enter a phone number"
+                        // defaultCountry="US"
                       />
                     </FormControl>
                     <FormMessage />

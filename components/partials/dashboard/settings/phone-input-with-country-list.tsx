@@ -31,25 +31,49 @@ type PhoneInputProps = Omit<
 
 const PhoneInput: React.ForwardRefExoticComponent<PhoneInputProps> =
   React.forwardRef<React.ElementRef<typeof RPNInput.default>, PhoneInputProps>(
-    ({ className, onChange, ...props }, ref) => {
+    ({ className, onChange, value, defaultCountry = 'US', ...props }, ref) => {
+      // Track if this is the first render
+      const isFirstRender = React.useRef(true);
+
+      // Only set default country code on first render if no value is provided
+      React.useEffect(() => {
+        // If there's already a value from the API, don't override it
+        if (isFirstRender.current && !value) {
+          const countryCode = `+${RPNInput.getCountryCallingCode(
+            defaultCountry
+          )}`;
+          onChange?.(countryCode as RPNInput.Value);
+        }
+        isFirstRender.current = false;
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+      }, []);
+
+      // Handle country selection and value changes
+      const handleChange = (newValue: RPNInput.Value) => {
+        // If input is empty or just has a plus, use the default country code
+        if (!newValue || newValue === '+') {
+          const countryCode = `+${RPNInput.getCountryCallingCode(
+            defaultCountry
+          )}`;
+          onChange?.(countryCode as RPNInput.Value);
+          return;
+        }
+
+        onChange?.(newValue || ('' as RPNInput.Value));
+      };
+
       return (
         <RPNInput.default
           ref={ref}
-          className={cn('flex test-1', className)}
+          className={cn('flex', className)}
           flagComponent={FlagComponent}
           countrySelectComponent={CountrySelect}
           inputComponent={InputComponent}
           smartCaret={false}
-          /**
-           * Handles the onChange event.
-           *
-           * react-phone-number-input might trigger the onChange event as undefined
-           * when a valid phone number is not entered. To prevent this,
-           * the value is coerced to an empty string.
-           *
-           * @param {E164Number | undefined} value - The entered value
-           */
-          onChange={(value) => onChange?.(value || ('' as RPNInput.Value))}
+          onChange={handleChange}
+          value={value}
+          defaultCountry={defaultCountry}
+          international
           {...props}
         />
       );
@@ -64,7 +88,7 @@ const InputComponent = React.forwardRef<
   <div className="w-full">
     <Input
       className={cn(
-        'rounded-e-md rounded-s-none focus:border-primary-500 test-2',
+        'rounded-e-md rounded-s-none focus:border-primary-500',
         className
       )}
       {...props}
@@ -89,13 +113,15 @@ const CountrySelect = ({
   options: countryList,
   onChange,
 }: CountrySelectProps) => {
+  const [open, setOpen] = React.useState(false);
+
   return (
-    <Popover>
+    <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button
           type="button"
           variant="outline"
-          className="flex gap-1 rounded-e-none rounded-s-md border-r-0 px-3 focus:z-10 focus:border-primary-500 "
+          className="flex gap-1 rounded-e-none rounded-s-md border-r-0 px-3 focus:z-10 focus:border-primary-500"
           disabled={disabled}
         >
           <FlagComponent
@@ -124,7 +150,10 @@ const CountrySelect = ({
                       country={value}
                       countryName={label}
                       selectedCountry={selectedCountry}
-                      onChange={onChange}
+                      onChange={(country) => {
+                        onChange(country);
+                        setOpen(false); // Close the popover after selection
+                      }}
                     />
                   ) : null
                 )}
@@ -149,7 +178,11 @@ const CountrySelectOption = ({
   onChange,
 }: CountrySelectOptionProps) => {
   return (
-    <CommandItem className="gap-2" onSelect={() => onChange(country)}>
+    <CommandItem
+      className="gap-2 cursor-pointer"
+      onSelect={() => onChange(country)}
+      value={`${country}-${countryName}`} // Ensure unique value for better selection
+    >
       <FlagComponent country={country} countryName={countryName} />
       <span className="flex-1 text-sm">{countryName}</span>
       <span className="text-sm text-foreground/50">{`+${RPNInput.getCountryCallingCode(

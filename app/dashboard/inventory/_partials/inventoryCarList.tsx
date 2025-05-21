@@ -1,40 +1,36 @@
 "use client";
 
 import {
-  flexRender,
   ColumnDef,
+  ColumnFiltersState,
   SortingState,
   VisibilityState,
-  useReactTable,
+  flexRender,
   getCoreRowModel,
-  ColumnFiltersState,
-  getSortedRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
+  getSortedRowModel,
+  useReactTable,
 } from "@tanstack/react-table";
-
-import { Controller, useForm } from "react-hook-form";
-import { Suspense, useMemo, useRef, useState } from "react";
-import { Button } from "@/components/shadcn/button";
-import { Input, InputCopy } from "@/components/shadcn/input";
-import Image from "next/image";
-import { MoreHorizontal } from "lucide-react";
 
 import {
   Dialog,
   DialogTitle,
   DialogContent,
   DialogHeader,
-  DialogDescription,
 } from "@/components/shadcn/dialog";
+
+import { useMemo, useState } from "react";
+
+import { MoreHorizontal } from "lucide-react";
 
 import {
   Table,
-  TableCell,
-  TableRow,
   TableBody,
+  TableCell,
   TableHead,
   TableHeader,
+  TableRow,
 } from "@/components/shadcn/table";
 
 import {
@@ -43,6 +39,9 @@ import {
   DropdownMenuTrigger,
   DropdownMenuContent,
 } from "@/components/shadcn/dropdown-menu";
+import { Button } from "@/components/shadcn/button";
+import { Controller, useForm } from "react-hook-form";
+import { Input, InputCopy } from "@/components/shadcn/input";
 
 export default function InventoryCarList({
   handleInventoryEdit,
@@ -426,10 +425,16 @@ export default function InventoryCarList({
 
               <DropdownMenuItem
                 onClick={() => {
-                  window.confirm(
-                    "Are you sure you want to delete this vehicle?"
-                  ) && handleInventoryDelete(row?.original?.id);
+                  console.log(row?.original?.id);
                 }}
+                // console log to fix error :: TODO
+                // onClick={() => {
+
+                //   window.confirm(
+                //     'Are you sure you want to delete this vehicle?'
+                //   ) && handleInventoryDelete(row?.original?.id);
+
+                // }}
               >
                 <svg
                   width="20"

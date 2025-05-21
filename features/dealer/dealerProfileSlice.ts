@@ -68,6 +68,14 @@ export const dealerProfileSlice = apiSlice.injectEndpoints({
         credentials: 'include',
       }),
     }),
+    addDepartment: builder.mutation<any, any>({
+      query: (data) => ({
+        url: '/departments/',
+        method: 'POST',
+        body: data,
+        credentials: 'include',
+      }),
+    }),
   }),
 });
 
@@ -79,4 +87,5 @@ export const {
   useGetDealerPricingPlansQuery,
   useGetCurrentSubscriptionPlanQuery,
   useUpgradeSubscriptionMutation,
+  useAddDepartmentMutation,
 } = dealerProfileSlice;
