@@ -2,12 +2,15 @@ import React, { useEffect, useState } from 'react'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuPortal, DropdownMenuTrigger } from '../../dashboard-dropdown';
 import { Button } from '@/components/shadcn/button';
 import { NotificationDataType } from '@/types/notificationSliceType';
-import { useGetNotificationsQuery, useGetNotificationunreadCountQuery } from '@/features/notification/notificationSlice';
+import { useGetNotificationsQuery, useGetNotificationunreadCountQuery, useMarkAllReadNotificationMutation } from '@/features/notification/notificationSlice';
 import NotificationSkeleton from './NotificationSkeleton';
-import { formatShortTimeAgo } from '@/lib/utils';
+import { beautifyErrors, formatShortTimeAgo } from '@/lib/utils';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import { useToast } from '@/hooks/useToast';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '@/store/store';
+import { setTotalUnreadNotification } from '@/features/notification/notificationStateSlice';
 
 
 const Notification = () => {
@@ -19,12 +22,27 @@ const Notification = () => {
 
     /*--React State--*/
     const [open, setOpen] = useState(false);
-    const [totalUnread, setTotalUnread] = useState(0);
     const [notifications, setNotifications] = useState<NotificationDataType[]>([]);
+
+    /*--Redux--*/
+    const dispatch = useDispatch();
+    const totalUnread = useSelector((state: RootState) => state.notificationState).totalUnread;
 
     /*--RTK Query--*/
     const { data: notificationsData, isLoading: notificationsLoading } = useGetNotificationsQuery({ limit: 5 }, { skip: !open });
     const { data: notificationUnreadCountData } = useGetNotificationunreadCountQuery();
+    const [markAllReadNotification] = useMarkAllReadNotificationMutation();
+
+    /*--Function--*/
+    const handleClickMarkAllReadNotification = async () => {
+        try {
+            setNotifications((prevNotifications) => prevNotifications.map((notification) => ({ ...notification, is_read: true })));
+            dispatch(setTotalUnreadNotification(0));
+            await markAllReadNotification().unwrap();
+        }catch(err){
+            toast("error", beautifyErrors(err));
+        }
+    }
 
     /*--UseEffect--*/
     useEffect(() => {
@@ -35,7 +53,7 @@ const Notification = () => {
 
     useEffect(() => {
         if (notificationUnreadCountData) {
-            setTotalUnread(notificationUnreadCountData?.total_count);
+            dispatch(setTotalUnreadNotification(notificationUnreadCountData?.total_count));
         }
     }, [notificationUnreadCountData]);
 
@@ -54,7 +72,7 @@ const Notification = () => {
                 const data = JSON.parse(event.data);
                 if (!data?.error) {
                     toast("success", data?.message);
-                    setTotalUnread(data?.unread_count);
+                    dispatch(setTotalUnreadNotification(data?.unread_count));
                     setNotifications((prevNotifications) => [data, ...prevNotifications?.slice(0, 4)]);
                 } else {
                     toast("error", data?.error);
@@ -76,7 +94,7 @@ const Notification = () => {
                 console.log('WebSocket cleaned up');
             }
         };
-    }, [session?.access, toast])
+    }, [session?.access, toast, dispatch])
 
     return (
         <div>
@@ -121,7 +139,7 @@ const Notification = () => {
                         <h2 className="text-gray-300 text-2xl font-semiboldx">
                             Notification
                         </h2>
-                        <div className="justify-start text-gray-200 text-sm font-medium select-none cursor-pointer">Mark all as read</div>
+                        <div className="justify-start text-gray-200 text-sm font-medium select-none cursor-pointer" onClick={handleClickMarkAllReadNotification}>Mark all as read</div>
                     </div>
 
                     {/* content */}

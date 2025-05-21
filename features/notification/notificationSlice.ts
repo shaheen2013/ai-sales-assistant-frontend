@@ -16,8 +16,14 @@ export const dealerSlice = apiSlice.injectEndpoints({
                 method: "GET",
                 url: `/v1/notifications/unread-count`,
             }),
-        })
+        }),
+        markAllReadNotification: builder.mutation<void, void>({
+            query: () => ({
+                method: "POST",
+                url: `/v1/notifications/mark-all-read`,
+            }),
+        }),
     }),
 });
 
-export const { useGetNotificationsQuery, useGetNotificationunreadCountQuery } = dealerSlice;
+export const { useGetNotificationsQuery, useGetNotificationunreadCountQuery, useMarkAllReadNotificationMutation } = dealerSlice;
