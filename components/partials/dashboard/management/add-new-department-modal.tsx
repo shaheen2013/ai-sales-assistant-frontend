@@ -55,16 +55,26 @@ const AddNewDepartmentModal = ({
   allDepartments: DepartmentDataType[];
 }) => {
   const toast = useToast();
-  const [showCustomInput, setShowCustomInput] = useState(false);
-  const [customDepartment, setCustomDepartment] = useState('');
-  const [departments, setDepartments] = useState([
+
+  const staticDepartmentNames = [
     'Sales Representative',
     'Technical Advisor',
     'Customer Support Agent',
     'Finance Advisor',
-  ]);
+  ];
+
+  const dynamicDepartmentNames = allDepartments?.map(
+    (dept: DepartmentDataType) => dept.department_name
+  );
+  console.log(dynamicDepartmentNames, 'dynamicDepartmentNames >>>>');
+  const [showCustomInput, setShowCustomInput] = useState(false);
+  const [customDepartment, setCustomDepartment] = useState('');
+  const [departments, setDepartments] = useState(
+    allDepartments?.length > 0 ? dynamicDepartmentNames : staticDepartmentNames
+  );
 
   const [addDepartment, { isLoading }] = useAddDepartmentMutation();
+
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -212,7 +222,6 @@ const AddNewDepartmentModal = ({
                               setShowCustomInput(false);
                             }}
                             className="bg-red-500 hover:bg-red-600 text-white"
-                            disabled={!customDepartment}
                           >
                             <Undo2 className="h-6 w-6" />
                           </Button>
@@ -239,7 +248,7 @@ const AddNewDepartmentModal = ({
                                 <SelectItem
                                   key={dept}
                                   value={dept}
-                                  className="flex items-center justify-between"
+                                  className="flex items-center justify-between cursor-pointer"
                                 >
                                   {dept}
                                 </SelectItem>

@@ -9,6 +9,7 @@ import AllDepartmentsTable from './all-departments-table';
 const DepartmentTableAndModal = () => {
   const [openModal, setOpenModal] = useState(false);
   const { data: departmentsData, isLoading, error } = useGetDepartmentsQuery();
+  console.log(departmentsData, 'departmentsData >');
   return (
     <div className="flex flex-col gap-6 rounded-2xl border border-[#EAEBEC] p-6">
       <div className="flex items-center justify-between">
@@ -31,9 +32,12 @@ const DepartmentTableAndModal = () => {
           error={error}
         />
       </div>
-
       {/* Dialog */}
-      <AddNewDepartmentModal open={openModal} onOpenChange={setOpenModal} />
+      <AddNewDepartmentModal
+        open={openModal}
+        onOpenChange={setOpenModal}
+        allDepartments={departmentsData?.data || []}
+      />
     </div>
   );
 };
