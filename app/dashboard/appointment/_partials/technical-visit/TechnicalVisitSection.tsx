@@ -1,53 +1,39 @@
 "use client";
 
-import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/components/shadcn/dropdown-menu'
-import { ArrowDownUp, ChevronDown } from 'lucide-react'
 import React, { useState } from 'react'
 import TechnicalVisitDataTable from './TechnicalVisitDataTable';
-import { TechnicalVisitColumnsDataType, technicalVisitsColumns } from './TechnicalVisitColumns';
+import { technicalVisitsColumns } from './TechnicalVisitColumns';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@radix-ui/react-tabs';
-import { useGetTalkToHumanCallLogsQuery, useGetTestDriveQuery } from '@/features/appointmentBooking/appointmentBookingSlice';
+import { useGetStoreVisitQuery, useGetTestDriveQuery } from '@/features/appointmentBooking/appointmentBookingSlice';
 import Pagination from '@/components/pagination/Pagination';
 import SimpleSelect from '@/components/select/SimpleSelect';
+import StoreVisitDataTable from '../store-visit/StoreVisitDataTable';
+import { storeVisitColumns } from '../store-visit/StoreVisitColumns';
 
-const technicalVisitDummyData: TechnicalVisitColumnsDataType[] = [
-    {
-        id: 1,
-        name: 'John Doe',
-        schedule_date: 'Dec 1, 2025 | 4.30pm',
-        priority: 'High',
-    },
-    {
-        id: 2,
-        name: 'Jane Smith',
-        schedule_date: 'Dec 1, 2025 | 4.30pm',
-        priority: 'Medium',
-    },
-    {
-        id: 3,
-        name: 'Mike Brown',
-        schedule_date: 'Dec 1, 2025 | 4.30pm',
-        priority: 'Low',
-    }
-]
 
 const TechnicalVisitSection = () => {
     /*--React State--*/
     const [page, setPage] = useState(1);
     const [sortBy, setSortBy] = useState<string>('');
+    const [tab, setTab] = useState('test_drive');
 
     /*--RTK Query--*/
     const { data: testDriveData, isFetching: testDriveIsFetching } = useGetTestDriveQuery({
         limit: 10,
         offset: (page - 1) * 10,
         ...(sortBy && { sort_by: sortBy }),
-    });
+    }, { skip: tab !== "test_drive" });
+    const { data: storeVisitData, isFetching: storeVisitIsFetching } = useGetStoreVisitQuery({
+        limit: 10,
+        offset: (page - 1) * 10,
+        ...(sortBy && { sort_by: sortBy }),
+    }, { skip: tab !== "store_visit" });
     return (
         <div>
             <h4 className="text-gray-400 text-xl font-semibold">Technical Visit</h4>
             <div className="text-gray-300 text-sm font-normal mt-1">AI-generated list of test drive appointments based on customer interactions for seamless scheduling.</div>
             <div className="p-4 rounded-2xl outline outline-1 outline-offset-[-1px] outline-gray-50 mt-4">
-                <Tabs defaultValue='test_drive'>
+                <Tabs value={tab} onValueChange={setTab} defaultValue='test_drive'>
                     <TabsList className='flex items-center justify-between gap-4'>
                         <div>
                             <TabsTrigger value="test_drive" className='border-b-2 border-b-transparent data-[state=active]:border-b-2 data-[state=active]:border-b-primary-500 pb-3 transition-all group/technicalVisitTabs'>
@@ -86,6 +72,7 @@ const TechnicalVisitSection = () => {
 
                     <TabsContent value='store_visit'>
                         {/* <TechnicalVisitDataTable columns={technicalVisitsColumns} data={technicalVisitDummyData} /> */}
+                        <StoreVisitDataTable columns={storeVisitColumns} data={storeVisitData?.results || []} loading={storeVisitIsFetching} />
                     </TabsContent>
                     <TabsContent value='test_drive'>
                         <TechnicalVisitDataTable columns={technicalVisitsColumns} data={testDriveData?.results || []} loading={testDriveIsFetching} />

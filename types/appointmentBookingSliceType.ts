@@ -19,3 +19,14 @@ export type TestDriveResponseType = {
     name: string;
     starts_at: string;
 }
+
+export type StoreVisitResponseType = {
+    id: number;
+    dealer: number;
+    customer: number;
+    prefered_time: string;
+    visit_reason: string;
+    is_visited: boolean;
+    created_at: string;
+    updated_at: string;
+};
