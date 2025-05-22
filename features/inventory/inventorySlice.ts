@@ -18,7 +18,7 @@ export const inventorySlice = apiSlice.injectEndpoints({
         const params = createQueryParams(data);
 
         return {
-          url: `/v1/dealer/vehicle-inventory?=${params}`,
+          url: `/v1/dealer/vehicle-inventory${params}`,
           method: "GET",
           credentials: "include",
         };
