@@ -255,7 +255,7 @@ export const dashboardDealerMenu: SidebarSection[] = [
       },
       {
         label: "Ask Support",
-        href: "/dashboard/support",
+        href: "/dashboard/ask-support",
         icon: (
           <svg
             width="24"
