@@ -2,9 +2,12 @@
 
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/components/shadcn/dropdown-menu'
 import { ArrowDownUp, ChevronDown } from 'lucide-react'
-import React from 'react'
+import React, { useState } from 'react'
 import TalkToHumanDataTable from './TalkToHumanDataTable';
 import { TalkToHumanColumnDataType, talkToHumanColumns } from './TalkToHumanColumns';
+import { useGetTalkToHumanCallLogsQuery } from '@/features/appointmentBooking/appointmentBookingSlice';
+import Pagination from '@/components/pagination/Pagination';
+import SimpleSelect from '@/components/select/SimpleSelect';
 
 const talkToHumanDummyData: TalkToHumanColumnDataType[] = [
     {
@@ -58,6 +61,17 @@ const talkToHumanDummyData: TalkToHumanColumnDataType[] = [
 ]
 
 const TalkToHumanSection = () => {
+    /*--React State--*/
+    const [page, setPage] = useState(1);
+    const [sortBy, setSortBy] = useState<string>('');
+
+    /*--RTK Query--*/
+    const { data: talkToHumanCallLogsData, isFetching: talkToHumanCallLogsIsFetching } = useGetTalkToHumanCallLogsQuery({
+        limit: 10,
+        offset: (page - 1) * 10,
+        ...(sortBy && { sort_by: sortBy }),
+    });
+
     return (
         <div>
             <h4 className="text-gray-400 text-xl font-semibold">Chat & Talk Appointment</h4>
@@ -71,25 +85,34 @@ const TalkToHumanSection = () => {
                         <div className="w-full h-0 outline outline-1 outline-offset-[-0.50px] outline-primary-500" />
                     </div>
 
-                    <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                            <div className='p-2 rounded-lg shadow-[0px_1px_1px_0px_rgba(229,229,229,1.00)] outline outline-1 outline-offset-[-1px] outline-gray-20 text-gray-400 flex items-center gap-2 cursor-pointer'>
-                                <ArrowDownUp className='text-inherit size-5' />
-                                <p className="text-sm font-normal select-none">Sort by: Date Uploaded</p>
-                                <ChevronDown className='text-inherit size-4' />
-                            </div>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent>
-                            <p>Sort by</p>
-                            <p>Sort by Date Uploaded</p>
-                            <p>Sort by Date Created</p>
-                            <p>Sort by Date Modified</p>
-                        </DropdownMenuContent>
-                    </DropdownMenu>
+                    <SimpleSelect
+                        options={[
+                            {
+                                label: 'Time',
+                                value: 'created_at',
+                            },
+                            {
+                                label: 'Preferred Date Time',
+                                value: 'preferred_date_time',
+                            }
+                        ]}
+                        placeholder="Sort By"
+                        triggerClassName="[&>span]:text-primary-500 [&>div>svg]:text-primary-500"
+                        value={sortBy}
+                        onChange={setSortBy}
+                    />
                 </div>
 
-                <TalkToHumanDataTable columns={talkToHumanColumns} data={talkToHumanDummyData} />
+                <TalkToHumanDataTable columns={talkToHumanColumns} data={talkToHumanCallLogsData?.results || []} loading={talkToHumanCallLogsIsFetching} />
 
+                {
+                    talkToHumanCallLogsData?.count && talkToHumanCallLogsData?.count > 12 &&
+                    <Pagination
+                        page={page}
+                        onPageChange={setPage}
+                        totalPage={Math.ceil(talkToHumanCallLogsData?.count / 10)}
+                    />
+                }
             </div>
         </div>
     )
