@@ -20,6 +20,7 @@ import {
   useDeleteDepartmentMutation,
   useGetDepartmentsQuery,
 } from '@/features/dealer/dealerManagementSlice';
+import { useToast } from '@/hooks/useToast';
 import { DepartmentDataType } from '@/types/dealerManagementSliceType';
 import {
   ColumnDef,
@@ -30,10 +31,10 @@ import {
 import { Edit2, MoreVertical, Trash } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
-import { toast } from 'sonner';
 import EditDepartmentModal from './edit-department-modal';
 
 const AllDepartmentsTable = () => {
+  const toast = useToast();
   const { data: departmentsData, isLoading, error } = useGetDepartmentsQuery();
   const [deleteDepartment, { isLoading: isDeleting }] =
     useDeleteDepartmentMutation();
@@ -94,9 +95,9 @@ const AllDepartmentsTable = () => {
         const handleRemoveDeptInfo = async () => {
           try {
             await deleteDepartment(department.id).unwrap();
-            toast.success('Department deleted successfully');
+            toast('success', 'Department deleted successfully');
           } catch (error) {
-            toast.error('Failed to delete department');
+            toast('error', 'Failed to delete department');
             console.error('Delete error:', error);
           }
         };
@@ -172,7 +173,7 @@ const AllDepartmentsTable = () => {
 
             <TableBody className="bg-white">
               {/* if loading */}
-              {isLoading ? (
+              {isLoading || isDeleting ? (
                 <TableRow>
                   <TableCell colSpan={7} className="space-y-2">
                     <TableSkeleton />
