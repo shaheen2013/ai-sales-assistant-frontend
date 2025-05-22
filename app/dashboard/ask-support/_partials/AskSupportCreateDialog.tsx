@@ -47,6 +47,10 @@ const AskSupportCreateDialog: FC<AskSupportCreateDialogPropsType> = ({ data, onO
             if (response) {
                 toast("success", !!data ? "Ticket updated successfully!" : "Ticket created successfully!");
                 onOpenChange(false);
+                reset({
+                    subject: "",
+                    description: ""
+                })
             }
         } catch (err) {
             toast("error", beautifyErrors(err));

@@ -48,8 +48,15 @@ export const dealerSlice = apiSlice.injectEndpoints({
                 body: data
             }),
             invalidatesTags: ["getDealerAllSupportTickets"]
+        }),
+        deleteDealerSupportTicker: builder.mutation<SupportTicketType, string>({
+            query: (ticketId) => ({
+                method: "DELETE",
+                url: `/dealer-dashboard/tickets/${ticketId}/delete/`,
+            }),
+            invalidatesTags: ["getDealerAllSupportTickets"]
         })
     }),
 });
 
-export const { useGetDealersQuery, useGetDealerStatisticsQuery, useGetDealerRegistrationCountQuery, useGetDealerAllSupportTicketsQuery, useCreateSupportTicketMutation, useUpdateDealerSupportTicketMutation } = dealerSlice;
+export const { useGetDealersQuery, useGetDealerStatisticsQuery, useGetDealerRegistrationCountQuery, useGetDealerAllSupportTicketsQuery, useCreateSupportTicketMutation, useUpdateDealerSupportTicketMutation, useDeleteDealerSupportTickerMutation } = dealerSlice;

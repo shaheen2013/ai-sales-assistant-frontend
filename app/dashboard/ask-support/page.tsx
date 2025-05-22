@@ -174,7 +174,7 @@ import { useToast } from '@/hooks/useToast';
 import { beautifyErrors, cn } from '@/lib/utils';
 import { SupportTicketType } from '@/types/supportTicketType';
 import { Eye, MoreHorizontal, Plus } from 'lucide-react';
-import { useGetDealerAllSupportTicketsQuery } from '@/features/dealer/dealerSlice';
+import { useDeleteDealerSupportTickerMutation, useGetDealerAllSupportTicketsQuery } from '@/features/dealer/dealerSlice';
 import AskSupportCreateDialog from './_partials/AskSupportCreateDialog';
 
 function AskSupportTable({
@@ -205,7 +205,7 @@ function AskSupportTable({
 
   /*--RTK Query--*/
   const [deleteSupportTicket, { isLoading: deleteTicketLoading }] =
-    useDeleteAdminSupportTicketMutation();
+    useDeleteDealerSupportTickerMutation();
 
   /*--Functions--*/
   const handleDeleteTicket = async (id: string) => {
