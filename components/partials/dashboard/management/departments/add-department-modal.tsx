@@ -26,11 +26,12 @@ import {
 import { useAddDepartmentMutation } from '@/features/dealer/dealerManagementSlice';
 import { useToast } from '@/hooks/useToast';
 import { beautifyErrors } from '@/lib/utils';
+import { DepartmentDataType } from '@/types/dealerManagementSliceType';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Check, Undo2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
-import { PhoneInput } from '../settings/phone-input-with-country-list';
 
 // Define form schema with validation
 const formSchema = z.object({
@@ -39,38 +40,55 @@ const formSchema = z.object({
     .string()
     .email('Invalid email format')
     .min(1, 'Department email is required'),
-  employee_name: z.string().min(1, 'Employee name is required'),
-  employee_phone: z.string().min(1, 'Employee phone is required'),
 });
 
 // Type for form data
 type FormData = z.infer<typeof formSchema>;
 
-const AddNewPeopleModal = ({
+const AddNewDepartmentModal = ({
   open,
   onOpenChange,
+  allDepartments,
 }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  allDepartments: DepartmentDataType[];
 }) => {
   const toast = useToast();
-  const [showCustomInput, setShowCustomInput] = useState(false);
-  const [customDepartment, setCustomDepartment] = useState('');
-  const [departments, setDepartments] = useState([
+
+  const staticDepartmentNames = [
     'Sales Representative',
     'Technical Advisor',
     'Customer Support Agent',
     'Finance Advisor',
-  ]);
+  ];
+
+  const [showCustomInput, setShowCustomInput] = useState(false);
+  const [customDepartment, setCustomDepartment] = useState('');
+  const [departments, setDepartments] = useState<string[]>([]);
+
+  // Update departments list when allDepartments changes
+  useEffect(() => {
+    const dynamicDepartmentNames =
+      allDepartments?.map((dept: DepartmentDataType) => dept.department_name) ||
+      [];
+
+    // Combine all department names, removing duplicates
+    const allNames = [
+      ...new Set([...dynamicDepartmentNames, ...staticDepartmentNames]),
+    ];
+
+    setDepartments(allNames);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [allDepartments]);
 
   const [addDepartment, { isLoading }] = useAddDepartmentMutation();
+
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       department_name: '',
       department_email: '',
-      employee_name: '',
-      employee_phone: '',
     },
   });
 
@@ -78,12 +96,6 @@ const AddNewPeopleModal = ({
     const payload = {
       department_name: data.department_name,
       department_email: data.department_email,
-      employees: [
-        {
-          name: data.employee_name,
-          phone_number: data.employee_phone,
-        },
-      ],
     };
     try {
       await addDepartment(payload).unwrap();
@@ -169,8 +181,9 @@ const AddNewPeopleModal = ({
     if (!open) {
       setShowCustomInput(false);
       setCustomDepartment('');
+      form.reset();
     }
-  }, [open]);
+  }, [open, form]);
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -185,14 +198,14 @@ const AddNewPeopleModal = ({
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <div className="flex flex-col gap-4 border-t border-b border-[#EFF4FA] py-4">
               {/* Department name & email */}
-              <div className="flex flex-col md:flex-row gap-3 items-start md:items-center w-full justify-between">
+              <div className="flex flex-col  gap-3 items-start md:items-center w-full justify-between">
                 <FormField
                   control={form.control}
                   name="department_name"
                   render={({ field }) => (
                     <FormItem className="w-full">
                       <FormLabel className="text-sm text-gray-700 font-medium">
-                        Department Name
+                        Department Name <span className="text-red-500">*</span>
                       </FormLabel>
                       {showCustomInput ? (
                         <div className="flex gap-2">
@@ -201,7 +214,7 @@ const AddNewPeopleModal = ({
                             onChange={(e) =>
                               setCustomDepartment(e.target.value)
                             }
-                            placeholder="Enter custom department"
+                            placeholder="Enter a new department"
                             className="border-[#d5d7da] rounded-md focus:border-[#019935] focus:ring-[#019935]"
                           />
                           <Button
@@ -210,7 +223,17 @@ const AddNewPeopleModal = ({
                             className="bg-[#019935] hover:bg-[#018a30] text-white"
                             disabled={!customDepartment}
                           >
-                            Add
+                            <Check className="h-6 w-6 " />
+                          </Button>
+                          <Button
+                            type="button"
+                            onClick={() => {
+                              setCustomDepartment('');
+                              setShowCustomInput(false);
+                            }}
+                            className="bg-red-500 hover:bg-red-600 text-white"
+                          >
+                            <Undo2 className="h-6 w-6" />
                           </Button>
                         </div>
                       ) : (
@@ -235,16 +258,16 @@ const AddNewPeopleModal = ({
                                 <SelectItem
                                   key={dept}
                                   value={dept}
-                                  className="flex items-center justify-between"
+                                  className="flex items-center justify-between cursor-pointer"
                                 >
                                   {dept}
                                 </SelectItem>
                               ))}
                               <SelectItem
                                 value="custom"
-                                className="text-[#019935]"
+                                className="text-[#019935] cursor-pointer font-semibold"
                               >
-                                Add Yours
+                                Add New Department
                               </SelectItem>
                             </SelectGroup>
                           </SelectContent>
@@ -260,56 +283,13 @@ const AddNewPeopleModal = ({
                   render={({ field }) => (
                     <FormItem className="w-full">
                       <FormLabel className="text-sm text-gray-700 font-medium">
-                        Department Email
+                        Department Email <span className="text-red-500">*</span>
                       </FormLabel>
                       <FormControl>
                         <Input
                           type="email"
                           {...field}
                           placeholder="Enter department email"
-                          className="border-[#d5d7da] rounded-md focus:border-[#019935] focus:ring-[#019935]"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-
-              {/* Employee email & phone */}
-              <div className="flex flex-col md:flex-row gap-3 items-start md:items-center w-full justify-between">
-                <FormField
-                  control={form.control}
-                  name="employee_name"
-                  render={({ field }) => (
-                    <FormItem className="w-full">
-                      <FormLabel className="text-sm text-gray-700 font-medium">
-                        Employee Name
-                      </FormLabel>
-                      <FormControl>
-                        <Input
-                          {...field}
-                          placeholder="Write employee name"
-                          className="border-[#d5d7da] rounded-md focus:border-[#019935] focus:ring-[#019935]"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="employee_phone"
-                  render={({ field }) => (
-                    <FormItem className="w-full">
-                      <FormLabel className="text-sm text-gray-700 font-medium">
-                        Employee Phone
-                      </FormLabel>
-                      <FormControl>
-                        <PhoneInput
-                          defaultCountry="US"
-                          {...field}
-                          placeholder="Enter phone number"
                           className="border-[#d5d7da] rounded-md focus:border-[#019935] focus:ring-[#019935]"
                         />
                       </FormControl>
@@ -346,4 +326,4 @@ const AddNewPeopleModal = ({
   );
 };
 
-export default AddNewPeopleModal;
+export default AddNewDepartmentModal;

@@ -1,5 +1,5 @@
 'use client';
-import DepartmentDetailsTable from '@/components/partials/dashboard/management/department-details-table';
+import DepartmentDetailsTable from '@/components/partials/dashboard/management/department-details/department-details-table';
 import { Button } from '@/components/shadcn/button';
 import {
   Table,

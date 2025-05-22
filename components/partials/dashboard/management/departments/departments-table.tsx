@@ -16,10 +16,7 @@ import {
   TableRow,
 } from '@/components/shadcn/table';
 import TableSkeleton from '@/components/skeleton/TableSkeleton';
-import {
-  useDeleteDepartmentMutation,
-  useGetDepartmentsQuery,
-} from '@/features/dealer/dealerManagementSlice';
+import { useDeleteDepartmentMutation } from '@/features/dealer/dealerManagementSlice';
 import { useToast } from '@/hooks/useToast';
 import { DepartmentDataType } from '@/types/dealerManagementSliceType';
 import {
@@ -33,9 +30,16 @@ import Link from 'next/link';
 import { useState } from 'react';
 import EditDepartmentModal from './edit-department-modal';
 
-const AllDepartmentsTable = () => {
+const AllDepartmentsTable = ({
+  departmentsData,
+  isLoading,
+  error,
+}: {
+  departmentsData: DepartmentDataType[];
+  isLoading: boolean;
+  error: any;
+}) => {
   const toast = useToast();
-  const { data: departmentsData, isLoading, error } = useGetDepartmentsQuery();
   const [deleteDepartment, { isLoading: isDeleting }] =
     useDeleteDepartmentMutation();
   const [editModalOpen, setEditModalOpen] = useState(false);
@@ -79,11 +83,8 @@ const AllDepartmentsTable = () => {
       header: 'Number of Employees',
       headerClassName: 'text-center ',
       cell: ({ row }) => {
-        return (
-          <div className="text-[#374151] text-center">
-            {row.getValue('employees').length}
-          </div>
-        );
+        const count = row.getValue('employees')?.length || 0;
+        return <div className="text-[#374151] text-center">{count}</div>;
       },
     },
     {
@@ -139,7 +140,7 @@ const AllDepartmentsTable = () => {
   ];
 
   const table = useReactTable({
-    data: departmentsData?.data || [],
+    data: departmentsData || [],
     columns: departmentColumns,
     getCoreRowModel: getCoreRowModel(),
   });
@@ -220,7 +221,7 @@ const AllDepartmentsTable = () => {
         open={editModalOpen}
         onOpenChange={setEditModalOpen}
         departmentId={selectedDepartmentId}
-        allDepartments={departmentsData?.data || []}
+        allDepartments={departmentsData || []}
       />
     </>
   );
