@@ -1,6 +1,7 @@
 import { PaginatedResponse } from "@/types/paginatedType";
 import { apiSlice } from "../api/apiSlice";
 import { Dealer, DealerRegistrationSourceCount, DealerStatisticsResponseType } from "@/types/dealerType";
+import { SupportStatusCountType, SupportTicketType } from "@/types/supportTicketType";
 
 export const dealerSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
@@ -23,8 +24,24 @@ export const dealerSlice = apiSlice.injectEndpoints({
                 url: `/admin-dashboard/dealer-registration-source-count/`,
                 params: queryParams,
             })
+        }),
+        getDealerAllSupportTickets: builder.query<PaginatedResponse<SupportTicketType> & SupportStatusCountType, Record<string, any>>({
+            query: (queryParams) => ({
+                method: "GET",
+                url: `/dealer-dashboard/tickets/`,
+                params: queryParams,
+            }),
+            providesTags: ["getDealerAllSupportTickets"],
+        }),
+        createSupportTicket: builder.mutation<SupportTicketType, Record<string, any>>({
+            query: (data) => ({
+                method: "POST",
+                url: `/dealer-dashboard/tickets/create/`,
+                body: data
+            }),
+            invalidatesTags: ["getDealerAllSupportTickets"],
         })
     }),
 });
 
-export const { useGetDealersQuery, useGetDealerStatisticsQuery, useGetDealerRegistrationCountQuery } = dealerSlice;
+export const { useGetDealersQuery, useGetDealerStatisticsQuery, useGetDealerRegistrationCountQuery, useGetDealerAllSupportTicketsQuery, useCreateSupportTicketMutation } = dealerSlice;
