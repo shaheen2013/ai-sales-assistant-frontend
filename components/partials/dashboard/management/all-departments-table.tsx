@@ -16,8 +16,10 @@ import {
   TableRow,
 } from '@/components/shadcn/table';
 import TableSkeleton from '@/components/skeleton/TableSkeleton';
-import { useDeleteDepartmentMutation } from '@/features/dealer/dealerManagementSlice';
-import { useToast } from '@/hooks/useToast';
+import {
+  useDeleteDepartmentMutation,
+  useGetDepartmentsQuery,
+} from '@/features/dealer/dealerManagementSlice';
 import { DepartmentDataType } from '@/types/dealerManagementSliceType';
 import {
   ColumnDef,
@@ -25,21 +27,25 @@ import {
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import { MoreVertical, Pencil, Trash } from 'lucide-react';
+import { Edit2, MoreVertical, Trash } from 'lucide-react';
 import Link from 'next/link';
+import { useState } from 'react';
+import { toast } from 'sonner';
+import EditDepartmentModal from './edit-department-modal';
 
-const AllDepartmentsTable = ({
-  departmentsData,
-  isLoading,
-  error,
-}: {
-  departmentsData: DepartmentDataType[];
-  isLoading: boolean;
-  error: any;
-}) => {
-  const toast = useToast();
+const AllDepartmentsTable = () => {
+  const { data: departmentsData, isLoading, error } = useGetDepartmentsQuery();
   const [deleteDepartment, { isLoading: isDeleting }] =
     useDeleteDepartmentMutation();
+  const [editModalOpen, setEditModalOpen] = useState(false);
+  const [selectedDepartmentId, setSelectedDepartmentId] = useState<
+    string | null
+  >(null);
+
+  const handleOpenEditModal = (id: string) => {
+    setSelectedDepartmentId(id);
+    setEditModalOpen(true);
+  };
 
   // Column definitions
   const departmentColumns: ColumnDef<DepartmentDataType>[] = [
@@ -49,7 +55,10 @@ const AllDepartmentsTable = ({
       cell: ({ row }) => {
         return (
           <div className="font-medium text-[#374151]">
-            <Link href={`/dashboard/management/${row.original.id}`}>
+            <Link
+              className="hover:text-blue-500 hover:underline"
+              href={`/dashboard/management/${row.original.id}`}
+            >
               {row.getValue('department_name')}
             </Link>
           </div>
@@ -85,17 +94,13 @@ const AllDepartmentsTable = ({
         const handleRemoveDeptInfo = async () => {
           try {
             await deleteDepartment(department.id).unwrap();
-            toast('success', 'Department deleted successfully');
+            toast.success('Department deleted successfully');
           } catch (error) {
-            toast('error', 'Failed to delete department');
+            toast.error('Failed to delete department');
             console.error('Delete error:', error);
           }
         };
 
-        const handleEditDeptInfo = () => {
-          alert(`edit department info ${department.id}`);
-        };
-        // actions dropdown
         return (
           <div className="text-right">
             <DropdownMenu>
@@ -110,13 +115,12 @@ const AllDepartmentsTable = ({
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
                 <DropdownMenuItem
-                  onClick={handleEditDeptInfo}
-                  className="cursor-pointer text-sm font-semibold"
+                  className="cursor-pointer text-gray-500 text-sm font-semibold"
+                  onClick={() => handleOpenEditModal(department.id)}
                 >
-                  <Pencil className="h-4 w-4 mr-2" />
+                  <Edit2 className="h-4 w-4 mr-2" />
                   Edit
                 </DropdownMenuItem>
-
                 <DropdownMenuItem
                   onClick={handleRemoveDeptInfo}
                   className="cursor-pointer text-red-500 text-sm font-semibold"
@@ -133,82 +137,91 @@ const AllDepartmentsTable = ({
     },
   ];
 
-  // initialize table
   const table = useReactTable({
-    data: departmentsData || [],
+    data: departmentsData?.data || [],
     columns: departmentColumns,
     getCoreRowModel: getCoreRowModel(),
   });
 
   return (
-    <div className="w-full">
-      <div className="rounded-2xl overflow-hidden">
-        <Table>
-          <TableHeader>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id} className="bg-[#f9fafb]">
-                {headerGroup.headers.map((header) => (
-                  <TableHead
-                    key={header.id}
-                    className={`font-medium text-[#6b7280] border-b border-[#E9EAEB] ${
-                      header.column.columnDef.headerClassName || ''
-                    }`}
-                  >
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
-                  </TableHead>
-                ))}
-              </TableRow>
-            ))}
-          </TableHeader>
-
-          <TableBody className="bg-white">
-            {/* handle loading state */}
-            {isLoading || isDeleting ? (
-              <TableRow>
-                <TableCell colSpan={7} className="space-y-2">
-                  <TableSkeleton />
-                </TableCell>
-              </TableRow>
-            ) : (
-              <>
-                {table.getRowModel().rows?.length ? (
-                  table.getRowModel().rows.map((row) => (
-                    <TableRow
-                      key={row.id}
-                      className="border-b border-[#E9EAEB]"
+    <>
+      <div className="w-full">
+        <div className="rounded-2xl overflow-hidden">
+          <Table>
+            <TableHeader>
+              {table.getHeaderGroups().map((headerGroup) => (
+                <TableRow key={headerGroup.id} className="bg-[#f9fafb]">
+                  {headerGroup.headers.map((header) => (
+                    <TableHead
+                      key={header.id}
+                      className={`font-medium text-[#6b7280] border-b border-[#E9EAEB] ${
+                        header.column.columnDef.headerClassName || ''
+                      }`}
                     >
-                      {row.getVisibleCells().map((cell) => (
-                        <TableCell key={cell.id} className="text-sm bg-white">
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext()
+                      {header.isPlaceholder
+                        ? null
+                        : flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
                           )}
-                        </TableCell>
-                      ))}
+                    </TableHead>
+                  ))}
+                </TableRow>
+              ))}
+            </TableHeader>
+
+            <TableBody className="bg-white">
+              {/* if loading */}
+              {isLoading ? (
+                <TableRow>
+                  <TableCell colSpan={7} className="space-y-2">
+                    <TableSkeleton />
+                  </TableCell>
+                </TableRow>
+              ) : (
+                <>
+                  {table.getRowModel().rows?.length ? (
+                    table.getRowModel().rows.map((row) => (
+                      <TableRow
+                        key={row.id}
+                        className="border-b border-[#E9EAEB]"
+                      >
+                        {row.getVisibleCells().map((cell) => (
+                          <TableCell key={cell.id} className="text-sm bg-white">
+                            {flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext()
+                            )}
+                          </TableCell>
+                        ))}
+                      </TableRow>
+                    ))
+                  ) : (
+                    <TableRow>
+                      {/* if error || no data found */}
+                      <TableCell
+                        colSpan={departmentColumns.length}
+                        className="h-24 text-center animate-pulse text-red-500 font-medium"
+                      >
+                        {error?.data?.message}
+                      </TableCell>
                     </TableRow>
-                  ))
-                ) : (
-                  <TableRow>
-                    {/* if error || no data found */}
-                    <TableCell
-                      colSpan={departmentColumns.length}
-                      className="h-24 text-center animate-pulse text-red-500 font-medium"
-                    >
-                      {error?.data?.message}
-                    </TableCell>
-                  </TableRow>
-                )}
-              </>
-            )}
-          </TableBody>
-        </Table>
+                  )}
+                </>
+              )}
+            </TableBody>
+          </Table>
+        </div>
       </div>
-    </div>
+
+      {/* Edit Department Modal */}
+      <EditDepartmentModal
+        open={editModalOpen}
+        onOpenChange={setEditModalOpen}
+        departmentId={selectedDepartmentId}
+        allDepartments={departmentsData?.data || []}
+      />
+    </>
   );
 };
 

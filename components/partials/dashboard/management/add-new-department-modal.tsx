@@ -63,15 +63,23 @@ const AddNewDepartmentModal = ({
     'Finance Advisor',
   ];
 
-  const dynamicDepartmentNames = allDepartments?.map(
-    (dept: DepartmentDataType) => dept.department_name
-  );
-  console.log(dynamicDepartmentNames, 'dynamicDepartmentNames >>>>');
   const [showCustomInput, setShowCustomInput] = useState(false);
   const [customDepartment, setCustomDepartment] = useState('');
-  const [departments, setDepartments] = useState(
-    allDepartments?.length > 0 ? dynamicDepartmentNames : staticDepartmentNames
-  );
+  const [departments, setDepartments] = useState<string[]>([]);
+
+  // Update departments list when allDepartments changes
+  useEffect(() => {
+    const dynamicDepartmentNames =
+      allDepartments?.map((dept: DepartmentDataType) => dept.department_name) ||
+      [];
+
+    // Combine all department names, removing duplicates
+    const allNames = [
+      ...new Set([...dynamicDepartmentNames, ...staticDepartmentNames]),
+    ];
+
+    setDepartments(allNames);
+  }, [allDepartments]);
 
   const [addDepartment, { isLoading }] = useAddDepartmentMutation();
 
@@ -172,8 +180,9 @@ const AddNewDepartmentModal = ({
     if (!open) {
       setShowCustomInput(false);
       setCustomDepartment('');
+      form.reset();
     }
-  }, [open]);
+  }, [open, form]);
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>

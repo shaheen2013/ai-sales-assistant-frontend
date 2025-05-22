@@ -8,8 +8,8 @@ import AllDepartmentsTable from './all-departments-table';
 
 const DepartmentTableAndModal = () => {
   const [openModal, setOpenModal] = useState(false);
-  const { data: departmentsData, isLoading, error } = useGetDepartmentsQuery();
-  console.log(departmentsData, 'departmentsData >');
+  const { data: departmentsData } = useGetDepartmentsQuery();
+
   return (
     <div className="flex flex-col gap-6 rounded-2xl border border-[#EAEBEC] p-6">
       <div className="flex items-center justify-between">
@@ -26,13 +26,9 @@ const DepartmentTableAndModal = () => {
         </Button>
       </div>
       <div>
-        <AllDepartmentsTable
-          departmentsData={departmentsData?.data || []}
-          isLoading={isLoading}
-          error={error}
-        />
+        <AllDepartmentsTable />
       </div>
-      {/* Dialog */}
+      {/* Add Department Dialog */}
       <AddNewDepartmentModal
         open={openModal}
         onOpenChange={setOpenModal}
