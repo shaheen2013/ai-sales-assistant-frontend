@@ -629,7 +629,7 @@ export default function InventoryCarList({
       >
         <DialogContent className="sm:max-w-[700px] max-h-full overflow-auto">
           <DialogHeader>
-            <DialogTitle>Inventory Details</DialogTitle>
+            <DialogTitle>Edit Inventory Details</DialogTitle>
           </DialogHeader>
 
           {/* body */}
@@ -684,6 +684,7 @@ export default function InventoryCarList({
                         id="stockId"
                         error={errors.stockId?.message}
                         copyText={field.value}
+                        disabled
                         {...field}
                       />
                     )}
@@ -708,7 +709,7 @@ export default function InventoryCarList({
                         id="vin"
                         error={errors.vin?.message}
                         copyText={field.value}
-                        // disabled
+                        disabled
                         {...field}
                       />
                     )}

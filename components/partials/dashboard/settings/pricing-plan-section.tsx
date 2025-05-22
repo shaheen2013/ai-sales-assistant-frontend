@@ -1,13 +1,13 @@
-import { Button } from '@/components/shadcn/button';
+import { Button } from "@/components/shadcn/button";
 import {
   useGetCurrentSubscriptionPlanQuery,
   useGetDealerPricingPlansQuery,
   useUpgradeSubscriptionMutation,
-} from '@/features/dealer/dealerProfileSlice';
-import { useToast } from '@/hooks/useToast';
-import { Check, Download } from 'lucide-react';
-import Link from 'next/link';
-import { useState } from 'react';
+} from "@/features/dealer/dealerProfileSlice";
+import { useToast } from "@/hooks/useToast";
+import { Check, Download } from "lucide-react";
+import Link from "next/link";
+import { useState } from "react";
 
 interface Price {
   id: string;
@@ -47,11 +47,11 @@ export default function PricingPlanSection() {
         new_price_id: id,
       }).unwrap();
       if (res) {
-        toast('success', 'Subscription upgraded successfully');
+        toast("success", "Subscription upgraded successfully");
       }
     } catch (error) {
-      toast('error', 'Failed to upgrade subscription');
-      console.error('Error upgrading subscription:', error);
+      toast("error", "Failed to upgrade subscription");
+      console.error("Error upgrading subscription:", error);
     } finally {
       setUpgradingPlanId(null);
     }
@@ -89,7 +89,7 @@ export default function PricingPlanSection() {
             <div
               key={plan.id}
               className={`border ${
-                isCurrentPlan ? 'border-primary-100' : 'border'
+                isCurrentPlan ? "border-primary-100" : "border"
               }  rounded-xl p-6 flex flex-col  md:items-center md:justify-between`}
             >
               <div className="flex flex-col md:flex-row md:items-center md:justify-between w-full">
@@ -103,7 +103,7 @@ export default function PricingPlanSection() {
                     </span>
                   </div>
                   <p className="text-[#707070] mb-4">
-                    {plan.description || 'Description Will be Here'}
+                    {plan.description || "Description Will be Here"}
                   </p>
                 </div>
                 {plan.prices.length > 0 && (
@@ -125,11 +125,11 @@ export default function PricingPlanSection() {
                                 <span
                                   className={`${
                                     isCurrentPlan
-                                      ? 'text-[#019935]'
-                                      : 'text-gray-500'
+                                      ? "text-[#019935]"
+                                      : "text-gray-500"
                                   } text-5xl font-semibold`}
                                 >
-                                  {selectedPrice?.unit_amount || '0'}
+                                  {selectedPrice?.unit_amount || "0"}
                                 </span>
                               </div>
                             );
@@ -167,8 +167,8 @@ export default function PricingPlanSection() {
                     href="#"
                     className={`${
                       isCurrentPlan
-                        ? ' text-[#019935]'
-                        : 'text-gray-500 underline'
+                        ? " text-[#019935]"
+                        : "text-gray-500 underline"
                     } font-medium`}
                   >
                     Learn more
@@ -179,14 +179,14 @@ export default function PricingPlanSection() {
                     </p>
                   ) : (
                     <Button
-                      variant={'outline'}
+                      variant={"outline"}
                       onClick={() => handleUpgradePlan(plan.id)}
                       disabled={upgradingPlanId === plan.id}
                       className="text-[#019935] text-base shadow-md px-4 py-2.5 font-medium border-primary-100"
                     >
                       {upgradingPlanId === plan.id
-                        ? 'Upgrading...'
-                        : 'Upgrade Plan'}
+                        ? "Upgrading..."
+                        : "Upgrade Plan"}
                       {upgradingPlanId !== plan.id && (
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -252,27 +252,27 @@ export default function PricingPlanSection() {
               {[
                 {
                   id: 1,
-                  plan: 'Basic Plan – Dec 2025',
-                  amount: 'USD $10.00',
-                  date: 'Dec 1, 2025',
+                  plan: "Basic Plan – Dec 2025",
+                  amount: "USD $10.00",
+                  date: "Dec 1, 2025",
                 },
                 {
                   id: 2,
-                  plan: 'Basic Plan – Nov 2025',
-                  amount: 'USD $10.00',
-                  date: 'Nov 1, 2025',
+                  plan: "Basic Plan – Nov 2025",
+                  amount: "USD $10.00",
+                  date: "Nov 1, 2025",
                 },
                 {
                   id: 3,
-                  plan: 'Basic Plan – Oct 2025',
-                  amount: 'USD $10.00',
-                  date: 'Oct 1, 2025',
+                  plan: "Basic Plan – Oct 2025",
+                  amount: "USD $10.00",
+                  date: "Oct 1, 2025",
                 },
                 {
                   id: 4,
-                  plan: 'Basic Plan – Sep 2025',
-                  amount: 'USD $10.00',
-                  date: 'Sep 1, 2025',
+                  plan: "Basic Plan – Sep 2025",
+                  amount: "USD $10.00",
+                  date: "Sep 1, 2025",
                 },
               ].map((invoice) => (
                 <tr key={invoice.id} className="border-b border-[#eaebec]">

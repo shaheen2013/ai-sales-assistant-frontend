@@ -267,6 +267,7 @@ const InputCopy = React.forwardRef<
       copyText,
       label,
       disabled,
+      onChange,
       ...props
     },
     ref
@@ -280,6 +281,8 @@ const InputCopy = React.forwardRef<
         setIsCopied(false);
       }, 2000);
     };
+
+    console.log("props => ", props);
 
     return (
       <div className={wrapperClassName}>
@@ -304,6 +307,13 @@ const InputCopy = React.forwardRef<
               className
             )}
             ref={ref}
+            onChange={(e) => {
+              if (disabled) {
+                return;
+              }
+
+              onChange && onChange(e);
+            }}
             {...props}
           />
 
