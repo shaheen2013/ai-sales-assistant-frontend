@@ -4,12 +4,11 @@ import Button from '@/components/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/shadcn/dialog'
 import { Input } from '@/components/shadcn/input'
 import { Textarea } from '@/components/shadcn/textarea';
-import { useUpdateAdminSupportTicketMutation } from '@/features/admin/adminSupportSlice';
-import { useCreateSupportTicketMutation } from '@/features/dealer/dealerSlice';
+import { useCreateSupportTicketMutation, useUpdateDealerSupportTicketMutation } from '@/features/dealer/dealerSlice';
 import { useToast } from '@/hooks/useToast';
 import { beautifyErrors } from '@/lib/utils';
 import { SupportTicketType } from '@/types/supportTicketType';
-import React, { FC } from 'react'
+import React, { FC, useEffect } from 'react'
 import { Controller, useForm } from 'react-hook-form';
 
 type AskSupportCreateDialogPropsType = {
@@ -24,10 +23,12 @@ type FormDataType = {
 }
 
 const AskSupportCreateDialog: FC<AskSupportCreateDialogPropsType> = ({ data, onOpenChange, open }) => {
+    console.log("data----->", data);
     /*--Hook Forms--*/
-    const { control, handleSubmit } = useForm<FormDataType>({
+    const { control, handleSubmit, reset } = useForm<FormDataType>({
         defaultValues: {
-
+            subject: data?.subject,
+            description: data?.description
         }
     })
 
@@ -36,19 +37,31 @@ const AskSupportCreateDialog: FC<AskSupportCreateDialogPropsType> = ({ data, onO
 
     /*--RTK Query--*/
     const [createSupportTicket, { isLoading: createSupportTicketLoading }] = useCreateSupportTicketMutation();
+    const [updateSupportTicket, { isLoading: updateSupportTicketLoading }] = useUpdateDealerSupportTicketMutation();
 
     /*--Functions--*/
     const onSubmit = async (formData: FormDataType) => {
         try {
-            const response = await createSupportTicket(formData).unwrap();
+            const request = !!data ? updateSupportTicket({ ticketId: data?.ticket_id, data: formData }) : createSupportTicket(formData);
+            const response = await request.unwrap();
             if (response) {
-                toast("success", "Ticket updated successfully!");
+                toast("success", !!data ? "Ticket updated successfully!" : "Ticket created successfully!");
                 onOpenChange(false);
             }
         } catch (err) {
             toast("error", beautifyErrors(err));
         }
     }
+
+    /*--UseEffect--*/
+    useEffect(() => {
+        if (data) {
+            reset({
+                subject: data.subject,
+                description: data.description
+            })
+        }
+    }, [data, reset])
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
@@ -74,7 +87,6 @@ const AskSupportCreateDialog: FC<AskSupportCreateDialogPropsType> = ({ data, onO
                                         placeholder={"e.g. John Doe"}
                                         label='Subject *'
                                         className='rounded-lg h-11'
-                                        value={data?.dealer?.name}
                                     />
                                 )}
                             />
@@ -92,7 +104,6 @@ const AskSupportCreateDialog: FC<AskSupportCreateDialogPropsType> = ({ data, onO
                                         label='Problem Summary *'
                                         placeholder="Problem description"
                                         className="min-h-[98px]"
-                                        value={data?.description}
                                     />
                                 )}
                             />
@@ -110,10 +121,10 @@ const AskSupportCreateDialog: FC<AskSupportCreateDialogPropsType> = ({ data, onO
                             <Button
                                 variant='primary'
                                 className='text-sm !font-medium max-w-fit [&>svg]:m-0 min-w-[160px]'
-                                loading={createSupportTicketLoading}
-                                disabled={createSupportTicketLoading}
+                                loading={createSupportTicketLoading || updateSupportTicketLoading}
+                                disabled={createSupportTicketLoading || updateSupportTicketLoading}
                             >
-                                Ask for support
+                                {!!data ? "Update Ticket" : "Ask for support"}
                             </Button>
                         </div>
                     </form>

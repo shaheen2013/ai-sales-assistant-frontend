@@ -40,8 +40,16 @@ export const dealerSlice = apiSlice.injectEndpoints({
                 body: data
             }),
             invalidatesTags: ["getDealerAllSupportTickets"],
+        }),
+        updateDealerSupportTicket: builder.mutation<SupportTicketType, Record<string, any>>({
+            query: ({ticketId, data}) => ({
+                method: "PUT",
+                url: `/dealer-dashboard/tickets/${ticketId}/update/`,
+                body: data
+            }),
+            invalidatesTags: ["getDealerAllSupportTickets"]
         })
     }),
 });
 
-export const { useGetDealersQuery, useGetDealerStatisticsQuery, useGetDealerRegistrationCountQuery, useGetDealerAllSupportTicketsQuery, useCreateSupportTicketMutation } = dealerSlice;
+export const { useGetDealersQuery, useGetDealerStatisticsQuery, useGetDealerRegistrationCountQuery, useGetDealerAllSupportTicketsQuery, useCreateSupportTicketMutation, useUpdateDealerSupportTicketMutation } = dealerSlice;
