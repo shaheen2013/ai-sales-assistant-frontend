@@ -94,10 +94,7 @@ export default function DashboardDealerInventory() {
 
   const [createVehicleInventory, { isLoading: isLoadingCreateVehicle }] =
     useCreateVehicleInventoryMutation();
-  const [
-    deleteVehicleInventory,
-    // , { isLoading: isLoadingDeleteVehicle }
-  ] = useDeleteVehicleInventoryMutation();
+  const [deleteVehicleInventory] = useDeleteVehicleInventoryMutation();
 
   const handleInventoryEdit = async (formData: any, id: any) => {
     console.log("edit id => ", id);
@@ -250,13 +247,17 @@ export default function DashboardDealerInventory() {
               </div>
 
               <div className="">
-                <button className="mt-auto bg-white border-gray-50 p-2 border rounded-lg mr-3">
+                <Button
+                  className=" bg-white border-gray-50 !p-1 border rounded-lg mr-3 h-10 w-10"
+                  variant="icon"
+                >
                   <svg
                     width="20"
                     height="21"
                     viewBox="0 0 20 21"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
+                    className="!h-5 !w-5"
                   >
                     <path
                       d="M12.5003 10.4993C12.5003 11.8801 11.381 12.9993 10.0003 12.9993C8.61957 12.9993 7.50029 11.8801 7.50029 10.4993C7.50029 9.11864 8.61957 7.99935 10.0003 7.99935C11.381 7.99935 12.5003 9.11864 12.5003 10.4993Z"
@@ -273,15 +274,19 @@ export default function DashboardDealerInventory() {
                       strokeLinejoin="round"
                     />
                   </svg>
-                </button>
+                </Button>
 
-                <button className="mt-auto bg-white border-gray-50 p-2 border rounded-lg">
+                <Button
+                  className="mt-auto bg-white border-gray-50 !p-1 border rounded-lg h-10 w-10"
+                  variant="icon"
+                >
                   <svg
-                    width="20"
-                    height="21"
+                    width="28"
+                    height="28"
                     viewBox="0 0 20 21"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
+                    className="!h-5 !w-5"
                   >
                     <path
                       d="M3.33301 13.8327L3.33301 14.666C3.33301 16.0467 4.4523 17.166 5.83301 17.166L14.1663 17.166C15.5471 17.166 16.6663 16.0467 16.6663 14.666L16.6663 13.8327M13.333 10.4993L9.99967 13.8327M9.99967 13.8327L6.66634 10.4993M9.99967 13.8327L9.99967 3.83268"
@@ -291,7 +296,7 @@ export default function DashboardDealerInventory() {
                       strokeLinejoin="round"
                     />
                   </svg>
-                </button>
+                </Button>
               </div>
             </div>
           ))}

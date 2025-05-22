@@ -109,7 +109,10 @@ export default function InventoryCarList({
         return (
           <h2
             className="flex items-center text-center gap-2 cursor-pointer"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+            onClick={() => {
+              console.log(column.getIsSorted());
+              column.toggleSorting(column.getIsSorted() === "asc");
+            }}
           >
             Created Date
             <svg
@@ -130,6 +133,8 @@ export default function InventoryCarList({
           </h2>
         );
       },
+      accessorFn: (row) => new Date(row.created_at),
+      sortingFn: "datetime",
       cell: ({ row }) => {
         const date = new Date(row.original?.created_at).toLocaleDateString(
           "en-US",
@@ -394,10 +399,6 @@ export default function InventoryCarList({
               </DropdownMenuItem>
 
               <DropdownMenuItem
-                // onClick={() => {
-                //   console.log(row?.original?.id);
-                // }}
-                // console log to fix error :: TODO
                 onClick={() => {
                   handleInventoryDelete(row?.original?.id);
                 }}
