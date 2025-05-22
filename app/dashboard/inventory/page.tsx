@@ -1,7 +1,11 @@
-import React from "react";
+import React, { Suspense } from "react";
 
 import InventoryPage from "./_partials/inventoryPage";
 
 export default function Inventory() {
-  return <InventoryPage />;
+  return (
+    <Suspense>
+      <InventoryPage />
+    </Suspense>
+  );
 }

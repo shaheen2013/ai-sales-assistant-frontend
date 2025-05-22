@@ -76,6 +76,8 @@ export const inventorySlice = apiSlice.injectEndpoints({
         };
       },
     }),
+
+    
   }),
 });
 
