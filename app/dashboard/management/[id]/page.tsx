@@ -1,7 +1,13 @@
 'use client';
 import DepartmentDetailsTable from '@/components/partials/dashboard/management/department-details-table';
 import { Button } from '@/components/shadcn/button';
-import { Skeleton } from '@/components/shadcn/skeleton';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableRow,
+} from '@/components/shadcn/table';
+import TableSkeleton from '@/components/skeleton/TableSkeleton';
 import { useGetDepartmentByIdQuery } from '@/features/dealer/dealerManagementSlice';
 import { ChevronLeft } from 'lucide-react';
 import Link from 'next/link';
@@ -23,24 +29,26 @@ const DepartmentDetailsPage = () => {
       </Link>
       <div className="flex items-center justify-between">
         <h2 className="text-2xl text-gray-500 font-semibold">
-          {isLoading
-            ? 'Loading...'
-            : department?.data?.department_name || 'Department Name'}
+          {department?.data?.department_name || 'Department Name'}
         </h2>
         <p className="text-gray-600 text-[18px] font-medium flex items-center gap-2">
           Total Employees:{' '}
           <span className="size-9 flex items-center justify-center rounded-xl border border-[#D5D7DA] bg-white">
-            {isLoading ? '-' : department?.data?.employees?.length || 0}
+            {isLoading ? '0' : department?.data?.employees?.length || 0}
           </span>
         </p>
       </div>
       <div className="">
         {isLoading ? (
-          <div>
-            <Skeleton className="h-8 w-full" />
-            <Skeleton className="h-8 w-full" />
-            <Skeleton className="h-8 w-full" />
-          </div>
+          <Table>
+            <TableBody>
+              <TableRow>
+                <TableCell colSpan={7} className="space-y-2">
+                  <TableSkeleton />
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
         ) : error ? (
           <div className="text-red-500 text-sm font-medium">
             {error.data.message + '!!' || 'Error Loading Department Details'}
