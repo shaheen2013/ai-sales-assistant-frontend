@@ -4,15 +4,19 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import React from 'react';
 import { TechnicalVisitColumnsDataType } from './TechnicalVisitColumns';
+import { TestDriveResponseType } from '@/types/appointmentBookingSliceType';
+import TableSkeleton from '@/components/skeleton/TableSkeleton';
 
 interface TechnicalVisitDataTableProps {
-  columns: ColumnDef<TechnicalVisitColumnsDataType, unknown>[];
-  data: TechnicalVisitColumnsDataType[];
+  columns: ColumnDef<TestDriveResponseType, unknown>[];
+  data: TestDriveResponseType[];
+  loading: boolean;
 }
 
 const TechnicalVisitDataTable = ({
   columns,
   data,
+  loading,
 }: TechnicalVisitDataTableProps) => {
   const table = useReactTable({
     data,
@@ -35,27 +39,32 @@ const TechnicalVisitDataTable = ({
           ))}
         </TableHeader>
         <TableBody>
-          {table.getRowModel().rows?.length ? (
-            table.getRowModel().rows.map((row) => (
-              <TableRow key={row.id}>
-                {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id} className='bg-white border-b border-[#E9EAEB]'>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </TableCell>
-                ))}
-              </TableRow>
-            ))
-          ) : (
-            <TableRow>
-              <TableCell colSpan={columns.length} className="h-24 text-center">
-                No results.
+          {
+            loading ? <TableRow>
+              <TableCell colSpan={3} className="space-y-2">
+                <TableSkeleton />
               </TableCell>
-            </TableRow>
-          )}
+            </TableRow> : table.getRowModel().rows?.length ? (
+              table.getRowModel().rows.map((row) => (
+                <TableRow key={row.id}>
+                  {row.getVisibleCells().map((cell) => (
+                    <TableCell key={cell.id} className='bg-white border-b border-[#E9EAEB]'>
+                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell colSpan={columns.length} className="h-24 text-center">
+                  No results.
+                </TableCell>
+              </TableRow>
+            )
+          }
         </TableBody>
       </Table>
 
-      <div className="text-primary-500 text-base font-medium mt-5 select-none underline flex justify-end mr-4">View all</div>
     </div>
   );
 };

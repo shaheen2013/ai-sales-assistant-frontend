@@ -69,7 +69,7 @@ const TalkToHumanSection = () => {
     const { data: talkToHumanCallLogsData, isFetching: talkToHumanCallLogsIsFetching } = useGetTalkToHumanCallLogsQuery({
         limit: 10,
         offset: (page - 1) * 10,
-        ...(sortBy && { sort_by: sortBy }),
+        ...(sortBy && { sort_by: sortBy, order: "asc" }),
     });
 
     return (

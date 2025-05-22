@@ -1,6 +1,6 @@
 import { PaginatedResponse } from "@/types/paginatedType";
 import { apiSlice } from "../api/apiSlice";
-import { TalkToHumanResponseType } from "@/types/appointmentBookingSliceType";
+import { TalkToHumanResponseType, TestDriveResponseType } from "@/types/appointmentBookingSliceType";
 
 export const appointmentBookingSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
@@ -11,7 +11,14 @@ export const appointmentBookingSlice = apiSlice.injectEndpoints({
                 params: queryParams,
             }),
         }),
+        getTestDrive: builder.query<PaginatedResponse<TestDriveResponseType>, Record<string, any>>({
+            query: (queryParams) => ({
+                method: "GET",
+                url: `/bookings/test-drive/`,
+                params: queryParams,
+            }),
+        })
     }),
 });
 
-export const { useGetTalkToHumanCallLogsQuery } = appointmentBookingSlice;
+export const { useGetTalkToHumanCallLogsQuery, useGetTestDriveQuery } = appointmentBookingSlice;
