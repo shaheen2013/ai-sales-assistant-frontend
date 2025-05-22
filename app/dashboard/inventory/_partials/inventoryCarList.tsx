@@ -44,10 +44,10 @@ import { Controller, useForm } from "react-hook-form";
 import { Input, InputCopy } from "@/components/shadcn/input";
 
 export default function InventoryCarList({
-  handleInventoryEdit,
   getVehicleList,
-}: // handleInventoryDelete,
-any) {
+  handleInventoryEdit,
+  handleInventoryDelete,
+}: any) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
@@ -67,36 +67,6 @@ any) {
     addInventory: false,
     addPdf: false,
   });
-
-  // const inventoryData: Inventory[] = [
-  //   {
-  //     stockId: "STK-001",
-  //     createdDate: "2023-10-01",
-  //     brand: "Toyota",
-  //     vin: "1HGCM82633A004352",
-  //     model: "Camry",
-  //     mileage: "45000",
-  //     year: "2020",
-  //   },
-  //   {
-  //     stockId: "STK-002",
-  //     createdDate: "2023-10-02",
-  //     brand: "Honda",
-  //     vin: "2HGFB2F59CH512345",
-  //     model: "Civic",
-  //     mileage: "38000",
-  //     year: "2019",
-  //   },
-  //   {
-  //     stockId: "STK-003",
-  //     createdDate: "2023-10-03",
-  //     brand: "Ford",
-  //     vin: "1FAHP3FN8AW123456",
-  //     model: "Focus",
-  //     mileage: "51000",
-  //     year: "2018",
-  //   },
-  // ];
 
   const columns: ColumnDef<Inventory>[] = [
     {
@@ -424,17 +394,13 @@ any) {
               </DropdownMenuItem>
 
               <DropdownMenuItem
-                onClick={() => {
-                  console.log(row?.original?.id);
-                }}
-                // console log to fix error :: TODO
                 // onClick={() => {
-
-                //   window.confirm(
-                //     'Are you sure you want to delete this vehicle?'
-                //   ) && handleInventoryDelete(row?.original?.id);
-
+                //   console.log(row?.original?.id);
                 // }}
+                // console log to fix error :: TODO
+                onClick={() => {
+                  handleInventoryDelete(row?.original?.id);
+                }}
               >
                 <svg
                   width="20"

@@ -1,10 +1,8 @@
 "use client";
 
+import moment from "moment";
 import { Suspense, useState } from "react";
-// import { useSearchParams } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
-
-import { beautifyErrors, cn } from "@/lib/utils";
 
 import {
   Select,
@@ -24,26 +22,28 @@ import {
   DialogDescription,
 } from "@/components/shadcn/dialog";
 
+import { beautifyErrors, cn } from "@/lib/utils";
+
+import { useToast } from "@/hooks/useToast";
 import { Button } from "@/components/shadcn/button";
 import { Input, InputCopy } from "@/components/shadcn/input";
 
 import InventoryCarList from "./inventoryCarList";
 import InventoryFilesList from "./inventoryFilesList";
 import DragAndDropUploader from "./DragAndDropUploader";
+
 import {
-  useCreateVehicleInventoryMutation,
-  useDeleteVehicleInventoryMutation,
   useGetInventoryFilesQuery,
   useGetVehicleInventoryQuery,
+  useDeleteVehicleInventoryMutation,
+  useCreateVehicleInventoryMutation,
 } from "@/features/inventory/inventorySlice";
-import moment from "moment";
-import { useToast } from "@/hooks/useToast";
+import Spinner from "@/components/spinner/Spinner";
 
 export default function DashboardDealerInventory() {
   const toast = useToast();
-  // const searchParams = useSearchParams();
 
-  const { control, handleSubmit } = useForm({
+  const { control, handleSubmit, reset } = useForm({
     defaultValues: {
       stockId: "",
       vin: "",
@@ -99,16 +99,19 @@ export default function DashboardDealerInventory() {
     // , { isLoading: isLoadingDeleteVehicle }
   ] = useDeleteVehicleInventoryMutation();
 
-  console.log("errorGetVehicle => ", errorGetInventoryFiles);
-  console.log("getVehicleList => ", dataGetInventoryFiles);
-
   const handleInventoryEdit = async (formData: any, id: any) => {
     console.log("edit id => ", id);
     console.log("edit formData => ", formData);
   };
 
   const handleInventoryDelete = async (id: string) => {
-    console.log("delete id => ", id);
+    const confirm = window.confirm(
+      "Are you sure you want to delete this vehicle inventory? This action cannot be undone."
+    );
+
+    if (!confirm) {
+      return;
+    }
 
     const { data, error } = await deleteVehicleInventory({ id: id });
 
@@ -118,7 +121,7 @@ export default function DashboardDealerInventory() {
       return;
     }
 
-    console.log("data => ", data);
+    await refetchGetVehicle();
   };
 
   const handleAddInventory = async (formData: any) => {
@@ -152,6 +155,7 @@ export default function DashboardDealerInventory() {
     }
 
     setModals({ ...modals, addInventory: false });
+    reset();
     await refetchGetVehicle();
 
     console.log("data => ", data);
@@ -160,7 +164,11 @@ export default function DashboardDealerInventory() {
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
 
   if (isFetchingGetVehicle) {
-    return "Loading...";
+    return (
+      <div className="h-full flex justify-center items-center">
+        <Spinner className="size-12" />
+      </div>
+    );
   }
 
   if (errorGetVehicle) {
@@ -540,6 +548,7 @@ export default function DashboardDealerInventory() {
                     <Controller
                       name="vin"
                       control={control}
+                      rules={{ required: "VIN Number is required" }}
                       render={({ field, formState: { errors } }) => (
                         <InputCopy
                           type="vin"
@@ -603,7 +612,7 @@ export default function DashboardDealerInventory() {
                     />
                   </div>
 
-                  {/* model */}
+                  {/* year */}
                   <div className="flex flex-col mb-3">
                     <label
                       htmlFor="email"
@@ -614,7 +623,7 @@ export default function DashboardDealerInventory() {
                     <Controller
                       name="year"
                       control={control}
-                      rules={{ required: "Year is required" }}
+                      // rules={{ required: "Year is required" }}
                       render={({ field, formState: { errors } }) => (
                         <Input
                           type="year"
@@ -639,7 +648,7 @@ export default function DashboardDealerInventory() {
                     <Controller
                       name="mileage"
                       control={control}
-                      rules={{ required: "Mileage is required" }}
+                      // rules={{ required: "Mileage is required" }}
                       render={({ field, formState: { errors } }) => (
                         <Input
                           type="number"
@@ -664,7 +673,7 @@ export default function DashboardDealerInventory() {
                     <Controller
                       name="numberPlate"
                       control={control}
-                      rules={{ required: "Number Plate is required" }}
+                      // rules={{ required: "Number Plate is required" }}
                       render={({ field, formState: { errors } }) => (
                         <Input
                           type="numberPlate"
@@ -689,7 +698,7 @@ export default function DashboardDealerInventory() {
                     <Controller
                       name="bodyStyle"
                       control={control}
-                      rules={{ required: " Body Style is required" }}
+                      // rules={{ required: " Body Style is required" }}
                       render={({ field, formState: { errors } }) => (
                         <Input
                           type="bodyStyle"
@@ -714,7 +723,7 @@ export default function DashboardDealerInventory() {
                     <Controller
                       name="engineType"
                       control={control}
-                      rules={{ required: "Engine Type is required" }}
+                      // rules={{ required: "Engine Type is required" }}
                       render={({ field, formState: { errors } }) => (
                         <Input
                           type="engineType"
@@ -739,7 +748,7 @@ export default function DashboardDealerInventory() {
                     <Controller
                       name="fuelType"
                       control={control}
-                      rules={{ required: "Fuel Type is required" }}
+                      // rules={{ required: "Fuel Type is required" }}
                       render={({ field, formState: { errors } }) => (
                         <Input
                           type="fuelType"
@@ -764,7 +773,7 @@ export default function DashboardDealerInventory() {
                     <Controller
                       name="odometer"
                       control={control}
-                      rules={{ required: "Odometer is required" }}
+                      // rules={{ required: "Odometer is required" }}
                       render={({ field, formState: { errors } }) => (
                         <Input
                           type="odometer"
@@ -789,7 +798,7 @@ export default function DashboardDealerInventory() {
                     <Controller
                       name="color"
                       control={control}
-                      rules={{ required: "Color is required" }}
+                      // rules={{ required: "Color is required" }}
                       render={({ field, formState: { errors } }) => (
                         <Input
                           type="text"
@@ -814,7 +823,7 @@ export default function DashboardDealerInventory() {
                     <Controller
                       name="consign"
                       control={control}
-                      rules={{ required: "Consign is required" }}
+                      // rules={{ required: "Consign is required" }}
                       render={({ field, formState: { errors } }) => (
                         <Input
                           type="consign"
@@ -839,7 +848,7 @@ export default function DashboardDealerInventory() {
                     <Controller
                       name="price"
                       control={control}
-                      rules={{ required: "Price is required" }}
+                      // rules={{ required: "Price is required" }}
                       render={({ field, formState: { errors } }) => (
                         <Input
                           type="text"
@@ -864,7 +873,7 @@ export default function DashboardDealerInventory() {
                     <Controller
                       name="dateIn"
                       control={control}
-                      rules={{ required: "Date In is required" }}
+                      // rules={{ required: "Date In is required" }}
                       render={({ field, formState: { errors } }) => (
                         <Input
                           type="text"
@@ -889,7 +898,7 @@ export default function DashboardDealerInventory() {
                     <Controller
                       name="dateOut"
                       control={control}
-                      rules={{ required: "Date Out is required" }}
+                      // rules={{ required: "Date Out is required" }}
                       render={({ field, formState: { errors } }) => (
                         <Input
                           type="text"
@@ -923,7 +932,7 @@ export default function DashboardDealerInventory() {
                     className="h-11 rounded-lg"
                     loading={isLoadingCreateVehicle}
                   >
-                    Save Changes
+                    Create
                   </Button>
                 </div>
               </form>
