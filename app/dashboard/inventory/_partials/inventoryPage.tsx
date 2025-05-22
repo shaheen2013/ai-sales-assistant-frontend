@@ -122,8 +122,6 @@ export default function DashboardDealerInventory() {
   };
 
   const handleAddInventory = async (formData: any) => {
-    console.log(formData);
-
     const payload = {
       price: formData.price,
       mileage: formData.mileage,
@@ -452,6 +450,8 @@ export default function DashboardDealerInventory() {
 
             {selectedPanel == "list" ? (
               <InventoryCarList
+                isLoading={false}
+                refetchGetVehicle={refetchGetVehicle}
                 getVehicleList={getVehicleList}
                 handleInventoryEdit={handleInventoryEdit}
                 handleInventoryDelete={handleInventoryDelete}

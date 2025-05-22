@@ -34,6 +34,18 @@ export const inventorySlice = apiSlice.injectEndpoints({
       }),
     }),
 
+    editVehicleInventory: builder.mutation({
+      query: (data) => {
+        const { id, ...rest } = data;
+        return {
+          url: `/v1/dealer/vehicle-inventory${id}/`,
+          method: "PATCH",
+          body: rest,
+          credentials: "include",
+        };
+      },
+    }),
+
     deleteVehicleInventory: builder.mutation({
       query: (params) => {
         const { id } = params;
@@ -71,6 +83,7 @@ export const {
   useVehicleInventoryUploadMutation,
   useGetVehicleInventoryQuery,
   useCreateVehicleInventoryMutation,
+  useEditVehicleInventoryMutation,
   useDeleteVehicleInventoryMutation,
 
   useGetVehiclesQuery,

@@ -1,16 +1,16 @@
 "use client";
 
 import {
+  flexRender,
   ColumnDef,
-  ColumnFiltersState,
   SortingState,
   VisibilityState,
-  flexRender,
+  useReactTable,
   getCoreRowModel,
+  ColumnFiltersState,
+  getSortedRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
-  getSortedRowModel,
-  useReactTable,
 } from "@tanstack/react-table";
 
 import {
@@ -21,16 +21,16 @@ import {
 } from "@/components/shadcn/dialog";
 
 import { useMemo, useState } from "react";
-
 import { MoreHorizontal } from "lucide-react";
+import { Controller, useForm } from "react-hook-form";
 
 import {
   Table,
-  TableBody,
   TableCell,
+  TableRow,
+  TableBody,
   TableHead,
   TableHeader,
-  TableRow,
 } from "@/components/shadcn/table";
 
 import {
@@ -39,28 +39,145 @@ import {
   DropdownMenuTrigger,
   DropdownMenuContent,
 } from "@/components/shadcn/dropdown-menu";
+
 import { Button } from "@/components/shadcn/button";
-import { Controller, useForm } from "react-hook-form";
+import { Skeleton } from "@/components/shadcn/skeleton";
 import { Input, InputCopy } from "@/components/shadcn/input";
+import { useEditVehicleInventoryMutation } from "@/features/inventory/inventorySlice";
+import moment from "moment";
+import { useToast } from "@/hooks/useToast";
+import { beautifyErrors } from "@/lib/utils";
+
+type Inventory = {
+  id: number;
+  created_at: string;
+  brand: string;
+  vin: string;
+  year: string;
+  mileage: string;
+  model: string;
+  number_plate: string;
+  body_style: string;
+  engine_type: string;
+  fuel_type: string;
+  odometer: string;
+  color: string;
+  consign: string;
+  price: string;
+  date_in: string;
+  date_out: string;
+};
 
 export default function InventoryCarList({
+  refetchGetVehicle,
+  isLoading = false,
   getVehicleList,
   handleInventoryEdit,
   handleInventoryDelete,
 }: any) {
+  const toast = useToast();
+
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = useState({});
 
-  type Inventory = {
-    id: string;
-    created_at: string;
-    brand: string;
-    vin: string;
-    year: string;
-    mileage: string;
-    model: string;
+  const [selectedInventory, setSelectedInventory] = useState<any>(null);
+
+  const { control, handleSubmit, setValue, reset } = useForm({
+    defaultValues: {
+      stockId: "",
+      vin: "",
+      brand: "",
+      model: "",
+      year: "",
+      mileage: "",
+      numberPlate: "",
+      bodyStyle: "",
+      engineType: "",
+      fuelType: "",
+      odometer: "",
+      color: "",
+      consign: "",
+      price: "",
+      dateIn: "",
+      dateOut: "",
+    },
+  });
+
+  const [editVehicle, { isLoading: isLoadingEditVehicle }] =
+    useEditVehicleInventoryMutation();
+
+  const handleEditClick = (id: number) => {
+    setSelectedInventory(id);
+    setModals((prev) => ({
+      ...prev,
+      addInventory: !prev.addInventory,
+    }));
+
+    const selectedInventory: Inventory = getVehicleList?.results?.find(
+      (item: any) => item.id === id
+    );
+
+    setValue("stockId", String(selectedInventory?.id));
+    setValue("vin", selectedInventory?.vin);
+    setValue("brand", selectedInventory?.brand);
+    setValue("model", selectedInventory?.model);
+    setValue("year", selectedInventory?.year);
+    setValue("mileage", selectedInventory?.mileage);
+    setValue("numberPlate", selectedInventory?.number_plate);
+    setValue("bodyStyle", selectedInventory?.body_style);
+    setValue("engineType", selectedInventory?.engine_type);
+    setValue("fuelType", selectedInventory?.fuel_type);
+    setValue("odometer", selectedInventory?.odometer);
+    setValue("color", selectedInventory?.color);
+    setValue("consign", selectedInventory?.consign);
+    setValue("price", selectedInventory?.price);
+    setValue("dateIn", selectedInventory?.date_in);
+    setValue("dateOut", selectedInventory?.date_out);
+
+    console.log("selectedInventory", selectedInventory);
+  };
+
+  const handleEditInventory = async (formData: any) => {
+    try {
+      const payload = {
+        id: selectedInventory,
+        price: formData.price,
+        mileage: formData.mileage,
+        brand: formData.brand,
+        model: formData.model,
+        year: formData.year,
+        vin: formData.vin,
+        stock_id: formData.stockId,
+        plate_no: formData.numberPlate,
+        body_style: formData.bodyStyle,
+        engine_type: formData.engineType,
+        fuel_type: formData.fuelType,
+        odometer: formData.odometer,
+        color: formData.color,
+        consign: formData.consign,
+        date_in: moment(formData.dateIn).format("YYYY-MM-DD"),
+        date_out: moment(formData.dateOut).format("YYYY-MM-DD"),
+      };
+
+      const { data, error } = await editVehicle(payload);
+
+      if (error) {
+        console.log(error);
+        toast("error", beautifyErrors(error));
+        return;
+      }
+
+      setModals({ ...modals, addInventory: false });
+      reset();
+      await refetchGetVehicle();
+
+      console.log("data => ", data);
+    } catch (error) {
+      console.log("error => ", error);
+      toast("error", "Something went wrong");
+    }
   };
 
   const [modals, setModals] = useState({
@@ -110,7 +227,6 @@ export default function InventoryCarList({
           <h2
             className="flex items-center text-center gap-2 cursor-pointer"
             onClick={() => {
-              console.log(column.getIsSorted());
               column.toggleSorting(column.getIsSorted() === "asc");
             }}
           >
@@ -381,8 +497,13 @@ export default function InventoryCarList({
                 <MoreHorizontal />
               </Button>
             </DropdownMenuTrigger>
+
             <DropdownMenuContent align="end">
-              <DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => {
+                  handleEditClick(row?.original?.id);
+                }}
+              >
                 <svg
                   width="20"
                   height="20"
@@ -448,26 +569,9 @@ export default function InventoryCarList({
     },
   });
 
-  const { control, handleSubmit } = useForm({
-    defaultValues: {
-      stockId: "",
-      vin: "",
-      brand: "",
-      model: "",
-      year: "",
-      mileage: "",
-      numberPlate: "",
-      bodyStyle: "",
-      engineType: "",
-      fuelType: "",
-      odometer: "",
-      color: "",
-      consign: "",
-      price: "",
-      dateIn: "",
-      dateOut: "",
-    },
-  });
+  if (isLoading) {
+    return <TableSkeleton />;
+  }
 
   return (
     <>
@@ -514,11 +618,9 @@ export default function InventoryCarList({
         </TableBody>
       </Table>
 
-      {/* add inventory modal */}
       <Dialog
         open={modals.addInventory}
         onOpenChange={(e) => {
-          console.log(e);
           setModals((prev) => ({
             ...prev,
             addInventory: !prev.addInventory,
@@ -563,7 +665,7 @@ export default function InventoryCarList({
             <hr className="pb-8" />
 
             {/* form */}
-            <form onSubmit={handleSubmit(handleInventoryEdit)} className="">
+            <form onSubmit={handleSubmit(handleEditInventory)} className="">
               <div className="grid grid-cols-2 gap-x-4 mb-6 ">
                 {/* stock id */}
                 <div>
@@ -598,6 +700,7 @@ export default function InventoryCarList({
                   </label>
                   <Controller
                     name="vin"
+                    rules={{ required: "VIN Number is required" }}
                     control={control}
                     render={({ field, formState: { errors } }) => (
                       <InputCopy
@@ -662,7 +765,7 @@ export default function InventoryCarList({
                   />
                 </div>
 
-                {/* model */}
+                {/* year */}
                 <div className="flex flex-col mb-3">
                   <label
                     htmlFor="email"
@@ -673,7 +776,7 @@ export default function InventoryCarList({
                   <Controller
                     name="year"
                     control={control}
-                    rules={{ required: "Year is required" }}
+                    // rules={{ required: "Year is required" }}
                     render={({ field, formState: { errors } }) => (
                       <Input
                         type="year"
@@ -698,7 +801,7 @@ export default function InventoryCarList({
                   <Controller
                     name="mileage"
                     control={control}
-                    rules={{ required: "Mileage is required" }}
+                    // rules={{ required: "Mileage is required" }}
                     render={({ field, formState: { errors } }) => (
                       <Input
                         type="number"
@@ -723,7 +826,7 @@ export default function InventoryCarList({
                   <Controller
                     name="numberPlate"
                     control={control}
-                    rules={{ required: "Number Plate is required" }}
+                    // rules={{ required: "Number Plate is required" }}
                     render={({ field, formState: { errors } }) => (
                       <Input
                         type="numberPlate"
@@ -748,7 +851,7 @@ export default function InventoryCarList({
                   <Controller
                     name="bodyStyle"
                     control={control}
-                    rules={{ required: " Body Style is required" }}
+                    // rules={{ required: " Body Style is required" }}
                     render={({ field, formState: { errors } }) => (
                       <Input
                         type="bodyStyle"
@@ -773,7 +876,7 @@ export default function InventoryCarList({
                   <Controller
                     name="engineType"
                     control={control}
-                    rules={{ required: "Engine Type is required" }}
+                    // rules={{ required: "Engine Type is required" }}
                     render={({ field, formState: { errors } }) => (
                       <Input
                         type="engineType"
@@ -798,7 +901,7 @@ export default function InventoryCarList({
                   <Controller
                     name="fuelType"
                     control={control}
-                    rules={{ required: "Fuel Type is required" }}
+                    // rules={{ required: "Fuel Type is required" }}
                     render={({ field, formState: { errors } }) => (
                       <Input
                         type="fuelType"
@@ -823,7 +926,7 @@ export default function InventoryCarList({
                   <Controller
                     name="odometer"
                     control={control}
-                    rules={{ required: "Odometer is required" }}
+                    // rules={{ required: "Odometer is required" }}
                     render={({ field, formState: { errors } }) => (
                       <Input
                         type="odometer"
@@ -848,7 +951,7 @@ export default function InventoryCarList({
                   <Controller
                     name="color"
                     control={control}
-                    rules={{ required: "Color is required" }}
+                    // rules={{ required: "Color is required" }}
                     render={({ field, formState: { errors } }) => (
                       <Input
                         type="text"
@@ -873,7 +976,7 @@ export default function InventoryCarList({
                   <Controller
                     name="consign"
                     control={control}
-                    rules={{ required: "Consign is required" }}
+                    // rules={{ required: "Consign is required" }}
                     render={({ field, formState: { errors } }) => (
                       <Input
                         type="consign"
@@ -898,7 +1001,7 @@ export default function InventoryCarList({
                   <Controller
                     name="price"
                     control={control}
-                    rules={{ required: "Price is required" }}
+                    // rules={{ required: "Price is required" }}
                     render={({ field, formState: { errors } }) => (
                       <Input
                         type="text"
@@ -923,7 +1026,7 @@ export default function InventoryCarList({
                   <Controller
                     name="dateIn"
                     control={control}
-                    rules={{ required: "Date In is required" }}
+                    // rules={{ required: "Date In is required" }}
                     render={({ field, formState: { errors } }) => (
                       <Input
                         type="text"
@@ -948,7 +1051,7 @@ export default function InventoryCarList({
                   <Controller
                     name="dateOut"
                     control={control}
-                    rules={{ required: "Date Out is required" }}
+                    // rules={{ required: "Date Out is required" }}
                     render={({ field, formState: { errors } }) => (
                       <Input
                         type="text"
@@ -980,7 +1083,7 @@ export default function InventoryCarList({
                   variant={"primary"}
                   type={"submit"}
                   className="h-11 rounded-lg"
-                  // loading={isLoadingCreateVehicle}
+                  loading={isLoadingEditVehicle}
                 >
                   Update Changes
                 </Button>
@@ -990,5 +1093,41 @@ export default function InventoryCarList({
         </DialogContent>
       </Dialog>
     </>
+  );
+}
+
+function TableSkeleton() {
+  return (
+    <div className="overflow-x-auto">
+      <table className="min-w-full table-auto ">
+        <tbody>
+          {[...Array(5)].map((_, i) => (
+            <tr key={i} className="border-t">
+              <td className="px-4 py-4">
+                <Skeleton className="w-[100px] h-[20px] rounded-full" />
+              </td>
+              <td className="px-4 py-4">
+                <Skeleton className="w-[100px] h-[20px] rounded-full" />
+              </td>
+              <td className="px-4 py-4">
+                <Skeleton className="w-[100px] h-[20px] rounded-full" />
+              </td>
+              <td className="px-4 py-4">
+                <Skeleton className="w-[100px] h-[20px] rounded-full" />
+              </td>
+              <td className="px-4 py-4">
+                <Skeleton className="w-[100px] h-[20px] rounded-full" />
+              </td>
+              <td className="px-4 py-4">
+                <Skeleton className="w-[100px] h-[20px] rounded-full" />
+              </td>
+              <td className="px-4 py-2 text-r4ght">
+                <Skeleton className="w-[100px] h-[20px] rounded-full" />
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 }
