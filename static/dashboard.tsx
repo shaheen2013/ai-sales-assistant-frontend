@@ -16,11 +16,11 @@ interface languages {
 
 export const dashboardUserMenu: SidebarSection[] = [
   {
-    label: "Menu",
+    label: 'Menu',
     items: [
       {
-        label: "Dashboard",
-        href: "/dashboard/overview",
+        label: 'Dashboard',
+        href: '/dashboard/overview',
         icon: (
           <svg
             width="20"
@@ -36,8 +36,8 @@ export const dashboardUserMenu: SidebarSection[] = [
         ),
       },
       {
-        label: "Dealer Overview",
-        href: "/dashboard/dealer-overview",
+        label: 'Dealer Overview',
+        href: '/dashboard/dealer-overview',
         icon: (
           <svg
             width="20"
@@ -50,8 +50,8 @@ export const dashboardUserMenu: SidebarSection[] = [
         ),
       },
       {
-        label: "Team Management",
-        href: "/dashboard/team-management",
+        label: 'Team Management',
+        href: '/dashboard/team-management',
         icon: (
           <svg
             width="24"
@@ -64,8 +64,8 @@ export const dashboardUserMenu: SidebarSection[] = [
         ),
       },
       {
-        label: "Subscribers",
-        href: "/dashboard/subscribers",
+        label: 'Subscribers',
+        href: '/dashboard/subscribers',
         icon: (
           <svg
             width="24"
@@ -81,11 +81,11 @@ export const dashboardUserMenu: SidebarSection[] = [
   },
 
   {
-    label: "Insights",
+    label: 'Insights',
     items: [
       {
-        label: "Notifications",
-        href: "/dashboard/notification",
+        label: 'Notifications',
+        href: '/dashboard/notification',
         icon: (
           <svg
             width="24"
@@ -98,8 +98,8 @@ export const dashboardUserMenu: SidebarSection[] = [
         ),
       },
       {
-        label: "Support",
-        href: "/dashboard/support",
+        label: 'Support',
+        href: '/dashboard/support',
         icon: (
           <svg
             width="24"
@@ -112,8 +112,8 @@ export const dashboardUserMenu: SidebarSection[] = [
         ),
       },
       {
-        label: "Forums",
-        href: "/dashboard/forums",
+        label: 'Forums',
+        href: '/dashboard/forums',
         icon: (
           <svg
             width="24"
@@ -129,11 +129,11 @@ export const dashboardUserMenu: SidebarSection[] = [
   },
 
   {
-    label: "Tools",
+    label: 'Tools',
     items: [
       {
-        label: "Settings",
-        href: "/dashboard/settings",
+        label: 'Settings',
+        href: '/dashboard/settings',
         icon: (
           <svg
             width="20"
@@ -146,8 +146,8 @@ export const dashboardUserMenu: SidebarSection[] = [
         ),
       },
       {
-        label: "Logout",
-        href: "/dashboard/logout",
+        label: 'Logout',
+        href: '/dashboard/logout',
         icon: (
           <svg
             width="20"
@@ -165,11 +165,11 @@ export const dashboardUserMenu: SidebarSection[] = [
 
 export const dashboardDealerMenu: SidebarSection[] = [
   {
-    label: "Menu",
+    label: 'Menu',
     items: [
       {
-        label: "Overview",
-        href: "/dashboard/overview",
+        label: 'Overview',
+        href: '/dashboard/overview',
         icon: (
           <svg
             width="20"
@@ -185,8 +185,8 @@ export const dashboardDealerMenu: SidebarSection[] = [
         ),
       },
       {
-        label: "Inventory",
-        href: "/dashboard/inventory",
+        label: 'Inventory',
+        href: '/dashboard/inventory',
         icon: (
           <svg
             width="20"
@@ -199,8 +199,8 @@ export const dashboardDealerMenu: SidebarSection[] = [
         ),
       },
       {
-        label: "Appointment",
-        href: "/dashboard/appointment",
+        label: 'Appointment',
+        href: '/dashboard/appointment',
         icon: (
           <svg
             width="21"
@@ -215,33 +215,33 @@ export const dashboardDealerMenu: SidebarSection[] = [
           </svg>
         ),
       },
-      // {
-      //   label: "Trade In",
-      //   href: "/dashboard/trade-in",
-      //   icon: (
-      //     <svg
-      //       width="21"
-      //       height="20"
-      //       viewBox="0 0 21 20"
-      //       fill="none"
-      //       xmlns="http://www.w3.org/2000/svg"
-      //     >
-      //       <path
-      //         d="M2.5 4.5C2.5 3.11929 3.61929 2 5 2H13C14.3807 2 15.5 3.11929 15.5 4.5V12.5C15.5 13.8807 14.3807 15 13 15H11.4146C11.5285 14.6771 11.5285 14.3229 11.4146 14H13C13.8284 14 14.5 13.3284 14.5 12.5V6H3.5V11.0854C3.29527 11.1576 3.10309 11.2756 2.93934 11.4393L2.5 11.8787V4.5ZM14.4998 18H8C8.38388 18 8.76777 17.8536 9.06066 17.5607L9.62131 17H14.4998C16.1566 17 17.4998 15.6569 17.4998 14V7.50001C17.4998 6.8469 17.0824 6.29128 16.4998 6.08536V5.05002C17.6409 5.28165 18.4998 6.29053 18.4998 7.50001V14C18.4998 16.2091 16.7089 18 14.4998 18ZM10.3536 14.8536L8.35355 16.8536C8.15829 17.0488 7.84171 17.0488 7.64645 16.8536C7.45118 16.6583 7.45118 16.3417 7.64645 16.1464L8.79289 15H3.20711L4.35355 16.1464C4.54882 16.3417 4.54882 16.6583 4.35355 16.8536C4.15829 17.0488 3.84171 17.0488 3.64645 16.8536L1.64645 14.8536C1.45118 14.6583 1.45118 14.3417 1.64645 14.1464L3.64645 12.1464C3.84171 11.9512 4.15829 11.9512 4.35355 12.1464C4.54882 12.3417 4.54882 12.6583 4.35355 12.8536L3.20711 14H5H8.79289L7.64645 12.8536C7.45118 12.6583 7.45118 12.3417 7.64645 12.1464C7.84171 11.9512 8.15829 11.9512 8.35355 12.1464L10.3536 14.1464C10.5488 14.3417 10.5488 14.6583 10.3536 14.8536ZM3.74284 14H5H5.06764"
-      //         className="fill-current"
-      //       />
-      //     </svg>
-      //   ),
-      // },
+      {
+        label: 'Management',
+        href: '/dashboard/management',
+        icon: (
+          <svg
+            width="21"
+            height="20"
+            viewBox="0 0 21 20"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M2.5 4.5C2.5 3.11929 3.61929 2 5 2H13C14.3807 2 15.5 3.11929 15.5 4.5V12.5C15.5 13.8807 14.3807 15 13 15H11.4146C11.5285 14.6771 11.5285 14.3229 11.4146 14H13C13.8284 14 14.5 13.3284 14.5 12.5V6H3.5V11.0854C3.29527 11.1576 3.10309 11.2756 2.93934 11.4393L2.5 11.8787V4.5ZM14.4998 18H8C8.38388 18 8.76777 17.8536 9.06066 17.5607L9.62131 17H14.4998C16.1566 17 17.4998 15.6569 17.4998 14V7.50001C17.4998 6.8469 17.0824 6.29128 16.4998 6.08536V5.05002C17.6409 5.28165 18.4998 6.29053 18.4998 7.50001V14C18.4998 16.2091 16.7089 18 14.4998 18ZM10.3536 14.8536L8.35355 16.8536C8.15829 17.0488 7.84171 17.0488 7.64645 16.8536C7.45118 16.6583 7.45118 16.3417 7.64645 16.1464L8.79289 15H3.20711L4.35355 16.1464C4.54882 16.3417 4.54882 16.6583 4.35355 16.8536C4.15829 17.0488 3.84171 17.0488 3.64645 16.8536L1.64645 14.8536C1.45118 14.6583 1.45118 14.3417 1.64645 14.1464L3.64645 12.1464C3.84171 11.9512 4.15829 11.9512 4.35355 12.1464C4.54882 12.3417 4.54882 12.6583 4.35355 12.8536L3.20711 14H5H8.79289L7.64645 12.8536C7.45118 12.6583 7.45118 12.3417 7.64645 12.1464C7.84171 11.9512 8.15829 11.9512 8.35355 12.1464L10.3536 14.1464C10.5488 14.3417 10.5488 14.6583 10.3536 14.8536ZM3.74284 14H5H5.06764"
+              className="fill-current"
+            />
+          </svg>
+        ),
+      },
     ],
   },
 
   {
-    label: "Insights",
+    label: 'Insights',
     items: [
       {
-        label: "Notifications",
-        href: "/dashboard/notification",
+        label: 'Notifications',
+        href: '/dashboard/notification',
         icon: (
           <svg
             width="24"
@@ -254,8 +254,8 @@ export const dashboardDealerMenu: SidebarSection[] = [
         ),
       },
       {
-        label: "Ask Support",
-        href: "/dashboard/ask-support",
+        label: 'Ask Support',
+        href: '/dashboard/ask-support',
         icon: (
           <svg
             width="24"
@@ -285,11 +285,11 @@ export const dashboardDealerMenu: SidebarSection[] = [
   },
 
   {
-    label: "Tools",
+    label: 'Tools',
     items: [
       {
-        label: "Settings",
-        href: "/dashboard/settings",
+        label: 'Settings',
+        href: '/dashboard/settings',
         icon: (
           <svg
             width="20"
@@ -302,8 +302,8 @@ export const dashboardDealerMenu: SidebarSection[] = [
         ),
       },
       {
-        label: "Logout",
-        href: "/dashboard/logout",
+        label: 'Logout',
+        href: '/dashboard/logout',
         icon: (
           <svg
             width="20"
@@ -320,12 +320,12 @@ export const dashboardDealerMenu: SidebarSection[] = [
 ];
 
 export const languages: languages[] = [
-  { name: "Eng (US)", flag: "/flags/us.png" },
-  { name: "China", flag: "/flags/cn.png" },
-  { name: "Denmark", flag: "/flags/de.png" },
-  { name: "Espain", flag: "/flags/es.png" },
-  { name: "France", flag: "/flags/fr.png" },
-  { name: "Italy", flag: "/flags/it.png" },
-  { name: "Portugal", flag: "/flags/pt.png" },
-  { name: "Russia", flag: "/flags/ru.png" },
+  { name: 'Eng (US)', flag: '/flags/us.png' },
+  { name: 'China', flag: '/flags/cn.png' },
+  { name: 'Denmark', flag: '/flags/de.png' },
+  { name: 'Espain', flag: '/flags/es.png' },
+  { name: 'France', flag: '/flags/fr.png' },
+  { name: 'Italy', flag: '/flags/it.png' },
+  { name: 'Portugal', flag: '/flags/pt.png' },
+  { name: 'Russia', flag: '/flags/ru.png' },
 ];
