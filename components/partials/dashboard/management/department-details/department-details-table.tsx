@@ -24,95 +24,109 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 import { MoreVertical, Pencil, Trash } from 'lucide-react';
-
-// Column definitions
-export const departmentColumns: ColumnDef<EmployeeDataType>[] = [
-  {
-    accessorKey: 'name',
-    header: 'Employee Name',
-    cell: ({ row }) => {
-      return (
-        <div className="font-medium text-[#374151]">{row.getValue('name')}</div>
-      );
-    },
-  },
-  {
-    accessorKey: 'routing_type',
-    header: 'Routing Type',
-    cell: ({ row }) => {
-      const routing_type: string = row.getValue('routing_type');
-      return <div className="text-[#374151]">{routing_type}</div>;
-    },
-  },
-  {
-    accessorKey: 'phone_number',
-    header: 'Phone Number',
-    headerClassName: 'text-center',
-    cell: ({ row }) => {
-      return (
-        <div className="text-[#374151] text-center">
-          {row.getValue('phone_number')}
-        </div>
-      );
-    },
-  },
-  {
-    id: 'actions',
-    header: () => <div className="text-right">Action</div>,
-    cell: ({ row }) => {
-      const employee = row.original;
-
-      // These functions would be passed as props in a real implementation
-      const handleEditEmployee = () => {
-        console.log(`Edit employee ${employee.id}`);
-      };
-
-      const handleRemoveEmployee = () => {
-        console.log(`Remove employee ${employee.id}`);
-      };
-
-      return (
-        <div className="text-right">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="h-8 w-8 p-0">
-                <MoreVertical className="h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem
-                onClick={handleEditEmployee}
-                className="cursor-pointer text-sm font-semibold"
-              >
-                <Pencil className="h-4 w-4 mr-2" />
-                Edit
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                onClick={handleRemoveEmployee}
-                className="cursor-pointer text-red-500 text-sm font-semibold"
-              >
-                <Trash className="h-4 w-4 mr-2" />
-                Delete
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
-      );
-    },
-  },
-];
+import { useState } from 'react';
+import EditEmployeeModal from './edit-employee-modal';
 
 interface DepartmentDetailsTableProps {
   departmentEmployees: EmployeeDataType[];
   isLoading: boolean;
   isError: any;
+  departmentId: string;
 }
 
 const DepartmentDetailsTable = ({
   departmentEmployees = [],
   isLoading,
   isError,
+  departmentId,
 }: DepartmentDetailsTableProps) => {
+  // edit employee modal
+  const [openEditEmployeeModal, setOpenEditEmployeeModal] = useState(false);
+  const [employeeData, setEmployeeData] = useState<EmployeeDataType | null>(
+    null
+  );
+
+  // Define handleEditEmployee outside of the column definition
+
+  // Column definitions
+  const departmentColumns: ColumnDef<EmployeeDataType>[] = [
+    {
+      accessorKey: 'name',
+      header: 'Employee Name',
+      cell: ({ row }) => {
+        return (
+          <div className="font-medium text-[#374151]">
+            {row.getValue('name')}
+          </div>
+        );
+      },
+    },
+    {
+      accessorKey: 'routing_type',
+      header: 'Routing Type',
+      cell: ({ row }) => {
+        const routing_type: string = row.getValue('routing_type');
+        return <div className="text-[#374151]">{routing_type}</div>;
+      },
+    },
+    {
+      accessorKey: 'phone_number',
+      header: 'Phone Number',
+      headerClassName: 'text-center',
+      cell: ({ row }) => {
+        return (
+          <div className="text-[#374151] text-center">
+            {row.getValue('phone_number')}
+          </div>
+        );
+      },
+    },
+    {
+      id: 'actions',
+      header: () => <div className="text-right">Action</div>,
+      cell: ({ row }) => {
+        const employee = row.original;
+
+        const handleRemoveEmployee = () => {
+          console.log(`Remove employee ${employee.id}`);
+        };
+
+        const handleEditEmployee = (emp: EmployeeDataType) => {
+          setEmployeeData(emp);
+          setOpenEditEmployeeModal(true);
+        };
+
+        return (
+          <div className="text-right">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="h-8 w-8 p-0">
+                  <MoreVertical className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem
+                  onClick={() => handleEditEmployee(employee)}
+                  className="cursor-pointer text-sm font-semibold"
+                >
+                  <Pencil className="h-4 w-4 mr-2" />
+                  Edit
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={handleRemoveEmployee}
+                  className="cursor-pointer text-red-500 text-sm font-semibold"
+                >
+                  <Trash className="h-4 w-4 mr-2" />
+                  Delete
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        );
+      },
+    },
+  ];
+
   const table = useReactTable({
     data: departmentEmployees,
     columns: departmentColumns,
@@ -189,6 +203,13 @@ const DepartmentDetailsTable = ({
           </TableBody>
         </Table>
       </div>
+      {/* edit employee modal */}
+      <EditEmployeeModal
+        open={openEditEmployeeModal}
+        onOpenChange={setOpenEditEmployeeModal}
+        employeeData={employeeData as EmployeeDataType}
+        departmentId={departmentId}
+      />
     </div>
   );
 };

@@ -32,7 +32,7 @@ const formSchema = z.object({
 // Type for form data
 type FormData = z.infer<typeof formSchema>;
 
-const AddPeopleInDepartmentModal = ({
+const AddEmployeeModal = ({
   open,
   onOpenChange,
   departmentId,
@@ -209,4 +209,4 @@ const AddPeopleInDepartmentModal = ({
   );
 };
 
-export default AddPeopleInDepartmentModal;
+export default AddEmployeeModal;

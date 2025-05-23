@@ -1,5 +1,5 @@
 'use client';
-import AddPeopleInDepartmentModal from '@/components/partials/dashboard/management/department-details/add-people-in-department-modal';
+import AddEmployeeModal from '@/components/partials/dashboard/management/department-details/add-employee-modal';
 import DepartmentDetailsTable from '@/components/partials/dashboard/management/department-details/department-details-table';
 import { Button } from '@/components/shadcn/button';
 import { useGetDepartmentByIdQuery } from '@/features/dealer/dealerManagementSlice';
@@ -57,9 +57,10 @@ const DepartmentDetailsPage = () => {
         isLoading={isLoading}
         isError={error}
         departmentEmployees={department?.data?.employees || []}
+        departmentId={id}
       />
-      {/* add people in department modal */}
-      <AddPeopleInDepartmentModal
+      {/* add employee in department modal */}
+      <AddEmployeeModal
         open={openAddEmployeeModal}
         onOpenChange={setOpenAddEmployeeModal}
         departmentId={id}

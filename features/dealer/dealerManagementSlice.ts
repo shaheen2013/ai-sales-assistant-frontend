@@ -57,6 +57,18 @@ export const dealerManagementSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['Departments'],
     }),
+    updateEmployeeInDepartment: builder.mutation<
+      any,
+      { id: string; employeeId: string; data: any }
+    >({
+      query: ({ id, employeeId, data }) => ({
+        url: `/departments/${id}/employees/${employeeId}/`,
+        method: 'PATCH',
+        body: data,
+        credentials: 'include',
+      }),
+      invalidatesTags: ['Departments'],
+    }),
     removeEmployeeFromDepartment: builder.mutation<
       any,
       { id: string; employeeId: string }
@@ -79,4 +91,5 @@ export const {
   useDeleteDepartmentMutation,
   useAddEmployeeToDepartmentMutation,
   useRemoveEmployeeFromDepartmentMutation,
+  useUpdateEmployeeInDepartmentMutation,
 } = dealerManagementSlice;

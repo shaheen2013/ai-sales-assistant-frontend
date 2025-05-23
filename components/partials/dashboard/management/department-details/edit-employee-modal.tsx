@@ -15,10 +15,9 @@ import {
   FormMessage,
 } from '@/components/shadcn/form';
 import { Input } from '@/components/shadcn/input';
-import { useEditEmployeeInDepartmentMutation } from '@/features/dealer/dealerManagementSlice';
+import { useUpdateEmployeeInDepartmentMutation } from '@/features/dealer/dealerManagementSlice';
 import { useToast } from '@/hooks/useToast';
 import { beautifyErrors } from '@/lib/utils';
-import { EmployeeDataType } from '@/types/dealerManagementSliceType';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
@@ -27,14 +26,22 @@ import { PhoneInput } from '../../settings/phone-input-with-country-list';
 
 // Define form schema with validation
 const formSchema = z.object({
-  employee_name: z.string().min(1, 'Employee name is required'),
-  employee_phone: z.string().min(1, 'Employee phone is required'),
+  name: z.string().min(1, 'Employee name is required'),
+  phone_number: z.string().min(1, 'Employee phone is required'),
 });
 
 // Type for form data
 type FormData = z.infer<typeof formSchema>;
 
-const EditPeopleModal = ({
+// Type for employee data
+interface EmployeeDataType {
+  id: number;
+  name: string;
+  routing_type: string;
+  phone_number: string;
+}
+
+const EditEmployeeModal = ({
   open,
   onOpenChange,
   departmentId,
@@ -43,50 +50,54 @@ const EditPeopleModal = ({
   open: boolean;
   onOpenChange: (open: boolean) => void;
   departmentId: string;
-  employeeData: EmployeeDataType | null;
+  employeeData?: EmployeeDataType;
 }) => {
   const toast = useToast();
-
-  const [editEmployeeInDepartment, { isLoading }] =
-    useEditEmployeeInDepartmentMutation();
-
+  const isLoading = false;
+  const [updateEmployeeInDepartment, { isLoading: isUpdatingEmployee }] =
+    useUpdateEmployeeInDepartmentMutation();
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      employee_name: '',
-      employee_phone: '',
+      name: '',
+      phone_number: '',
     },
   });
 
-  // Populate form with employee data when it's available
+  // Update form values when employeeData changes
   useEffect(() => {
-    if (employeeData && open) {
+    if (employeeData) {
       form.reset({
-        employee_name: employeeData.name || '',
-        employee_phone: employeeData.phone_number || '',
+        name: employeeData.name,
+        phone_number: employeeData.phone_number,
       });
     }
-  }, [employeeData, form, open]);
+  }, [employeeData, form]);
 
   const onSubmit = async (data: FormData) => {
-    if (!employeeData || !departmentId) {
-      toast('error', 'Missing employee data');
-      return;
-    }
-
     const payload = {
-      name: data.employee_name,
-      phone_number: data.employee_phone,
+      name: data.name,
+      phone_number: data.phone_number,
     };
 
+    console.log('Editing employee with data:', {
+      employeeId: employeeData?.id,
+      departmentId,
+      formData: payload,
+    });
+
+    // Here you would make the API call to update the employee
+    // For now, we're just logging the data
+
     try {
-      await editEmployeeInDepartment({
-        dept_id: departmentId,
-        emp_id: employeeData.id,
+      // Commented out the add employee mutation since we're editing
+      // await addEmployeeToDepartment({
+      await updateEmployeeInDepartment({
+        id: departmentId,
+        employeeId: employeeData?.id,
         data: payload,
       }).unwrap();
       toast('success', 'Employee updated successfully');
-      onOpenChange(false);
     } catch (error: any) {
       console.log(error, 'error >');
       // server error response
@@ -137,8 +148,8 @@ const EditPeopleModal = ({
       if (!errorMessage) {
         errorMessage =
           error?.data?.status === 'error'
-            ? 'An error occurred while updating the employee.'
-            : beautifyErrors(error) || 'Unknown error occurred.';
+            ? beautifyErrors(error) || 'Unknown error occurred.'
+            : 'Unknown error occurred.';
       }
 
       // Ensure errorMessage is a string before trimming
@@ -149,6 +160,8 @@ const EditPeopleModal = ({
           : String(errorMessage)
       );
     }
+    form.reset();
+    onOpenChange(false);
   };
 
   return (
@@ -156,22 +169,21 @@ const EditPeopleModal = ({
       <DialogContent className="max-w-2xl p-4">
         <DialogHeader>
           <DialogTitle className="text-gray-300">
-            Edit Employee: {employeeData?.name || 'Employee'}
+            {employeeData ? 'Edit Employee' : 'Add Employee'}
           </DialogTitle>
         </DialogHeader>
         <DialogDescription className="hidden"></DialogDescription>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <div className="flex flex-col gap-4 border-t border-b border-[#EFF4FA] py-4">
-              {/* Employee name & phone */}
               <div className="flex flex-col md:flex-row gap-3 items-start md:items-center w-full justify-between">
                 <FormField
                   control={form.control}
-                  name="employee_name"
+                  name="name"
                   render={({ field }) => (
                     <FormItem className="w-full">
                       <FormLabel className="text-sm text-gray-700 font-medium">
-                        Employee Name <span className="text-red-500">*</span>
+                        Employee Name
                       </FormLabel>
                       <FormControl>
                         <Input
@@ -186,11 +198,11 @@ const EditPeopleModal = ({
                 />
                 <FormField
                   control={form.control}
-                  name="employee_phone"
+                  name="phone_number"
                   render={({ field }) => (
                     <FormItem className="w-full">
                       <FormLabel className="text-sm text-gray-700 font-medium">
-                        Employee Phone <span className="text-red-500">*</span>
+                        Employee Phone
                       </FormLabel>
                       <FormControl>
                         <PhoneInput
@@ -210,6 +222,7 @@ const EditPeopleModal = ({
               <Button
                 type="button"
                 onClick={() => {
+                  form.reset();
                   onOpenChange(false);
                 }}
                 variant="outline"
@@ -222,7 +235,13 @@ const EditPeopleModal = ({
                 disabled={isLoading}
                 className="bg-[#019935] hover:bg-[#018a30] text-white"
               >
-                {isLoading ? 'Updating...' : 'Update Employee'}
+                {isLoading
+                  ? employeeData
+                    ? 'Updating...'
+                    : 'Adding...'
+                  : employeeData
+                  ? 'Update Employee'
+                  : 'Add Employee'}
               </Button>
             </div>
           </form>
@@ -232,4 +251,4 @@ const EditPeopleModal = ({
   );
 };
 
-export default EditPeopleModal;
+export default EditEmployeeModal;
