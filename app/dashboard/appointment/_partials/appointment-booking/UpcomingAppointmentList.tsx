@@ -1,18 +1,45 @@
 import { Ellipsis } from 'lucide-react'
-import React from 'react'
+import React, { FC } from 'react'
 import UpcomingAppointmentItem from './UpcomingAppointmentItem'
+import { StoreVisitResponseType, TalkToHumanResponseType, TestDriveResponseType } from '@/types/appointmentBookingSliceType';
+import moment from 'moment';
 
-const UpcomingAppointmentList = () => {
+type UpcomingAppointmentListPropsType = {
+    title: string;
+    data: TalkToHumanResponseType[] | TestDriveResponseType[] | StoreVisitResponseType[];
+}
+
+const UpcomingAppointmentList: FC<UpcomingAppointmentListPropsType> = ({ data, title }) => {
+    /*--Functions--*/
+    const getAppoinmentTime = (item: TalkToHumanResponseType | TestDriveResponseType | StoreVisitResponseType) => {
+        if ("preferred_date_time" in item) {
+            return moment(item?.preferred_date_time || "").format("hh:mm A");
+        } else if ("prefered_time" in item) {
+            return moment(item?.prefered_time || "").format("hh:mm A");
+        } else if ("start_at" in item) {
+            return moment(item?.start_at || "").format("hh:mm A");
+        }
+        return "";
+    }
+
+    const getCustomerName = (item: TalkToHumanResponseType | TestDriveResponseType | StoreVisitResponseType) => {
+        if ("customer" in item) {
+            return String(item?.customer);
+        } else if ("name" in item) {
+            return item?.name;
+        }
+        return "N/A";
+    }
+
     return (
         <div>
             <div className='flex items-center justify-between gap-[1.5px]'>
-                <h6 className="text-gray-700 text-lg font-medium shrink-0">9 March</h6>
+                <h6 className="text-gray-700 text-lg font-medium shrink-0 capitalize">{title}</h6>
                 <div className='grow h-px bg-gray-50' />
-                <Ellipsis className='size-5 text-gray-200 shrink-0' />
             </div>
             <div className='mt-4 flex flex-col gap-[19px]'>
                 {
-                    Array.from({ length: 3 }).map((item, index) => <UpcomingAppointmentItem key={index} index={index} time="10:00 AM" title="Customer Name" topic="Test Drive" />)
+                    data?.map((item, index) => <UpcomingAppointmentItem key={index} index={index} time={getAppoinmentTime(item)} title={getCustomerName(item)} />)
                 }
             </div>
         </div>
