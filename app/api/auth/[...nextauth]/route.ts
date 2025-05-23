@@ -1,9 +1,21 @@
 import { JWT } from "next-auth/jwt";
+import { jwtDecode } from "jwt-decode";
+
 import { beautifyErrors } from "@/lib/utils";
-import NextAuth, { AuthOptions } from "next-auth";
+import NextAuth, { AuthOptions, Session } from "next-auth";
 
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
+
+// Extend the Session type to include accessTokenExpires
+declare module "next-auth" {
+  interface Session {
+    accessTokenExpires?: number;
+    access: string;
+    refresh: string;
+    user: any;
+  }
+}
 
 async function refreshAccessToken(token: JWT) {
   try {
@@ -22,6 +34,8 @@ async function refreshAccessToken(token: JWT) {
     if (!response.ok) {
       throw data;
     }
+
+    console.log("RefreshAccessToken => ", data);
 
     return {
       ...token,
@@ -143,12 +157,22 @@ const authOptions: AuthOptions = {
       }
 
       if (user && "access" in user && "refresh" in user) {
+        // decode the access token to get exp
+        const decoded: any = jwtDecode(user.access as string);
+        const accessTokenExpires = decoded.exp * 1000;
+
         return {
           ...token,
           access: user.access,
           refresh: user.refresh,
+          accessTokenExpires: accessTokenExpires,
           user: user.user,
         };
+      }
+
+      if (token.access) {
+        const decodedToken = jwtDecode(token.access);
+        token.accessTokenExpires = (decodedToken?.exp || 0) * 1000;
       }
 
       // Refresh only for credentials-based tokens
@@ -167,6 +191,7 @@ const authOptions: AuthOptions = {
       session.access = token.access;
       session.refresh = token.refresh;
       session.user = token.user;
+      session.accessTokenExpires = token.accessTokenExpires;
 
       return session;
     },
