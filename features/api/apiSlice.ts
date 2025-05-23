@@ -27,6 +27,6 @@ export const apiSlice = createApi({
     'departmentsData',
     'pricingPlans',
     'getDealerAllSupportTickets',
-  ],
+    "getStoreVisit"],
   endpoints: () => ({}),
 });
