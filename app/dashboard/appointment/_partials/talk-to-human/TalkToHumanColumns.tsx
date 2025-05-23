@@ -1,7 +1,6 @@
-import Badge from '@/components/badge/Badge';
+import { Checkbox } from '@/components/shadcn/checkbox';
 import { TalkToHumanResponseType } from '@/types/appointmentBookingSliceType';
 import { ColumnDef } from '@tanstack/react-table';
-import { Phone } from 'lucide-react';
 import moment from 'moment';
 
 export type TalkToHumanColumnDataType = {
@@ -12,83 +11,32 @@ export type TalkToHumanColumnDataType = {
   priority: string;
 }
 
-export const talkToHumanColumns: ColumnDef<TalkToHumanResponseType>[] = [
-  {
-    accessorKey: "name",
-    header: "Name",
-    cell: ({ row }) => row.original.customer,
-  },
-  // {
-  //   accessorKey: "category",
-  //   header: () => <div className="text-center">Category</div>,
-  //   cell: ({ row }) => {
-  //     const categories = row.getValue("category");
-  //     const getCategoryVariant = (category: string) => {
-  //       if (category === "car_buying") {
-  //         return "blue";
-  //       } else if (category === "car_information") {
-  //         return "purple";
-  //       } else if (category === "suggestions") {
-  //         return "orange";
-  //       }
-
-  //       return "blue";
-  //     }
-
-  //     return (
-  //       <div className="flex flex-col gap-1 items-center">
-  //         {Array.isArray(categories) ? categories?.map((category, index) => (
-  //           <Badge
-  //             text={category.label}
-  //             variant={getCategoryVariant(category?.value)}
-  //             key={index}
-  //           />
-  //         )) : "N/A"}
-  //       </div>
-  //     );
-  //   }
-  // },
-  {
-    accessorKey: "schedule_date",
-    header: "Scheduled Date & Time",
-    cell: ({ row }) => `${moment(row.original?.created_at).format("MMM DD, YYYY")} | ${moment(row.original?.created_at).format("hh:mm a")}`,
-  },
-  // {
-  //   accessorKey: "priority",
-  //   header: () => <div className="text-center">Priority</div>,
-  //   cell: ({ row }) => {
-  //     const priority: string = row.original.department?.department_email;
-  //     const getCategoryVariant = (priority: string) => {
-  //       if (priority?.toLowerCase() === "high") {
-  //         return "green";
-  //       } else if (priority?.toLowerCase() === "medium") {
-  //         return "blue";
-  //       } else if (priority?.toLowerCase() === "low") {
-  //         return "red";
-  //       }
-
-  //       return "blue";
-  //     }
-
-  //     return (
-  //       <div className='flex items-center justify-center'>
-  //         <Badge
-  //         text={priority}
-  //         variant={getCategoryVariant(priority)}
-  //       />
-  //       </div>
-  //     );
-  //   }
-  // },
-  {
-    accessorKey: "action",
-    header: () => <div className="text-center">Action</div>,
-    cell: ({ }) => {
-      return (
-        <div className='p-1.5 bg-primary-500 rounded-lg outline outline-1 outline-offset-[-1px] outline-gray-50 max-w-fit mx-auto'>
-          <Phone className='size-5 text-white' />
-        </div>
-      );
+export const talkToHumanColumns = ({ handleChangeTalkStatus }: { handleChangeTalkStatus: (checked: boolean, id: number) => void }): ColumnDef<TalkToHumanResponseType>[] => {
+  return [
+    {
+      accessorKey: "name",
+      header: "Name",
+      cell: ({ row }) => row.original.customer,
+    },
+    {
+      accessorKey: "schedule_date",
+      header: "Scheduled Date & Time",
+      cell: ({ row }) => `${moment(row.original?.created_at).format("MMM DD, YYYY")} | ${moment(row.original?.created_at).format("hh:mm a")}`,
+    },
+    {
+      accessorKey: "action",
+      header: () => <div className="text-center">Talked</div>,
+      cell: ({ row }) => {
+        return (
+          <div>
+            <Checkbox
+              wrapperClassName='border-none flex justify-center items-center'
+              checked={row.original?.is_talked}
+              onCheckedChange={(checked) => handleChangeTalkStatus(Boolean(checked), row.original?.id)}
+            />
+          </div>
+        );
+      }
     }
-  }
-]
+  ]
+}

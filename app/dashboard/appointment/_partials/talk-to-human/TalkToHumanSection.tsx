@@ -65,6 +65,11 @@ const TalkToHumanSection = () => {
     const [page, setPage] = useState(1);
     const [sortBy, setSortBy] = useState<string>('');
 
+    /*--Functions--*/
+    const handleChangeTalkStatus = (checked: boolean, id: number) => { 
+        
+     };
+
     /*--RTK Query--*/
     const { data: talkToHumanCallLogsData, isFetching: talkToHumanCallLogsIsFetching } = useGetTalkToHumanCallLogsQuery({
         limit: 10,
@@ -103,7 +108,7 @@ const TalkToHumanSection = () => {
                     />
                 </div>
 
-                <TalkToHumanDataTable columns={talkToHumanColumns} data={talkToHumanCallLogsData?.results || []} loading={talkToHumanCallLogsIsFetching} />
+                <TalkToHumanDataTable columns={talkToHumanColumns({ handleChangeTalkStatus })} data={talkToHumanCallLogsData?.results || []} loading={talkToHumanCallLogsIsFetching} />
 
                 {
                     talkToHumanCallLogsData?.count && talkToHumanCallLogsData?.count > 12 &&
