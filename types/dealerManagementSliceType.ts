@@ -1,9 +1,9 @@
-enum RoutingType {
+export enum RoutingType {
   MOBILE = 'MOBILE',
   OFFICE = 'OFFICE',
 }
 
-interface EmployeeDataType {
+export interface EmployeeDataType {
   id: number;
   name: string;
   routing_type: RoutingType;
@@ -11,7 +11,7 @@ interface EmployeeDataType {
 }
 
 export interface DepartmentDataType {
-  id: number;
+  id?: number;
   department_name: string;
   department_email: string;
   employees: EmployeeDataType[];

@@ -25,7 +25,7 @@ import {
 } from '@/components/shadcn/select';
 import { useAddDepartmentMutation } from '@/features/dealer/dealerManagementSlice';
 import { useToast } from '@/hooks/useToast';
-import { beautifyErrors } from '@/lib/utils';
+import { handleApiError } from '@/lib/utils';
 import { DepartmentDataType } from '@/types/dealerManagementSliceType';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Check, Undo2 } from 'lucide-react';
@@ -96,71 +96,13 @@ const AddNewDepartmentModal = ({
     const payload = {
       department_name: data.department_name,
       department_email: data.department_email,
-    };
+      employees: [],
+    } as DepartmentDataType;
     try {
       await addDepartment(payload).unwrap();
       toast('success', 'Department added successfully');
     } catch (error: any) {
-      console.log(error, 'error >');
-      // server error response
-      if (error?.data?.status === 500) {
-        toast('error', 'Unexpected Server Error');
-      }
-      // handle errors for bad request and other cases
-      // Enhanced error handling for nested error structures
-      let errorMessage = '';
-
-      if (error?.data?.message) {
-        // Handle top-level message if it's a string
-        if (typeof error.data.message === 'string') {
-          errorMessage = error.data.message;
-        } else if (
-          error.data.message.employees &&
-          Array.isArray(error.data.message.employees)
-        ) {
-          // Handle employee-specific errors
-          error.data.message.employees.forEach((employeeError: any) => {
-            if (typeof employeeError === 'object') {
-              Object.entries(employeeError).forEach(([field, fieldErrors]) => {
-                if (Array.isArray(fieldErrors)) {
-                  fieldErrors.forEach((fieldError: string) => {
-                    errorMessage += `${field}: ${fieldError}\n`;
-                  });
-                }
-              });
-            }
-          });
-        }
-      } else if (error?.data) {
-        // Handle other field errors in data
-        Object.entries(error.data).forEach(([key, value]) => {
-          if (key !== 'status') {
-            if (Array.isArray(value)) {
-              value.forEach((msg: string) => {
-                errorMessage += `${key}: ${msg}\n`;
-              });
-            } else if (typeof value === 'string') {
-              errorMessage += `${key}: ${value}\n`;
-            }
-          }
-        });
-      }
-
-      // Fallback if no specific error message was constructed
-      if (!errorMessage) {
-        errorMessage =
-          error?.data?.status === 'error'
-            ? 'An error occurred while adding the department.'
-            : beautifyErrors(error) || 'Unknown error occurred.';
-      }
-
-      // Ensure errorMessage is a string before trimming
-      toast(
-        'error',
-        typeof errorMessage === 'string'
-          ? errorMessage.trim()
-          : String(errorMessage)
-      );
+      toast('error', handleApiError(error));
     }
     form.reset();
     onOpenChange(false);

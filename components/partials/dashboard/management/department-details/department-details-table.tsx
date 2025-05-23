@@ -19,7 +19,10 @@ import TableSkeleton from '@/components/skeleton/TableSkeleton';
 import { useRemoveEmployeeFromDepartmentMutation } from '@/features/dealer/dealerManagementSlice';
 import { useToast } from '@/hooks/useToast';
 import { handleApiError } from '@/lib/utils';
-import { EmployeeDataType } from '@/types/dealerManagementSliceType';
+import {
+  EmployeeDataType,
+  RoutingType,
+} from '@/types/dealerManagementSliceType';
 import {
   ColumnDef,
   flexRender,
@@ -69,14 +72,13 @@ const DepartmentDetailsTable = ({
       accessorKey: 'routing_type',
       header: 'Routing Type',
       cell: ({ row }) => {
-        const routing_type: string = row.getValue('routing_type');
+        const routing_type: RoutingType = row.getValue('routing_type');
         return <div className="text-[#374151]">{routing_type}</div>;
       },
     },
     {
       accessorKey: 'phone_number',
-      header: 'Phone Number',
-      headerClassName: 'text-center',
+      header: () => <div className="text-center">Phone Number</div>,
       cell: ({ row }) => {
         return (
           <div className="text-[#374151] text-center">
@@ -94,7 +96,7 @@ const DepartmentDetailsTable = ({
           try {
             await removeEmployeeFromDepartment({
               id: departmentId,
-              employeeId: employee.id,
+              employeeId: String(employee.id),
             });
             toast('success', 'Employee removed successfully');
           } catch (error: any) {
@@ -154,9 +156,7 @@ const DepartmentDetailsTable = ({
                 {headerGroup.headers.map((header) => (
                   <TableHead
                     key={header.id}
-                    className={`font-medium text-[#6b7280] border-b border-[#E9EAEB] ${
-                      header.column.columnDef.headerClassName || ''
-                    }`}
+                    className={`font-medium text-[#6b7280] border-b border-[#E9EAEB]`}
                   >
                     {header.isPlaceholder
                       ? null

@@ -81,9 +81,9 @@ const AllDepartmentsTable = ({
     {
       accessorKey: 'employees',
       header: 'Number of Employees',
-      headerClassName: 'text-center ',
       cell: ({ row }) => {
-        const count = row.getValue('employees')?.length || 0;
+        const employees = row.getValue('employees');
+        const count = Array.isArray(employees) ? employees.length : 0;
         return <div className="text-[#374151] text-center">{count}</div>;
       },
     },
@@ -95,7 +95,7 @@ const AllDepartmentsTable = ({
 
         const handleRemoveDeptInfo = async () => {
           try {
-            await deleteDepartment(department.id).unwrap();
+            await deleteDepartment(String(department.id)).unwrap();
             toast('success', 'Department deleted successfully');
           } catch (error) {
             toast('error', 'Failed to delete department');
@@ -118,7 +118,7 @@ const AllDepartmentsTable = ({
               <DropdownMenuContent align="end">
                 <DropdownMenuItem
                   className="cursor-pointer text-gray-500 text-sm font-semibold"
-                  onClick={() => handleOpenEditModal(department.id)}
+                  onClick={() => handleOpenEditModal(String(department.id))}
                 >
                   <Edit2 className="h-4 w-4 mr-2" />
                   Edit
@@ -156,9 +156,7 @@ const AllDepartmentsTable = ({
                   {headerGroup.headers.map((header) => (
                     <TableHead
                       key={header.id}
-                      className={`font-medium text-[#6b7280] border-b border-[#E9EAEB] ${
-                        header.column.columnDef.headerClassName || ''
-                      }`}
+                      className={`font-medium text-[#6b7280] border-b border-[#E9EAEB]`}
                     >
                       {header.isPlaceholder
                         ? null

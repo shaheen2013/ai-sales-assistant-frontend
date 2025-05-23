@@ -3,7 +3,7 @@ import { apiSlice } from '../api/apiSlice';
 
 export const dealerManagementSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getDepartments: builder.query<DepartmentDataType[], void>({
+    getDepartments: builder.query<any, void>({
       query: () => ({
         url: '/departments/',
         method: 'GET',
@@ -11,7 +11,7 @@ export const dealerManagementSlice = apiSlice.injectEndpoints({
       }),
       providesTags: ['Departments'],
     }),
-    getDepartmentById: builder.query<DepartmentDataType, string>({
+    getDepartmentById: builder.query<any, string>({
       query: (id) => ({
         url: `/departments/${id}/`,
         method: 'GET',

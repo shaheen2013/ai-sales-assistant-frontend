@@ -18,6 +18,7 @@ import { Input } from '@/components/shadcn/input';
 import { useUpdateEmployeeInDepartmentMutation } from '@/features/dealer/dealerManagementSlice';
 import { useToast } from '@/hooks/useToast';
 import { handleApiError } from '@/lib/utils';
+import { EmployeeDataType } from '@/types/dealerManagementSliceType';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
@@ -32,14 +33,6 @@ const formSchema = z.object({
 
 // Type for form data
 type FormData = z.infer<typeof formSchema>;
-
-// Type for employee data
-interface EmployeeDataType {
-  id: number;
-  name: string;
-  routing_type: string;
-  phone_number: string;
-}
 
 const EditEmployeeModal = ({
   open,
@@ -82,7 +75,7 @@ const EditEmployeeModal = ({
     try {
       await updateEmployeeInDepartment({
         id: departmentId,
-        employeeId: employeeData?.id,
+        employeeId: employeeData?.id ? String(employeeData.id) : '',
         data: payload,
       }).unwrap();
       toast('success', 'Employee updated successfully');

@@ -40,7 +40,7 @@ export default function PricingPlanSection() {
 
   const [upgradingPlanId, setUpgradingPlanId] = useState<string | null>(null);
   const currentPlan = pricingPlans?.find(
-    (plan: any) => plan.id === currentPlanResponse?.subscription?.id
+    (plan: any) => plan.id === currentPlanResponse?.subscription?.product?.id
   );
 
   const handleUpgradePlan = async (id: string) => {

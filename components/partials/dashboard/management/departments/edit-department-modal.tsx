@@ -52,7 +52,7 @@ const EditDepartmentModal = ({
 
   // Find the current department from allDepartments
   const currentDepartment = allDepartments?.find(
-    (dept: DepartmentDataType) => dept.id === departmentId
+    (dept: DepartmentDataType) => dept.id === Number(departmentId)
   );
 
   const form = useForm<FormData>({

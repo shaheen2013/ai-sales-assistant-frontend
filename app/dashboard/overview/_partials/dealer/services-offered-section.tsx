@@ -5,10 +5,12 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/shadcn/card';
+import { Skeleton } from '@/components/shadcn/skeleton';
 import { useGetDepartmentsQuery } from '@/features/dealer/dealerManagementSlice';
+import { DepartmentDataType } from '@/types/dealerManagementSliceType';
 
 const ServicesOfferedSection = () => {
-  const { data: departmentsData, isLoading, error } = useGetDepartmentsQuery();
+  const { data: departmentsData, isLoading } = useGetDepartmentsQuery();
 
   // Available badge variants from the Badge component
   const badgeVariants = ['green', 'purple', 'orange', 'red', 'blue'] as const;
@@ -31,16 +33,22 @@ const ServicesOfferedSection = () => {
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="flex flex-wrap gap-3">
-          {departmentsData?.data?.map((department) => (
-            <Badge
-              key={department.id}
-              variant={getDepartmentColor(department.department_name)}
-              text={department.department_name}
-              isDot={false}
-            />
-          ))}
-        </div>
+        {isLoading ? (
+          <div className="flex flex-wrap gap-3">
+            <Skeleton className="w-20 h-10" />
+          </div>
+        ) : (
+          <div className="flex flex-wrap gap-3">
+            {departmentsData?.data?.map((department: DepartmentDataType) => (
+              <Badge
+                key={department.id}
+                variant={getDepartmentColor(department.department_name)}
+                text={department.department_name}
+                isDot={false}
+              />
+            ))}
+          </div>
+        )}
       </CardContent>
     </Card>
   );
