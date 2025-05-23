@@ -32,7 +32,8 @@ export default function PricingPlanSection() {
     useGetDealerPricingPlansQuery();
   const { data: currentPlanResponse } = useGetCurrentSubscriptionPlanQuery();
 
-  const [upgradeSubscription] = useUpgradeSubscriptionMutation();
+  const [upgradeSubscription, { isLoading: isUpgrading }] =
+    useUpgradeSubscriptionMutation();
 
   const [selectedPriceMap, setSelectedPriceMap] = useState<
     Record<string, string>
@@ -85,7 +86,7 @@ export default function PricingPlanSection() {
       </div>
 
       {/* Pricing Plans */}
-      {isLoadingPlans ? (
+      {isLoadingPlans || isUpgrading ? (
         <PricingPlanSkeleton />
       ) : (
         <div className="space-y-6">

@@ -25,6 +25,7 @@ export const apiSlice = createApi({
     'dealerProfile',
     'getAdminAllSupportTickets',
     'Departments',
+    'PricingPlans',
   ],
   endpoints: () => ({}),
 });
