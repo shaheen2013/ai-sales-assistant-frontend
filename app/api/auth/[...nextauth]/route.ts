@@ -1,6 +1,7 @@
 import { JWT } from "next-auth/jwt";
 import { beautifyErrors } from "@/lib/utils";
 import NextAuth, { AuthOptions } from "next-auth";
+import { jwtDecode } from "jwt-decode";
 
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
@@ -149,6 +150,11 @@ const authOptions: AuthOptions = {
           refresh: user.refresh,
           user: user.user,
         };
+      }
+
+      if (token.access) {
+        const decodedToken = jwtDecode(token.access);
+        token.accessTokenExpires = (decodedToken?.exp || 0) * 1000;
       }
 
       // Refresh only for credentials-based tokens

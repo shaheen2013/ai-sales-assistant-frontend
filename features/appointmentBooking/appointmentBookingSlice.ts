@@ -1,6 +1,6 @@
 import { PaginatedResponse } from "@/types/paginatedType";
 import { apiSlice } from "../api/apiSlice";
-import { StoreVisitResponseType, TalkToHumanResponseType, TestDriveResponseType } from "@/types/appointmentBookingSliceType";
+import { AppointmentResponseType, StoreVisitResponseType, TalkToHumanResponseType, TestDriveResponseType } from "@/types/appointmentBookingSliceType";
 
 export const appointmentBookingSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
@@ -48,8 +48,15 @@ export const appointmentBookingSlice = apiSlice.injectEndpoints({
                     patchResults.undo();
                 }
             }
+        }),
+        getAppoinments: builder.query<AppointmentResponseType, Record<string, any>>({
+            query: (queryParams) => ({
+                method: "GET",
+                url: `/dealer-dashboard/bookings/by-date/`,
+                params: queryParams,
+            }),
         })
     }),
 });
 
-export const { useGetTalkToHumanCallLogsQuery, useGetTestDriveQuery, useGetStoreVisitQuery, useUpdateStoreVisitStatusMutation } = appointmentBookingSlice;
+export const { useGetTalkToHumanCallLogsQuery, useGetTestDriveQuery, useGetStoreVisitQuery, useUpdateStoreVisitStatusMutation, useGetAppoinmentsQuery } = appointmentBookingSlice;

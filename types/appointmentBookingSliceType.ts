@@ -1,7 +1,15 @@
+type EmployeeType = {
+    id: string;
+    name: string;
+    routing_type: string;
+    phone_number: string;
+}
+
 export type DepartmentType = {
     id: number;
     department_name: string;
     department_email: string;
+    employees: EmployeeType[]
 };
 
 export type TalkToHumanResponseType = {
@@ -30,3 +38,12 @@ export type StoreVisitResponseType = {
     created_at: string;
     updated_at: string;
 };
+
+export type AppointmentResponseType = {
+    status: string;
+    data: {
+        talk_to_human: TalkToHumanResponseType[],
+        technical_visits: StoreVisitResponseType[],
+        test_drives: TestDriveResponseType[],
+    }
+}
