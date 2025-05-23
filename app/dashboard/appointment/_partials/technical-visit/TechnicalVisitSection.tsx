@@ -1,14 +1,14 @@
 "use client";
 
 import React, { useState } from 'react'
-import TechnicalVisitDataTable from './TechnicalVisitDataTable';
-import { technicalVisitsColumns } from './TechnicalVisitColumns';
+import TestDriveDataTable from './TestDriveDataTable';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@radix-ui/react-tabs';
 import { useGetStoreVisitQuery, useGetTestDriveQuery, useUpdateStoreVisitStatusMutation } from '@/features/appointmentBooking/appointmentBookingSlice';
 import Pagination from '@/components/pagination/Pagination';
 import SimpleSelect from '@/components/select/SimpleSelect';
 import StoreVisitDataTable from '../store-visit/StoreVisitDataTable';
 import { storeVisitColumns } from '../store-visit/StoreVisitColumns';
+import { testDriveVisitsColumns } from './TestDriveVisitColumns';
 
 
 const TechnicalVisitSection = () => {
@@ -88,11 +88,10 @@ const TechnicalVisitSection = () => {
 
 
                     <TabsContent value='store_visit'>
-                        {/* <TechnicalVisitDataTable columns={technicalVisitsColumns} data={technicalVisitDummyData} /> */}
                         <StoreVisitDataTable columns={storeVisitColumns({ handleChangeVisitStatus })} data={storeVisitData?.results || []} loading={storeVisitIsFetching} />
                     </TabsContent>
                     <TabsContent value='test_drive'>
-                        <TechnicalVisitDataTable columns={technicalVisitsColumns} data={testDriveData?.results || []} loading={testDriveIsFetching} />
+                        <TestDriveDataTable columns={testDriveVisitsColumns} data={testDriveData?.results || []} loading={testDriveIsFetching} />
                     </TabsContent>
                 </Tabs>
 
