@@ -1,11 +1,19 @@
-import React, { Suspense } from "react";
+'use client';
 
-export const metadata = {
-  title: "Team Management | Teez",
-  description: "Dealer Overview",
-};
+import { signOut, useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import { Suspense, useEffect } from 'react';
 
 export default function DashboardLogout() {
+  const { data: session } = useSession();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (session) {
+      signOut({ callbackUrl: '/login' });
+    }
+  }, [session, router]);
+
   return (
     <Suspense>
       <div>Dashboard Logout</div>
