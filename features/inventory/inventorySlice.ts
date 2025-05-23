@@ -70,14 +70,12 @@ export const inventorySlice = apiSlice.injectEndpoints({
     getInventoryFiles: builder.query({
       query: () => {
         return {
-          url: `/dealers/vehicles`,
+          url: `/inventory/files`,
           method: "GET",
           credentials: "include",
         };
       },
     }),
-
-    
   }),
 });
 

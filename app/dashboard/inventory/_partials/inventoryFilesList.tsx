@@ -419,7 +419,7 @@ export default function InventoryFilesList() {
     },
   ];
 
-  const data: Inventory[] = useMemo(() => inventoryData, [inventoryData]);
+  const data: Inventory[] = useMemo(() => inventoryData, []);
 
   const table = useReactTable({
     data,
