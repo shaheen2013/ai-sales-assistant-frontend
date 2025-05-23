@@ -1,12 +1,28 @@
-import { Badge } from '@/components/shadcn/badge';
+import Badge from '@/components/badge/Badge';
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
 } from '@/components/shadcn/card';
+import { useGetDepartmentsQuery } from '@/features/dealer/dealerManagementSlice';
 
 const ServicesOfferedSection = () => {
+  const { data: departmentsData, isLoading, error } = useGetDepartmentsQuery();
+
+  // Available badge variants from the Badge component
+  const badgeVariants = ['green', 'purple', 'orange', 'red', 'blue'] as const;
+
+  // Function to assign consistent colors based on department name
+  const getDepartmentColor = (departmentName: string) => {
+    // Use the sum of character codes to create a deterministic index
+    const charSum = departmentName
+      .split('')
+      .reduce((sum, char) => sum + char.charCodeAt(0), 0);
+    const colorIndex = charSum % badgeVariants.length;
+    return badgeVariants[colorIndex];
+  };
+
   return (
     <Card>
       <CardHeader>
@@ -16,33 +32,14 @@ const ServicesOfferedSection = () => {
       </CardHeader>
       <CardContent>
         <div className="flex flex-wrap gap-3">
-          <Badge className="bg-[#ecf6fe] text-[#2196f3] hover:bg-[#ecf6fe]/80 rounded-full px-4 py-1">
-            Sales
-          </Badge>
-          <Badge className="bg-[#fff5eb] text-[#ffb056] hover:bg-[#fff5eb]/80 rounded-full px-4 py-1">
-            Financing
-          </Badge>
-          <Badge className="bg-[#f0edfc] text-[#654ce6] hover:bg-[#f0edfc]/80 rounded-full px-4 py-1">
-            Trade-In
-          </Badge>
-          <Badge className="bg-[#e7f6ef] text-[#13c56b] hover:bg-[#e7f6ef]/80 rounded-full px-4 py-1">
-            Maintenance
-          </Badge>
-          <Badge className="bg-[#fdeded] text-[#ed5e5e] hover:bg-[#fdeded]/80 rounded-full px-4 py-1">
-            Test Drive
-          </Badge>
-          <Badge className="bg-[#ecf6fe] text-[#2196f3] hover:bg-[#ecf6fe]/80 rounded-full px-4 py-1">
-            Consultation
-          </Badge>
-          <Badge className="bg-[#fff5eb] text-[#ffb056] hover:bg-[#fff5eb]/80 rounded-full px-4 py-1">
-            Offers
-          </Badge>
-          <Badge className="bg-[#f0edfc] text-[#654ce6] hover:bg-[#f0edfc]/80 rounded-full px-4 py-1">
-            Support
-          </Badge>
-          <Badge className="bg-[#e7f6ef] text-[#13c56b] hover:bg-[#e7f6ef]/80 rounded-full px-4 py-1">
-            Support
-          </Badge>
+          {departmentsData?.data?.map((department) => (
+            <Badge
+              key={department.id}
+              variant={getDepartmentColor(department.department_name)}
+              text={department.department_name}
+              isDot={false}
+            />
+          ))}
         </div>
       </CardContent>
     </Card>
