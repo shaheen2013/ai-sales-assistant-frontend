@@ -72,7 +72,7 @@ export default function InventoryCarList({
   refetchGetVehicle,
   isLoading = false,
   getVehicleList,
-  handleInventoryEdit,
+  // handleInventoryEdit,
   handleInventoryDelete,
 }: any) {
   const toast = useToast();
@@ -620,7 +620,7 @@ export default function InventoryCarList({
 
       <Dialog
         open={modals.addInventory}
-        onOpenChange={(e) => {
+        onOpenChange={() => {
           setModals((prev) => ({
             ...prev,
             addInventory: !prev.addInventory,

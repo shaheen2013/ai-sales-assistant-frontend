@@ -1,7 +1,7 @@
 "use client";
 
 import moment from "moment";
-import { Suspense, useState } from "react";
+import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 
 import {
@@ -89,8 +89,8 @@ export default function DashboardDealerInventory() {
   } = useGetVehicleInventoryQuery({});
 
   const {
-    data: dataGetInventoryFiles,
-    error: errorGetInventoryFiles,
+    // data: dataGetInventoryFiles,
+    // error: errorGetInventoryFiles,
     // isFetching: isFetchingGetInventoryFiles,
     // refetch: refetchGetInventoryFiles,
   } = useGetInventoryFilesQuery({});

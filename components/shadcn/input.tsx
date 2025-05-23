@@ -312,7 +312,9 @@ const InputCopy = React.forwardRef<
                 return;
               }
 
-              onChange && onChange(e);
+              if (onChange) {
+                onChange(e);
+              }
             }}
             {...props}
           />
