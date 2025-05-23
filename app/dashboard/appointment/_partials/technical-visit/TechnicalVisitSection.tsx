@@ -96,11 +96,20 @@ const TechnicalVisitSection = () => {
                 </Tabs>
 
                 {
-                    testDriveData?.count && testDriveData?.count > 12 &&
+                    tab === "test_drive" && typeof testDriveData?.count === 'number' && testDriveData?.count > 10 &&
                     <Pagination
                         page={page}
                         onPageChange={setPage}
                         totalPage={Math.ceil(testDriveData?.count / 10)}
+                    />
+                }
+
+                {
+                    tab === "store_visit" && typeof storeVisitData?.count === 'number' && storeVisitData?.count > 10 &&
+                    <Pagination
+                        page={page}
+                        onPageChange={setPage}
+                        totalPage={Math.ceil(storeVisitData?.count / 10)}
                     />
                 }
             </div>

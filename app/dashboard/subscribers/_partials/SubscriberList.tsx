@@ -91,12 +91,12 @@ const SubscriberList = () => {
                             loading={dealersFetching}
                         />
 
-                        <Pagination
+                        {typeof dealersData?.count === 'number' && dealersData?.count > 10 && <Pagination
                             page={page}
                             onPageChange={setPage}
                             className='justify-end mt-4'
                             totalPage={Math.ceil((dealersData?.count || 0) / 10)}
-                        />
+                        />}
                     </div>
                 </div>
             }
