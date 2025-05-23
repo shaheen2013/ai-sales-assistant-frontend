@@ -15,6 +15,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/shadcn/table';
+import TableSkeleton from '@/components/skeleton/TableSkeleton';
 import { EmployeeDataType } from '@/types/dealerManagementSliceType';
 import {
   ColumnDef,
@@ -103,10 +104,14 @@ export const departmentColumns: ColumnDef<EmployeeDataType>[] = [
 
 interface DepartmentDetailsTableProps {
   departmentEmployees: EmployeeDataType[];
+  isLoading: boolean;
+  isError: any;
 }
 
 const DepartmentDetailsTable = ({
   departmentEmployees = [],
+  isLoading,
+  isError,
 }: DepartmentDetailsTableProps) => {
   const table = useReactTable({
     data: departmentEmployees,
@@ -140,7 +145,16 @@ const DepartmentDetailsTable = ({
             ))}
           </TableHeader>
           <TableBody className="bg-white">
-            {table.getRowModel().rows?.length ? (
+            {isLoading ? (
+              <TableRow>
+                <TableCell
+                  colSpan={departmentColumns.length}
+                  className="h-24 text-center space-y-2"
+                >
+                  <TableSkeleton />
+                </TableCell>
+              </TableRow>
+            ) : table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow key={row.id} className="border-b border-[#E9EAEB]">
                   {row.getVisibleCells().map((cell) => (
@@ -159,7 +173,16 @@ const DepartmentDetailsTable = ({
                   colSpan={departmentColumns.length}
                   className="h-24 text-center"
                 >
-                  No employees found in this department.
+                  {isError ? (
+                    <div className="text-red-500 text-sm font-medium">
+                      {isError?.data?.message ||
+                        'Error Loading Department Details'}
+                    </div>
+                  ) : (
+                    <div className="text-gray-500 text-sm font-medium">
+                      No employees found in this department.
+                    </div>
+                  )}
                 </TableCell>
               </TableRow>
             )}

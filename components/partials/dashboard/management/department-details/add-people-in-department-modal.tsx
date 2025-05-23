@@ -15,78 +15,54 @@ import {
   FormMessage,
 } from '@/components/shadcn/form';
 import { Input } from '@/components/shadcn/input';
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/shadcn/select';
-import { useAddDepartmentMutation } from '@/features/dealer/dealerManagementSlice';
+import { useAddEmployeeToDepartmentMutation } from '@/features/dealer/dealerManagementSlice';
 import { useToast } from '@/hooks/useToast';
 import { beautifyErrors } from '@/lib/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 import { PhoneInput } from '../../settings/phone-input-with-country-list';
 
 // Define form schema with validation
 const formSchema = z.object({
-  department_name: z.string().min(1, 'Department name is required'),
-  department_email: z
-    .string()
-    .email('Invalid email format')
-    .min(1, 'Department email is required'),
-  employee_name: z.string().min(1, 'Employee name is required'),
-  employee_phone: z.string().min(1, 'Employee phone is required'),
+  name: z.string().min(1, 'Employee name is required'),
+  phone_number: z.string().min(1, 'Employee phone is required'),
 });
 
 // Type for form data
 type FormData = z.infer<typeof formSchema>;
 
-const AddNewPeopleModal = ({
+const AddPeopleInDepartmentModal = ({
   open,
   onOpenChange,
+  departmentId,
 }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  departmentId: string;
 }) => {
   const toast = useToast();
-  const [showCustomInput, setShowCustomInput] = useState(false);
-  const [customDepartment, setCustomDepartment] = useState('');
-  const [departments, setDepartments] = useState([
-    'Sales Representative',
-    'Technical Advisor',
-    'Customer Support Agent',
-    'Finance Advisor',
-  ]);
 
-  const [addDepartment, { isLoading }] = useAddDepartmentMutation();
+  const [addEmployeeToDepartment, { isLoading }] =
+    useAddEmployeeToDepartmentMutation();
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      department_name: '',
-      department_email: '',
-      employee_name: '',
-      employee_phone: '',
+      name: '',
+      phone_number: '',
     },
   });
 
   const onSubmit = async (data: FormData) => {
     const payload = {
-      department_name: data.department_name,
-      department_email: data.department_email,
-      employees: [
-        {
-          name: data.employee_name,
-          phone_number: data.employee_phone,
-        },
-      ],
+      name: data.name,
+      phone_number: data.phone_number,
     };
     try {
-      await addDepartment(payload).unwrap();
+      await addEmployeeToDepartment({
+        id: departmentId,
+        data: payload,
+      }).unwrap();
       toast('success', 'Department added successfully');
     } catch (error: any) {
       console.log(error, 'error >');
@@ -138,8 +114,8 @@ const AddNewPeopleModal = ({
       if (!errorMessage) {
         errorMessage =
           error?.data?.status === 'error'
-            ? 'An error occurred while adding the department.'
-            : beautifyErrors(error) || 'Unknown error occurred.';
+            ? beautifyErrors(error) || 'Unknown error occurred.'
+            : 'Unknown error occurred.';
       }
 
       // Ensure errorMessage is a string before trimming
@@ -154,133 +130,20 @@ const AddNewPeopleModal = ({
     onOpenChange(false);
   };
 
-  // Handle custom department input
-  const handleAddCustomDepartment = () => {
-    if (customDepartment && !departments.includes(customDepartment)) {
-      setDepartments([...departments, customDepartment]);
-      form.setValue('department_name', customDepartment);
-      setCustomDepartment('');
-      setShowCustomInput(false);
-    }
-  };
-
-  // Reset custom input when modal closes
-  useEffect(() => {
-    if (!open) {
-      setShowCustomInput(false);
-      setCustomDepartment('');
-    }
-  }, [open]);
-
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-2xl p-4">
         <DialogHeader>
-          <DialogTitle className="text-gray-300">
-            Add Department & Assign People
-          </DialogTitle>
+          <DialogTitle className="text-gray-300">Add Employee</DialogTitle>
         </DialogHeader>
         <DialogDescription className="hidden"></DialogDescription>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <div className="flex flex-col gap-4 border-t border-b border-[#EFF4FA] py-4">
-              {/* Department name & email */}
               <div className="flex flex-col md:flex-row gap-3 items-start md:items-center w-full justify-between">
                 <FormField
                   control={form.control}
-                  name="department_name"
-                  render={({ field }) => (
-                    <FormItem className="w-full">
-                      <FormLabel className="text-sm text-gray-700 font-medium">
-                        Department Name
-                      </FormLabel>
-                      {showCustomInput ? (
-                        <div className="flex gap-2">
-                          <Input
-                            value={customDepartment}
-                            onChange={(e) =>
-                              setCustomDepartment(e.target.value)
-                            }
-                            placeholder="Enter custom department"
-                            className="border-[#d5d7da] rounded-md focus:border-[#019935] focus:ring-[#019935]"
-                          />
-                          <Button
-                            type="button"
-                            onClick={handleAddCustomDepartment}
-                            className="bg-[#019935] hover:bg-[#018a30] text-white"
-                            disabled={!customDepartment}
-                          >
-                            Add
-                          </Button>
-                        </div>
-                      ) : (
-                        <Select
-                          onValueChange={(value) => {
-                            if (value === 'custom') {
-                              setShowCustomInput(true);
-                            } else {
-                              field.onChange(value);
-                            }
-                          }}
-                          value={field.value}
-                        >
-                          <FormControl>
-                            <SelectTrigger className="border-[#d5d7da] focus:ring-[#019935] focus:border-[#019935]">
-                              <SelectValue placeholder="Choose Department" />
-                            </SelectTrigger>
-                          </FormControl>
-                          <SelectContent>
-                            <SelectGroup>
-                              {departments.map((dept) => (
-                                <SelectItem
-                                  key={dept}
-                                  value={dept}
-                                  className="flex items-center justify-between"
-                                >
-                                  {dept}
-                                </SelectItem>
-                              ))}
-                              <SelectItem
-                                value="custom"
-                                className="text-[#019935]"
-                              >
-                                Add Yours
-                              </SelectItem>
-                            </SelectGroup>
-                          </SelectContent>
-                        </Select>
-                      )}
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="department_email"
-                  render={({ field }) => (
-                    <FormItem className="w-full">
-                      <FormLabel className="text-sm text-gray-700 font-medium">
-                        Department Email
-                      </FormLabel>
-                      <FormControl>
-                        <Input
-                          type="email"
-                          {...field}
-                          placeholder="Enter department email"
-                          className="border-[#d5d7da] rounded-md focus:border-[#019935] focus:ring-[#019935]"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-
-              {/* Employee email & phone */}
-              <div className="flex flex-col md:flex-row gap-3 items-start md:items-center w-full justify-between">
-                <FormField
-                  control={form.control}
-                  name="employee_name"
+                  name="name"
                   render={({ field }) => (
                     <FormItem className="w-full">
                       <FormLabel className="text-sm text-gray-700 font-medium">
@@ -299,7 +162,7 @@ const AddNewPeopleModal = ({
                 />
                 <FormField
                   control={form.control}
-                  name="employee_phone"
+                  name="phone_number"
                   render={({ field }) => (
                     <FormItem className="w-full">
                       <FormLabel className="text-sm text-gray-700 font-medium">
@@ -346,4 +209,4 @@ const AddNewPeopleModal = ({
   );
 };
 
-export default AddNewPeopleModal;
+export default AddPeopleInDepartmentModal;
