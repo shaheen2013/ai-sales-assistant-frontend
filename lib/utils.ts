@@ -1,6 +1,6 @@
-import { clsx, type ClassValue } from 'clsx';
-import moment from 'moment';
-import { twMerge } from 'tailwind-merge';
+import { clsx, type ClassValue } from "clsx";
+import moment from "moment";
+import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -15,7 +15,7 @@ export function beautifyErrors(errors: any): string {
 
   if (errors?.data) {
     for (const key in errors?.data) {
-      if (typeof errors?.data?.[key] === 'string') {
+      if (typeof errors?.data?.[key] === "string") {
         errorMessages.push(errors?.data?.[key]);
       }
 
@@ -26,7 +26,7 @@ export function beautifyErrors(errors: any): string {
   }
 
   if (errors?.detail) {
-    if (typeof errors?.detail === 'string') {
+    if (typeof errors?.detail === "string") {
       errorMessages.push(errors?.detail);
     }
 
@@ -36,7 +36,7 @@ export function beautifyErrors(errors: any): string {
   }
 
   if (errors?.non_field_errors) {
-    if (typeof errors?.non_field_errors === 'string') {
+    if (typeof errors?.non_field_errors === "string") {
       errorMessages.push(errors?.non_field_errors);
     }
 
@@ -45,7 +45,7 @@ export function beautifyErrors(errors: any): string {
     }
   }
 
-  return errorMessages.length > 0 ? errorMessages[0] : 'Something went wrong!';
+  return errorMessages.length > 0 ? errorMessages[0] : "Something went wrong!";
 }
 
 /**
@@ -133,10 +133,10 @@ export function handleApiError(error: any): string {
 }
 
 export function formatFileSize(bytes: number): string {
-  if (bytes === 0) return '0 Bytes';
+  if (bytes === 0) return "0 Bytes";
 
   const k = 1024;
-  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+  const sizes = ["Bytes", "KB", "MB", "GB", "TB"];
   const i = Math.floor(Math.log(bytes) / Math.log(k));
   const size = bytes / Math.pow(k, i);
 
@@ -163,7 +163,7 @@ export function createQueryParams(
     return (
       value !== null &&
       value !== undefined &&
-      value !== '' &&
+      value !== "" &&
       value !== false &&
       value !== 0 &&
       !Number.isNaN(value)
@@ -206,4 +206,17 @@ export function getYears() {
   }
 
   return years;
+}
+
+export function shortenFilename(filename: string, maxLength = 12) {
+  const parts = filename.split(".");
+  if (parts.length < 2) return filename;
+
+  const ext = parts.pop();
+  const name = parts.join(".");
+
+  if (name.length <= maxLength) return `${name}.${ext}`;
+
+  const half = Math.floor((maxLength - 3) / 2); // 3 for "..."
+  return `${name.slice(0, half)}...${name.slice(-half)}.${ext}`;
 }

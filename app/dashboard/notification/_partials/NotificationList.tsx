@@ -72,7 +72,7 @@ const NotificationList = () => {
             };
 
             socket.onclose = (event) => {
-                console.log('WebSocket closed:', event);
+                // console.log('WebSocket closed:', event);
             };
         }
 
