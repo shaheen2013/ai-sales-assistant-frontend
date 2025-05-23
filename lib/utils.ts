@@ -53,15 +53,15 @@ export function beautifyErrors(errors: any): string {
  * Handles nested error structures and formats them into a readable message
  */
 export function handleApiError(error: any): string {
-  let errorMessage = '';
+  let errorMessage = "";
 
   // Handle server errors (500)
   if (error?.data?.status === 500) {
-    return 'Unexpected Server Error';
+    return "Unexpected Server Error";
   }
 
   // Handle top-level message if it's a string
-  if (error?.data?.message && typeof error.data.message === 'string') {
+  if (error?.data?.message && typeof error.data.message === "string") {
     errorMessage = error.data.message;
   }
   // Handle nested employee errors
@@ -70,7 +70,7 @@ export function handleApiError(error: any): string {
     Array.isArray(error.data.message.employees)
   ) {
     error.data.message.employees.forEach((employeeError: any) => {
-      if (typeof employeeError === 'object') {
+      if (typeof employeeError === "object") {
         Object.entries(employeeError).forEach(([field, fieldErrors]) => {
           if (Array.isArray(fieldErrors)) {
             fieldErrors.forEach((fieldError: string) => {
@@ -84,12 +84,12 @@ export function handleApiError(error: any): string {
   // Handle other field errors in data
   else if (error?.data) {
     Object.entries(error.data).forEach(([key, value]) => {
-      if (key !== 'status') {
+      if (key !== "status") {
         if (Array.isArray(value)) {
           value.forEach((msg: string) => {
             errorMessage += `${key}: ${msg}\n`;
           });
-        } else if (typeof value === 'string') {
+        } else if (typeof value === "string") {
           errorMessage += `${key}: ${value}\n`;
         }
       }
@@ -98,22 +98,22 @@ export function handleApiError(error: any): string {
 
   // Handle error.detail
   if (error?.detail) {
-    if (typeof error.detail === 'string') {
-      errorMessage += error.detail + '\n';
+    if (typeof error.detail === "string") {
+      errorMessage += error.detail + "\n";
     } else if (Array.isArray(error.detail)) {
       error.detail.forEach((detail: string) => {
-        errorMessage += detail + '\n';
+        errorMessage += detail + "\n";
       });
     }
   }
 
   // Handle non_field_errors
   if (error?.non_field_errors) {
-    if (typeof error.non_field_errors === 'string') {
-      errorMessage += error.non_field_errors + '\n';
+    if (typeof error.non_field_errors === "string") {
+      errorMessage += error.non_field_errors + "\n";
     } else if (Array.isArray(error.non_field_errors)) {
       error.non_field_errors.forEach((nfe: string) => {
-        errorMessage += nfe + '\n';
+        errorMessage += nfe + "\n";
       });
     }
   }
@@ -121,13 +121,13 @@ export function handleApiError(error: any): string {
   // Fallback if no specific error message was constructed
   if (!errorMessage) {
     errorMessage =
-      error?.data?.status === 'error'
-        ? beautifyErrors(error) || 'Unknown error occurred.'
-        : 'Unknown error occurred.';
+      error?.data?.status === "error"
+        ? beautifyErrors(error) || "Unknown error occurred."
+        : "Unknown error occurred.";
   }
 
   // Ensure errorMessage is a string and trim it
-  return typeof errorMessage === 'string'
+  return typeof errorMessage === "string"
     ? errorMessage.trim()
     : String(errorMessage);
 }
@@ -155,7 +155,6 @@ export function createQueryParams(
 ): string {
   const { excludeFaulty = true } = config;
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const entries = Object.entries(params).filter(([_, value]) => {
     if (!excludeFaulty) return true;
 
@@ -176,7 +175,8 @@ export function createQueryParams(
     searchParams.append(key, String(value));
   }
 
-  return searchParams.toString();
+  const queryString = searchParams.toString();
+  return queryString ? `?${queryString}` : "";
 }
 
 export function formatShortTimeAgo(date: string): string {
