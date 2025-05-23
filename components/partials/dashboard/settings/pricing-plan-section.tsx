@@ -49,9 +49,9 @@ export default function PricingPlanSection() {
       if (res) {
         toast('success', 'Subscription upgraded successfully');
       }
-    } catch (error) {
-      toast('error', 'Failed to upgrade subscription');
-      console.error('Error upgrading subscription:', error);
+    } catch (error: any) {
+      toast('error', error?.data?.error || 'Failed to upgrade subscription');
+      console.error('Error', error);
     } finally {
       setUpgradingPlanId(null);
     }
@@ -180,14 +180,23 @@ export default function PricingPlanSection() {
                   ) : (
                     <Button
                       variant={'outline'}
-                      onClick={() => handleUpgradePlan(plan.id)}
-                      disabled={upgradingPlanId === plan.id}
+                      onClick={() =>
+                        handleUpgradePlan(
+                          selectedPriceMap[plan.id] || plan.prices[0].id
+                        )
+                      }
+                      disabled={
+                        upgradingPlanId ===
+                        (selectedPriceMap[plan.id] || plan.prices[0].id)
+                      }
                       className="text-[#019935] text-base shadow-md px-4 py-2.5 font-medium border-primary-100"
                     >
-                      {upgradingPlanId === plan.id
+                      {upgradingPlanId ===
+                      (selectedPriceMap[plan.id] || plan.prices[0].id)
                         ? 'Upgrading...'
                         : 'Upgrade Plan'}
-                      {upgradingPlanId !== plan.id && (
+                      {upgradingPlanId !==
+                        (selectedPriceMap[plan.id] || plan.prices[0].id) && (
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           width="20"
