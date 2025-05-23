@@ -44,11 +44,6 @@ export type TUpdateDealerProfileValues = z.infer<typeof formSchema>;
 
 export default function EditProfileSection() {
   const [profileImage, setProfileImage] = useState<File | null>(null);
-  const [selectedServices, setSelectedServices] = useState<string[]>([
-    'Sales',
-    'Financing',
-  ]);
-
   const toast = useToast();
   const { data, isLoading } = useGetDealerProfileQuery(undefined, {
     refetchOnMountOrArgChange: true,

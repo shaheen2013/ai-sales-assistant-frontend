@@ -5,7 +5,6 @@ import { useGetDealerProfileQuery } from '@/features/dealer/dealerProfileSlice';
 import CardInformationSection from './card-information-section';
 import ContactInformationCard from './contact-information-card';
 import PublicEmbedCodeCard from './embeded-code-card';
-import InviteFreindsCard from './invite-freinds-card';
 import ServicesOfferedSection from './services-offered-section';
 import ShortBioSection from './short-bio-section';
 import UpgradePlanCtaCard from './upgrade-plan-cta-card';
@@ -32,7 +31,7 @@ export default function DealerProfile() {
         <div className="space-y-6">
           <UpgradePlanCtaCard />
           <ContactInformationCard data={dealerProfileData} />
-          <InviteFreindsCard />
+          {/* <InviteFreindsCard /> */}
           <PublicEmbedCodeCard />
         </div>
       </div>
