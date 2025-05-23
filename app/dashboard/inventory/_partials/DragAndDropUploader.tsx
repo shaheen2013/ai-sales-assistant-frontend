@@ -15,10 +15,17 @@ export default function DragAndDropUploader({
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   // Hardcoded validation rules for now
-  const allowedFileTypes = ["application/pdf", "application/msword"];
-  const allowedFileExtensions = [".pdf", ".doc", ".docx"];
+  const allowedFileTypes = [
+    "application/pdf",
+    "application/msword",
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document", // .docx
+    "text/plain", // .txt
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", // .xlsx
+    "application/vnd.ms-excel", // .xls
+  ];
+  const allowedFileExtensions = [".docx", ".pdf", ".txt", ".xlsx", ".xls"];
   const maxFileSize = 5 * 1024 * 1024;
-  const allowedMultipleFiles = true;
+  const allowedMultipleFiles = false;
 
   function validateFile(file: File): boolean {
     const fileType = file.type;
@@ -89,7 +96,7 @@ export default function DragAndDropUploader({
       {/* Drop zone */}
       <div
         className={`h-[220px] overflow-y-auto rounded-lg p-4 pb-0 cursor-pointer border-2 border-dashed transition-colors duration-150
-          ${isDragging ? "border-blue-500 bg-blue-50" : "border-gray-300"}
+          ${isDragging ? "border-green-500 bg-green-50" : "border-gray-300"}
         `}
         onClick={openFileDialog}
         onDragOver={handleDragOver}

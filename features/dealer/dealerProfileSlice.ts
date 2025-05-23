@@ -59,6 +59,7 @@ export const dealerProfileSlice = apiSlice.injectEndpoints({
         method: 'GET',
         credentials: 'include',
       }),
+      providesTags: ['pricingPlans'],
     }),
     upgradeSubscription: builder.mutation<any, any>({
       query: (data) => ({
@@ -67,14 +68,7 @@ export const dealerProfileSlice = apiSlice.injectEndpoints({
         body: data,
         credentials: 'include',
       }),
-    }),
-    addDepartment: builder.mutation<any, any>({
-      query: (data) => ({
-        url: '/departments/',
-        method: 'POST',
-        body: data,
-        credentials: 'include',
-      }),
+      invalidatesTags: ['pricingPlans'],
     }),
   }),
 });
@@ -87,5 +81,4 @@ export const {
   useGetDealerPricingPlansQuery,
   useGetCurrentSubscriptionPlanQuery,
   useUpgradeSubscriptionMutation,
-  useAddDepartmentMutation,
 } = dealerProfileSlice;
