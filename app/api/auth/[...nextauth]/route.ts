@@ -170,6 +170,11 @@ const authOptions: AuthOptions = {
         };
       }
 
+      if (token.access) {
+        const decodedToken = jwtDecode(token.access);
+        token.accessTokenExpires = (decodedToken?.exp || 0) * 1000;
+      }
+
       // Refresh only for credentials-based tokens
       if (
         token.access &&

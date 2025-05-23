@@ -40,7 +40,7 @@ const StoreVisitDataTable = ({
         <TableBody>
           {
             loading ? <TableRow>
-              <TableCell colSpan={3} className="space-y-2">
+              <TableCell colSpan={4} className="space-y-2">
                 <TableSkeleton />
               </TableCell>
             </TableRow> : table.getRowModel().rows?.length ? (

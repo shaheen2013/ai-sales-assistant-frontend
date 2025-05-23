@@ -14,16 +14,17 @@ const Checkbox = React.forwardRef<
     onChange?: (value: boolean) => void;
     variant?: "primary" | "secondary";
     error?: boolean;
+    wrapperClassName?: string;
   }
 >(
   (
-    { className, value, onChange, variant = "primary", error, ...props },
+    { className, wrapperClassName, value, onChange, variant = "primary", error, ...props },
     ref
   ) => (
     <div
       className={classNames("flex border rounded-md ", {
         "border border-red-500": error,
-      })}
+      }, wrapperClassName)}
     >
       <CheckboxPrimitive.Root
         ref={ref}
