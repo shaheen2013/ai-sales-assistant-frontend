@@ -16,6 +16,9 @@ import {
   TableRow,
 } from '@/components/shadcn/table';
 import TableSkeleton from '@/components/skeleton/TableSkeleton';
+import { useRemoveEmployeeFromDepartmentMutation } from '@/features/dealer/dealerManagementSlice';
+import { useToast } from '@/hooks/useToast';
+import { handleApiError } from '@/lib/utils';
 import { EmployeeDataType } from '@/types/dealerManagementSliceType';
 import {
   ColumnDef,
@@ -45,8 +48,9 @@ const DepartmentDetailsTable = ({
   const [employeeData, setEmployeeData] = useState<EmployeeDataType | null>(
     null
   );
-
-  // Define handleEditEmployee outside of the column definition
+  const toast = useToast();
+  const [removeEmployeeFromDepartment, { isLoading: isDeleting }] =
+    useRemoveEmployeeFromDepartmentMutation();
 
   // Column definitions
   const departmentColumns: ColumnDef<EmployeeDataType>[] = [
@@ -86,9 +90,16 @@ const DepartmentDetailsTable = ({
       header: () => <div className="text-right">Action</div>,
       cell: ({ row }) => {
         const employee = row.original;
-
-        const handleRemoveEmployee = () => {
-          console.log(`Remove employee ${employee.id}`);
+        const handleRemoveEmployee = async () => {
+          try {
+            await removeEmployeeFromDepartment({
+              id: departmentId,
+              employeeId: employee.id,
+            });
+            toast('success', 'Employee removed successfully');
+          } catch (error: any) {
+            toast('error', handleApiError(error));
+          }
         };
 
         const handleEditEmployee = (emp: EmployeeDataType) => {
@@ -159,7 +170,7 @@ const DepartmentDetailsTable = ({
             ))}
           </TableHeader>
           <TableBody className="bg-white">
-            {isLoading ? (
+            {isLoading || isDeleting ? (
               <TableRow>
                 <TableCell
                   colSpan={departmentColumns.length}

@@ -17,7 +17,7 @@ import {
 import { Input } from '@/components/shadcn/input';
 import { useUpdateEmployeeInDepartmentMutation } from '@/features/dealer/dealerManagementSlice';
 import { useToast } from '@/hooks/useToast';
-import { beautifyErrors } from '@/lib/utils';
+import { handleApiError } from '@/lib/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
@@ -53,7 +53,7 @@ const EditEmployeeModal = ({
   employeeData?: EmployeeDataType;
 }) => {
   const toast = useToast();
-  const isLoading = false;
+
   const [updateEmployeeInDepartment, { isLoading: isUpdatingEmployee }] =
     useUpdateEmployeeInDepartmentMutation();
   const form = useForm<FormData>({
@@ -79,19 +79,7 @@ const EditEmployeeModal = ({
       name: data.name,
       phone_number: data.phone_number,
     };
-
-    console.log('Editing employee with data:', {
-      employeeId: employeeData?.id,
-      departmentId,
-      formData: payload,
-    });
-
-    // Here you would make the API call to update the employee
-    // For now, we're just logging the data
-
     try {
-      // Commented out the add employee mutation since we're editing
-      // await addEmployeeToDepartment({
       await updateEmployeeInDepartment({
         id: departmentId,
         employeeId: employeeData?.id,
@@ -100,65 +88,7 @@ const EditEmployeeModal = ({
       toast('success', 'Employee updated successfully');
     } catch (error: any) {
       console.log(error, 'error >');
-      // server error response
-      if (error?.data?.status === 500) {
-        toast('error', 'Unexpected Server Error');
-      }
-      // handle errors for bad request and other cases
-      // Enhanced error handling for nested error structures
-      let errorMessage = '';
-
-      if (error?.data?.message) {
-        // Handle top-level message if it's a string
-        if (typeof error.data.message === 'string') {
-          errorMessage = error.data.message;
-        } else if (
-          error.data.message.employees &&
-          Array.isArray(error.data.message.employees)
-        ) {
-          // Handle employee-specific errors
-          error.data.message.employees.forEach((employeeError: any) => {
-            if (typeof employeeError === 'object') {
-              Object.entries(employeeError).forEach(([field, fieldErrors]) => {
-                if (Array.isArray(fieldErrors)) {
-                  fieldErrors.forEach((fieldError: string) => {
-                    errorMessage += `${field}: ${fieldError}\n`;
-                  });
-                }
-              });
-            }
-          });
-        }
-      } else if (error?.data) {
-        // Handle other field errors in data
-        Object.entries(error.data).forEach(([key, value]) => {
-          if (key !== 'status') {
-            if (Array.isArray(value)) {
-              value.forEach((msg: string) => {
-                errorMessage += `${key}: ${msg}\n`;
-              });
-            } else if (typeof value === 'string') {
-              errorMessage += `${key}: ${value}\n`;
-            }
-          }
-        });
-      }
-
-      // Fallback if no specific error message was constructed
-      if (!errorMessage) {
-        errorMessage =
-          error?.data?.status === 'error'
-            ? beautifyErrors(error) || 'Unknown error occurred.'
-            : 'Unknown error occurred.';
-      }
-
-      // Ensure errorMessage is a string before trimming
-      toast(
-        'error',
-        typeof errorMessage === 'string'
-          ? errorMessage.trim()
-          : String(errorMessage)
-      );
+      toast('error', handleApiError(error));
     }
     form.reset();
     onOpenChange(false);
@@ -232,10 +162,10 @@ const EditEmployeeModal = ({
               </Button>
               <Button
                 type="submit"
-                disabled={isLoading}
+                disabled={isUpdatingEmployee}
                 className="bg-[#019935] hover:bg-[#018a30] text-white"
               >
-                {isLoading
+                {isUpdatingEmployee
                   ? employeeData
                     ? 'Updating...'
                     : 'Adding...'
