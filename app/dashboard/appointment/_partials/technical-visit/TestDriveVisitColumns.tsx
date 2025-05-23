@@ -28,25 +28,25 @@ export const testDriveVisitsColumns: ColumnDef<TestDriveResponseType>[] = [
     accessorKey: "Booking Status",
     header: () => <div className="text-center">Booking Status</div>,
     cell: ({ row }) => {
-      const priority: string = row.getValue("priority");
+      // const priority: string = row.getValue("priority");
       const getCategoryVariant = (priority: string) => {
-        if (priority?.toLowerCase() === "high") {
-          return "green";
-        } else if (priority?.toLowerCase() === "medium") {
-          return "blue";
-        } else if (priority?.toLowerCase() === "low") {
-          return "red";
-        }
+        // if (priority?.toLowerCase() === "high") {
+        //   return "green";
+        // } else if (priority?.toLowerCase() === "medium") {
+        //   return "blue";
+        // } else if (priority?.toLowerCase() === "low") {
+        //   return "red";
+        // }
 
         return "blue";
       }
 
       return (
         <div className='flex items-center justify-center'>
-          <Badge
+          {/* <Badge
             text={priority}
             variant={getCategoryVariant(priority)}
-          />
+          /> */}
         </div>
       );
     }

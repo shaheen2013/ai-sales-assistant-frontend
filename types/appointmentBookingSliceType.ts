@@ -12,10 +12,17 @@ export type DepartmentType = {
     employees: EmployeeType[]
 };
 
+type CustomerType = {
+    id: number;
+    name: string;
+    email: string;
+    phone_number: string;
+}
+
 export type TalkToHumanResponseType = {
     id: number;
     dealer: string;
-    customer: string;
+    customer: CustomerType;
     preferred_date_time: string;
     department: DepartmentType;
     is_talked: boolean;
@@ -31,7 +38,7 @@ export type TestDriveResponseType = {
 export type StoreVisitResponseType = {
     id: number;
     dealer: number;
-    customer: number;
+    customer: CustomerType;
     prefered_time: string;
     visit_reason: string;
     is_visited: boolean;

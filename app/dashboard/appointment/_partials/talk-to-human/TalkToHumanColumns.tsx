@@ -16,7 +16,7 @@ export const talkToHumanColumns = ({ handleChangeTalkStatus }: { handleChangeTal
     {
       accessorKey: "name",
       header: "Name",
-      cell: ({ row }) => row.original.customer,
+      cell: ({ row }) => row.original.customer?.name || "N/A",
     },
     {
       accessorKey: "schedule_date",
