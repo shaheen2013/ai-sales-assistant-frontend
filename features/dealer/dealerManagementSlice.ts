@@ -9,7 +9,7 @@ export const dealerManagementSlice = apiSlice.injectEndpoints({
         method: 'GET',
         credentials: 'include',
       }),
-      providesTags: ['Departments'],
+      providesTags: ['departmentsData'],
     }),
     getDepartmentById: builder.query<any, string>({
       query: (id) => ({
@@ -17,7 +17,7 @@ export const dealerManagementSlice = apiSlice.injectEndpoints({
         method: 'GET',
         credentials: 'include',
       }),
-      providesTags: ['Departments'],
+      providesTags: ['departmentsData'],
     }),
     addDepartment: builder.mutation<any, DepartmentDataType>({
       query: (department) => ({
@@ -26,7 +26,7 @@ export const dealerManagementSlice = apiSlice.injectEndpoints({
         body: department,
         credentials: 'include',
       }),
-      invalidatesTags: ['Departments'],
+      invalidatesTags: ['departmentsData'],
     }),
     updateDepartment: builder.mutation<
       any,
@@ -38,7 +38,7 @@ export const dealerManagementSlice = apiSlice.injectEndpoints({
         body: data,
         credentials: 'include',
       }),
-      invalidatesTags: ['Departments'],
+      invalidatesTags: ['departmentsData'],
     }),
     deleteDepartment: builder.mutation<any, string>({
       query: (id) => ({
@@ -46,7 +46,7 @@ export const dealerManagementSlice = apiSlice.injectEndpoints({
         method: 'DELETE',
         credentials: 'include',
       }),
-      invalidatesTags: ['Departments'],
+      invalidatesTags: ['departmentsData'],
     }),
     addEmployeeToDepartment: builder.mutation<any, { id: string; data: any }>({
       query: ({ id, data }) => ({
@@ -55,7 +55,7 @@ export const dealerManagementSlice = apiSlice.injectEndpoints({
         body: data,
         credentials: 'include',
       }),
-      invalidatesTags: ['Departments'],
+      invalidatesTags: ['departmentsData'],
     }),
     updateEmployeeInDepartment: builder.mutation<
       any,
@@ -67,7 +67,7 @@ export const dealerManagementSlice = apiSlice.injectEndpoints({
         body: data,
         credentials: 'include',
       }),
-      invalidatesTags: ['Departments'],
+      invalidatesTags: ['departmentsData'],
     }),
     removeEmployeeFromDepartment: builder.mutation<
       any,
@@ -78,7 +78,7 @@ export const dealerManagementSlice = apiSlice.injectEndpoints({
         method: 'DELETE',
         credentials: 'include',
       }),
-      invalidatesTags: ['Departments'],
+      invalidatesTags: ['departmentsData'],
     }),
   }),
 });

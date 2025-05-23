@@ -24,7 +24,7 @@ export const apiSlice = createApi({
     'user',
     'dealerProfile',
     'getAdminAllSupportTickets',
-    'departments',
+    'departmentsData',
     'pricingPlans',
     'getDealerAllSupportTickets',
   ],
