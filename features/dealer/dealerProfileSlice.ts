@@ -70,6 +70,13 @@ export const dealerProfileSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['pricingPlans'],
     }),
+    getBillingHistory: builder.query<any, void>({
+      query: () => ({
+        url: '/dealer-dashboard/invoices/',
+        method: 'GET',
+        credentials: 'include',
+      }),
+    }),
   }),
 });
 
@@ -81,4 +88,5 @@ export const {
   useGetDealerPricingPlansQuery,
   useGetCurrentSubscriptionPlanQuery,
   useUpgradeSubscriptionMutation,
+  useGetBillingHistoryQuery,
 } = dealerProfileSlice;

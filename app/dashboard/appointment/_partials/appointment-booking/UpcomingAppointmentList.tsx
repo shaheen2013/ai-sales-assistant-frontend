@@ -24,9 +24,9 @@ const UpcomingAppointmentList: FC<UpcomingAppointmentListPropsType> = ({ data, t
 
     const getCustomerName = (item: TalkToHumanResponseType | TestDriveResponseType | StoreVisitResponseType) => {
         if ("customer" in item) {
-            return String(item?.customer);
+            return item?.customer?.name || "N/A";
         } else if ("name" in item) {
-            return item?.name;
+            return item?.name || "N/A";
         }
         return "N/A";
     }
