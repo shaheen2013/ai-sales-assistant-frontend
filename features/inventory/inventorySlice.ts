@@ -18,7 +18,7 @@ export const inventorySlice = apiSlice.injectEndpoints({
         const params = createQueryParams(data);
 
         return {
-          url: `/v1/dealer/vehicle-inventory?=${params}`,
+          url: `/v1/dealer/vehicle-inventory${params}`,
           method: "GET",
           credentials: "include",
         };
@@ -32,6 +32,18 @@ export const inventorySlice = apiSlice.injectEndpoints({
         body: data,
         credentials: "include",
       }),
+    }),
+
+    editVehicleInventory: builder.mutation({
+      query: (data) => {
+        const { id, ...rest } = data;
+        return {
+          url: `/v1/dealer/vehicle-inventory${id}/`,
+          method: "PATCH",
+          body: rest,
+          credentials: "include",
+        };
+      },
     }),
 
     deleteVehicleInventory: builder.mutation({
@@ -58,7 +70,7 @@ export const inventorySlice = apiSlice.injectEndpoints({
     getInventoryFiles: builder.query({
       query: () => {
         return {
-          url: `/dealers/vehicles`,
+          url: `/inventory/files`,
           method: "GET",
           credentials: "include",
         };
@@ -71,6 +83,7 @@ export const {
   useVehicleInventoryUploadMutation,
   useGetVehicleInventoryQuery,
   useCreateVehicleInventoryMutation,
+  useEditVehicleInventoryMutation,
   useDeleteVehicleInventoryMutation,
 
   useGetVehiclesQuery,
