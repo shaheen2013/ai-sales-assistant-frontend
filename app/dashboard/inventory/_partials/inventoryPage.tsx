@@ -4,6 +4,7 @@ import moment from "moment";
 import { useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
+import { useDebounceValue } from "usehooks-ts";
 
 import {
   Select,
@@ -79,7 +80,9 @@ export default function DashboardDealerInventory() {
   const filter = searchParams.get("filter");
   const sort = searchParams.get("sort");
 
-  console.log("search => ", search);
+  const [debouncedSearchValue, setSearch] = useDebounceValue("", 500);
+
+  console.log("debouncedValue => ", debouncedSearchValue);
 
   // const files_search = searchParams.get("file_search");
   // const files_filter = searchParams.get("file_filter");
@@ -92,7 +95,7 @@ export default function DashboardDealerInventory() {
     isFetching: isFetchingGetVehicle,
     refetch: refetchGetVehicle,
   } = useGetVehicleInventoryQuery({
-    search: search,
+    search: debouncedSearchValue,
     filter: filter,
     sort: sort,
     // offset
@@ -301,6 +304,8 @@ export default function DashboardDealerInventory() {
             {/* search */}
             <div>
               <Input
+                // value={debouncedValue}
+                onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search"
                 className="max-w-[300px] h-10"
                 preIcon={
