@@ -5,7 +5,7 @@ import { ArrowDownUp, ChevronDown } from 'lucide-react'
 import React, { useState } from 'react'
 import TalkToHumanDataTable from './TalkToHumanDataTable';
 import { TalkToHumanColumnDataType, talkToHumanColumns } from './TalkToHumanColumns';
-import { useGetTalkToHumanCallLogsQuery } from '@/features/appointmentBooking/appointmentBookingSlice';
+import { useGetTalkToHumanCallLogsQuery, useUpdateTalkToHumanStatusMutation } from '@/features/appointmentBooking/appointmentBookingSlice';
 import Pagination from '@/components/pagination/Pagination';
 import SimpleSelect from '@/components/select/SimpleSelect';
 
@@ -65,17 +65,27 @@ const TalkToHumanSection = () => {
     const [page, setPage] = useState(1);
     const [sortBy, setSortBy] = useState<string>('');
 
-    /*--Functions--*/
-    const handleChangeTalkStatus = (checked: boolean, id: number) => { 
-        
-     };
-
     /*--RTK Query--*/
     const { data: talkToHumanCallLogsData, isFetching: talkToHumanCallLogsIsFetching } = useGetTalkToHumanCallLogsQuery({
         limit: 10,
         offset: (page - 1) * 10,
         ...(sortBy && { sort_by: sortBy, order: "asc" }),
     });
+    const [updateTalkToHumanStatus] = useUpdateTalkToHumanStatusMutation();
+
+    /*--Functions--*/
+    const handleChangeTalkStatus = (checked: boolean, id: number) => {
+        const data = {
+            is_talked: checked
+        }
+        updateTalkToHumanStatus({
+            id, data, queryParams: {
+                limit: 10,
+                offset: (page - 1) * 10,
+                ...(sortBy && { sort_by: sortBy, order: "asc" }),
+            }
+        });
+    };
 
     return (
         <div>
@@ -111,7 +121,7 @@ const TalkToHumanSection = () => {
                 <TalkToHumanDataTable columns={talkToHumanColumns({ handleChangeTalkStatus })} data={talkToHumanCallLogsData?.results || []} loading={talkToHumanCallLogsIsFetching} />
 
                 {
-                    talkToHumanCallLogsData?.count && talkToHumanCallLogsData?.count > 12 &&
+                    typeof talkToHumanCallLogsData?.count === 'number' && talkToHumanCallLogsData?.count > 10 &&
                     <Pagination
                         page={page}
                         onPageChange={setPage}
