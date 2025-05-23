@@ -19,7 +19,7 @@ export default function ResetPasswordForm() {
   const toast = useToast();
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { data: session, status } = useSession();
+  const { status } = useSession();
 
   const uid = searchParams.get("uid");
   const token = searchParams.get("token");
@@ -40,19 +40,6 @@ export default function ResetPasswordForm() {
     },
   });
 
-  // const handleGoogleRegister = async () => {
-  //   const { error, data } = await registerGoogle({ token: "123" });
-
-  //   if (error) {
-  //     toast("error", beautifyErrors(error));
-  //     console.log("error", beautifyErrors(error));
-
-  //     return;
-  //   }
-
-  //   console.log("data", data);
-  // };
-
   const onSubmit = async (formData: FormValues) => {
     try {
       const payload = {
@@ -71,7 +58,7 @@ export default function ResetPasswordForm() {
       }
 
       if (data) {
-        toast("success", data?.message || "Password reset successful");
+        toast("success", data?.detail || "Password reset successful");
         router.push("/login");
         console.log("data", data);
       }
@@ -143,7 +130,7 @@ export default function ResetPasswordForm() {
         {/* cpassword */}
         <div className="flex flex-col mb-3">
           <label
-            htmlFor="password"
+            htmlFor="password2"
             className="text-sm mb-1 text-[#414651] font-medium"
           >
             Confirm Password<span className="text-primary-500">*</span>
@@ -164,7 +151,7 @@ export default function ResetPasswordForm() {
             render={({ field, formState: { errors } }) => (
               <Input
                 type="password"
-                id="password"
+                id="password2"
                 className="h-10"
                 placeholder="Create new password"
                 error={errors?.cpassword?.message}
@@ -201,7 +188,7 @@ export default function ResetPasswordForm() {
 
       <div className="text-center text-sm text-gray-400">
         <span>Just remember?</span>{" "}
-        <Link href="/general/login" className="text-primary-500 font-semibold">
+        <Link href="/login" className="text-primary-500 font-semibold">
           Log In
         </Link>
       </div>

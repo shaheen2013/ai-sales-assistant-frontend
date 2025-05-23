@@ -5,34 +5,6 @@ import NextAuth, { AuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-interface Token {
-  access: string;
-  refresh: string;
-  user: {
-    id: number;
-    last_login: string | null;
-    created_at: string;
-    updated_at: string;
-    street_address: string;
-    zip_code: string;
-    city: string;
-    state: string;
-    country: string;
-    lat: string;
-    lng: string;
-    county: string;
-    email: string;
-    name: string;
-    phone_number: string | null;
-    about: string | null;
-    profile_picture: string | null;
-    is_active: boolean;
-    is_verified: boolean;
-    uuid: string;
-    user_type: string;
-  };
-}
-
 async function refreshAccessToken(token: JWT) {
   try {
     const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/refresh-token`;
@@ -157,7 +129,7 @@ const authOptions: AuthOptions = {
     }),
   ],
   callbacks: {
-    async jwt({ token, user, account, profile, trigger }) {
+    async jwt({ token, user, account }) {
       // Google sign-in
       if (account?.provider === "google" && user) {
         const response = await googleAccessToken(account?.id_token as string);

@@ -1,19 +1,16 @@
 import { Metadata } from "next";
-import { redirect } from "next/navigation";
+import { Suspense } from "react";
+
+import ResetPasswordForm from "@/components/partials/auth/dealer/reset-password-form";
 
 export const metadata: Metadata = {
   title: "Reset Password | AI Sales Assistant",
 };
 
-export default function ResetRedirect({ searchParams }: any) {
-  const { uid, token } = searchParams;
-
-  // You can determine the role dynamically if needed (e.g., from cookies/session).
-  const role = "dealer"; // or 'admin'
-
-  const params = new URLSearchParams();
-  if (uid) params.append("uid", uid);
-  if (token) params.append("token", token);
-
-  redirect(`/${role}/reset-password?${params.toString()}`);
+export default function ResetRedirect() {
+  return (
+    <Suspense>
+      <ResetPasswordForm />
+    </Suspense>
+  );
 }

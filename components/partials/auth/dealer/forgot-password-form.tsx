@@ -2,7 +2,6 @@
 
 import React from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useForm, Controller } from "react-hook-form";
 
@@ -16,7 +15,6 @@ import { useForgotPasswordMutation } from "@/features/auth/authSlice";
 
 export default function ForgotPasswordForm() {
   const toast = useToast();
-  const router = useRouter();
   const { status } = useSession();
 
   const [forgotPassword, { isLoading }] = useForgotPasswordMutation();
@@ -32,25 +30,12 @@ export default function ForgotPasswordForm() {
 
   const { handleSubmit, control } = useForm<FormValues>({
     defaultValues: {
-      name: "John",
+      name: "",
       email: "",
       password: "",
       terms: true,
     },
   });
-
-  // const handleGoogleRegister = async () => {
-  //   const { error, data } = await registerGoogle({ token: "123" });
-
-  //   if (error) {
-  //     toast("error", beautifyErrors(error));
-  //     console.log("error", beautifyErrors(error));
-
-  //     return;
-  //   }
-
-  //   console.log("data", data);
-  // };
 
   const onSubmit = async (formData: FormValues) => {
     try {
@@ -151,7 +136,7 @@ export default function ForgotPasswordForm() {
 
       <div className="text-center text-sm text-gray-400">
         <span>Just remember?</span>{" "}
-        <Link href="/general/login" className="text-primary-500 font-semibold">
+        <Link href="/login" className="text-primary-500 font-semibold">
           Log In
         </Link>
       </div>

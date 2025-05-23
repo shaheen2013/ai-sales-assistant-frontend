@@ -1,13 +1,16 @@
 import { Metadata } from "next";
 
-import EnterCodeForm from "@/components/partials/auth/user/enter-code-form";
+import VerifyEmailPage from "./partials/VerifyEmailPage";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Enter Code | AI Sales Assistant",
 };
 
-export default function EnterCodePage() {
-  return <EnterCodeForm />;
+export default function VerifyEmail() {
+  return (
+    <Suspense>
+      <VerifyEmailPage />
+    </Suspense>
+  );
 }
-
-// export const dynamicPhoto = "/images/general-signup.svg";

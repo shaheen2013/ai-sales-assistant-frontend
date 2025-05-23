@@ -18,7 +18,7 @@ export default function LoginForm() {
 
   const toast = useToast();
   const router = useRouter();
-  const { data: session, status } = useSession();
+  const { status } = useSession();
 
   const loading = status === "loading";
 
@@ -31,7 +31,7 @@ export default function LoginForm() {
 
   const { handleSubmit, control } = useForm<FormValues>({
     defaultValues: {
-      name: "John",
+      name: "",
       email: "",
       password: "",
       terms: true,
@@ -74,7 +74,7 @@ export default function LoginForm() {
     }
   };
 
-  if (status === "authenticated" && session?.user?.user_type === "dealer") {
+  if (status === "authenticated") {
     router.push("/dashboard/overview");
   }
 
@@ -259,7 +259,7 @@ export default function LoginForm() {
       </form>
 
       <div className="text-center mb-2">
-        <Link href="/dealer/forgot-password" className="text-sm font-medium">
+        <Link href="/forgot-password" className="text-sm font-medium">
           Forgot Password?
         </Link>
       </div>

@@ -26,7 +26,7 @@ export default function NewUserModal() {
     basicProfile: false,
   });
 
-  const [step, setStep] = useState<number>(1);
+  const [step] = useState<number>(1);
 
   useEffect(() => {
     if (newuser) {

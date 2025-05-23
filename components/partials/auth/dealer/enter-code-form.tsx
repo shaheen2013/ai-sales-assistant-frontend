@@ -2,74 +2,55 @@
 
 import React from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useForm, Controller } from "react-hook-form";
 
 // components
 import Button from "@/components/button";
-
-import { useRegisterDealerMutation } from "@/features/auth/authSlice";
-
-import { beautifyErrors } from "@/lib/utils";
 import { useToast } from "@/hooks/useToast";
-
 import { Input } from "@/components/shadcn/input";
 
 export default function EnterCodeForm() {
   const toast = useToast();
   const router = useRouter();
 
-  const [register, { isLoading: isLoadingRegister }] = useRegisterDealerMutation();
+  const searchParams = useSearchParams();
+
+  const uid = searchParams.get("search");
+  const token = searchParams.get("token");
+
+  // const [emailConfirmation, { isLoading }] = useEmailConfirmedMutation({});
 
   type FormValues = {
-    name: string;
-    email: string;
-    password: string;
-    terms: boolean;
+    code: string;
   };
 
   const { handleSubmit, control } = useForm<FormValues>({
     defaultValues: {
-      name: "John",
-      email: "",
-      password: "",
-      terms: true,
+      code: "",
     },
   });
 
-  // const handleGoogleRegister = async () => {
-  //   const { error, data } = await registerGoogle({ token: "123" });
-
-  //   if (error) {
-  //     toast("error", beautifyErrors(error));
-  //     console.log("error", beautifyErrors(error));
-
-  //     return;
-  //   }
-
-  //   console.log("data", data);
-  // };
-
   const onSubmit = async (formData: FormValues) => {
-    console.log(formData);
-
     try {
-      const payload = {
-        name: formData.name,
-        email: formData.email,
-        password: formData.password,
-        terms: formData.terms,
-      };
-      const { error } = await register(payload);
+      // const payload = {
+      //   uid: uid,
+      //   token: token,
+      // };
+      // const { error, data } = await emailConfirmation(payload);
 
-      if (error) {
-        toast("error", beautifyErrors(error));
-        console.log("error", beautifyErrors(error));
+      // if (error) {
+      //   toast("error", beautifyErrors(error));
+      //   console.log("error", beautifyErrors(error));
 
-        return;
-      }
+      //   return;
+      // }
+
+      // console.log("data", data);
 
       toast("success", "Account created successfully!");
+
+      return;
       router.push("/dashboard/overview");
     } catch (error) {
       console.log(error);
@@ -83,7 +64,7 @@ export default function EnterCodeForm() {
       </h2>
 
       <p className="text-[#555D6A] text-center mb-6">
-        We send a code to the phone number you have given.
+        We send a code to the email address you gave us.
       </p>
 
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -93,20 +74,20 @@ export default function EnterCodeForm() {
             htmlFor="email"
             className="text-sm mb-1 text-[#414651] font-medium"
           >
-            Name <span className="text-primary-500">*</span>
+            Code <span className="text-primary-500">*</span>
           </label>
 
           <Controller
-            name="name"
+            name="code"
             control={control}
-            rules={{ required: "Name is required" }}
+            rules={{ required: "Code is required" }}
             render={({ field, formState: { errors } }) => (
               <Input
                 type="text"
                 id="name"
                 className="h-10"
-                placeholder="Name Here"
-                error={errors?.name?.message}
+                placeholder="Code Here"
+                error={errors?.code?.message}
                 preIcon={
                   <svg
                     width="20"
@@ -131,8 +112,8 @@ export default function EnterCodeForm() {
         <Button
           variant="primary"
           className="w-full mb-4 !font-medium"
-          loading={isLoadingRegister}
-          disabled={isLoadingRegister}
+          // loading={isLoading}
+          // disabled={isLoading}
         >
           Submit Code
         </Button>
@@ -140,7 +121,7 @@ export default function EnterCodeForm() {
 
       <div className="text-center text-sm text-gray-400">
         <span>Already have an account?</span>{" "}
-        <Link href="/general/login" className="text-primary-500 font-semibold">
+        <Link href="/user/login" className="text-primary-500 font-semibold">
           Log in
         </Link>
       </div>

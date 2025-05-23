@@ -135,7 +135,6 @@ const AdminSupportDialog: FC<AdminSupportDialogPropsType> = ({ data, onOpenChang
                 placeholder="Problem description"
                 className="min-h-[98px]"
                 wrapperClassName="xl:col-span-2 pb-4 border-b border-[#eff4fa]"
-                message='This is a hint text to help user.'
                 value={data?.description}
               />
 

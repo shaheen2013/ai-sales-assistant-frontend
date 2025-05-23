@@ -30,6 +30,8 @@ export default function DashboardSupport() {
   } = useGetAdminAllSupportTicketsQuery({
     status,
     ...(sortBy && { sort_by: sortBy }),
+    page,
+    page_size: 10,
   });
 
   return (

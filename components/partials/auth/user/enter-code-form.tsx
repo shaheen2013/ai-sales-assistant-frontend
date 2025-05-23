@@ -30,7 +30,7 @@ export default function EnterCodeForm() {
 
   const { handleSubmit, control } = useForm<FormValues>({
     defaultValues: {
-      name: "John",
+      name: "",
       email: "",
       password: "",
       terms: true,
@@ -140,7 +140,7 @@ export default function EnterCodeForm() {
 
       <div className="text-center text-sm text-gray-400">
         <span>Already have an account?</span>{" "}
-        <Link href="/general/login" className="text-primary-500 font-semibold">
+        <Link href="/user/login" className="text-primary-500 font-semibold">
           Log in
         </Link>
       </div>

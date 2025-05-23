@@ -8,7 +8,11 @@ import { useGetAdminDashboardDealerOverviewQuery } from "@/features/admin/adminD
 import Spinner from "@/components/spinner/Spinner";
 import MapChart from "../_components/MapChart";
 import moment from "moment";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
+import { useGetDealerRegistrationCountQuery } from "@/features/dealer/dealerSlice";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/shadcn/select";
+import { ChevronDown } from "lucide-react";
+import { getYears } from "@/lib/utils";
 
 const progressColors = [
     "#2196F3",
@@ -19,9 +23,16 @@ const progressColors = [
 ]
 
 function AdminDashboardDealerOverview() {
+    /*--React State--*/
+    const [year, setYear] = useState(String(moment().year()));
+
     /*--RTK Query--*/
     const { data, isLoading } = useGetAdminDashboardDealerOverviewQuery();
+    const { data: dealerRegistrationCount } = useGetDealerRegistrationCountQuery({ year });
+
     const totalActiveUser = useMemo(() => data?.country?.reduce((acc, curr) => acc + curr.count, 0), [data?.country]);
+    const totalOrganicUser = useMemo(() => dealerRegistrationCount?.counts?.reduce((acc, curr) => acc + curr.organic, 0), [dealerRegistrationCount?.counts]);
+    const totalAiUser = useMemo(() => dealerRegistrationCount?.counts?.reduce((acc, curr) => acc + curr.by_ai, 0), [dealerRegistrationCount?.counts]);
 
     return (
         <>
@@ -42,21 +53,55 @@ function AdminDashboardDealerOverview() {
 
                         {/* dealers chart section */}
                         <div className="border rounded-lg p-4 mb-4">
-                            <h4 className="text-[#181D27] text-sm font-semibold mb-4">
-                                How do you acquire Dealers?
-                            </h4>
+                            <div className="flex items-center justify-between mb-4">
+                                <h4 className="text-[#181D27] text-sm font-semibold">
+                                    How do you acquire Dealers?
+                                </h4>
+                                <Select value={year} onValueChange={setYear} defaultValue={String(moment().year())}>
+                                    <SelectTrigger
+                                        className='max-w-fit [&>svg]:hidden [&>span]:pointer-events-auto [&>span]:text-primary-500 [&>span]:text-sm [&>span]:font-medium gap-1.5'
+                                    >
+                                        <SelectValue placeholder='All Subscribers' />
+                                        <div>
+                                            <ChevronDown className='size-5 text-primary-500' />
+                                        </div>
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectGroup>
+                                            {
+                                                getYears().map((year) => (
+                                                    <SelectItem key={year} value={String(year)}>
+                                                        {year}
+                                                    </SelectItem>
+                                                ))
+                                            }
+                                        </SelectGroup>
+                                    </SelectContent>
+                                </Select>
+                            </div>
                             <hr className="mb-4" />
 
                             {/* charts */}
                             <div className="xl:flex-row flex-col-reverse flex overflow-x-auto">
                                 {/* left */}
                                 <div className="flex-1">
-                                    <DashboardDealerOverviewChart />
+                                    <DashboardDealerOverviewChart data={dealerRegistrationCount?.counts || []} />
                                 </div>
 
                                 {/* right */}
                                 <div className="col-span-4 lg:w-[280px] mx-auto w-full">
-                                    <DashboardDealerOverviewPieChart />
+                                    <DashboardDealerOverviewPieChart data={[
+                                        {
+                                            name: "organic",
+                                            visitors: totalOrganicUser || 0,
+                                            fill: "var(--color-chrome)",
+                                        },
+                                        {
+                                            name: "byAi",
+                                            visitors: totalAiUser || 0,
+                                            fill: "var(--color-safari)",
+                                        }
+                                    ]} />
                                 </div>
                             </div>
                         </div>
@@ -99,7 +144,7 @@ function AdminDashboardDealerOverview() {
                                                     <Progress
                                                         value={item?.percentage}
                                                         className="h-[10px]"
-                                                        progressColor={progressColors[index%5]}
+                                                        progressColor={progressColors[index % 5]}
                                                     />{" "}
                                                     <span className="text-gray-700 text-sm font-medium">{item?.percentage}%</span>
                                                 </div>

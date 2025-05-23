@@ -2,7 +2,6 @@
 
 import React from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useSession, signIn } from "next-auth/react";
 import { useForm, Controller } from "react-hook-form";
 
@@ -16,8 +15,7 @@ import { beautifyErrors } from "@/lib/utils";
 
 export default function ForgotPasswordForm() {
   const toast = useToast();
-  const router = useRouter();
-  const { data: session, status } = useSession();
+  const { status } = useSession();
 
   const [forgotPassword, { isLoading }] = useForgotPasswordMutation();
 
@@ -32,7 +30,7 @@ export default function ForgotPasswordForm() {
 
   const { handleSubmit, control } = useForm<FormValues>({
     defaultValues: {
-      name: "John",
+      name: "",
       email: "",
       password: "",
       terms: true,
@@ -154,7 +152,7 @@ export default function ForgotPasswordForm() {
 
       <div className="text-center text-sm text-gray-400">
         <span>Just remember?</span>{" "}
-        <Link href="/general/login" className="text-primary-500 font-semibold">
+        <Link href="/user/login" className="text-primary-500 font-semibold">
           Log In
         </Link>
       </div>

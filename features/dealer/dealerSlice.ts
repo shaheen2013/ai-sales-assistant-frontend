@@ -1,6 +1,7 @@
 import { PaginatedResponse } from "@/types/paginatedType";
 import { apiSlice } from "../api/apiSlice";
-import { Dealer, DealerStatisticsResponseType } from "@/types/dealerType";
+import { Dealer, DealerRegistrationSourceCount, DealerStatisticsResponseType } from "@/types/dealerType";
+import { SupportStatusCountType, SupportTicketType } from "@/types/supportTicketType";
 
 export const dealerSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
@@ -16,8 +17,46 @@ export const dealerSlice = apiSlice.injectEndpoints({
                 method: "GET",
                 url: `/admin-dashboard/dealer/subscription/statistics/`,
             }),
+        }),
+        getDealerRegistrationCount: builder.query<DealerRegistrationSourceCount, Record<string, any>>({
+            query: (queryParams) => ({
+                method: "GET",
+                url: `/admin-dashboard/dealer-registration-source-count/`,
+                params: queryParams,
+            })
+        }),
+        getDealerAllSupportTickets: builder.query<PaginatedResponse<SupportTicketType> & SupportStatusCountType, Record<string, any>>({
+            query: (queryParams) => ({
+                method: "GET",
+                url: `/dealer-dashboard/tickets/`,
+                params: queryParams,
+            }),
+            providesTags: ["getDealerAllSupportTickets"],
+        }),
+        createSupportTicket: builder.mutation<SupportTicketType, Record<string, any>>({
+            query: (data) => ({
+                method: "POST",
+                url: `/dealer-dashboard/tickets/create/`,
+                body: data
+            }),
+            invalidatesTags: ["getDealerAllSupportTickets"],
+        }),
+        updateDealerSupportTicket: builder.mutation<SupportTicketType, Record<string, any>>({
+            query: ({ticketId, data}) => ({
+                method: "PUT",
+                url: `/dealer-dashboard/tickets/${ticketId}/update/`,
+                body: data
+            }),
+            invalidatesTags: ["getDealerAllSupportTickets"]
+        }),
+        deleteDealerSupportTicker: builder.mutation<SupportTicketType, string>({
+            query: (ticketId) => ({
+                method: "DELETE",
+                url: `/dealer-dashboard/tickets/${ticketId}/delete/`,
+            }),
+            invalidatesTags: ["getDealerAllSupportTickets"]
         })
     }),
 });
 
-export const { useGetDealersQuery, useGetDealerStatisticsQuery } = dealerSlice;
+export const { useGetDealersQuery, useGetDealerStatisticsQuery, useGetDealerRegistrationCountQuery, useGetDealerAllSupportTicketsQuery, useCreateSupportTicketMutation, useUpdateDealerSupportTicketMutation, useDeleteDealerSupportTickerMutation } = dealerSlice;
