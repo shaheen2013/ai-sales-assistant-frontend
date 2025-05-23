@@ -1,7 +1,11 @@
-import { Check, Download } from 'lucide-react';
+import { useGetBillingHistoryQuery } from '@/features/dealer/dealerProfileSlice';
+import { Check, Download, X } from 'lucide-react';
 import Link from 'next/link';
 
 const BillingHistoryTable = () => {
+  const { data: billingHistory } = useGetBillingHistoryQuery();
+  const invoicesData = billingHistory?.results || [];
+
   return (
     <div className="mt-12">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
@@ -13,6 +17,7 @@ const BillingHistoryTable = () => {
             Manage your team members and their account permissions here.
           </p>
         </div>
+        {/* TODO: Add a download all billing history functionality */}
         <button className="mt-4 md:mt-0 flex items-center gap-2 text-[#2b3545] border border-[#eaebec] rounded-lg px-4 py-2">
           Download All Billing History <Download size={16} />
         </button>
@@ -41,48 +46,41 @@ const BillingHistoryTable = () => {
             </tr>
           </thead>
           <tbody>
-            {[
-              {
-                id: 1,
-                plan: 'Basic Plan – Dec 2025',
-                amount: 'USD $10.00',
-                date: 'Dec 1, 2025',
-              },
-              {
-                id: 2,
-                plan: 'Basic Plan – Nov 2025',
-                amount: 'USD $10.00',
-                date: 'Nov 1, 2025',
-              },
-              {
-                id: 3,
-                plan: 'Basic Plan – Oct 2025',
-                amount: 'USD $10.00',
-                date: 'Oct 1, 2025',
-              },
-              {
-                id: 4,
-                plan: 'Basic Plan – Sep 2025',
-                amount: 'USD $10.00',
-                date: 'Sep 1, 2025',
-              },
-            ].map((invoice) => (
-              <tr key={invoice.id} className="border-b border-[#eaebec]">
-                <td className="py-4 px-4 text-[#2b3545]">{invoice.plan}</td>
-                <td className="py-4 px-4 text-[#2b3545]">{invoice.amount}</td>
-                <td className="py-4 px-4 text-[#2b3545]">{invoice.date}</td>
-                <td className="py-4 px-4">
-                  <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-[#b0dfc0] text-[#018b30] text-xs">
-                    <Check size={12} /> Paid
-                  </span>
-                </td>
-                <td className="py-4 px-4">
-                  <button className="text-[#707070]">
-                    <Download size={18} />
-                  </button>
+            {invoicesData?.length === 0 ? (
+              <tr>
+                <td colSpan={5} className="py-4 px-4 text-center">
+                  No invoices found
                 </td>
               </tr>
-            ))}
+            ) : (
+              invoicesData?.map((invoice: any) => (
+                <tr key={invoice.id} className="border-b border-[#eaebec]">
+                  <td className="py-4 px-4 text-[#2b3545]">
+                    {invoice.plan_name}
+                  </td>
+                  <td className="py-4 px-4 text-[#2b3545]">{invoice.total}</td>
+                  <td className="py-4 px-4 text-[#2b3545]">
+                    {invoice.created}
+                  </td>
+                  <td className="py-4 px-4">
+                    {invoice.paid ? (
+                      <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-[#b0dfc0] text-[#018b30] text-xs">
+                        <Check size={12} /> Paid
+                      </span>
+                    ) : (
+                      <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-[#f0b4b4] text-[#990000] text-xs">
+                        <X size={12} /> Unpaid
+                      </span>
+                    )}
+                  </td>
+                  <td className="py-4 px-4 text-left">
+                    <a href={invoice.invoice_pdf} rel="noopener noreferrer">
+                      <Download size={18} />
+                    </a>
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>
