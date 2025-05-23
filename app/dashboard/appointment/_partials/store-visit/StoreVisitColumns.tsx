@@ -10,7 +10,7 @@ export const storeVisitColumns = ({ handleChangeVisitStatus }: { handleChangeVis
     {
       accessorKey: "name",
       header: "Name",
-      cell: ({ row }) => row.original?.customer || "N/A",
+      cell: ({ row }) => row.original?.customer?.name || "N/A",
     },
     {
       accessorKey: "schedule_date",
