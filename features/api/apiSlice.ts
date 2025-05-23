@@ -20,6 +20,13 @@ export const apiSlice = createApi({
       return headers;
     },
   }),
-  tagTypes: ['user', 'dealerProfile', "getAdminAllSupportTickets", "getDealerAllSupportTickets"],
+  tagTypes: [
+    'user',
+    'dealerProfile',
+    'getAdminAllSupportTickets',
+    'departmentsData',
+    'pricingPlans',
+    'getDealerAllSupportTickets',
+  ],
   endpoints: () => ({}),
 });
