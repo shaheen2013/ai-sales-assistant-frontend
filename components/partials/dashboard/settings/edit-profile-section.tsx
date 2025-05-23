@@ -15,14 +15,7 @@ import {
 } from '@/features/dealer/dealerProfileSlice';
 import { useToast } from '@/hooks/useToast';
 import { zodResolver } from '@hookform/resolvers/zod';
-import {
-  ChevronRight,
-  CircleHelp,
-  Pencil,
-  Trash2,
-  Upload,
-  X,
-} from 'lucide-react';
+import { ChevronRight, CircleHelp, Pencil, Trash2, Upload } from 'lucide-react';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -55,7 +48,7 @@ export default function EditProfileSection() {
     'Sales',
     'Financing',
   ]);
-  const [newService, setNewService] = useState<string>('');
+
   const toast = useToast();
   const { data, isLoading } = useGetDealerProfileQuery(undefined, {
     refetchOnMountOrArgChange: true,
@@ -102,21 +95,6 @@ export default function EditProfileSection() {
       setProfileImage(file);
       form.setValue('profile_picture', file);
     }
-  };
-
-  const addService = (service: string) => {
-    if (service && !selectedServices.includes(service)) {
-      const newServices = [...selectedServices, service];
-      setSelectedServices(newServices);
-      // form.setValue('services', newServices);
-      setNewService('');
-    }
-  };
-
-  const removeService = (service: string) => {
-    const newServices = selectedServices.filter((s) => s !== service);
-    setSelectedServices(newServices);
-    // form.setValue('services', newServices);
   };
 
   const onSubmit = async (data: TUpdateDealerProfileValues) => {
@@ -463,7 +441,7 @@ export default function EditProfileSection() {
           </div>
 
           {/* Form Fields - Fifth Row */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+          <div className="grid grid-cols-1  gap-4 sm:gap-6">
             <div className="space-y-1 sm:space-y-2">
               <label
                 htmlFor="about"
@@ -490,51 +468,6 @@ export default function EditProfileSection() {
               />
               <p className="text-[#717882] text-xs sm:text-sm">
                 Enter your short bio here
-              </p>
-            </div>
-
-            <div className="space-y-1 sm:space-y-2">
-              <label
-                htmlFor="services"
-                className="text-[#555d6a] flex items-center text-sm sm:text-base"
-              >
-                Services Offered <span className="text-red-500 ml-0.5">*</span>
-                <CircleHelp className="h-4 w-4 ml-1 text-[#a4a7ae]" />
-              </label>
-              <div className="border border-[#d5d7da] rounded-md p-2 min-h-[100px] sm:min-h-[120px]">
-                <div className="flex flex-wrap gap-2 mb-2">
-                  {selectedServices.map((service) => (
-                    <div
-                      key={service}
-                      className="flex items-center bg-[#f5f5f5] rounded-md px-2 py-1"
-                    >
-                      <span className="text-[#555d6a] text-xs sm:text-sm">
-                        {service}
-                      </span>
-                      <button
-                        onClick={() => removeService(service)}
-                        className="ml-1 text-[#555d6a] hover:text-[#2b3545]"
-                      >
-                        <X className="h-3 w-3 sm:h-4 sm:w-4" />
-                      </button>
-                    </div>
-                  ))}
-                  <Input
-                    value={newService}
-                    onChange={(e) => setNewService(e.target.value)}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter') {
-                        e.preventDefault();
-                        addService(newService);
-                      }
-                    }}
-                    placeholder="Test Drive"
-                    className="border-none focus:ring-0 p-0 h-8 text-[#555d6a] text-xs sm:text-sm"
-                  />
-                </div>
-              </div>
-              <p className="text-[#717882] text-xs sm:text-sm">
-                Your service you offered
               </p>
             </div>
           </div>
@@ -591,12 +524,12 @@ export default function EditProfileSection() {
                   </div>
                 </div>
                 <div className="flex items-center space-x-2 sm:space-x-3">
-                  <button className="text-[#555d6a]">
+                  <div className="text-[#555d6a]">
                     <Pencil className="h-4 w-4 sm:h-5 sm:w-5" />
-                  </button>
-                  <button className="text-[#555d6a]">
+                  </div>
+                  <div className="text-[#555d6a]">
                     <Trash2 className="h-4 w-4 sm:h-5 sm:w-5" />
-                  </button>
+                  </div>
                 </div>
               </div>
             </div>
