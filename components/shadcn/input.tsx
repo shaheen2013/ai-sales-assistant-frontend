@@ -56,6 +56,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
                 "pl-10": preIcon,
                 "pr-10": postIcon,
               },
+              error && "border-red-500",
               className
             )}
             ref={ref}

@@ -21,3 +21,14 @@ export interface DealerStatisticsResponseType {
     paid_dealers: DealerStatisticType;
     paid_conversion_rate: DealerStatisticType
 }
+
+export interface DealerRegistrationSourceMonthlyData {
+    month: string;
+    organic: number;
+    by_ai: number;
+}
+
+export interface DealerRegistrationSourceCount {
+    year: number;
+    counts: DealerRegistrationSourceMonthlyData[];
+}

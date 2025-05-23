@@ -3,21 +3,20 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/shadcn/table';
 import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import React from 'react';
-import { TechnicalVisitColumnsDataType } from './TechnicalVisitColumns';
-import { TestDriveResponseType } from '@/types/appointmentBookingSliceType';
+import { StoreVisitResponseType } from '@/types/appointmentBookingSliceType';
 import TableSkeleton from '@/components/skeleton/TableSkeleton';
 
-interface TechnicalVisitDataTableProps {
-  columns: ColumnDef<TestDriveResponseType, unknown>[];
-  data: TestDriveResponseType[];
+interface StoreVisitDataTableProps {
+  columns: ColumnDef<StoreVisitResponseType, unknown>[];
+  data: StoreVisitResponseType[];
   loading: boolean;
 }
 
-const TechnicalVisitDataTable = ({
+const StoreVisitDataTable = ({
   columns,
   data,
   loading,
-}: TechnicalVisitDataTableProps) => {
+}: StoreVisitDataTableProps) => {
   const table = useReactTable({
     data,
     columns,
@@ -69,4 +68,4 @@ const TechnicalVisitDataTable = ({
   );
 };
 
-export default TechnicalVisitDataTable;
+export default StoreVisitDataTable;

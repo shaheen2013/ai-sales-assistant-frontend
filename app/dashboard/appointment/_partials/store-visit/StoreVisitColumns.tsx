@@ -1,63 +1,30 @@
 import Badge from '@/components/badge/Badge';
-import { TalkToHumanResponseType } from '@/types/appointmentBookingSliceType';
+import { StoreVisitResponseType } from '@/types/appointmentBookingSliceType';
 import { ColumnDef } from '@tanstack/react-table';
 import { Phone } from 'lucide-react';
 import moment from 'moment';
 
-export type TalkToHumanColumnDataType = {
-  id: number;
-  name: string;
-  category: { label: string, value: string }[];
-  schedule_date: string;
-  priority: string;
-}
-
-export const talkToHumanColumns: ColumnDef<TalkToHumanResponseType>[] = [
+export const storeVisitColumns: ColumnDef<StoreVisitResponseType>[] = [
   {
     accessorKey: "name",
     header: "Name",
-    cell: ({ row }) => row.original.customer,
+    cell: ({ row }) => row.original?.customer || "N/A",
   },
-  // {
-  //   accessorKey: "category",
-  //   header: () => <div className="text-center">Category</div>,
-  //   cell: ({ row }) => {
-  //     const categories = row.getValue("category");
-  //     const getCategoryVariant = (category: string) => {
-  //       if (category === "car_buying") {
-  //         return "blue";
-  //       } else if (category === "car_information") {
-  //         return "purple";
-  //       } else if (category === "suggestions") {
-  //         return "orange";
-  //       }
-
-  //       return "blue";
-  //     }
-
-  //     return (
-  //       <div className="flex flex-col gap-1 items-center">
-  //         {Array.isArray(categories) ? categories?.map((category, index) => (
-  //           <Badge
-  //             text={category.label}
-  //             variant={getCategoryVariant(category?.value)}
-  //             key={index}
-  //           />
-  //         )) : "N/A"}
-  //       </div>
-  //     );
-  //   }
-  // },
   {
     accessorKey: "schedule_date",
     header: "Scheduled Date & Time",
     cell: ({ row }) => `${moment(row.original?.created_at).format("MMM DD, YYYY")} | ${moment(row.original?.created_at).format("hh:mm a")}`,
   },
+  {
+    accessorKey: "visit_reason",
+    header: "Visit Reason",
+    cell: ({ row }) => row.original?.visit_reason || "N/A",
+  },
   // {
   //   accessorKey: "priority",
   //   header: () => <div className="text-center">Priority</div>,
   //   cell: ({ row }) => {
-  //     const priority: string = row.original.department?.department_email;
+  //     const priority: string = row.getValue("priority");
   //     const getCategoryVariant = (priority: string) => {
   //       if (priority?.toLowerCase() === "high") {
   //         return "green";
