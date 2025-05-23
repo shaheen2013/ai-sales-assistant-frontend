@@ -180,11 +180,9 @@ export default function PricingPlans() {
 
                         {/* subtitle */}
 
-                        {plan.description && (
-                          <p className="text-center text-[#2B3545] mb-9">
-                            {plan.description}
-                          </p>
-                        )}
+                        <p className="text-center text-[#2B3545] mb-9">
+                          {plan?.description || "Perfect for sell used cars"}
+                        </p>
 
                         <hr className="mb-9" />
 
