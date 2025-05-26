@@ -24,6 +24,20 @@ export default function AnonymousChat() {
         'Hello, I am Clara, from Teez AI. How can I assist you with your vehicle parts inventory today?',
       timestamp: '2025-05-07T12:00:00Z',
     },
+    {
+      id: '5151',
+      isMe: false,
+      message:
+        `Hello! I'm your friendly sales assistant for Teez AI, here to help you understand the incredible value of joining our platform. Teez AI is an AI-driven solution specifically designed to empower dealerships like yours with intelligent automation, real-time customer engagement, and streamlined operations.
+
+By becoming a dealer with Teez AI, you'll not only gain access to advanced tools and features that can significantly boost your sales, but you'll also receive personalized support from our admin team. This includes expert onboarding, customized platform configurations, and integration with your existing systems, ensuring a seamless experience.
+
+If you're ready to transform your dealership and enhance your customer interactions, I encourage you to sign up today! You can register through this link: [Join Teez AI](http://localhost:8000/api/dealer-registration/?source=ai&session_id=87882dfb-ca50-418c-a2db-829147262a69).
+
+Don't miss out on the opportunity to elevate your dealership's digital presence! If you have any questions or need assistance, feel free to reach out. I'm here to help you every step of the way!
+        `,
+      timestamp: '2025-05-07T12:00:00Z',
+    },
   ]);
 
   const [startChat, { isLoading, error }] = useStartChatMutation();
@@ -85,16 +99,14 @@ export default function AnonymousChat() {
 
     try {
       const response = await startChat({
-        message,
-        email: email,
-        dealer_id: 1, // hard coded set the dealer id for now
+        question: message,
       }).unwrap();
       setMessages((prevMessages) => [
         ...prevMessages,
         {
           id: (Date.now() + 1).toString(),
           isMe: false,
-          message: response.response,
+          message: response.answer,
           timestamp: new Date().toISOString(),
         },
       ]);
@@ -107,28 +119,18 @@ export default function AnonymousChat() {
     <div className="h-[calc(100vh)] overflow-hidden flex flex-col justify-center">
       <Header />
       <div className="flex-1">
-        {!initiateChat ? (
-          <AISalesInitializer
-            emailValue={email}
-            selectedDealer={selectedDealer}
-            onEmailChange={handleEmailChange}
-            onDealerChange={handleDealerChange}
-            onEmailSubmit={handleEmailSubmit}
-          />
-        ) : (
-          <ChatApp
-            isLoading={isLoading}
-            isError={!!error}
-            message={message}
-            messages={messages}
-            onMessageChange={(e) => setMessage(e.target.value)}
-            messageRef={messageRef}
-            messagesRef={messagesRef}
-            onEmojiClick={handleEmojiClick}
-            onMessageSend={handleMessageSend}
-            selectedDealer={selectedDealer}
-          />
-        )}
+        <ChatApp
+          isLoading={isLoading}
+          isError={!!error}
+          message={message}
+          messages={messages}
+          onMessageChange={(e) => setMessage(e.target.value)}
+          messageRef={messageRef}
+          messagesRef={messagesRef}
+          onEmojiClick={handleEmojiClick}
+          onMessageSend={handleMessageSend}
+          selectedDealer={selectedDealer}
+        />
       </div>
     </div>
   );

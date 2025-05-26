@@ -4,7 +4,7 @@ export const chatSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     startChat: builder.mutation({
       query: (data) => ({
-        url: `/v1/chat/`,
+        url: `/admin-dashboard/sales-agent-admin-to-dealer/`,
         method: 'POST',
         body: data,
         credentials: 'include',
