@@ -1,37 +1,37 @@
-'use client';
+"use client";
 
-import Button from '@/components/button';
+import Button from "@/components/button";
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormMessage,
-} from '@/components/shadcn/form';
-import { InputPassword } from '@/components/shadcn/input';
-import { useUpdateDealerPasswordMutation } from '@/features/dealer/dealerProfileSlice';
-import { useToast } from '@/hooks/useToast';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import * as z from 'zod';
+} from "@/components/shadcn/form";
+import { InputPassword } from "@/components/shadcn/input";
+import { useUpdateDealerPasswordMutation } from "@/features/dealer/dealerProfileSlice";
+import { useToast } from "@/hooks/useToast";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
 
 // Password validation schema
 const passwordSchema = z
   .object({
-    old_password: z.string().min(1, 'Old password is required'),
+    old_password: z.string().min(1, "Old password is required"),
     new_password: z
       .string()
-      .min(8, 'Password must be at least 8 characters')
-      .regex(/[a-z]/, 'Password must contain at least one lowercase letter')
+      .min(8, "Password must be at least 8 characters")
+      .regex(/[a-z]/, "Password must contain at least one lowercase letter")
       .regex(
         /[\d\W\s]/,
-        'Password must contain at least one number, symbol, or whitespace'
+        "Password must contain at least one number, symbol, or whitespace"
       ),
-    confirm_password: z.string().min(1, 'Please confirm your password'),
+    confirm_password: z.string().min(1, "Please confirm your password"),
   })
   .refine((data) => data.new_password === data.confirm_password, {
-    message: 'Passwords do not match',
-    path: ['confirm_password'],
+    message: "Passwords do not match",
+    path: ["confirm_password"],
   });
 
 type PasswordFormValues = z.infer<typeof passwordSchema>;
@@ -44,9 +44,9 @@ export default function PasswordAndSecuritySection() {
   const form = useForm<PasswordFormValues>({
     resolver: zodResolver(passwordSchema),
     defaultValues: {
-      old_password: '',
-      new_password: '',
-      confirm_password: '',
+      old_password: "",
+      new_password: "",
+      confirm_password: "",
     },
   });
 
@@ -58,11 +58,11 @@ export default function PasswordAndSecuritySection() {
       }).unwrap();
 
       if (response) {
-        toast('success', 'Password updated successfully');
+        toast("success", "Password updated successfully");
         form.reset();
       }
     } catch (error: any) {
-      toast('error', error.data?.detail || 'Failed to update password');
+      toast("error", error.data?.detail || "Failed to update password");
     }
   };
 
@@ -140,8 +140,7 @@ export default function PasswordAndSecuritySection() {
                   htmlFor="confirm_password"
                   className="text-[#555d6a] font-normal"
                 >
-                  Enter New Password Again{' '}
-                  <span className="text-red-500">*</span>
+                  Confirm Password <span className="text-red-500">*</span>
                 </label>
                 <FormField
                   control={form.control}
@@ -191,7 +190,7 @@ export default function PasswordAndSecuritySection() {
               variant="primary"
               disabled={isLoading}
             >
-              {isLoading ? 'Updating...' : 'Update Password'}
+              {isLoading ? "Updating..." : "Update Password"}
             </Button>
           </div>
         </form>
