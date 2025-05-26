@@ -24,7 +24,7 @@ export const storeVisitColumns = ({ handleChangeVisitStatus }: { handleChangeVis
     },
     {
       accessorKey: "Visited",
-      header: () => <div className="text-center">Action</div>,
+      header: () => <div className="text-center">Visited</div>,
       cell: ({ row }) => {
         return (
           <div>

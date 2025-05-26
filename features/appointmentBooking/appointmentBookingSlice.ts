@@ -10,6 +10,7 @@ export const appointmentBookingSlice = apiSlice.injectEndpoints({
                 url: `/call-logs/`,
                 params: queryParams,
             }),
+            providesTags: ["getTalkToHumanCallLogs"],
         }),
         getTestDrive: builder.query<PaginatedResponse<TestDriveResponseType>, Record<string, any>>({
             query: (queryParams) => ({
@@ -49,6 +50,29 @@ export const appointmentBookingSlice = apiSlice.injectEndpoints({
                 }
             }
         }),
+        updateTalkToHumanStatus: builder.mutation<StoreVisitResponseType, Record<string, any>>({
+            query: ({ id, data }) => ({
+                method: "PATCH",
+                url: `/talk-to-human-bookings/${id}/update/`,
+                body: data,
+            }),
+            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+                const patchResults = dispatch(
+                    appointmentBookingSlice.util.updateQueryData("getTalkToHumanCallLogs", arg?.queryParams, (draft) => {
+                        const item = draft.results?.find((visit) => visit.id === arg.id);
+                        if (item) {
+                            Object.assign(item, { ...item, ...arg.data });
+                        }
+                    })
+                )
+
+                try {
+                    await queryFulfilled;
+                } catch (err) {
+                    patchResults.undo();
+                }
+            }
+        }),
         getAppoinments: builder.query<AppointmentResponseType, Record<string, any>>({
             query: (queryParams) => ({
                 method: "GET",
@@ -59,4 +83,4 @@ export const appointmentBookingSlice = apiSlice.injectEndpoints({
     }),
 });
 
-export const { useGetTalkToHumanCallLogsQuery, useGetTestDriveQuery, useGetStoreVisitQuery, useUpdateStoreVisitStatusMutation, useGetAppoinmentsQuery } = appointmentBookingSlice;
+export const { useGetTalkToHumanCallLogsQuery, useGetTestDriveQuery, useGetStoreVisitQuery, useUpdateStoreVisitStatusMutation, useGetAppoinmentsQuery, useUpdateTalkToHumanStatusMutation } = appointmentBookingSlice;

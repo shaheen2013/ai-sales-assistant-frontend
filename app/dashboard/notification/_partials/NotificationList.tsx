@@ -153,7 +153,7 @@ const NotificationList = () => {
             </div>
 
             {
-                notificationsData?.count && notificationsData?.count > 10 && <Pagination
+                typeof notificationsData?.count === 'number'  && notificationsData?.count > 10 && <Pagination
                     page={page}
                     totalPage={(notificationsData?.count || 0) / 10}
                     onPageChange={(page) => setPage(page)}

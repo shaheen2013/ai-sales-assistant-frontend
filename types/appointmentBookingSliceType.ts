@@ -33,6 +33,7 @@ export type TestDriveResponseType = {
     id: string;
     name: string;
     starts_at: string;
+    booking_status: string;
 }
 
 export type StoreVisitResponseType = {
