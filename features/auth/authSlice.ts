@@ -3,10 +3,11 @@ import { apiSlice } from "../api/apiSlice";
 export const authSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     registerDealer: builder.mutation({
-      query: (data) => ({
+      query: ({ data, queryParams }) => ({
         url: `/dealer-registration`,
         method: "POST",
         body: data,
+        params: queryParams,
         credentials: "include",
       }),
       invalidatesTags: ["user"],

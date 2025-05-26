@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { signIn, useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useForm, Controller } from "react-hook-form";
 
 // components
@@ -24,6 +24,10 @@ import DealerRegistration from "@/components/partials/auth/dealer/dealer-registr
 export default function SignupForm() {
   const toast = useToast();
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const source = searchParams.get("source");
+  const session_id = searchParams.get("session_id");
+
   const { status } = useSession();
 
   const [registerProgress, setRegisterProgress] = useState(0);
@@ -80,7 +84,19 @@ export default function SignupForm() {
         terms: formData.terms,
       };
 
-      const { error, data } = await register(payload);
+      let queryParams = {};
+      if (source && session_id) {
+        queryParams = {
+          ...queryParams,
+          source: source,
+          session_id: session_id
+        }
+      }
+
+      const { error, data } = await register({
+        data: payload,
+        queryParams
+      });
 
       if (error) {
         toast("error", beautifyErrors(error));
@@ -104,7 +120,7 @@ export default function SignupForm() {
           clearInterval(interval);
           // After reaching 100, reset back to 0
           toast("success", data?.detail || "Registration successful");
-          setTimeout(() => {}, 3000); // small pause before reset (optional)
+          setTimeout(() => { }, 3000); // small pause before reset (optional)
         }
       }, 30); // 20ms per update = smooth
     } catch (error) {
