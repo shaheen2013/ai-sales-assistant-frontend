@@ -69,20 +69,20 @@ export default function DashboardDealerInventory() {
   });
 
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
-  const [selectedPanel, setSelectedPanel] = useState<"list" | "files">("list");
+  const [selectedPanel, setSelectedPanel] = useState<"list" | "files">("files");
 
   const [modals, setModals] = useState({
     addInventory: false,
     addPdf: false,
   });
 
-  const search = searchParams.get("search");
+  // const search = searchParams.get("search");
   const filter = searchParams.get("filter");
   const sort = searchParams.get("sort");
 
   const [debouncedSearchValue, setSearch] = useDebounceValue("", 500);
 
-  console.log("debouncedValue => ", debouncedSearchValue);
+  // console.log("debouncedValue => ", debouncedSearchValue);
 
   // const files_search = searchParams.get("file_search");
   // const files_filter = searchParams.get("file_filter");
@@ -425,7 +425,12 @@ export default function DashboardDealerInventory() {
               handleInventoryDelete={handleInventoryDelete}
             />
           ) : (
-            <InventoryFilesList />
+            <InventoryFilesList
+              isLoading={isFetchingGetInventoryFiles}
+              isError={errorGetInventoryFiles}
+              refetchGetInventoryFiles={refetchGetInventoryFiles}
+              dataGetInventoryFiles={dataGetInventoryFiles}
+            />
           )}
 
           <hr />
