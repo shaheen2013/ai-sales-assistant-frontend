@@ -58,44 +58,7 @@ export default function InventoryFilesList({
     file_name: string;
     file: string;
     file_size: string;
-    // stockId: string;
-    // createdDate: string;
-    // brand: string;
-    // vin: string;
-    // model: string;
-    // mileage: string;
-    // year: string;
   };
-
-  // const inventoryData: Inventory[] = [
-  //   {
-  //     stockId: "STK-001",
-  //     createdDate: "2023-10-01",
-  //     brand: "Toyota",
-  //     vin: "1HGCM82633A004352",
-  //     model: "Camry",
-  //     mileage: "45000",
-  //     year: "2020",
-  //   },
-  //   {
-  //     stockId: "STK-002",
-  //     createdDate: "2023-10-02",
-  //     brand: "Honda",
-  //     vin: "2HGFB2F59CH512345",
-  //     model: "Civic",
-  //     mileage: "38000",
-  //     year: "2019",
-  //   },
-  //   {
-  //     stockId: "STK-003",
-  //     createdDate: "2023-10-03",
-  //     brand: "Ford",
-  //     vin: "1FAHP3FN8AW123456",
-  //     model: "Focus",
-  //     mileage: "51000",
-  //     year: "2018",
-  //   },
-  // ];
 
   const columns: ColumnDef<Inventory>[] = [
     {
@@ -310,8 +273,8 @@ export default function InventoryFilesList({
   ];
 
   const data: Inventory[] = useMemo(
-    () => dataGetInventoryFiles?.results || [],
-    []
+    () => dataGetInventoryFiles?.results,
+    [dataGetInventoryFiles?.results]
   );
 
   const table = useReactTable({
@@ -338,7 +301,6 @@ export default function InventoryFilesList({
   }
 
   if (isError) {
-    console.error("Error loading inventory files");
     return (
       <div className="flex items-center justify-center h-full">
         <p className="text-red-500">Error loading inventory files.</p>
@@ -373,7 +335,7 @@ export default function InventoryFilesList({
           ))}
         </TableHeader>
         <TableBody>
-          {table && table?.getRowModel()?.rows?.length ? (
+          {table?.getRowModel()?.rows?.length ? (
             table?.getRowModel()?.rows?.map((row) => (
               <TableRow
                 key={row.id}

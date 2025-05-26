@@ -82,12 +82,6 @@ export default function DashboardDealerInventory() {
 
   const [debouncedSearchValue, setSearch] = useDebounceValue("", 500);
 
-  // console.log("debouncedValue => ", debouncedSearchValue);
-
-  // const files_search = searchParams.get("file_search");
-  // const files_filter = searchParams.get("file_filter");
-  // const files_sort = searchParams.get("file_sort");
-
   // rtk query
   const {
     data: getVehicleList,
@@ -98,15 +92,19 @@ export default function DashboardDealerInventory() {
     search: debouncedSearchValue,
     filter: filter,
     sort: sort,
-    // offset
   });
 
   const {
     data: dataGetInventoryFiles,
     error: errorGetInventoryFiles,
+    isLoading: isLoadingGetInventoryFiles,
     isFetching: isFetchingGetInventoryFiles,
     refetch: refetchGetInventoryFiles,
-  } = useGetInventoryFilesQuery({});
+  } = useGetInventoryFilesQuery({
+    search: debouncedSearchValue,
+    filter: filter,
+    sort: sort,
+  });
 
   // rtk mutation
   const [createVehicleInventory, { isLoading: isLoadingCreateVehicle }] =
@@ -261,7 +259,7 @@ export default function DashboardDealerInventory() {
         <h2 className="mb-4">Recent files</h2>
 
         <RecentFiles
-          isFetching={isFetchingGetInventoryFiles}
+          isFetching={isLoadingGetInventoryFiles}
           dataGetInventoryFiles={dataGetInventoryFiles}
         />
       </div>
@@ -304,7 +302,6 @@ export default function DashboardDealerInventory() {
             {/* search */}
             <div>
               <Input
-                // value={debouncedValue}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search"
                 className="max-w-[300px] h-10"
@@ -334,6 +331,7 @@ export default function DashboardDealerInventory() {
               {/* filter */}
               <Select>
                 <SelectTrigger
+                  value={""}
                   className="w-[80px]"
                   postIcon={<div></div>}
                   preIcon={
@@ -427,7 +425,7 @@ export default function DashboardDealerInventory() {
           ) : (
             <InventoryFilesList
               isLoading={isFetchingGetInventoryFiles}
-              isError={errorGetInventoryFiles}
+              isError={Boolean(errorGetInventoryFiles)}
               refetchGetInventoryFiles={refetchGetInventoryFiles}
               dataGetInventoryFiles={dataGetInventoryFiles}
             />
