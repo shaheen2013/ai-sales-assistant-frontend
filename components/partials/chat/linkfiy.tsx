@@ -11,7 +11,6 @@ export function linkifyHTML(htmlString: string): React.ReactNode {
       // Handle text nodes
       if (domNode.type === "text") {
         const data = (domNode as Text).data;
-        console.log("data----->", data);
         const matches = linkify.match(data);
 
         if (matches) {
