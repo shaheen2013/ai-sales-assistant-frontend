@@ -12,7 +12,7 @@ import Button from "@/components/button";
 
 import { beautifyErrors } from "@/lib/utils";
 import { useToast } from "@/hooks/useToast";
-import { Input } from "@/components/shadcn/input";
+import { Input, InputPassword } from "@/components/shadcn/input";
 import { useResetPasswordMutation } from "@/features/auth/authSlice";
 
 export default function ResetPasswordForm() {
@@ -101,8 +101,7 @@ export default function ResetPasswordForm() {
             control={control}
             rules={{ required: "Password is required" }}
             render={({ field, formState: { errors } }) => (
-              <Input
-                type="password"
+              <InputPassword
                 id="password"
                 className="h-10"
                 placeholder="Create new password"
@@ -149,8 +148,7 @@ export default function ResetPasswordForm() {
               },
             }}
             render={({ field, formState: { errors } }) => (
-              <Input
-                type="password"
+              <InputPassword
                 id="password2"
                 className="h-10"
                 placeholder="Create new password"
