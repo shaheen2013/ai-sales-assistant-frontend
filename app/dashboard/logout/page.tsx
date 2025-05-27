@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { signOut, useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
-import { Suspense, useEffect } from 'react';
+import { signOut, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { Suspense, useEffect } from "react";
 
 export default function DashboardLogout() {
   const { data: session } = useSession();
@@ -10,13 +10,9 @@ export default function DashboardLogout() {
 
   useEffect(() => {
     if (session) {
-      signOut({ callbackUrl: '/login' });
+      signOut({ callbackUrl: "/login" });
     }
   }, [session, router]);
 
-  return (
-    <Suspense>
-      <div>Dashboard Logout</div>
-    </Suspense>
-  );
+  return <Suspense>{/* <div>Dashboard Logout</div> */}</Suspense>;
 }

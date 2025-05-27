@@ -1,18 +1,23 @@
 "use client";
 
 import Image from "next/image";
+import { useSession } from "next-auth/react";
 
-import { Button } from "@/components/shadcn/button";
 import { languages } from "@/static/dashboard";
+import { useSidebar } from "@/components/shadcn/sidebar";
+import Notification from "./_partials/notification/Notification";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "@/components/partials/dashboard/dashboard-dropdown";
-import { useSidebar } from "@/components/shadcn/sidebar";
-import Notification from "./_partials/notification/Notification";
 
 export default function DashboardHeader() {
+  const { data: session } = useSession();
+
+  console.log("session", session);
+
   const { toggleSidebar } = useSidebar();
 
   const handleOpenChange = (open: boolean) => {
@@ -63,7 +68,7 @@ export default function DashboardHeader() {
         </div>
         <div>
           <h2 className="text-gray-500 font-semibold lg:text-2xl text-xl mb-1">
-            Hello, Kawsar!
+            Hello, {session?.user?.name || "Anonymous"}!
           </h2>
           <p className="text-gray-300 lg:text-base text-sm">
             Welcome back, let&apos;s explore now!

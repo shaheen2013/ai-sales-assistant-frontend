@@ -311,8 +311,6 @@ export default function InventoryFilesList({
     );
   }
 
-  console.log("dataGetInventoryFiles => ", dataGetInventoryFiles?.results);
-
   return (
     <>
       <Table>
