@@ -1,6 +1,5 @@
 import { useGetBillingHistoryQuery } from '@/features/dealer/dealerProfileSlice';
 import { Check, Download, X } from 'lucide-react';
-import Link from 'next/link';
 
 const BillingHistoryTable = () => {
   const { data: billingHistory } = useGetBillingHistoryQuery();
@@ -40,7 +39,7 @@ const BillingHistoryTable = () => {
               <th className="py-4 px-4 text-left font-medium text-[#707070]">
                 Status
               </th>
-              <th className="py-4 px-4 text-left font-medium text-[#707070]">
+              <th className="py-4 px-4 text-center font-medium text-[#707070]">
                 Download
               </th>
             </tr>
@@ -60,7 +59,11 @@ const BillingHistoryTable = () => {
                   </td>
                   <td className="py-4 px-4 text-[#2b3545]">{invoice.total}</td>
                   <td className="py-4 px-4 text-[#2b3545]">
-                    {invoice.created}
+                    {new Date(invoice.created)?.toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
+                    })}
                   </td>
                   <td className="py-4 px-4">
                     {invoice.paid ? (
@@ -73,9 +76,9 @@ const BillingHistoryTable = () => {
                       </span>
                     )}
                   </td>
-                  <td className="py-4 px-4 text-left">
-                    <a href={invoice.invoice_pdf} rel="noopener noreferrer">
-                      <Download size={18} />
+                  <td className="py-4 px-4  flex justify-center">
+                    <a href={invoice.invoice_pdf} rel="noopener noreferrer ">
+                      <Download size={18} className="text-center" />
                     </a>
                   </td>
                 </tr>
@@ -85,11 +88,11 @@ const BillingHistoryTable = () => {
         </table>
       </div>
 
-      <div className="mt-4 text-right">
+      {/* <div className="mt-4 text-right">
         <Link href="#" className="text-[#019935] font-medium">
           View all
         </Link>
-      </div>
+      </div> */}
     </div>
   );
 };
