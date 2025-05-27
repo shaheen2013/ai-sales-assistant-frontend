@@ -940,7 +940,7 @@ export default function DashboardDealerInventory() {
             />
           </div>
 
-          <div className="text-gray-400">Only support .pdf, .doc</div>
+          <div className="text-gray-400">Only support .pdf, .doc, .csv</div>
 
           <div className="flex justify-end gap-3">
             <Button

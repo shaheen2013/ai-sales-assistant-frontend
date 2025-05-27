@@ -22,8 +22,16 @@ export default function DragAndDropUploader({
     "text/plain", // .txt
     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", // .xlsx
     "application/vnd.ms-excel", // .xls
+    "text/csv", // .csv
   ];
-  const allowedFileExtensions = [".docx", ".pdf", ".txt", ".xlsx", ".xls"];
+  const allowedFileExtensions = [
+    ".docx",
+    ".pdf",
+    ".txt",
+    ".xlsx",
+    ".xls",
+    ".csv",
+  ];
   const maxFileSize = 5 * 1024 * 1024;
   const allowedMultipleFiles = false;
 
