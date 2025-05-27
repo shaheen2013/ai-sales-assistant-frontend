@@ -27,7 +27,16 @@ export const dealerProfileSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['dealerProfile'],
     }),
-
+    getNotificationSettings: builder.query<
+      DealerNotificationSettingsType,
+      void
+    >({
+      query: () => ({
+        url: '/notification-settings-configuration',
+        method: 'GET',
+        credentials: 'include',
+      }),
+    }),
     updateNotificationSettings: builder.mutation<
       any,
       DealerNotificationSettingsType
@@ -83,6 +92,7 @@ export const dealerProfileSlice = apiSlice.injectEndpoints({
 export const {
   useGetDealerProfileQuery,
   useUpdateDealerProfileMutation,
+  useGetNotificationSettingsQuery,
   useUpdateNotificationSettingsMutation,
   useUpdateDealerPasswordMutation,
   useGetDealerPricingPlansQuery,
