@@ -249,10 +249,10 @@ export function DashboardSidebar() {
 
                   <div className="grid ml-1">
                     <div className="text-gray-400 font-medium text-sm">
-                      John Doe
+                      {session?.user?.name}
                     </div>
                     <div className="text-[10px] text-gray-300">
-                      john@example.com
+                      {session?.user?.email}
                     </div>
                   </div>
                 </div>
