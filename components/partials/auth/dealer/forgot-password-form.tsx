@@ -79,7 +79,7 @@ export default function ForgotPasswordForm() {
       </h2>
 
       <p className="text-[#555D6A] text-center mb-6">
-        No worriest! Just enter your email and we&apos;ll send you a reset
+        No worries! Just enter your email and we&apos;ll send you a reset
         password link.
       </p>
 
@@ -130,7 +130,7 @@ export default function ForgotPasswordForm() {
           loading={loading || isLoading}
           disabled={loading || isLoading}
         >
-          Log In
+          Forgot Password
         </Button>
       </form>
 

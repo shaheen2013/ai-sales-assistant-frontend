@@ -2,9 +2,10 @@
 
 import moment from "moment";
 import { useState } from "react";
+import { Send } from "lucide-react";
+import { useDebounceValue } from "usehooks-ts";
 import { useSearchParams } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
-import { useDebounceValue } from "usehooks-ts";
 
 import {
   Select,
@@ -24,16 +25,16 @@ import {
   DialogDescription,
 } from "@/components/shadcn/dialog";
 
-import { beautifyErrors, cn } from "@/lib/utils";
+import { beautifyErrors } from "@/lib/utils";
 
 import { useToast } from "@/hooks/useToast";
 import { Button } from "@/components/shadcn/button";
 import { Input, InputCopy } from "@/components/shadcn/input";
 
-import RecentFiles from "./RecentFiles";
-import InventoryCarList from "./inventoryCarList";
-import InventoryFilesList from "./inventoryFilesList";
-import DragAndDropUploader from "./DragAndDropUploader";
+// import RecentFiles from "./RecentFiles";
+// import InventoryCarList from "./inventoryCarList";
+// import InventoryFilesList from "./inventoryFilesList";
+// import DragAndDropUploader from "./DragAndDropUploader";
 
 import {
   useGetInventoryFilesQuery,
@@ -43,8 +44,9 @@ import {
   useVehicleInventoryUploadMutation,
 } from "@/features/inventory/inventorySlice";
 import SomethingWentWrong from "@/components/SomethingWentWrong";
+import Link from "next/link";
 
-export default function DashboardDealerInventory() {
+export default function DashboardForumsTableUI() {
   const toast = useToast();
   const searchParams = useSearchParams();
 
@@ -95,17 +97,17 @@ export default function DashboardDealerInventory() {
     sort: sort,
   });
 
-  const {
-    data: dataGetInventoryFiles,
-    error: errorGetInventoryFiles,
-    isLoading: isLoadingGetInventoryFiles,
-    isFetching: isFetchingGetInventoryFiles,
-    refetch: refetchGetInventoryFiles,
-  } = useGetInventoryFilesQuery({
-    search: debouncedSearchValue,
-    filter: filter,
-    sort: sort,
-  });
+  //   const {
+  //     data: dataGetInventoryFiles,
+  //     error: errorGetInventoryFiles,
+  //     isLoading: isLoadingGetInventoryFiles,
+  //     isFetching: isFetchingGetInventoryFiles,
+  //     refetch: refetchGetInventoryFiles,
+  //   } = useGetInventoryFilesQuery({
+  //     search: debouncedSearchValue,
+  //     filter: filter,
+  //     sort: sort,
+  //   });
 
   // rtk mutation
   const [createVehicleInventory, { isLoading: isLoadingCreateVehicle }] =
@@ -198,7 +200,7 @@ export default function DashboardDealerInventory() {
       setModals({ ...modals, addPdf: false });
       setUploadedFiles([]);
 
-      refetchGetInventoryFiles();
+      //   refetchGetInventoryFiles();
     } catch (error) {
       console.log(error);
       toast("error", beautifyErrors(error));
@@ -206,63 +208,25 @@ export default function DashboardDealerInventory() {
     console.log("files => ", uploadedFiles);
   };
 
-  if (errorGetVehicle || errorGetInventoryFiles) {
+  if (errorGetVehicle) {
     return <SomethingWentWrong />;
   }
 
   return (
     <div className="">
       {/* add inventory / place add pdf  */}
-      <div className="flex gap-3 mb-6">
-        <Button
-          variant="primary"
-          className="w-full !py-3 h-11"
-          onClick={() => setModals({ ...modals, addInventory: true })}
-        >
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 20 20"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
+      <div className="flex justify-between items-center gap-3 mb-6">
+        <h2 className="text-gray-400 font-semibold text-2xl">Newsletter</h2>
+
+        <Button variant="primary" className="!py-3 h-11">
+          <Link
+            href="/dashboard/newsletters/send"
+            className="flex items-center gap-2"
           >
-            <path
-              d="M9.88338 1.00673L10 1C10.5128 1 10.9355 1.38604 10.9933 1.88338L11 2V9H18C18.5128 9 18.9355 9.38604 18.9933 9.88338L19 10C19 10.5128 18.614 10.9355 18.1166 10.9933L18 11H11V18C11 18.5128 10.614 18.9355 10.1166 18.9933L10 19C9.48716 19 9.06449 18.614 9.00673 18.1166L9 18V11H2C1.48716 11 1.06449 10.614 1.00673 10.1166L1 10C1 9.48716 1.38604 9.06449 1.88338 9.00673L2 9H9V2C9 1.48716 9.38604 1.06449 9.88338 1.00673L10 1L9.88338 1.00673Z"
-              fill="white"
-            />
-          </svg>
-          Add Inventory
+            <Send />
+            Send Newsletter
+          </Link>
         </Button>
-
-        <Button
-          className="w-full h-11"
-          variant="outline"
-          onClick={() => setModals({ ...modals, addPdf: true })}
-        >
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 20 20"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M5.50269 11.0021C5.22654 11.0021 5.00269 11.2259 5.00269 11.5021V14.5021C5.00269 14.7782 5.22654 15.0021 5.50269 15.0021C5.77883 15.0021 6.00269 14.7782 6.00269 14.5021V14.0025H6.50004C7.32858 14.0025 8.00024 13.3308 8.00024 12.5023C8.00024 11.6737 7.32858 11.0021 6.50004 11.0021H5.50269ZM6.50004 13.0025H6.00269V12.0021H6.50004C6.77629 12.0021 7.00024 12.226 7.00024 12.5023C7.00024 12.7785 6.7763 13.0025 6.50004 13.0025ZM12.9977 11.5014C12.998 11.2255 13.2218 11.0021 13.4977 11.0021H15.0027C15.2788 11.0021 15.5027 11.2259 15.5027 11.5021C15.5027 11.7782 15.2788 12.0021 15.0027 12.0021H13.997L13.9958 13.0038H15.0027C15.2788 13.0038 15.5027 13.2277 15.5027 13.5038C15.5027 13.7799 15.2788 14.0038 15.0027 14.0038H13.9964L13.9977 14.5008C13.9984 14.7769 13.7751 15.0014 13.4989 15.0021C13.2228 15.0028 12.9984 14.7795 12.9977 14.5033L12.9951 13.5051L12.9951 13.5032L12.9977 11.5014ZM9.5 11.0021C9.22386 11.0021 9 11.2259 9 11.5021V14.5021C9 14.7782 9.22386 15.0021 9.5 15.0021H9.99755C11.1021 15.0021 11.9975 14.1067 11.9976 13.0021C11.9976 11.8975 11.1021 11.0021 9.99755 11.0021H9.5ZM10 14.0021V12.0021C10.5512 12.0034 10.9976 12.4506 10.9976 13.0021C10.9975 13.5535 10.5512 14.0008 10 14.0021ZM18 18V16.8358C18.5912 16.5549 19 15.9523 19 15.2542V10.75C19 10.0519 18.5912 9.44927 18 9.16841V7.828C18 7.298 17.789 6.789 17.414 6.414L11.585 0.586C11.57 0.571048 11.5531 0.55808 11.5363 0.545195C11.5238 0.535674 11.5115 0.526198 11.5 0.516C11.429 0.452 11.359 0.389 11.281 0.336C11.2557 0.318941 11.2281 0.305475 11.2005 0.292071C11.1845 0.284259 11.1685 0.276469 11.153 0.268C11.1363 0.258594 11.1197 0.248967 11.103 0.239326C11.0488 0.20797 10.9944 0.176475 10.937 0.152C10.74 0.0699999 10.528 0.0289999 10.313 0.0139999C10.2933 0.0127423 10.2738 0.0100789 10.2542 0.00740928C10.2271 0.00371057 10.1999 0 10.172 0H4C2.896 0 2 0.896 2 2V9.16841C1.40876 9.44928 1 10.0519 1 10.75V15.2542C1 15.9523 1.40876 16.5549 2 16.8358V18C2 19.104 2.896 20 4 20H16C17.104 20 18 19.104 18 18ZM16 18.5H4C3.724 18.5 3.5 18.275 3.5 18V17.0042H16.5V18C16.5 18.275 16.276 18.5 16 18.5ZM16.5 8V9H3.5V2C3.5 1.725 3.724 1.5 4 1.5H10V6C10 7.104 10.896 8 12 8H16.5ZM15.378 6.5H12C11.724 6.5 11.5 6.275 11.5 6V2.621L15.378 6.5ZM2.75 10.5H17.25C17.3881 10.5 17.5 10.6119 17.5 10.75V15.2542C17.5 15.3923 17.3881 15.5042 17.25 15.5042H2.75C2.61193 15.5042 2.5 15.3923 2.5 15.2542V10.75C2.5 10.6119 2.61193 10.5 2.75 10.5Z"
-              fill="#5D6679"
-            />
-          </svg>
-          Place/Add pdf
-        </Button>
-      </div>
-
-      {/* recent files  */}
-      <div className="mb-3">
-        <h2 className="mb-4">Recent files</h2>
-
-        <RecentFiles
-          isFetching={isLoadingGetInventoryFiles}
-          dataGetInventoryFiles={dataGetInventoryFiles}
-        />
       </div>
 
       {/* table wrapper */}
@@ -270,36 +234,6 @@ export default function DashboardDealerInventory() {
         <div className="rounded-md border p-3">
           {/* header */}
           <div className="flex justify-between items-center mb-4">
-            {/*  */}
-            <div className="flex items-center  gap-3">
-              <h2
-                onClick={() => setSelectedPanel("list")}
-                className={cn(
-                  `text-base text-gray-500 font-medium cursor-pointer`,
-                  {
-                    "underline underline-offset-[12px]":
-                      selectedPanel == "list",
-                  }
-                )}
-              >
-                Inventory Car List
-              </h2>
-
-              {/* <h2 className="text-lg text-gray-500">Inventory Files</h2> */}
-              <h2
-                onClick={() => setSelectedPanel("files")}
-                className={cn(
-                  `text-base text-gray-500 font-medium cursor-pointer`,
-                  {
-                    "underline underline-offset-[12px]":
-                      selectedPanel == "files",
-                  }
-                )}
-              >
-                Inventory Files
-              </h2>
-            </div>
-
             {/* search */}
             <div>
               <Input
@@ -415,7 +349,7 @@ export default function DashboardDealerInventory() {
             </div>
           </div>
 
-          {selectedPanel == "list" ? (
+          {/* {selectedPanel == "list" ? (
             <InventoryCarList
               isLoading={isFetchingGetVehicle}
               refetchGetVehicle={refetchGetVehicle}
@@ -430,7 +364,7 @@ export default function DashboardDealerInventory() {
               refetchGetInventoryFiles={refetchGetInventoryFiles}
               dataGetInventoryFiles={dataGetInventoryFiles}
             />
-          )}
+          )} */}
 
           <hr />
 
@@ -935,10 +869,10 @@ export default function DashboardDealerInventory() {
           {/* body */}
           <div className="">
             {/* form */}
-            <DragAndDropUploader
+            {/* <DragAndDropUploader
               value={uploadedFiles}
               onChange={(files) => setUploadedFiles(files)}
-            />
+            /> */}
           </div>
 
           <div className="text-gray-400">Only support .pdf, .doc, .csv</div>

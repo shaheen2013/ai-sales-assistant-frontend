@@ -13,6 +13,8 @@ import {
   getPaginationRowModel,
 } from "@tanstack/react-table";
 
+import moment from "moment";
+
 import {
   Dialog,
   DialogTitle,
@@ -40,13 +42,12 @@ import {
   DropdownMenuContent,
 } from "@/components/shadcn/dropdown-menu";
 
+import { beautifyErrors } from "@/lib/utils";
+import { useToast } from "@/hooks/useToast";
 import { Button } from "@/components/shadcn/button";
 import { Skeleton } from "@/components/shadcn/skeleton";
 import { Input, InputCopy } from "@/components/shadcn/input";
 import { useEditVehicleInventoryMutation } from "@/features/inventory/inventorySlice";
-import moment from "moment";
-import { useToast } from "@/hooks/useToast";
-import { beautifyErrors } from "@/lib/utils";
 
 type Inventory = {
   id: number;
@@ -72,7 +73,6 @@ export default function InventoryCarList({
   refetchGetVehicle,
   isLoading = false,
   getVehicleList,
-  // handleInventoryEdit,
   handleInventoryDelete,
 }: any) {
   const toast = useToast();

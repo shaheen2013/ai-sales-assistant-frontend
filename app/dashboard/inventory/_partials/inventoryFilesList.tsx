@@ -13,7 +13,6 @@ import {
   getPaginationRowModel,
 } from "@tanstack/react-table";
 
-// import { Controller, useForm } from "react-hook-form";
 import { useMemo, useState } from "react";
 
 import Image from "next/image";
@@ -35,75 +34,33 @@ import {
   DropdownMenuContent,
 } from "@/components/shadcn/dropdown-menu";
 import { Button } from "@/components/shadcn/button";
+import { Skeleton } from "@/components/shadcn/skeleton";
+import Link from "next/link";
 
-export default function InventoryFilesList() {
+export default function InventoryFilesList({
+  isLoading,
+  isError,
+  refetchGetInventoryFiles,
+  dataGetInventoryFiles,
+}: {
+  isLoading?: boolean;
+  isError?: boolean;
+  refetchGetInventoryFiles?: () => void;
+  dataGetInventoryFiles?: any;
+}) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = useState({});
 
   type Inventory = {
-    stockId: string;
-    createdDate: string;
-    brand: string;
-    vin: string;
-    model: string;
-    mileage: string;
-    year: string;
+    created_date: string;
+    file_name: string;
+    file: string;
+    file_size: string;
   };
 
-  const inventoryData: Inventory[] = [
-    {
-      stockId: "STK-001",
-      createdDate: "2023-10-01",
-      brand: "Toyota",
-      vin: "1HGCM82633A004352",
-      model: "Camry",
-      mileage: "45000",
-      year: "2020",
-    },
-    {
-      stockId: "STK-002",
-      createdDate: "2023-10-02",
-      brand: "Honda",
-      vin: "2HGFB2F59CH512345",
-      model: "Civic",
-      mileage: "38000",
-      year: "2019",
-    },
-    {
-      stockId: "STK-003",
-      createdDate: "2023-10-03",
-      brand: "Ford",
-      vin: "1FAHP3FN8AW123456",
-      model: "Focus",
-      mileage: "51000",
-      year: "2018",
-    },
-  ];
-
   const columns: ColumnDef<Inventory>[] = [
-    {
-      accessorKey: "id",
-      header: ({}) => {
-        return (
-          <h2 className="flex items-center gap-2 cursor-pointer">File Name</h2>
-        );
-      },
-      cell: ({ row }) => (
-        <div className="text-gray-400 flex items-center gap-2">
-          <Image
-            src="https://dummyimage.com/40x40"
-            alt=""
-            height="30"
-            width="30"
-            className="rounded-full"
-          />
-          <div>{row.original?.stockId}</div>
-        </div>
-      ),
-    },
-
     {
       accessorKey: "createdDate",
       header: ({ column }) => {
@@ -132,7 +89,7 @@ export default function InventoryFilesList() {
         );
       },
       cell: ({ row }) => {
-        const date = new Date(row.original?.createdDate).toLocaleDateString(
+        const date = new Date(row.original?.created_date).toLocaleDateString(
           "en-US",
           {
             day: "2-digit",
@@ -140,7 +97,7 @@ export default function InventoryFilesList() {
             year: "numeric",
           }
         );
-        const time = new Date(row.original?.createdDate).toLocaleTimeString(
+        const time = new Date(row.original?.created_date).toLocaleTimeString(
           "en-US",
           {
             hour: "2-digit",
@@ -160,14 +117,14 @@ export default function InventoryFilesList() {
     },
 
     {
-      accessorKey: "brand",
+      accessorKey: "file_name",
       header: ({ column }) => {
         return (
           <h2
             className="flex items-center text-center gap-2 cursor-pointer"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            Uploaded By
+            File Name
             <svg
               width="16"
               height="16"
@@ -188,27 +145,33 @@ export default function InventoryFilesList() {
       },
       cell: ({ row }) => (
         <div className="flex items-center gap-2">
-          <Image
+          {/* <Image
             src="https://dummyimage.com/40x40"
             alt=""
             height="30"
             width="30"
             className="rounded-full"
-          />
-          <span className="text-gray-400">{row.original?.brand}</span>
+          /> */}
+          <Link
+            href={row.original?.file}
+            target="_blank"
+            className="text-gray-400 underline hover:text-gray-600 cursor-pointer"
+          >
+            {row.original?.file_name}
+          </Link>
         </div>
       ),
     },
 
     {
-      accessorKey: "vin",
+      accessorKey: "file_size",
       header: ({ column }) => {
         return (
           <h2
             className="flex items-center text-center gap-2 cursor-pointer"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            VIN Number
+            File Size
             <svg
               width="16"
               height="16"
@@ -227,139 +190,24 @@ export default function InventoryFilesList() {
           </h2>
         );
       },
-      cell: ({ row }) => {
-        const date = new Date(row.original?.createdDate).toLocaleDateString(
-          "en-US",
-          {
-            day: "2-digit",
-            month: "short", // Outputs "Feb"
-            year: "numeric",
-          }
-        );
-
-        const time = new Date(row.original?.createdDate).toLocaleTimeString(
-          "en-US",
-          {
-            hour: "2-digit",
-            minute: "2-digit",
-            second: "2-digit", // Add seconds
-            hour12: true, // Ensures AM/PM format
-          }
-        );
-
-        return (
-          <div className=" font-medium text-gray-400">
-            <div>{date}</div>
-            <div>{time}</div>
-          </div>
-        );
-      },
-    },
-
-    {
-      accessorKey: "model",
-      header: ({ column }) => {
-        return (
-          <h2
-            className="flex items-center text-center gap-2 cursor-pointer"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+      cell: ({ row }) => (
+        <div className="flex items-center gap-2">
+          {/* <Image
+            src="https://dummyimage.com/40x40"
+            alt=""
+            height="30"
+            width="30"
+            className="rounded-full"
+          /> */}
+          <Link
+            href={row.original?.file}
+            target="_blank"
+            className="text-gray-400"
           >
-            Model Number
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 16 16"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M4.6665 9.99935L7.99984 13.3327L11.3332 9.99935M4.6665 5.99935L7.99984 2.66602L11.3332 5.99935"
-                stroke="#111928"
-                strokeWidth="1.4"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </h2>
-        );
-      },
-      cell: ({ row }) => {
-        return (
-          <div className=" font-medium text-gray-400">
-            {row.original?.model}
-          </div>
-        );
-      },
-    },
-
-    {
-      accessorKey: "mileage",
-      header: ({ column }) => {
-        return (
-          <h2
-            className="flex items-center text-center gap-2 cursor-pointer"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
-            Mileage
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 16 16"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M4.6665 9.99935L7.99984 13.3327L11.3332 9.99935M4.6665 5.99935L7.99984 2.66602L11.3332 5.99935"
-                stroke="#111928"
-                strokeWidth="1.4"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </h2>
-        );
-      },
-      cell: ({ row }) => {
-        return (
-          <div className=" font-medium text-gray-400">
-            {row.original?.mileage}
-          </div>
-        );
-      },
-    },
-
-    {
-      accessorKey: "year",
-      header: ({ column }) => {
-        return (
-          <h2
-            className="flex items-center text-center gap-2 cursor-pointer"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
-            Year
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 16 16"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M4.6665 9.99935L7.99984 13.3327L11.3332 9.99935M4.6665 5.99935L7.99984 2.66602L11.3332 5.99935"
-                stroke="#111928"
-                strokeWidth="1.4"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </h2>
-        );
-      },
-      cell: ({ row }) => {
-        return (
-          <div className=" font-medium text-gray-400">{row.original?.year}</div>
-        );
-      },
+            {row.original?.file_size}
+          </Link>
+        </div>
+      ),
     },
 
     {
@@ -371,7 +219,7 @@ export default function InventoryFilesList() {
           </h2>
         );
       },
-      cell: ({}) => {
+      cell: ({ row }) => {
         return (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -380,37 +228,42 @@ export default function InventoryFilesList() {
                 <MoreHorizontal />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem>
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 20 20"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M17.1813 2.92689C16.0291 1.71505 14.1047 1.69077 12.9222 2.87317L3.54741 12.2475C3.21958 12.5754 2.99204 12.9899 2.89148 13.4424L2.01387 17.3923C1.97678 17.5592 2.02754 17.7335 2.14844 17.8544C2.26934 17.9753 2.44362 18.026 2.6105 17.9889L6.53689 17.1157C7.00432 17.0118 7.43243 16.7767 7.77103 16.4381L17.129 7.08003C18.27 5.939 18.2933 4.09631 17.1813 2.92689ZM13.6293 3.58029C14.4143 2.79538 15.6917 2.8115 16.4566 3.61596C17.1948 4.39225 17.1793 5.61548 16.4219 6.37293L15.7507 7.04418L12.958 4.25155L13.6293 3.58029ZM12.2509 4.95864L15.0436 7.7513L7.06391 15.731C6.85976 15.9352 6.60164 16.0769 6.31982 16.1396L3.1605 16.8421L3.86768 13.6593C3.92698 13.3924 4.06117 13.148 4.2545 12.9547L12.2509 4.95864Z"
-                    fill="#333741"
-                  />
-                </svg>
-                <span className="text-gray-500">Edit</span>
-              </DropdownMenuItem>
+            <DropdownMenuContent
+              align="end"
+              onClick={(e) => {
+                e.stopPropagation();
 
+                // download file
+                const fileUrl = row.original?.file;
+                if (fileUrl) {
+                  const link = document.createElement("a");
+                  link.target = "_blank";
+                  link.href = fileUrl;
+                  link.download = row.original?.file_name || "download";
+                  document.body.appendChild(link);
+                  link.click();
+                  document.body.removeChild(link);
+                }
+              }}
+            >
               <DropdownMenuItem>
                 <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 20 20"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
-                    d="M8.5 4H11.5C11.5 3.17157 10.8284 2.5 10 2.5C9.17157 2.5 8.5 3.17157 8.5 4ZM7.5 4C7.5 2.61929 8.61929 1.5 10 1.5C11.3807 1.5 12.5 2.61929 12.5 4H17.5C17.7761 4 18 4.22386 18 4.5C18 4.77614 17.7761 5 17.5 5H16.4456L15.2521 15.3439C15.0774 16.8576 13.7957 18 12.2719 18H7.72813C6.20431 18 4.92256 16.8576 4.7479 15.3439L3.55437 5H2.5C2.22386 5 2 4.77614 2 4.5C2 4.22386 2.22386 4 2.5 4H7.5ZM5.74131 15.2292C5.85775 16.2384 6.71225 17 7.72813 17H12.2719C13.2878 17 14.1422 16.2384 14.2587 15.2292L15.439 5H4.56101L5.74131 15.2292ZM8.5 7.5C8.77614 7.5 9 7.72386 9 8V14C9 14.2761 8.77614 14.5 8.5 14.5C8.22386 14.5 8 14.2761 8 14V8C8 7.72386 8.22386 7.5 8.5 7.5ZM12 8C12 7.72386 11.7761 7.5 11.5 7.5C11.2239 7.5 11 7.72386 11 8V14C11 14.2761 11.2239 14.5 11.5 14.5C11.7761 14.5 12 14.2761 12 14V8Z"
-                    fill="#D92D21"
-                  />
+                    d="M3 14V20C3 21.1046 3.89543 22 5 22H19C20.1046 22 21 21.1046 21 20V14M12 2V16M12 16L7 10.5555M12 16L17 10.5556"
+                    stroke="#333741"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  ></path>
                 </svg>
-                <span className="font-medium text-red-500">Delete</span>
+
+                <span className="text-gray-500">Download</span>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -419,7 +272,10 @@ export default function InventoryFilesList() {
     },
   ];
 
-  const data: Inventory[] = useMemo(() => inventoryData, []);
+  const data: Inventory[] = useMemo(
+    () => dataGetInventoryFiles?.results,
+    [dataGetInventoryFiles?.results]
+  );
 
   const table = useReactTable({
     data,
@@ -439,6 +295,21 @@ export default function InventoryFilesList() {
       rowSelection,
     },
   });
+
+  if (isLoading) {
+    return <TableSkeleton />;
+  }
+
+  if (isError) {
+    return (
+      <div className="flex items-center justify-center h-full">
+        <p className="text-red-500">Error loading inventory files.</p>
+        <Button onClick={refetchGetInventoryFiles} className="ml-4">
+          Retry
+        </Button>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -462,13 +333,13 @@ export default function InventoryFilesList() {
           ))}
         </TableHeader>
         <TableBody>
-          {table.getRowModel().rows?.length ? (
-            table.getRowModel().rows.map((row) => (
+          {table?.getRowModel()?.rows?.length ? (
+            table?.getRowModel()?.rows?.map((row) => (
               <TableRow
                 key={row.id}
                 data-state={row.getIsSelected() && "selected"}
               >
-                {row.getVisibleCells().map((cell) => (
+                {row?.getVisibleCells().map((cell) => (
                   <TableCell key={cell.id}>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </TableCell>
@@ -485,5 +356,41 @@ export default function InventoryFilesList() {
         </TableBody>
       </Table>
     </>
+  );
+}
+
+function TableSkeleton() {
+  return (
+    <div className="overflow-x-auto">
+      <table className="min-w-full table-auto ">
+        <tbody>
+          {[...Array(5)].map((_, i) => (
+            <tr key={i} className="border-t">
+              <td className="px-4 py-4">
+                <Skeleton className="w-[100px] h-[20px] rounded-full" />
+              </td>
+              <td className="px-4 py-4">
+                <Skeleton className="w-[100px] h-[20px] rounded-full" />
+              </td>
+              <td className="px-4 py-4">
+                <Skeleton className="w-[100px] h-[20px] rounded-full" />
+              </td>
+              <td className="px-4 py-4">
+                <Skeleton className="w-[100px] h-[20px] rounded-full" />
+              </td>
+              <td className="px-4 py-4">
+                <Skeleton className="w-[100px] h-[20px] rounded-full" />
+              </td>
+              <td className="px-4 py-4">
+                <Skeleton className="w-[100px] h-[20px] rounded-full" />
+              </td>
+              <td className="px-4 py-2 text-r4ght">
+                <Skeleton className="w-[100px] h-[20px] rounded-full" />
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 }

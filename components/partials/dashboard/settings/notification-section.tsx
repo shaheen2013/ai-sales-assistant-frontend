@@ -11,12 +11,16 @@ import {
 } from '@/components/shadcn/form';
 import { RadioGroup, RadioGroupItem } from '@/components/shadcn/radio-group';
 import { Separator } from '@/components/shadcn/separator';
-import { useUpdateNotificationSettingsMutation } from '@/features/dealer/dealerProfileSlice';
+import {
+  useGetNotificationSettingsQuery,
+  useUpdateNotificationSettingsMutation,
+} from '@/features/dealer/dealerProfileSlice';
 import { useToast } from '@/hooks/useToast';
 import { zodResolver } from '@hookform/resolvers/zod';
-import Link from 'next/link';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
+import NotificationSectionSkeleton from '../skeleton/notification-section-skeleton';
 
 // Define the notification settings schema
 const notificationSchema = z.object({
@@ -37,6 +41,9 @@ type NotificationFormValues = z.infer<typeof notificationSchema>;
 
 export default function NotificationSection() {
   const toast = useToast();
+  const { data: notificationData, isLoading: isNotificationLoading } =
+    useGetNotificationSettingsQuery();
+
   const [updateNotificationSettings, { isLoading }] =
     useUpdateNotificationSettingsMutation();
 
@@ -53,12 +60,12 @@ export default function NotificationSection() {
     },
   });
 
-  // Fetch and set initial values (you would implement this if you have a query)
-  // useEffect(() => {
-  //   if (notificationData) {
-  //     form.reset(notificationData);
-  //   }
-  // }, [notificationData, form]);
+  useEffect(() => {
+    console.log('render count');
+    if (notificationData) {
+      form.reset(notificationData);
+    }
+  }, [notificationData, form]);
 
   const onSubmit = async (values: NotificationFormValues) => {
     try {
@@ -73,6 +80,10 @@ export default function NotificationSection() {
     }
   };
 
+  if (isNotificationLoading) {
+    return <NotificationSectionSkeleton />;
+  }
+  console.log(notificationData, 'notificationData >>');
   return (
     <div className="mx-auto p-6 bg-white rounded-2xl border border-gray-50">
       <h1 className="text-[#2b3545] text-2xl font-semibold mb-6">
@@ -357,19 +368,6 @@ export default function NotificationSection() {
             If you opt out of the above, note that we&apos;ll still send you
             important administrative emails, such as password resets.
           </p>
-
-          <div className="mb-8">
-            <p className="text-[#555d6a]">
-              We will use this email address:{' '}
-              <span className="text-[#2b3545] font-medium">
-                hello@carhouse.com
-              </span>{' '}
-              <Link href="#" className="text-[#019935]">
-                (change address)
-              </Link>
-              .
-            </p>
-          </div>
 
           <Separator className="my-6 bg-[#eaebec]" />
 

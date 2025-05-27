@@ -16,11 +16,11 @@ interface languages {
 
 export const dashboardUserMenu: SidebarSection[] = [
   {
-    label: 'Menu',
+    label: "Menu",
     items: [
       {
-        label: 'Dashboard',
-        href: '/dashboard/overview',
+        label: "Dashboard",
+        href: "/dashboard/overview",
         icon: (
           <svg
             width="20"
@@ -36,8 +36,8 @@ export const dashboardUserMenu: SidebarSection[] = [
         ),
       },
       {
-        label: 'Dealer Overview',
-        href: '/dashboard/dealer-overview',
+        label: "Dealer Overview",
+        href: "/dashboard/dealer-overview",
         icon: (
           <svg
             width="20"
@@ -50,8 +50,8 @@ export const dashboardUserMenu: SidebarSection[] = [
         ),
       },
       {
-        label: 'Team Management',
-        href: '/dashboard/team-management',
+        label: "Team Management",
+        href: "/dashboard/team-management",
         icon: (
           <svg
             width="24"
@@ -64,8 +64,8 @@ export const dashboardUserMenu: SidebarSection[] = [
         ),
       },
       {
-        label: 'Subscribers',
-        href: '/dashboard/subscribers',
+        label: "Subscribers",
+        href: "/dashboard/subscribers",
         icon: (
           <svg
             width="24"
@@ -81,11 +81,11 @@ export const dashboardUserMenu: SidebarSection[] = [
   },
 
   {
-    label: 'Insights',
+    label: "Insights",
     items: [
       {
-        label: 'Notifications',
-        href: '/dashboard/notification',
+        label: "Notifications",
+        href: "/dashboard/notification",
         icon: (
           <svg
             width="24"
@@ -98,8 +98,8 @@ export const dashboardUserMenu: SidebarSection[] = [
         ),
       },
       {
-        label: 'Support',
-        href: '/dashboard/support',
+        label: "Support",
+        href: "/dashboard/support",
         icon: (
           <svg
             width="24"
@@ -112,8 +112,8 @@ export const dashboardUserMenu: SidebarSection[] = [
         ),
       },
       {
-        label: 'Forums',
-        href: '/dashboard/forums',
+        label: "Newsletters",
+        href: "/dashboard/newsletters",
         icon: (
           <svg
             width="24"
@@ -129,11 +129,11 @@ export const dashboardUserMenu: SidebarSection[] = [
   },
 
   {
-    label: 'Tools',
+    label: "Tools",
     items: [
       {
-        label: 'Settings',
-        href: '/dashboard/settings',
+        label: "Settings",
+        href: "/dashboard/settings",
         icon: (
           <svg
             width="20"
@@ -146,8 +146,8 @@ export const dashboardUserMenu: SidebarSection[] = [
         ),
       },
       {
-        label: 'Logout',
-        href: '/dashboard/logout',
+        label: "Logout",
+        href: "/dashboard/logout",
         icon: (
           <svg
             width="20"
@@ -165,11 +165,11 @@ export const dashboardUserMenu: SidebarSection[] = [
 
 export const dashboardDealerMenu: SidebarSection[] = [
   {
-    label: 'Menu',
+    label: "Menu",
     items: [
       {
-        label: 'Overview',
-        href: '/dashboard/overview',
+        label: "Overview",
+        href: "/dashboard/overview",
         icon: (
           <svg
             width="20"
@@ -185,8 +185,8 @@ export const dashboardDealerMenu: SidebarSection[] = [
         ),
       },
       {
-        label: 'Inventory',
-        href: '/dashboard/inventory',
+        label: "Inventory",
+        href: "/dashboard/inventory",
         icon: (
           <svg
             width="20"
@@ -199,8 +199,8 @@ export const dashboardDealerMenu: SidebarSection[] = [
         ),
       },
       {
-        label: 'Appointment',
-        href: '/dashboard/appointment',
+        label: "Appointment",
+        href: "/dashboard/appointment",
         icon: (
           <svg
             width="21"
@@ -216,8 +216,8 @@ export const dashboardDealerMenu: SidebarSection[] = [
         ),
       },
       {
-        label: 'Management',
-        href: '/dashboard/management',
+        label: "Management",
+        href: "/dashboard/management",
         icon: (
           <svg
             width="21"
@@ -237,11 +237,11 @@ export const dashboardDealerMenu: SidebarSection[] = [
   },
 
   {
-    label: 'Insights',
+    label: "Insights",
     items: [
       {
-        label: 'Notifications',
-        href: '/dashboard/notification',
+        label: "Notifications",
+        href: "/dashboard/notification",
         icon: (
           <svg
             width="24"
@@ -254,8 +254,8 @@ export const dashboardDealerMenu: SidebarSection[] = [
         ),
       },
       {
-        label: 'Ask Support',
-        href: '/dashboard/ask-support',
+        label: "Ask Support",
+        href: "/dashboard/ask-support",
         icon: (
           <svg
             width="24"
@@ -285,11 +285,11 @@ export const dashboardDealerMenu: SidebarSection[] = [
   },
 
   {
-    label: 'Tools',
+    label: "Tools",
     items: [
       {
-        label: 'Settings',
-        href: '/dashboard/settings',
+        label: "Settings",
+        href: "/dashboard/settings",
         icon: (
           <svg
             width="20"
@@ -302,8 +302,8 @@ export const dashboardDealerMenu: SidebarSection[] = [
         ),
       },
       {
-        label: 'Logout',
-        href: '/dashboard/logout',
+        label: "Logout",
+        href: "/dashboard/logout",
         icon: (
           <svg
             width="20"
@@ -320,12 +320,12 @@ export const dashboardDealerMenu: SidebarSection[] = [
 ];
 
 export const languages: languages[] = [
-  { name: 'Eng (US)', flag: '/flags/us.png' },
-  { name: 'China', flag: '/flags/cn.png' },
-  { name: 'Denmark', flag: '/flags/de.png' },
-  { name: 'Espain', flag: '/flags/es.png' },
-  { name: 'France', flag: '/flags/fr.png' },
-  { name: 'Italy', flag: '/flags/it.png' },
-  { name: 'Portugal', flag: '/flags/pt.png' },
-  { name: 'Russia', flag: '/flags/ru.png' },
+  { name: "Eng (US)", flag: "/flags/us.png" },
+  { name: "China", flag: "/flags/cn.png" },
+  { name: "Denmark", flag: "/flags/de.png" },
+  { name: "Espain", flag: "/flags/es.png" },
+  { name: "France", flag: "/flags/fr.png" },
+  { name: "Italy", flag: "/flags/it.png" },
+  { name: "Portugal", flag: "/flags/pt.png" },
+  { name: "Russia", flag: "/flags/ru.png" },
 ];

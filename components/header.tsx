@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
   Dialog,
@@ -6,13 +6,13 @@ import {
   Disclosure,
   DisclosureButton,
   DisclosurePanel,
-} from '@headlessui/react';
+} from "@headlessui/react";
 
-import classNames from 'classnames';
-import { ChevronDownIcon } from 'lucide-react';
-import Image from 'next/image';
-import Link from 'next/link';
-import { forwardRef, useState } from 'react';
+import classNames from "classnames";
+import { ChevronDownIcon } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { forwardRef, useState } from "react";
 
 import {
   NavigationMenu,
@@ -21,41 +21,41 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-} from '@/components/shadcn/navigation-menu';
-import { cn } from '@/lib/utils';
-import { navigationData } from '@/static/homepage';
-import Button from './button';
-import { ClaraIcon } from './partials/chat/svg-icons';
+} from "@/components/shadcn/navigation-menu";
+import { cn } from "@/lib/utils";
+import { navigationData } from "@/static/homepage";
+import Button from "./button";
+import { ClaraIcon } from "./partials/chat/svg-icons";
 
 const products = [
   {
-    name: 'Solutions',
-    description: 'Get a better understanding of your traffic',
-    href: '#',
+    name: "Solutions",
+    description: "Get a better understanding of your traffic",
+    href: "#",
     // icon: ChartPieIcon,
   },
   {
-    name: 'Engagement',
-    description: 'Speak directly to your customers',
-    href: '#',
+    name: "Engagement",
+    description: "Speak directly to your customers",
+    href: "#",
     // icon: CursorArrowRaysIcon,
   },
   {
-    name: 'Security',
-    description: 'Your customers’ data will be safe and secure',
-    href: '#',
+    name: "Security",
+    description: "Your customers’ data will be safe and secure",
+    href: "#",
     // icon: FingerPrintIcon,
   },
   {
-    name: 'Integrations',
-    description: 'Connect with third-party tools',
-    href: '#',
+    name: "Integrations",
+    description: "Connect with third-party tools",
+    href: "#",
     // icon: SquaresPlusIcon,
   },
   {
-    name: 'Automations',
-    description: 'Build strategic funnels that will convert',
-    href: '#',
+    name: "Automations",
+    description: "Build strategic funnels that will convert",
+    href: "#",
     // icon: ArrowPathIcon,
   },
 ];
@@ -191,8 +191,8 @@ export default function Example() {
 
         {/* right */}
         <div className="hidden lg:flex lg:flex-1 lg:justify-end gap-3">
-          <Button href="/signup" variant="outline-primary">
-            <span>Sign Up</span>
+          <Button href="/login" variant="outline-primary">
+            <span>Sign In</span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="22"
@@ -406,8 +406,8 @@ export default function Example() {
 }
 
 const ListItem = forwardRef<
-  React.ElementRef<'a'>,
-  React.ComponentPropsWithoutRef<'a'>
+  React.ElementRef<"a">,
+  React.ComponentPropsWithoutRef<"a">
 >(({ className, title, children, ...props }, ref) => {
   return (
     <li>
@@ -415,7 +415,7 @@ const ListItem = forwardRef<
         <a
           ref={ref}
           className={cn(
-            'block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground',
+            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
             className
           )}
           {...props}
@@ -430,10 +430,10 @@ const ListItem = forwardRef<
   );
 });
 
-ListItem.displayName = 'ListItem';
+ListItem.displayName = "ListItem";
 
 function DropdownContent() {
-  const [selected, setSelected] = useState<'buyers' | 'sellers'>('buyers');
+  const [selected, setSelected] = useState<"buyers" | "sellers">("buyers");
 
   const menus = navigationData[selected] as any;
 
@@ -448,9 +448,9 @@ function DropdownContent() {
             <div
               key={index}
               className={classNames(
-                'rounded-lg p-4 flex items-start gap-2 border-b ',
+                "rounded-lg p-4 flex items-start gap-2 border-b ",
                 {
-                  'border-primary-300 bg-primary-50 group is-published':
+                  "border-primary-300 bg-primary-50 group is-published":
                     item == selected,
                 }
               )}
@@ -573,7 +573,7 @@ function DropdownContent() {
         })}
 
         <div className="h-[200px] flex justify-end items-end pr-6">
-          {selected == 'buyers' ? (
+          {selected == "buyers" ? (
             <Image
               src="/icons/homepage/dropdown-buyer.svg"
               height={130}
