@@ -74,7 +74,7 @@ const AdminDashboardOverviewCard: FC<AdminDashboardOverviewCardProps> = ({
         <div>
           <div className="bg-white rounded-lg flex p-2 justify-center items-center gap-1">
             <span className="text-[#2A2F3D] text-sm font-medium">
-              {growth}%
+              {Number(growth).toFixed(2)}%
             </span>
             <svg
               width="15"
