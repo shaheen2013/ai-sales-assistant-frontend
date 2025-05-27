@@ -178,7 +178,7 @@ export function DashboardSidebar() {
 
         {/* user widget */}
         <div className="absolute bg-white bottom-0 left-[16px] right-[16px] p-3 border rounded-lg mb-4">
-          <div className="flex justify-between mb-1">
+          {/* <div className="flex justify-between mb-1">
             <div className="flex items-center justify-center gap-2 mb-[6px]">
               <svg
                 width="15"
@@ -210,11 +210,11 @@ export function DashboardSidebar() {
             </div>
 
             <div className="text-gray-400 text-xs">20/45</div>
-          </div>
+          </div> */}
 
-          <Progress value={50} className="mb-5" />
+          {/* <Progress value={50} className="mb-5" /> */}
 
-          <hr className="mb-5" />
+          {/* <hr className="mb-5" /> */}
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
