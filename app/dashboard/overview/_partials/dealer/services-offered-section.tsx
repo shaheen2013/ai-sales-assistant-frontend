@@ -39,14 +39,20 @@ const ServicesOfferedSection = () => {
           </div>
         ) : (
           <div className="flex flex-wrap gap-3">
-            {departmentsData?.data?.map((department: DepartmentDataType) => (
-              <Badge
-                key={department.id}
-                variant={getDepartmentColor(department.department_name)}
-                text={department.department_name}
-                isDot={false}
-              />
-            ))}
+            {departmentsData?.data?.length === 0 ? (
+              <div className="flex flex-wrap gap-3">
+                <Badge variant="red" text="No services found" />
+              </div>
+            ) : (
+              departmentsData?.data?.map((department: DepartmentDataType) => (
+                <Badge
+                  key={department.id}
+                  variant={getDepartmentColor(department.department_name)}
+                  text={department.department_name}
+                  isDot={false}
+                />
+              ))
+            )}
           </div>
         )}
       </CardContent>
