@@ -42,6 +42,7 @@ import {
   useCreateVehicleInventoryMutation,
   useVehicleInventoryUploadMutation,
 } from "@/features/inventory/inventorySlice";
+import SomethingWentWrong from "@/components/SomethingWentWrong";
 
 export default function DashboardDealerInventory() {
   const toast = useToast();
@@ -205,8 +206,8 @@ export default function DashboardDealerInventory() {
     console.log("files => ", uploadedFiles);
   };
 
-  if (errorGetVehicle) {
-    return JSON.stringify(errorGetVehicle);
+  if (errorGetVehicle || errorGetInventoryFiles) {
+    return <SomethingWentWrong />;
   }
 
   return (
