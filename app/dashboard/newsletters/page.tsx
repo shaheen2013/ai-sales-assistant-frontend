@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import { Suspense } from "react";
 import DashboardForumsTableUI from "./partials/DashboardForumsTableUI";
 
 // import DashboardForumsUI from "./partials/DashboardForumsUI";
@@ -10,10 +10,8 @@ export const metadata = {
 
 export default function DashboardForumsPage() {
   return (
-    <div>
-      <Suspense>
-        <DashboardForumsTableUI />
-      </Suspense>
-    </div>
+    <Suspense>
+      <DashboardForumsTableUI />
+    </Suspense>
   );
 }

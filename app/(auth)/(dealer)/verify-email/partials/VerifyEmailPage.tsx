@@ -19,9 +19,6 @@ export default function VerifyEmailPage() {
     token: token,
   });
 
-  console.log("data", data);
-  console.log("isError", isError);
-
   if (isFetching) {
     return (
       <div className="w-full flex items-center justify-center">

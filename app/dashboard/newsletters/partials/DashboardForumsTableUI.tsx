@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import moment from "moment";
 import { useState } from "react";
 import { Send } from "lucide-react";
@@ -26,7 +27,6 @@ import {
 } from "@/components/shadcn/dialog";
 
 import { beautifyErrors } from "@/lib/utils";
-
 import { useToast } from "@/hooks/useToast";
 import { Button } from "@/components/shadcn/button";
 import { Input, InputCopy } from "@/components/shadcn/input";
@@ -44,7 +44,7 @@ import {
   useVehicleInventoryUploadMutation,
 } from "@/features/inventory/inventorySlice";
 import SomethingWentWrong from "@/components/SomethingWentWrong";
-import Link from "next/link";
+import { useGetNewsLetterQuery } from "@/features/newsLetter/newsLetterSlice";
 
 export default function DashboardForumsTableUI() {
   const toast = useToast();
@@ -72,7 +72,6 @@ export default function DashboardForumsTableUI() {
   });
 
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
-  const [selectedPanel, setSelectedPanel] = useState<"list" | "files">("files");
 
   const [modals, setModals] = useState({
     addInventory: false,
@@ -97,17 +96,14 @@ export default function DashboardForumsTableUI() {
     sort: sort,
   });
 
-  //   const {
-  //     data: dataGetInventoryFiles,
-  //     error: errorGetInventoryFiles,
-  //     isLoading: isLoadingGetInventoryFiles,
-  //     isFetching: isFetchingGetInventoryFiles,
-  //     refetch: refetchGetInventoryFiles,
-  //   } = useGetInventoryFilesQuery({
-  //     search: debouncedSearchValue,
-  //     filter: filter,
-  //     sort: sort,
-  //   });
+  const {
+    data: getGetNewsLetter,
+    error: errorNewsLetter,
+    isFetching: isFetchingGetNewsLetter,
+    refetch: refetchGetNewsLetter,
+  } = useGetNewsLetterQuery({});
+
+  console.log("debugging => ", getGetNewsLetter);
 
   // rtk mutation
   const [createVehicleInventory, { isLoading: isLoadingCreateVehicle }] =

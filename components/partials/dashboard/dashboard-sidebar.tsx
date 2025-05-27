@@ -62,7 +62,7 @@ export function DashboardSidebar() {
                   {/* items */}
                   <div className="flex flex-col gap-2 py-2">
                     {item.items.map((subItem, subIndex) => {
-                      const isActive = pathname === subItem.href;
+                      const isActive = pathname.startsWith(subItem.href);
 
                       console.log("pathname", pathname);
                       console.log("subItem.href", subItem.href);

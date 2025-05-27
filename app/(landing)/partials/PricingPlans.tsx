@@ -109,8 +109,6 @@ export default function PricingPlans() {
     data: dataGetDealerPricing,
   } = useGetDealerPricingPlansQuery();
 
-  console.log("dataGetDealerPricing => ", dataGetDealerPricing);
-
   if (isError) {
     return "Something went wrong while fetching the data. Please try again later.";
   }
@@ -152,8 +150,6 @@ export default function PricingPlans() {
                 {dataGetDealerPricing.map(
                   (plan: PricingPlan, index: number) => {
                     const price = plan?.prices?.[0];
-
-                    console.log("plan => ", plan);
 
                     return (
                       <div

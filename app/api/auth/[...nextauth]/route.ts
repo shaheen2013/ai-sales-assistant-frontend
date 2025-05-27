@@ -35,8 +35,6 @@ async function refreshAccessToken(token: JWT) {
       throw data;
     }
 
-    console.log("RefreshAccessToken => ", data);
-
     return {
       ...token,
       access: data.access,
