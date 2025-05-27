@@ -11,7 +11,6 @@ import {
   SidebarFooter,
   SidebarContent,
 } from "@/components/shadcn/sidebar";
-import { Progress } from "@/components/shadcn/progress";
 import { dashboardDealerMenu, dashboardUserMenu } from "@/static/dashboard";
 
 import {
@@ -64,6 +63,9 @@ export function DashboardSidebar() {
                   <div className="flex flex-col gap-2 py-2">
                     {item.items.map((subItem, subIndex) => {
                       const isActive = pathname === subItem.href;
+
+                      console.log("pathname", pathname);
+                      console.log("subItem.href", subItem.href);
 
                       return (
                         <Link

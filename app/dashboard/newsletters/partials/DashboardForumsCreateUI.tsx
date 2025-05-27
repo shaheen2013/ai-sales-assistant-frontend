@@ -1,14 +1,15 @@
-'use client';
-import { Badge } from '@/components/shadcn/badge';
-import { Button } from '@/components/shadcn/button';
-import { Input } from '@/components/shadcn/input';
-import { Textarea } from '@/components/shadcn/textarea';
-import { useSendNewsletterMutation } from '@/features/admin/adminDashboardSlice';
-import { useToast } from '@/hooks/useToast';
-import { cn } from '@/lib/utils';
-import { Paperclip, XCircle } from 'lucide-react';
-import React, { useEffect, useRef } from 'react';
-import { Controller, useForm } from 'react-hook-form';
+"use client";
+
+import { Badge } from "@/components/shadcn/badge";
+import { Button } from "@/components/shadcn/button";
+import { Input } from "@/components/shadcn/input";
+import { Textarea } from "@/components/shadcn/textarea";
+import {} from "@/features/admin/adminDashboardSlice";
+import { useToast } from "@/hooks/useToast";
+import { cn } from "@/lib/utils";
+import { Paperclip, XCircle } from "lucide-react";
+import React, { useEffect, useRef } from "react";
+import { Controller, useForm } from "react-hook-form";
 
 type FormValues = {
   subject: string;
@@ -17,7 +18,7 @@ type FormValues = {
 
 export default function DashboardForumsUI() {
   const toast = useToast();
-  const [sendNewsletter, { isLoading }] = useSendNewsletterMutation();
+  // const [sendNewsletter, { isLoading }] = useSendNewsletterMutation();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const {
@@ -27,21 +28,13 @@ export default function DashboardForumsUI() {
     reset,
   } = useForm<FormValues>({
     defaultValues: {
-      subject: '',
-      summary: '',
+      subject: "",
+      summary: "",
     },
   });
 
   const [files, setFiles] = React.useState<File[]>([]);
-  const [fileError, setFileError] = React.useState<string>('');
-
-  // Add useEffect to monitor files array
-  useEffect(() => {
-    // Clear file error when no files are present
-    if (files.length === 0) {
-      setFileError('');
-    }
-  }, [files]); // Dependency on files array
+  const [fileError, setFileError] = React.useState<string>("");
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = event.target.files;
@@ -61,19 +54,19 @@ export default function DashboardForumsUI() {
         setFileError(
           `Files already selected: ${duplicateFiles
             .map((f) => f.name)
-            .join(', ')}`
+            .join(", ")}`
         );
         if (fileInputRef.current) {
-          fileInputRef.current.value = '';
+          fileInputRef.current.value = "";
         }
         return;
       }
 
       setFiles((prevFiles) => [...prevFiles, ...filesArray]);
-      setFileError(''); // Clear any previous file error
+      setFileError(""); // Clear any previous file error
     }
     if (fileInputRef.current) {
-      fileInputRef.current.value = '';
+      fileInputRef.current.value = "";
     }
   };
 
@@ -88,43 +81,43 @@ export default function DashboardForumsUI() {
     try {
       // Check if files are attached
       if (files.length === 0) {
-        setFileError('At least one file is required');
+        setFileError("At least one file is required");
         return;
       }
 
       const payload = new FormData();
-      payload.append('subject', formData.subject);
-      payload.append('summary', formData.summary);
+      payload.append("subject", formData.subject);
+      payload.append("summary", formData.summary);
 
       // Append files
       for (let i = 0; i < files.length; i++) {
-        payload.append('files', files[i]);
+        payload.append("files", files[i]);
       }
 
       try {
-        await sendNewsletter(payload).unwrap();
-        toast('success', 'Newsletter sent successfully!');
+        // await sendNewsletter(payload).unwrap();
+        toast("success", "Newsletter sent successfully!");
         reset();
         setFiles([]);
-        setFileError('');
+        setFileError("");
       } catch (apiError: any) {
-        console.log('API Error:', apiError);
+        console.log("API Error:", apiError);
         // Detailed error logging
         if (apiError.data) {
           const errorMessages = [];
           for (const [key, value] of Object.entries(apiError.data)) {
             errorMessages.push(`${key}: ${value}`);
           }
-          toast('error', errorMessages.join(', '));
+          toast("error", errorMessages.join(", "));
         } else {
-          console.log('Unknown Error:', apiError);
-          toast('error', apiError?.message || 'Failed to send newsletter');
+          console.log("Unknown Error:", apiError);
+          toast("error", apiError?.message || "Failed to send newsletter");
         }
       }
     } catch (error) {
       // This catch block handles any other errors (like FormData creation errors)
-      console.error('Unexpected Error:', error);
-      toast('error', 'An unexpected error occurred');
+      console.error("Unexpected Error:", error);
+      toast("error", "An unexpected error occurred");
     }
   };
 
@@ -145,10 +138,10 @@ export default function DashboardForumsUI() {
               name="subject"
               control={control}
               rules={{
-                required: 'Subject is required',
+                required: "Subject is required",
                 maxLength: {
                   value: 255,
-                  message: 'Subject must be less than 255 characters',
+                  message: "Subject must be less than 255 characters",
                 },
               }}
               render={({ field }) => (
@@ -157,10 +150,10 @@ export default function DashboardForumsUI() {
                     type="text"
                     id="subject"
                     className={cn(
-                      'h-10',
+                      "h-10",
                       errors?.subject
-                        ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
-                        : 'focus:border-primary-500 focus:ring-primary-500'
+                        ? "border-red-500 focus:border-red-500 focus:ring-red-500"
+                        : "focus:border-primary-500 focus:ring-primary-500"
                     )}
                     placeholder="Your subject here..."
                     {...field}
@@ -187,16 +180,16 @@ export default function DashboardForumsUI() {
               name="summary"
               control={control}
               rules={{
-                required: 'Summary is required',
+                required: "Summary is required",
               }}
               render={({ field }) => (
                 <div>
                   <Textarea
                     className={cn(
-                      'border roundedLg h-[300px] p-3 text-sm w-full',
+                      "border roundedLg h-[300px] p-3 text-sm w-full",
                       errors?.summary
-                        ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
-                        : 'focus:border-primary-500 focus:ring-primary-500'
+                        ? "border-red-500 focus:border-red-500 focus:ring-red-500"
+                        : "focus:border-primary-500 focus:ring-primary-500"
                     )}
                     placeholder="Newsletter description here..."
                     {...field}
@@ -249,8 +242,8 @@ export default function DashboardForumsUI() {
                   variant="outline"
                   type="button"
                   className={cn(
-                    'text-[#414651]',
-                    fileError && 'border-red-500'
+                    "text-[#414651]",
+                    fileError && "border-red-500"
                   )}
                   onClick={() => fileInputRef.current?.click()}
                 >
@@ -270,10 +263,10 @@ export default function DashboardForumsUI() {
           <Button
             variant="primary"
             type="submit"
-            disabled={isLoading}
+            // disabled={isLoading}
             className="!font-medium"
           >
-            {isLoading ? 'Sending...' : 'Send Newsletter'}
+            {false ? "Sending..." : "Send Newsletter"}
           </Button>
         </div>
       </form>

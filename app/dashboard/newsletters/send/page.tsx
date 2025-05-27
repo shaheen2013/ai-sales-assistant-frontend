@@ -1,9 +1,9 @@
 import React from "react";
 
-import DashboardForumsUI from "./partials/DashboardForumsUI";
+import DashboardForumsUI from "../partials/DashboardForumsCreateUI";
 
 export const metadata = {
-  title: "Team Management | Teez",
+  title: "Newsletter | Teez",
   description: "Dealer Overview",
 };
 
