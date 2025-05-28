@@ -2,7 +2,6 @@
 import React, { useState } from 'react'
 import { useGetAdminDashboardOverviewQuery } from '@/features/admin/adminDashboardSlice';
 import AdminDashboardOverviewCard from './AdminDashboardOverviewCard';
-import Spinner from '@/components/spinner/Spinner';
 import AdminDashboardOverviewChart from './AdminDashboardOverviewChart';
 import DateRange from '@/components/date-range/DateRange';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/components/shadcn/dropdown-menu';
