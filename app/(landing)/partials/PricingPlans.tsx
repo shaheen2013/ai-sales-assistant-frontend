@@ -77,7 +77,7 @@ export default function PricingPlans() {
       <div className="container px-5 py-12 mx-auto">
         <div className="flex flex-col justify-center text-center">
           {/* badge */}
-          <div>
+          <div className="">
             <span className="border border-primary-600 py-2 px-6 rounded-lg text-primary-600 mb-9 inline-flex ">
               The Plans
             </span>
