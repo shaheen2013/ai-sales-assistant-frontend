@@ -53,7 +53,7 @@ const AdminDashboardOverview = () => {
 
     /*--RTK Query--*/
     const { data: adminDashboardOverviewData, isLoading: adminDashboardOverviewLoading } = useGetAdminDashboardOverviewQuery({
-        ...(isDifferentDate ? { created_at_before: startDate, created_at_after: endDate } : {})
+        ...(isDifferentDate ? { created_at_before: endDate, created_at_after: startDate } : {})
     });
     return (
         <>
