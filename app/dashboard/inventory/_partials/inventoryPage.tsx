@@ -81,7 +81,7 @@ export default function DashboardDealerInventory() {
   const [modals, setModals] = useState({
     addInventory: false,
     addPdf: false,
-    selectPlan: true,
+    selectPlan: false,
   });
 
   // const search = searchParams.get("search");
