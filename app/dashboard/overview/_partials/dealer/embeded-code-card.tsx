@@ -23,7 +23,7 @@ const PublicEmbedCodeCard = () => {
     }, 2000);
   };
 
-  const embeddedCode = `<iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="1440" height="1080" src="${process.env.NEXT_PUBLIC_FRONTEND_URL}/dealers/${data?.data?.dealer_details?.id}" allowfullscreen></iframe>`
+  const embeddedCode = `<iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="1440" height="600" src="${process.env.NEXT_PUBLIC_FRONTEND_URL}/dealers/${data?.data?.dealer_details?.id}" allowfullscreen></iframe>`
 
   return (
     <Card>
