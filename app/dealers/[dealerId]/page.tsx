@@ -1,5 +1,5 @@
 import React from 'react'
-import PublicDealerProfile from './PublicDealerProfile'
+import PublicDealerProfile from './_partials/PublicDealerProfile'
 
 const page = () => {
   return (

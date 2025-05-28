@@ -1,21 +1,44 @@
+"use client";
+
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/components/shadcn/dropdown-menu'
 import { languages } from '@/static/dashboard'
 import Image from 'next/image'
 import React from 'react'
+import PublciProfileHeader from './PublciProfileHeader'
+import ShortBioSection from '@/app/dashboard/overview/_partials/dealer/short-bio-section'
+import ServicesOfferedSection from '@/app/dashboard/overview/_partials/dealer/services-offered-section'
+import ContactInformationCard from '@/app/dashboard/overview/_partials/dealer/contact-information-card'
+import { useGetDealerPublicProfileQuery } from '@/features/dealer/dealerSlice'
+import { useParams } from 'next/navigation'
+import DealerProfileOverviewSkeleton from '@/components/partials/dashboard/skeleton/dealer-profile-overview-skeleton'
+import PublicProfileServiceOfferSection from './PublicProfileServiceOfferSection';
 
 const PublicDealerProfile = () => {
+    /*--Next Hooks--*/
+    const { dealerId } = useParams();
+
+    /*--RTK Query--*/
+    const { data: dealerProfile, isLoading } = useGetDealerPublicProfileQuery(Number(dealerId));
+
+    if (isLoading) return (
+        <div className='p-6'>
+            <DealerProfileOverviewSkeleton />
+        </div>
+    );
+
     return (
         <div className='p-6'>
-            <div className='px-6 py-8 bg-white rounded-2xl shadow-[0px_0px_8px_0px_rgba(0,0,0,0.08)] border-b border-[#eaebed] flex items-center justify-between'>
+            <div className='px-6 py-4 md:py-8 bg-white rounded-2xl shadow-[0px_0px_8px_0px_rgba(0,0,0,0.08)] border-b border-[#eaebed] flex flex-row items-center justify-between'>
                 <Image
                     src="/icons/homepage/footer-brand.svg"
                     alt="Logo"
                     width={140}
                     height={32}
+                    className='w-[100px] md:w-[140px]'
                 />
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                        <div className="cursor-pointer px-3 py-2 rounded-lg border relative flex gap-3 justify-center items-center h-[42px]">
+                        <div className="cursor-pointer md:px-3 md:py-2 rounded-lg border relative flex gap-3 justify-center items-center h-[42px]">
                             {/* image  */}
                             <div className="rounded-full h-5 w-5 overflow-hidden">
                                 <Image
@@ -73,7 +96,21 @@ const PublicDealerProfile = () => {
                         </div>
                     </DropdownMenuContent>
                 </DropdownMenu>
-            </div>    
+            </div>
+            <div className='mt-6'>
+                <PublciProfileHeader />
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+                    {/* left side */}
+                    <div className="md:col-span-2 space-y-6">
+                        <ShortBioSection bio={dealerProfile?.about || ""} />
+                        <PublicProfileServiceOfferSection />
+                    </div>
+                    {/* right side */}
+                    <div className="space-y-6">
+                        <ContactInformationCard data={dealerProfile} />
+                    </div>
+                </div>
+            </div>
         </div>
     )
 }

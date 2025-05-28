@@ -1,3 +1,5 @@
+import { EmployeeDataType } from "./dealerManagementSliceType";
+
 export type DealerProfileType = {
   status?: string;
   detail?: string; //for api response
@@ -21,6 +23,7 @@ export type DealerProfileType = {
     updated_at?: string; // readOnly, ISO datetime string
 
     dealer_details?: {
+      id: number;
       business_name?: string | null; // maxLength: 510
       business_email?: string | null; // email, maxLength: 254
       business_summary?: string | null;
@@ -29,6 +32,15 @@ export type DealerProfileType = {
     };
   };
 };
+
+export type DealerPublicProfileType = DealerProfileType["data"] & {
+  department: {
+    id: number;
+    department_name: string;
+    department_email: string;
+    employees: EmployeeDataType[];
+  }[]
+}
 
 export type DealerUpdatePasswordType = {
   old_password: string;
