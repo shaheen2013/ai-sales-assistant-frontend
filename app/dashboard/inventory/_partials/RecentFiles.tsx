@@ -39,8 +39,14 @@ export default function RecentFiles({
     );
   }
 
+  if (dataGetInventoryFiles?.results?.length == 0) {
+    return null;
+  }
+
   return (
     <div>
+      <h2 className="mb-4">Recent files</h2>
+
       <div className="grid lg:grid-cols-3 gap-4 mb-6">
         {dataGetInventoryFiles?.results?.map(
           (inventoryFile: any, index: any) => (
@@ -133,6 +139,8 @@ export default function RecentFiles({
             </div>
           )
         )}
+
+        {/* no results */}
       </div>
     </div>
   );
