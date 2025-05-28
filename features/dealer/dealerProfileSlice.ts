@@ -1,89 +1,99 @@
 import {
-  DealerNotificationSettingsType,
   DealerProfileType,
   DealerUpdatePasswordType,
-} from '@/types/dealerProfileSliceType';
+} from "@/types/dealerProfileSliceType";
 
-import { apiSlice } from '../api/apiSlice';
+import { apiSlice } from "../api/apiSlice";
 
 export const dealerProfileSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getDealerProfile: builder.query<DealerProfileType, void>({
       query: () => ({
-        url: '/dealer-dashboard/profile/',
-        method: 'GET',
-        credentials: 'include',
+        url: "/dealer-dashboard/profile/",
+        method: "GET",
+        credentials: "include",
       }),
-      providesTags: ['dealerProfile'],
+      providesTags: ["dealerProfile"],
     }),
 
     updateDealerProfile: builder.mutation<DealerProfileType, FormData>({
       query: (formData) => ({
-        url: '/update-profile',
-        method: 'PATCH',
+        url: "/update-profile",
+        method: "PATCH",
         body: formData,
         formData: true,
-        credentials: 'include',
+        credentials: "include",
       }),
-      invalidatesTags: ['dealerProfile'],
+      invalidatesTags: ["dealerProfile"],
     }),
-    getNotificationSettings: builder.query<
-      DealerNotificationSettingsType,
-      void
-    >({
+
+    getNotificationSettings: builder.query({
       query: () => ({
-        url: '/notification-settings-configuration',
-        method: 'GET',
-        credentials: 'include',
+        url: "/notification-settings-configuration",
+        method: "GET",
+        credentials: "include",
       }),
     }),
-    updateNotificationSettings: builder.mutation<
-      any,
-      DealerNotificationSettingsType
-    >({
+
+    updateNotificationSettings: builder.mutation({
       query: (data) => ({
-        url: '/notification-settings-configuration',
-        method: 'PATCH',
+        url: "/notification-settings-configuration",
+        method: "PATCH",
         body: data,
-        credentials: 'include',
+        credentials: "include",
       }),
     }),
+
     updateDealerPassword: builder.mutation<any, DealerUpdatePasswordType>({
       query: (data) => ({
-        url: '/password-change',
-        method: 'POST',
+        url: "/password-change",
+        method: "POST",
         body: data,
-        credentials: 'include',
+        credentials: "include",
       }),
     }),
+
     getDealerPricingPlans: builder.query<any, void>({
       query: () => ({
-        url: '/stripe/subscriptions/available_plans/',
-        method: 'GET',
+        url: "/stripe/subscriptions/available_plans/",
+        method: "GET",
       }),
     }),
+
     getCurrentSubscriptionPlan: builder.query<any, void>({
       query: () => ({
-        url: '/stripe/subscriptions/current_subscription/',
-        method: 'GET',
-        credentials: 'include',
+        url: "/stripe/subscriptions/current_subscription/",
+        method: "GET",
+        credentials: "include",
       }),
-      providesTags: ['pricingPlans'],
+      providesTags: ["pricingPlans"],
     }),
+
+    createSubscription: builder.mutation<any, any>({
+      query: (data) => ({
+        url: "/stripe/subscriptions/create_subscription/",
+        method: "POST",
+        body: data,
+        credentials: "include",
+      }),
+      invalidatesTags: ["pricingPlans"],
+    }),
+
     upgradeSubscription: builder.mutation<any, any>({
       query: (data) => ({
-        url: '/stripe/subscriptions/upgrade_subscription/',
-        method: 'PATCH',
+        url: "/stripe/subscriptions/upgrade_subscription/",
+        method: "PATCH",
         body: data,
-        credentials: 'include',
+        credentials: "include",
       }),
-      invalidatesTags: ['pricingPlans'],
+      invalidatesTags: ["pricingPlans"],
     }),
+
     getBillingHistory: builder.query<any, void>({
       query: () => ({
-        url: '/dealer-dashboard/invoices/',
-        method: 'GET',
-        credentials: 'include',
+        url: "/dealer-dashboard/invoices/",
+        method: "GET",
+        credentials: "include",
       }),
     }),
   }),
@@ -97,6 +107,7 @@ export const {
   useUpdateDealerPasswordMutation,
   useGetDealerPricingPlansQuery,
   useGetCurrentSubscriptionPlanQuery,
+  useCreateSubscriptionMutation,
   useUpgradeSubscriptionMutation,
   useGetBillingHistoryQuery,
 } = dealerProfileSlice;

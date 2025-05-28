@@ -1,13 +1,11 @@
-import React from "react";
-
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/components/shadcn/tabs";
 import { Button } from "@/components/shadcn/button";
-import { useGetDealerPricingPlansQuery } from "@/features/dealer/dealerProfileSlice";
+import { Tabs, TabsContent } from "@/components/shadcn/tabs";
+import {
+  useCreateSubscriptionMutation,
+  useGetDealerPricingPlansQuery,
+  useUpgradeSubscriptionMutation,
+} from "@/features/dealer/dealerProfileSlice";
+import { useSession } from "next-auth/react";
 
 interface PricingPlan {
   name?: string;
@@ -19,95 +17,45 @@ interface PricingPlan {
   features?: string[];
 }
 
-const pricingPlans: { monthly: PricingPlan[]; annually: PricingPlan[] } = {
-  monthly: [
-    {
-      type: "Basic",
-      price: 10,
-      subtitle: "Perfect for sell used cars",
-      features: [
-        "Manage up to 20 car listings",
-        "AI-powered customer inquiries via text",
-        "Basic lead generation assistance",
-        "24/7 automated customer responses",
-        "Essential inventory management",
-      ],
-    },
-
-    {
-      type: "Enterprise",
-      price: 20,
-      subtitle: "Perfect for brands who sale new cars",
-      features: [
-        "Manage up to 100 car listings",
-        "AI-driven lead generation & customer matching",
-        "Voice & text AI customer support",
-        "Automated follow-ups & appointment scheduling",
-        "Performance analytics & insights",
-      ],
-    },
-
-    {
-      type: "Executive Assistant",
-      price: 40,
-      subtitle: "Perfect for Team with multiple member",
-      features: [
-        "Multi-user access for teams",
-        "AI-powered task management & scheduling",
-        "Seamless customer support via text & voice",
-        "Shared dashboard for collaboration",
-        "Advanced analytics & reporting",
-      ],
-    },
-  ],
-  annually: [
-    {
-      type: "Basic",
-      price: 5,
-      subtitle: "Perfect for sell used cars",
-      features: [
-        "Manage up to 20 car listings",
-        "AI-powered customer inquiries via text",
-        "Basic lead generation assistance",
-        "24/7 automated customer responses",
-        "Essential inventory management",
-      ],
-    },
-
-    {
-      type: "Enterprise",
-      price: 10,
-      subtitle: "Perfect for brands who sale new cars",
-      features: [
-        "Manage up to 100 car listings",
-        "AI-driven lead generation & customer matching",
-        "Voice & text AI customer support",
-        "Automated follow-ups & appointment scheduling",
-        "Performance analytics & insights",
-      ],
-    },
-
-    {
-      type: "Executive Assistant",
-      price: 30,
-      subtitle: "Perfect for Team with multiple member",
-      features: [
-        "Multi-user access for teams",
-        "AI-powered task management & scheduling",
-        "Seamless customer support via text & voice",
-        "Shared dashboard for collaboration",
-        "Advanced analytics & reporting",
-      ],
-    },
-  ],
-};
-
 export default function PricingPlans() {
+  const { data: session } = useSession();
+
   const {
     isError,
     isFetching,
     data: dataGetDealerPricing,
   } = useGetDealerPricingPlansQuery();
+
+  const [
+    createSubscription,
+    { isLoading: isLoadingCreateSubscription, originalArgs },
+  ] = useCreateSubscriptionMutation();
+
+  console.log("originalArgs => ", originalArgs?.price_id);
+
+  const handleCreateSubscription = async (priceId: string) => {
+    if (!session?.user) {
+      alert("Please login to upgrade your subscription.");
+      return;
+    }
+
+    try {
+      const { data, error } = await createSubscription({
+        price_id: priceId,
+        success_url: `${window.location.origin}/dashboard/overview`,
+        cancel_url: `${window.location.origin}`,
+      });
+
+      if (error) {
+        console.error("Error creating subscription:", error);
+        return;
+      }
+
+      window.location.href = data?.checkout_url;
+    } catch (error: any) {
+      console.error("Error creating subscription:", error);
+    }
+  };
 
   if (isError) {
     return "Something went wrong while fetching the data. Please try again later.";
@@ -151,6 +99,12 @@ export default function PricingPlans() {
                   (plan: PricingPlan, index: number) => {
                     const price = plan?.prices?.[0];
 
+                    console.log("plan", plan);
+
+                    const isLoading =
+                      isLoadingCreateSubscription &&
+                      price?.id === originalArgs?.price_id;
+
                     return (
                       <div
                         key={index}
@@ -175,7 +129,6 @@ export default function PricingPlans() {
                         </div>
 
                         {/* subtitle */}
-
                         <p className="text-center text-[#2B3545] mb-9">
                           {plan?.description || "Perfect for sell used cars"}
                         </p>
@@ -226,6 +179,10 @@ export default function PricingPlans() {
                         <div className="h-full flex flex-col items-end">
                           {/* button */}
                           <Button
+                            loading={isLoading}
+                            onClick={() => {
+                              handleCreateSubscription(price.id);
+                            }}
                             variant="primary"
                             className="w-full !font-normal bg-primary-400 mt-auto"
                           >

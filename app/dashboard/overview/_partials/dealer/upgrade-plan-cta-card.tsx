@@ -1,27 +1,51 @@
-import { Badge } from '@/components/shadcn/badge';
-import { Button } from '@/components/shadcn/button';
-import { Card, CardContent } from '@/components/shadcn/card';
-import { ArrowUpRight } from 'lucide-react';
+"use client";
+
+import { ArrowUpRight } from "lucide-react";
+
+import { Badge } from "@/components/shadcn/badge";
+import { Button } from "@/components/shadcn/button";
+import { Card, CardContent } from "@/components/shadcn/card";
+import { useGetCurrentSubscriptionPlanQuery } from "@/features/dealer/dealerProfileSlice";
+import { Skeleton } from "@/components/shadcn/skeleton";
 
 const UpgradePlanCtaCard = () => {
+  const {
+    data: dataGetCurrentSubscription,
+    error: errorGetCurrentSubscription,
+    isLoading: isLoadingGetCurrentSubscription,
+    isFetching: isFetchingGetCurrentSubscription,
+  } = useGetCurrentSubscriptionPlanQuery();
+
+  console.log(" ==> ", dataGetCurrentSubscription);
+
+  if (isFetchingGetCurrentSubscription) {
+    return <Skeleton className="h-[220px] w-full" />;
+  }
+
   return (
     <Card>
-      <CardContent className="pt-6 ">
+      <CardContent className="pt-6">
         <div className="flex items-start">
           <div>
-            <Badge className="bg-[#e7f6ef] text-[#13c56b] hover:bg-[#e7f6ef]/80 rounded-full px-3 py-0.5 mb-2">
-              Enterprise
+            <Badge className="bg-[#e7f6ef] text-[#13c56b] hover:bg-[#e7f6ef]/80 rounded-full px-3 py-0.5 mb-2 capitalize">
+              {dataGetCurrentSubscription?.subscription?.status}
             </Badge>
 
             <h2 className="text-[20px] font-semibold text-gray-400 mt-2">
-              Premium
+              {dataGetCurrentSubscription?.subscription?.product?.name}
             </h2>
             <p className="text-gray-300 text-sm mt-2">
               Perfect for brands who sale new cars
             </p>
           </div>
           <h3 className="text-2xl font-semibold text-gray-400 flex items-baseline">
-            <span className="text-gray-400 text-3xl">$10.00</span>
+            <span className="text-gray-400 text-3xl">
+              $
+              {
+                dataGetCurrentSubscription?.subscription?.product?.prices?.[0]
+                    ?.convert_amount
+              }
+            </span>
             <span className=" text-gray-400 text-sm ml-1">/month</span>
           </h3>
         </div>
