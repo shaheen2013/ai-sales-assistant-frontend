@@ -1131,7 +1131,7 @@ export default function DashboardDealerInventory() {
             <div className="flex flex-col gap-3">
               {plans.map((plan, index) => {
                 return (
-                  <label className="has-[:checked]:border-primary-400 has-[:checked]:text-primary-900 has-[:checked]:ring-indigo-200 flex w-full border border-gray-50 rounded-xl p-5 cursor-pointer transition-all gap-3 group flex-col">
+                  <label className="has-[:checked]:border-primary-400 has-[:checked]:text-primary-900 has-[:checked]:ring-indigo-200 flex w-full border border-gray-50 rounded-xl pt-4 px-4 cursor-pointer transition-all gap-3 group flex-col">
                     <div className="flex gap-3">
                       <input
                         defaultChecked={index === 0} // Default to the first plan being selected
