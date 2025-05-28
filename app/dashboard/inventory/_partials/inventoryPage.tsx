@@ -43,6 +43,12 @@ import {
   useVehicleInventoryUploadMutation,
 } from "@/features/inventory/inventorySlice";
 import SomethingWentWrong from "@/components/SomethingWentWrong";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/shadcn/accordion";
 
 export default function DashboardDealerInventory() {
   const toast = useToast();
@@ -210,6 +216,21 @@ export default function DashboardDealerInventory() {
   if (errorGetVehicle || errorGetInventoryFiles) {
     return <SomethingWentWrong />;
   }
+
+  const plans = [
+    {
+      name: "Pro Plan",
+      price: "150",
+      benefits: [
+        "500 voice minutes",
+        "$0.15 per minute",
+        "Small to mid-size independent dealerships (1-2 reps)",
+        "Optional $250 one-time if integrations are needed",
+      ],
+    },
+    { name: "Business Plan", price: "300" },
+    { name: "Enterprise Plan", price: "999" },
+  ];
 
   return (
     <div className="">
@@ -1039,7 +1060,7 @@ export default function DashboardDealerInventory() {
 
           <div className="grid grid-cols-2 gap-9">
             {/* left */}
-            <div className="dev">
+            <div className="">
               <h4 className="text-xs text-primary-400">
                 Welcome to Teez, Kawsar!
               </h4>
@@ -1052,10 +1073,101 @@ export default function DashboardDealerInventory() {
                 Congratulations on reaching this milestone! You&apos;re one step
                 closer to your goal!
               </p>
+
+              <Accordion
+                type="single"
+                collapsible
+                className="w-full"
+                defaultValue="item-1"
+              >
+                <AccordionItem
+                  value="item-1"
+                  className="p-0 pb-2 rounded-none mb-3"
+                >
+                  <AccordionTrigger className="text-xs font-semibold text-gray-400">
+                    What&'s included in the monthly voice minutes?
+                  </AccordionTrigger>
+                  <AccordionContent className="text-xs font-normal text-gray-300">
+                    Your plan's included minutes apply to all voice
+                    conversations handled by the AI assistant on behalf of your
+                    dealership. This includes inbound buyer inquiries,
+                    appointment bookings, trade-in discussions, and more.
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem
+                  value="item-2"
+                  className="p-0 pb-2 rounded-none mb-3"
+                >
+                  <AccordionTrigger className="text-xs font-semibold text-gray-400">
+                    What happens if we exceed our included voice minutes?
+                  </AccordionTrigger>
+                  <AccordionContent className="text-xs font-normal text-gray-300">
+                    If you exceed your included voice minutes, you will be
+                    charged for additional minutes at the rate specified in your
+                    plan. You can monitor your usage through the dashboard to
+                    avoid unexpected charges.
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem
+                  value="item-3"
+                  className="p-0 pb-2 rounded-none border-none mb-3"
+                >
+                  <AccordionTrigger className="text-xs font-semibold text-gray-400">
+                    Is there a contract or can I cancel anytime?
+                  </AccordionTrigger>
+                  <AccordionContent className="text-xs font-normal text-gray-300">
+                    There is no long-term contract required. You can cancel your
+                    subscription at any time through your account settings. Your
+                    plan will remain active until the end of the current billing
+                    cycle.
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
             </div>
 
             {/* right */}
-            <div className="dev">1</div>
+            <div className="flex flex-col gap-3">
+              {plans.map((plan, index) => {
+                return (
+                  <label className="has-[:checked]:border-primary-400 has-[:checked]:text-primary-900 has-[:checked]:ring-indigo-200 flex w-full border border-gray-50 rounded-lg p-5 cursor-pointer transition-all items-center gap-3 group">
+                    <input
+                      defaultChecked={index === 0} // Default to the first plan being selected
+                      name="plan"
+                      type="radio"
+                      className="box-content h-1.5 w-1.5 appearance-none rounded-full border-[5px] border-white bg-white bg-clip-padding outline-none ring-1 ring-gray-950/10 checked:border-primary-500 checked:ring-primary-500"
+                    />
+                    <div className="flex justify-between items-center w-full">
+                      {/* title, description */}
+                      <div className="">
+                        <h2 className="text-gray-400 font-semibold text-lg mb-1">
+                          {plan.name}
+                        </h2>
+                        <h4 className="text-xs text-gray-400">
+                          Perfect for sell used cars
+                        </h4>
+                      </div>
+
+                      {/* pricing */}
+                      <div className="">
+                        <span className="group-has-[:checked]:text-primary-400 text-gray-400">
+                          $
+                        </span>
+                        <span className="group-has-[:checked]:text-primary-400 text-gray-400 font-bold text-3xl">
+                          {plan.price}
+                        </span>
+                        /month
+                      </div>
+                    </div>
+                  </label>
+                );
+              })}
+
+              <span className="underline text-xs font-medium text-primary-400 flex items-end justify-end cursor-pointer">
+                Show all plan Detail View
+              </span>
+            </div>
           </div>
         </DialogContent>
       </Dialog>
