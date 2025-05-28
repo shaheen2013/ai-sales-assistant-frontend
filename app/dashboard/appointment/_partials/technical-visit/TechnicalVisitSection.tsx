@@ -3,7 +3,7 @@
 import React, { useState } from 'react'
 import TestDriveDataTable from './TestDriveDataTable';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@radix-ui/react-tabs';
-import { useGetStoreVisitQuery, useGetTestDriveQuery, useUpdateStoreVisitStatusMutation } from '@/features/appointmentBooking/appointmentBookingSlice';
+import { useGetStoreVisitQuery, useGetTestDriveQuery, useUpdateStoreVisitStatusMutation, useUpdateTestDriveBookingStatusMutation } from '@/features/appointmentBooking/appointmentBookingSlice';
 import Pagination from '@/components/pagination/Pagination';
 import SimpleSelect from '@/components/select/SimpleSelect';
 import StoreVisitDataTable from '../store-visit/StoreVisitDataTable';
@@ -29,6 +29,7 @@ const TechnicalVisitSection = () => {
         ...(sortBy && { sort_by: sortBy }),
     }, { skip: tab !== "store_visit" });
     const [updateStoreVisitStatus] = useUpdateStoreVisitStatusMutation();
+    const [updateTestDriveBookingStatus] = useUpdateTestDriveBookingStatusMutation();
 
     /*--Functions--*/
     const handleChangeVisitStatus = (checked: boolean, id: number) => {
@@ -37,6 +38,21 @@ const TechnicalVisitSection = () => {
         }
         updateStoreVisitStatus({
             id, data, queryParams: {
+                limit: 10,
+                offset: (page - 1) * 10,
+                ...(sortBy && { sort_by: sortBy }),
+            }
+        });
+    }
+
+    const handleChangeBookingStatus = (status: string, id: number) => {
+        const data = {
+            booking_status: status
+        }
+        updateTestDriveBookingStatus({
+            id,
+            data,
+            queryParams: {
                 limit: 10,
                 offset: (page - 1) * 10,
                 ...(sortBy && { sort_by: sortBy }),
@@ -91,7 +107,7 @@ const TechnicalVisitSection = () => {
                         <StoreVisitDataTable columns={storeVisitColumns({ handleChangeVisitStatus })} data={storeVisitData?.results || []} loading={storeVisitIsFetching} />
                     </TabsContent>
                     <TabsContent value='test_drive'>
-                        <TestDriveDataTable columns={testDriveVisitsColumns} data={testDriveData?.results || []} loading={testDriveIsFetching} />
+                        <TestDriveDataTable columns={testDriveVisitsColumns({ handleChangeBookingStatus })} data={testDriveData?.results || []} loading={testDriveIsFetching} />
                     </TabsContent>
                 </Tabs>
 

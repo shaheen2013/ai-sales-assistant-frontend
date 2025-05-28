@@ -85,16 +85,14 @@ export default function AnonymousChat() {
 
     try {
       const response = await startChat({
-        message,
-        email: email,
-        dealer_id: 1, // hard coded set the dealer id for now
+        question: message,
       }).unwrap();
       setMessages((prevMessages) => [
         ...prevMessages,
         {
           id: (Date.now() + 1).toString(),
           isMe: false,
-          message: response.response,
+          message: response.answer,
           timestamp: new Date().toISOString(),
         },
       ]);
@@ -107,28 +105,18 @@ export default function AnonymousChat() {
     <div className="h-[calc(100vh)] overflow-hidden flex flex-col justify-center">
       <Header />
       <div className="flex-1">
-        {!initiateChat ? (
-          <AISalesInitializer
-            emailValue={email}
-            selectedDealer={selectedDealer}
-            onEmailChange={handleEmailChange}
-            onDealerChange={handleDealerChange}
-            onEmailSubmit={handleEmailSubmit}
-          />
-        ) : (
-          <ChatApp
-            isLoading={isLoading}
-            isError={!!error}
-            message={message}
-            messages={messages}
-            onMessageChange={(e) => setMessage(e.target.value)}
-            messageRef={messageRef}
-            messagesRef={messagesRef}
-            onEmojiClick={handleEmojiClick}
-            onMessageSend={handleMessageSend}
-            selectedDealer={selectedDealer}
-          />
-        )}
+        <ChatApp
+          isLoading={isLoading}
+          isError={!!error}
+          message={message}
+          messages={messages}
+          onMessageChange={(e) => setMessage(e.target.value)}
+          messageRef={messageRef}
+          messagesRef={messagesRef}
+          onEmojiClick={handleEmojiClick}
+          onMessageSend={handleMessageSend}
+          selectedDealer={selectedDealer}
+        />
       </div>
     </div>
   );

@@ -28,7 +28,8 @@ export const apiSlice = createApi({
     'pricingPlans',
     'getDealerAllSupportTickets',
     "getStoreVisit",
-    "getTalkToHumanCallLogs"
+    "getTalkToHumanCallLogs",
+    "getTestDrive"
   ],
   endpoints: () => ({}),
 });

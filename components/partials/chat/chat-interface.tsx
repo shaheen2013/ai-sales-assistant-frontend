@@ -17,6 +17,7 @@ import Picker from '@emoji-mart/react';
 import moment from 'moment';
 import Image from 'next/image';
 import { ClaraIcon } from './svg-icons';
+import { linkifyHTML } from '@/components/partials/chat/linkfiy';
 
 interface Message {
   id: string;
@@ -55,12 +56,12 @@ export default function ChatApp({
         {/* messages */}
         <div className="flex flex-col flex-1">
           {/* header */}
-          <header className="flex lg:flex-row flex-col justify-between lg:items-center border-b pt-4 pb-8">
-            <div>
+          <header className="flex lg:flex-row flex-col justify-end lg:items-center border-b pb-4">
+            {/* <div>
               <h2 className="text-gray-[#2B3545] font-semibold lg:mb-0 mb-3">
                 Why the car is not starting?
               </h2>
-            </div>
+            </div> */}
 
             <div className="flex items-center gap-2">
               <Button variant="icon" className="h-10 w-10">
@@ -79,61 +80,6 @@ export default function ChatApp({
                   />
                 </svg>
               </Button>
-
-              <Button variant="icon" className="h-10 w-10">
-                <svg
-                  className="!h-5 !w-5"
-                  viewBox="0 0 22 22"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M8.2513 2.97852C6.85339 2.97852 5.51273 3.53383 4.52426 4.52231C3.53579 5.51078 2.98047 6.85144 2.98047 8.24935V14.7641C2.98047 14.9464 3.0529 15.1213 3.18183 15.2502C3.31076 15.3792 3.48563 15.4516 3.66797 15.4516C3.85031 15.4516 4.02517 15.3792 4.1541 15.2502C4.28304 15.1213 4.35547 14.9464 4.35547 14.7641V8.24935C4.35547 7.21611 4.76592 6.22519 5.49653 5.49458C6.22714 4.76397 7.21806 4.35352 8.2513 4.35352H14.6799C14.8622 4.35352 15.0371 4.28108 15.166 4.15215C15.295 4.02322 15.3674 3.84835 15.3674 3.66602C15.3674 3.48368 15.295 3.30881 15.166 3.17988C15.0371 3.05095 14.8622 2.97852 14.6799 2.97852H8.2513Z"
-                    fill="#2C2F3A"
-                  />
-                  <path
-                    fillRule="evenodd"
-                    clipRule="evenodd"
-                    d="M16.8694 6.22743C13.8823 5.89554 10.8677 5.89554 7.8806 6.22743C7.46724 6.27334 7.08158 6.45776 6.78633 6.75067C6.49108 7.04359 6.30362 7.42778 6.25443 7.84077C5.90217 10.8537 5.90217 13.8974 6.25443 16.9103C6.30362 17.3232 6.49108 17.7074 6.78633 18.0004C7.08158 18.2933 7.46724 18.4777 7.8806 18.5236C10.8515 18.8554 13.8985 18.8554 16.8694 18.5236C17.2828 18.4777 17.6685 18.2933 17.9637 18.0004C18.2589 17.7074 18.4464 17.3232 18.4956 16.9103C18.8479 13.8974 18.8479 10.8537 18.4956 7.84077C18.4464 7.42778 18.2589 7.04359 17.9637 6.75067C17.6685 6.45776 17.2828 6.27334 16.8694 6.22743ZM8.03368 7.59418C10.9028 7.27335 13.8472 7.27335 16.7163 7.59418C16.8209 7.60575 16.9184 7.65221 16.9933 7.72606C17.0681 7.79991 17.1159 7.89684 17.1288 8.00118C17.4694 10.9075 17.4694 13.8436 17.1288 16.7498C17.1159 16.8542 17.0681 16.9511 16.9933 17.025C16.9184 17.0988 16.8209 17.1453 16.7163 17.1568C13.8472 17.4777 10.9028 17.4777 8.03368 17.1568C7.92917 17.1453 7.83161 17.0988 7.75676 17.025C7.68192 16.9511 7.63415 16.8542 7.62118 16.7498C7.2806 13.8436 7.2806 10.9075 7.62118 8.00118C7.63415 7.89684 7.68192 7.79991 7.75676 7.72606C7.83161 7.65221 7.92917 7.60575 8.03368 7.59418Z"
-                    fill="#2C2F3A"
-                  />
-                </svg>
-              </Button>
-
-              <Select value={selectedDealer}>
-                <SelectTrigger className="h-10 border-gray-50 w-[250px] data-[placeholder]:!text-gray-800">
-                  <SelectValue placeholder="Change your Dealer" className="" />
-                </SelectTrigger>
-
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectItem value="continental-motors">
-                      Continental Motors
-                    </SelectItem>
-                    <SelectItem value="skyline-autohaus">
-                      Skyline Autohaus
-                    </SelectItem>
-                    <SelectItem value="ironclad-motors">
-                      Ironclad Motors
-                    </SelectItem>
-                    <SelectItem value="velocity-garage">
-                      Velocity Garage
-                    </SelectItem>
-                    <SelectItem value="crimson-ridge-motors">
-                      Crimson Ridge Motors
-                    </SelectItem>
-                    <SelectItem value="silverline-dealers">
-                      Silverline Dealers
-                    </SelectItem>
-                    <SelectItem value="northstar-auto-group">
-                      NorthStar Auto Group
-                    </SelectItem>
-                    <SelectItem value="urbancruise-motors">
-                      UrbanCruise Motors
-                    </SelectItem>
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
             </div>
           </header>
 
@@ -165,7 +111,7 @@ export default function ChatApp({
 
                       {/* message */}
                       <div className="bg-[#34AD5D] text-white rounded-xl py-2 px-4 relative">
-                        {item.message}
+                        {linkifyHTML(item.message)}
 
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -205,8 +151,9 @@ export default function ChatApp({
                         wordWrap: 'break-word',
                         whiteSpace: 'pre-wrap',
                       }}
-                      dangerouslySetInnerHTML={{ __html: item.message }}
-                    />
+                    >
+                      {linkifyHTML(item.message)}
+                    </p>
                   </div>
                 </div>
               );

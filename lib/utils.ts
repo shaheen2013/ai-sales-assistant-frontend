@@ -1,7 +1,10 @@
 import { clsx, type ClassValue } from "clsx";
 import moment from "moment";
 import { twMerge } from "tailwind-merge";
+import parse, { domToReact } from "html-react-parser";
+import LinkifyIt from "linkify-it";
 
+const linkify = new LinkifyIt();
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
@@ -219,4 +222,45 @@ export function shortenFilename(filename: string, maxLength = 12) {
 
   const half = Math.floor((maxLength - 3) / 2); // 3 for "..."
   return `${name.slice(0, half)}...${name.slice(-half)}.${ext}`;
+}
+
+export function linkifyHTML(htmlString: string) {
+  return parse(htmlString, {
+    replace: (domNode) => {
+      // If it's a text node
+      if (domNode.type === "text") {
+        const { data } = domNode;
+        const matches = linkify.match(data);
+        if (matches) {
+          const result = [];
+          let lastIndex = 0;
+
+          matches.forEach((match, i) => {
+            const { index, lastIndex: endIndex, raw } = match;
+            if (index > lastIndex) {
+              result.push(data.slice(lastIndex, index));
+            }
+            result.push(
+              `<a
+                key={link-${i}}
+                href={raw}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-500 underline"
+              >
+                {raw}
+              </a>`
+            );
+            lastIndex = endIndex;
+          });
+
+          if (lastIndex < data.length) {
+            result.push(data.slice(lastIndex));
+          }
+
+          return `<>${result}</>`;
+        }
+      }
+    },
+  });
 }

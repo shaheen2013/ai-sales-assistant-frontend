@@ -6,10 +6,11 @@ import { apiSlice } from '../api/apiSlice';
 
 export const adminDashboardSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getAdminDashboardOverview: builder.query<AdminDashboardResponseType, void>({
-      query: () => ({
+    getAdminDashboardOverview: builder.query<AdminDashboardResponseType, Record<string, any>>({
+      query: (queryParams) => ({
         method: 'GET',
         url: `/admin-dashboard/admin`,
+        params: queryParams,
       }),
     }),
     getAdminDashboardDealerOverview: builder.query<
