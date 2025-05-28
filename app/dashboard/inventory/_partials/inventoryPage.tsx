@@ -1049,7 +1049,7 @@ export default function DashboardDealerInventory() {
               </h2>
 
               <p className="text-gray-200 text-xs mb-6">
-                Congratulations on reaching this milestone! You're one step
+                Congratulations on reaching this milestone! You&apos;re one step
                 closer to your goal!
               </p>
             </div>

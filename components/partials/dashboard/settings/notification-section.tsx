@@ -42,7 +42,7 @@ type NotificationFormValues = z.infer<typeof notificationSchema>;
 export default function NotificationSection() {
   const toast = useToast();
   const { data: notificationData, isLoading: isNotificationLoading } =
-    useGetNotificationSettingsQuery();
+    useGetNotificationSettingsQuery(undefined);
 
   const [updateNotificationSettings, { isLoading }] =
     useUpdateNotificationSettingsMutation();
