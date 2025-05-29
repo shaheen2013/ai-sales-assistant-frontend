@@ -67,17 +67,32 @@ const AdminDashboardOverview = () => {
             <h3 className="text-gray-500 text-2xl font-semibold">25 Days</h3>
           </div>
 
-          <div>h</div>
+          <div className="flex items-center gap-3">
+            <div className="border-r-2 border-white pr-3">
+              <h2 className="text-gray-400 text-xs text-right">Start Date</h2>
+              <h2 className="text-lg font-semibold">1st Nov, 25</h2>
+            </div>
+
+            <div>
+              <h2 className="text-gray-400 text-xs">End Date</h2>
+              <h2 className="text-lg font-semibold">1st Nov, 25</h2>
+            </div>
+          </div>
         </div>
 
         {/* right */}
         <div className="p-4 rounded-xl bg-[#DDF2F6] flex justify-between">
           <div>
-            <h3 className="text-sm text-gray-400 mb-1">Remaining for</h3>
-            <h3 className="text-gray-500 text-2xl font-semibold">25 Days</h3>
+            <h3 className="text-sm text-gray-400 mb-1">AI Talk Remaining</h3>
+            <h3 className="text-gray-500 text-2xl font-semibold">280 m</h3>
           </div>
 
-          <div>h</div>
+          <div className="flex items-center gap-3">
+            <div className=" border-white pr-3">
+              <h2 className="text-gray-400 text-xs">Balance</h2>
+              <h2 className="text-lg font-semibold">220/500 m</h2>
+            </div>
+          </div>
         </div>
       </div>
 
