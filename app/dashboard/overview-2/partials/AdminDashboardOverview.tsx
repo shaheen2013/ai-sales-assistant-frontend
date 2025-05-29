@@ -15,6 +15,7 @@ import {
 import { Skeleton } from "@/components/shadcn/skeleton";
 import { useGetAdminDashboardOverviewQuery } from "@/features/admin/adminDashboardSlice";
 import { Button } from "@/components/shadcn/button";
+import StatisticsSection from "./StatisticsSection";
 
 const AdminDashboardOverview = () => {
   const [wavesurfer, setWavesurfer] = useState<any>(null);
@@ -97,7 +98,7 @@ const AdminDashboardOverview = () => {
       </div>
 
       {/* audio & voice section */}
-      <div className="gap-4 grid grid-cols-2 mb-4">
+      <div className="gap-4 grid lg:grid-cols-2 mb-4">
         {/* left */}
         <div className="order-2 lg:order-1 border rounded-xl p-4">
           <h2 className="font-bold text-xl text-gray">Number for AI Call</h2>
@@ -272,7 +273,7 @@ const AdminDashboardOverview = () => {
       </div>
 
       {/* statistics section */}
-      <div className="border rounded-xl p-6">hey</div>
+      <StatisticsSection />
     </div>
   );
 };
