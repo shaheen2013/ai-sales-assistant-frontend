@@ -14,32 +14,8 @@ import {
 } from "@/components/shadcn/select";
 
 import { Skeleton } from "@/components/shadcn/skeleton";
-import AdminDashboardOverviewCard from "./AdminDashboardOverviewCard";
 import { useGetAdminDashboardOverviewQuery } from "@/features/admin/adminDashboardSlice";
 import { Button } from "@/components/shadcn/button";
-
-const adminDashboardOverviewCardData = [
-  {
-    label: "New Dealers",
-    value: "dealer",
-    bgColor: "#e5d9ff",
-  },
-  {
-    label: "Payment",
-    value: "payment",
-    bgColor: "#ddf2f6",
-  },
-  // {
-  //     label: "Visitors",
-  //     value: "visitor",
-  //     bgColor: "#f0f4a9"
-  // },
-  // {
-  //     label: "AI Talk/Chat",
-  //     value: "call_history",
-  //     bgColor: "#e3e8ef"
-  // },
-];
 
 const AdminDashboardOverview = () => {
   const [wavesurfer, setWavesurfer] = useState<any>(null);

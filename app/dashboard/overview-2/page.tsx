@@ -1,4 +1,4 @@
-import AdminDashboardOverview from "./admin/AdminDashboardOverview";
+import AdminDashboardOverview from "./partials/AdminDashboardOverview";
 
 export default function page() {
   return (
