@@ -8,7 +8,6 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/shadcn/select";
@@ -146,7 +145,7 @@ const AdminDashboardOverview = () => {
             The AI voice call will be tailored to your preferences.
           </p>
 
-          <Select>
+          <Select defaultValue="clara">
             <SelectTrigger
               className="w-full"
               postIcon={
@@ -168,7 +167,6 @@ const AdminDashboardOverview = () => {
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
-                {/* <SelectItem value="apple">Apple</SelectItem> */}
                 <SelectItem value="clara">Clara (Default)</SelectItem>
 
                 <SelectItem value="mike">Mike</SelectItem>
