@@ -4,8 +4,8 @@ import {
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@/components/shadcn/dropdown-menu';
-import { FC } from 'react';
+} from "@/components/shadcn/dropdown-menu";
+import { FC } from "react";
 
 type AdminDashboardOverviewCardProps = {
   bgColor: string;
@@ -22,7 +22,7 @@ const AdminDashboardOverviewCard: FC<AdminDashboardOverviewCardProps> = ({
 }) => {
   return (
     <div
-      className="shadow-md rounded-lg py-4 px-6 mb-4 w-full"
+      className="rounded-lg py-4 px-6 w-full"
       style={{ backgroundColor: bgColor }}
     >
       {/* top */}
