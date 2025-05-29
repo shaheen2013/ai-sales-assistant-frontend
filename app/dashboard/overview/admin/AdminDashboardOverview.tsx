@@ -51,7 +51,7 @@ const AdminDashboardOverview = () => {
   };
 
   const onPlayPause = () => {
-    wavesurfer && wavesurfer.playPause();
+    if (wavesurfer) wavesurfer.playPause();
   };
 
   const {

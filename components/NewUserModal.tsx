@@ -553,7 +553,7 @@ export default function NewUserModal() {
                 {/* left */}
                 <div className="">
                   <h2 className="text-gray-400 font-bold text-2xl mt-2 mb-2">
-                    FAQ's
+                    FAQ&apos;s
                   </h2>
 
                   <Accordion
@@ -567,10 +567,10 @@ export default function NewUserModal() {
                       className="p-0 pb-2 rounded-none mb-3"
                     >
                       <AccordionTrigger className="text-xs font-semibold text-gray-400">
-                        What&'s included in the monthly voice minutes?
+                        What&&apos;s included in the monthly voice minutes?
                       </AccordionTrigger>
                       <AccordionContent className="text-xs font-normal text-gray-300">
-                        Your plan's included minutes apply to all voice
+                        Your plan&apos;s included minutes apply to all voice
                         conversations handled by the AI assistant on behalf of
                         your dealership. This includes inbound buyer inquiries,
                         appointment bookings, trade-in discussions, and more.
@@ -613,7 +613,10 @@ export default function NewUserModal() {
                 <div className="flex flex-col gap-3">
                   {plans.map((plan, index) => {
                     return (
-                      <label className="has-[:checked]:border-primary-400 has-[:checked]:text-primary-900 has-[:checked]:ring-indigo-200 flex w-full border border-gray-50 rounded-xl pt-4 px-4 cursor-pointer transition-all gap-3 group flex-col">
+                      <label
+                        key={index}
+                        className="has-[:checked]:border-primary-400 has-[:checked]:text-primary-900 has-[:checked]:ring-indigo-200 flex w-full border border-gray-50 rounded-xl pt-4 px-4 cursor-pointer transition-all gap-3 group flex-col"
+                      >
                         <div className="flex gap-3">
                           <input
                             defaultChecked={index === 0} // Default to the first plan being selected

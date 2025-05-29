@@ -1,7 +1,7 @@
 "use client";
 
-import { useRef, useState } from "react";
-import WavesurferPlayer, { useWavesurfer } from "@wavesurfer/react";
+import { useState } from "react";
+import WavesurferPlayer from "@wavesurfer/react";
 
 import {
   Select,
@@ -12,10 +12,36 @@ import {
   SelectValue,
 } from "@/components/shadcn/select";
 
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogHeader,
+} from "@/components/shadcn/dialog";
+
+import StatisticsSection from "./StatisticsSection";
+import { Button } from "@/components/shadcn/button";
 import { Skeleton } from "@/components/shadcn/skeleton";
 import { useGetAdminDashboardOverviewQuery } from "@/features/admin/adminDashboardSlice";
-import { Button } from "@/components/shadcn/button";
-import StatisticsSection from "./StatisticsSection";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/shadcn/accordion";
+
+const plans = [
+  {
+    name: "Pro Plan",
+    price: "150",
+    benefits: [
+      "500 voice minutes",
+      "$0.15 per minute",
+      "Small to mid-size independent dealerships",
+      "Optional $250 one-time if integrations are needed",
+    ],
+  },
+];
 
 const AdminDashboardOverview = () => {
   const [wavesurfer, setWavesurfer] = useState<any>(null);
@@ -27,7 +53,7 @@ const AdminDashboardOverview = () => {
   };
 
   const onPlayPause = () => {
-    wavesurfer && wavesurfer.playPause();
+    if (wavesurfer) wavesurfer.playPause();
   };
 
   const {
@@ -37,6 +63,10 @@ const AdminDashboardOverview = () => {
     // ...(isDifferentDate
     //   ? { created_at_before: endDate, created_at_after: startDate }
     //   : {}),
+  });
+
+  const [modals, setModals] = useState({
+    addTwilioNumber: false,
   });
 
   if (adminDashboardFetching) {
@@ -134,6 +164,7 @@ const AdminDashboardOverview = () => {
 
           <div className="flex items-center justify-center">
             <Button
+              onClick={() => setModals({ ...modals, addTwilioNumber: true })}
               variant="outline"
               className="text-primary-600 border-primary-100 h-11 rounded-lg"
             >
@@ -274,6 +305,197 @@ const AdminDashboardOverview = () => {
 
       {/* statistics section */}
       <StatisticsSection />
+
+      {/* modals */}
+      <Dialog
+        open={modals.addTwilioNumber}
+        onOpenChange={() => {
+          setModals((prev) => ({
+            ...prev,
+            addTwilioNumber: !prev.addTwilioNumber,
+          }));
+        }}
+      >
+        <DialogContent className="sm:max-w-[900px] max-h-full overflow-auto">
+          <DialogHeader>
+            <DialogTitle className="">
+              <h2 className="text-gray-900 text-2xl font-bold text-center">
+                Add Twilio Number
+              </h2>
+
+              <p className="text-sm text-gray-400 text-center font-normal">
+                Connect your Twilio number to enable AI-powered voice calls.
+                This number will be used by Teez to make and receive calls on
+                your behalf. Voice features won&apos;t work without it.
+              </p>
+            </DialogTitle>
+          </DialogHeader>
+
+          <div className="grid grid-cols-2 gap-9">
+            {/* left */}
+            <div className="">
+              <h2 className="text-gray-400 font-bold text-2xl mt-2 mb-2">
+                FAQ&apos;s
+              </h2>
+
+              <Accordion
+                type="single"
+                collapsible
+                className="w-full"
+                defaultValue="item-1"
+              >
+                <AccordionItem
+                  value="item-1"
+                  className="p-0 pb-2 rounded-none mb-3"
+                >
+                  <AccordionTrigger className="text-xs font-semibold text-gray-400">
+                    What&&apos;s included in the monthly voice minutes?
+                  </AccordionTrigger>
+                  <AccordionContent className="text-xs font-normal text-gray-300">
+                    Your plan&apos;s included minutes apply to all voice
+                    conversations handled by the AI assistant on behalf of your
+                    dealership. This includes inbound buyer inquiries,
+                    appointment bookings, trade-in discussions, and more.
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem
+                  value="item-2"
+                  className="p-0 pb-2 rounded-none mb-3"
+                >
+                  <AccordionTrigger className="text-xs font-semibold text-gray-400">
+                    What happens if we exceed our included voice minutes?
+                  </AccordionTrigger>
+                  <AccordionContent className="text-xs font-normal text-gray-300">
+                    If you exceed your included voice minutes, you will be
+                    charged for additional minutes at the rate specified in your
+                    plan. You can monitor your usage through the dashboard to
+                    avoid unexpected charges.
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem
+                  value="item-3"
+                  className="p-0 pb-2 rounded-none border-none mb-3"
+                >
+                  <AccordionTrigger className="text-xs font-semibold text-gray-400">
+                    Is there a contract or can I cancel anytime?
+                  </AccordionTrigger>
+                  <AccordionContent className="text-xs font-normal text-gray-300">
+                    There is no long-term contract required. You can cancel your
+                    subscription at any time through your account settings. Your
+                    plan will remain active until the end of the current billing
+                    cycle.
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+            </div>
+
+            {/* right */}
+            <div className="flex flex-col gap-3">
+              {plans.map((plan, index) => {
+                return (
+                  <label
+                    key={index}
+                    className="has-[:checked]:border-primary-400 has-[:checked]:text-primary-900 has-[:checked]:ring-indigo-200 flex w-full border border-gray-50 rounded-xl pt-4 px-4 cursor-pointer transition-all gap-3 group flex-col"
+                  >
+                    <div className="flex gap-3">
+                      <input
+                        defaultChecked={index === 0} // Default to the first plan being selected
+                        name="plan"
+                        type="radio"
+                        className="box-content h-2 w-2 appearance-none rounded-full border-[5px] border-white bg-white bg-clip-padding outline-none ring-1 ring-gray-950/10 checked:border-primary-500 checked:ring-primary-500 mt-1"
+                      />
+                      <div className="flex justify-between w-full">
+                        {/* title, description */}
+                        <div className="">
+                          <h2 className="text-gray-400 font-semibold text-lg mb-1">
+                            {plan.name}
+                          </h2>
+                          <h4 className="text-xs text-gray-400">
+                            Perfect for sell used cars
+                          </h4>
+                        </div>
+
+                        {/* pricing */}
+                        <div className="">
+                          <span className="group-has-[:checked]:text-primary-400 text-gray-400">
+                            $
+                          </span>
+                          <span className="group-has-[:checked]:text-primary-400 text-gray-400 font-bold text-3xl">
+                            {plan.price}
+                          </span>
+                          /month
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* benefits  */}
+                    <div className="pl-[25px]">
+                      {plan?.benefits?.map((benefit, index) => {
+                        return (
+                          <div
+                            key={index}
+                            className="text-xs text-gray-300 mb-3 flex gap-2"
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="16"
+                              height="16"
+                              viewBox="0 0 16 16"
+                              fill="none"
+                            >
+                              <rect
+                                x="16"
+                                y="16"
+                                width="16"
+                                height="16"
+                                rx="8"
+                                transform="rotate(-180 16 16)"
+                                fill="#55BB78"
+                              />
+                              <path
+                                d="M6.98228 10.6663C6.77947 10.6663 6.58738 10.589 6.4643 10.4557L4.79846 8.65701C4.74695 8.60146 4.70935 8.53817 4.68781 8.47074C4.66626 8.40331 4.66118 8.33307 4.67287 8.26404C4.68457 8.195 4.71279 8.12853 4.75594 8.06842C4.79909 8.00831 4.85631 7.95573 4.92434 7.9137C4.99234 7.8715 5.06987 7.84068 5.15248 7.823C5.23509 7.80533 5.32115 7.80115 5.40574 7.8107C5.49033 7.82026 5.57178 7.84336 5.64542 7.87869C5.71906 7.91402 5.78345 7.96087 5.83489 8.01657L6.93099 9.19916L9.68688 5.58282C9.77828 5.46342 9.92389 5.37851 10.0918 5.34673C10.2597 5.31495 10.4362 5.33888 10.5825 5.41328C10.887 5.56796 10.9807 5.89561 10.7904 6.14478L7.53429 10.4157C7.47871 10.4889 7.40209 10.5499 7.3111 10.5935C7.2201 10.637 7.11747 10.6618 7.01212 10.6656C7.00186 10.6663 6.99254 10.6663 6.98228 10.6663Z"
+                                fill="white"
+                              />
+                            </svg>
+                            {benefit}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </label>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* footer */}
+          <div className="flex justify-end gap-3 mt-6">
+            <Button
+              variant="outline"
+              className="text-primary-400 border-primary-400"
+            >
+              Cancel
+            </Button>
+            <Button variant="primary">
+              Update Twilio Number
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
+                fill="none"
+              >
+                <path
+                  d="M7.73271 4.20694C8.03263 3.92125 8.50737 3.93279 8.79306 4.23271L13.7944 9.48318C14.0703 9.77285 14.0703 10.2281 13.7944 10.5178L8.79306 15.7682C8.50737 16.0681 8.03263 16.0797 7.73271 15.794C7.43279 15.5083 7.42125 15.0336 7.70694 14.7336L12.2155 10.0005L7.70694 5.26729C7.42125 4.96737 7.43279 4.49264 7.73271 4.20694Z"
+                  fill="white"
+                />
+              </svg>
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
