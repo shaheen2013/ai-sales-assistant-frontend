@@ -32,6 +32,7 @@ import { Skeleton } from "@/components/shadcn/skeleton";
 import { useGetAdminDashboardOverviewQuery } from "@/features/admin/adminDashboardSlice";
 import { InputPhoneNumber } from "@/components/shadcn/input";
 import { countryCodes } from "@/static/CountryCodes";
+import classNames from "classnames";
 
 const plans = [
   {
@@ -50,6 +51,15 @@ const AdminDashboardOverview = () => {
   const [wavesurfer, setWavesurfer] = useState<any>(null);
   const [isPlaying, setIsPlaying] = useState(false);
 
+  const [modals, setModals] = useState({
+    addTwilioNumber: true,
+  });
+
+  const [twillioState, setTwillioState] = useState({
+    phoneNumber: "",
+    selectedPlan: "old", // old, new
+  });
+
   const onReady = (ws: any) => {
     setWavesurfer(ws);
     setIsPlaying(false);
@@ -66,10 +76,6 @@ const AdminDashboardOverview = () => {
     // ...(isDifferentDate
     //   ? { created_at_before: endDate, created_at_after: startDate }
     //   : {}),
-  });
-
-  const [modals, setModals] = useState({
-    addTwilioNumber: true,
   });
 
   if (adminDashboardFetching) {
@@ -397,10 +403,98 @@ const AdminDashboardOverview = () => {
             {/* right */}
             <div className="flex flex-col gap-3">
               {/* give me a twillio number */}
+              <div
+                onClick={() =>
+                  setTwillioState({ ...twillioState, selectedPlan: "old" })
+                }
+                className={classNames(
+                  `border rounded-lg p-4 cursor-pointer flex items-center gap-3`,
+                  {
+                    "border-primary-500": twillioState.selectedPlan === "old",
+                  }
+                )}
+              >
+                {/* icon */}
+                <div>
+                  <svg
+                    width="20"
+                    height="21"
+                    viewBox="0 0 20 21"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M10 0.697266C15.2467 0.697266 19.5 4.95056 19.5 10.1973C19.5 15.444 15.2467 19.6973 10 19.6973C4.7533 19.6973 0.5 15.444 0.5 10.1973C0.5 4.95056 4.7533 0.697266 10 0.697266Z"
+                      stroke="#D5D7DA"
+                    />
+                  </svg>
+                </div>
 
+                {/* content */}
+                <div>
+                  <h3 className="text-gray-400 text-lg font-semibold mb-1">
+                    Give me a Twilio Number
+                  </h3>
+                  <h4 className="text-xs text-gray-300">
+                    We will provide a number to you.
+                  </h4>
+                </div>
+              </div>
 
               {/* I  already have a twilio number */}
-     
+              <div
+                onClick={() =>
+                  setTwillioState({ ...twillioState, selectedPlan: "new" })
+                }
+                className={classNames(
+                  `border rounded-lg p-4 cursor-pointer flex items-center gap-3`,
+                  {
+                    "border-primary-500": twillioState.selectedPlan === "new",
+                  }
+                )}
+              >
+                {/* icon */}
+                <div>
+                  <svg
+                    width="20"
+                    height="21"
+                    viewBox="0 0 20 21"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M10 0.697266C15.2467 0.697266 19.5 4.95056 19.5 10.1973C19.5 15.444 15.2467 19.6973 10 19.6973C4.7533 19.6973 0.5 15.444 0.5 10.1973C0.5 4.95056 4.7533 0.697266 10 0.697266Z"
+                      stroke="#D5D7DA"
+                    />
+                  </svg>
+                </div>
+
+                {/* content */}
+                <div>
+                  <h3 className="text-gray-400 text-lg font-semibold mb-1">
+                    Give me a Twilio Number
+                  </h3>
+                  <h4 className="text-xs text-gray-300">
+                    We will provide a number to you.
+                  </h4>
+
+                  <hr className="my-3" />
+
+                  <label htmlFor="">Enter your number</label>
+                  <InputPhoneNumber
+                    value={twillioState.phoneNumber}
+                    onChange={(e) =>
+                      setTwillioState({
+                        ...twillioState,
+                        phoneNumber: e.target.value,
+                      })
+                    }
+                    className="w-full"
+                    placeholder="Enter your Twilio number"
+                    countries={countryCodes}
+                  />
+                </div>
+              </div>
             </div>
           </div>
 
