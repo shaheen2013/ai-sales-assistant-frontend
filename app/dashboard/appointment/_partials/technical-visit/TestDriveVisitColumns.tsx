@@ -23,7 +23,7 @@ export const testDriveVisitsColumns = ({ handleChangeBookingStatus }: { handleCh
     {
       accessorKey: "schedule_date",
       header: "Scheduled Date & Time",
-      cell: ({ row }) => `${moment(row.original?.starts_at).format("MMM DD, YYYY")} | ${moment(row.original?.starts_at).format("hh:mm a")}`,
+      cell: ({ row }) => `${moment.utc(row.original?.start_at).format("MMM DD, YYYY")} | ${moment.utc(row.original?.start_at).format("hh:mm a")}`,
     },
     {
       accessorKey: "Booking Status",
