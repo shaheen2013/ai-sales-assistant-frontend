@@ -179,40 +179,6 @@ const InputPhoneNumber = React.forwardRef<
             </div>
           )}
 
-          {/* <Select defaultValue="US">
-            <SelectTrigger
-              className="w-[90px] bg-white absolute left-2 dev"
-              postIcon={
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 20 20"
-                  fill="none"
-                >
-                  <path
-                    d="M5 7.5L10 12.5L15 7.5"
-                    stroke="#A4A7AE"
-                    strokeWidth="1.66667"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              }
-            >
-              <SelectValue placeholder="" />
-            </SelectTrigger>
-            <SelectContent>
-              {countries.map((country: any, index: number) => {
-                return (
-                  <SelectItem key={index} value={country.code}>
-                    {country.dial_code}
-                  </SelectItem>
-                );
-              })}
-            </SelectContent>
-          </Select> */}
-
           <select
             className="w-[70px] bg-white absolute left-2 text-sm outline-none"
             defaultValue="US"
