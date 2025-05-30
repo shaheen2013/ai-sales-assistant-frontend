@@ -23,7 +23,6 @@ type FormDataType = {
 }
 
 const AskSupportCreateDialog: FC<AskSupportCreateDialogPropsType> = ({ data, onOpenChange, open }) => {
-    console.log("data----->", data);
     /*--Hook Forms--*/
     const { control, handleSubmit, reset } = useForm<FormDataType>({
         defaultValues: {
@@ -68,10 +67,16 @@ const AskSupportCreateDialog: FC<AskSupportCreateDialogPropsType> = ({ data, onO
     }, [data, reset])
 
     return (
-        <Dialog open={open} onOpenChange={onOpenChange}>
+        <Dialog open={open} onOpenChange={(open) => {
+            onOpenChange(open);
+            reset({
+                subject: "",
+                description: ""
+            })
+        }}>
             <DialogContent className='max-w-[700px] max-h-[90vh] overflow-hidden flex flex-col p-4'>
                 <DialogHeader className='text-[#717882] text-xl font-semibold flex items-center flex-row justify-between border-b border-[#eff4fa] pb-4 mb-4'>
-                    <DialogTitle>Ask for new support</DialogTitle>
+                    <DialogTitle>{!!data ? "Update Support Ticket" : "Ask for new support"}</DialogTitle>
                 </DialogHeader>
 
                 <div className='overflow-auto h-full '>
