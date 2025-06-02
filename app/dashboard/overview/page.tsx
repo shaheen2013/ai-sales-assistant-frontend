@@ -2,7 +2,7 @@
 
 import { useSession } from "next-auth/react";
 import AdminDashboardOverview from "./_partials/admin/AdminDashboardOverview";
-import DealerDashboardOverview from "./_partials/dealer/DealerProfile";
+import DealerDashboardOverview from "./_partials/dealer/DealerDashboardOverview";
 
 function DashboardOverview() {
   const { data: session } = useSession();
