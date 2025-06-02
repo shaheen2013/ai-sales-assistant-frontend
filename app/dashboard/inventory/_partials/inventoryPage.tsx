@@ -192,7 +192,7 @@ export default function DashboardDealerInventory() {
 
       formData.append("inventory_file", uploadedFiles[0]);
 
-      const { data, error } = await inventoryUpload(formData);
+      const { data, error }: any = await inventoryUpload(formData);
 
       if (error) {
         console.log(error);
@@ -200,7 +200,7 @@ export default function DashboardDealerInventory() {
         return;
       }
 
-      toast("success", `${data?.success}  ${data?.failled}`, {
+      toast("success", data?.message || "Successfull", {
         duration: 10000,
       });
 
