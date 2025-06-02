@@ -78,7 +78,7 @@ export default function DashboardDealerInventory() {
   });
 
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
-  const [selectedPanel, setSelectedPanel] = useState<"list" | "files">("files");
+  const [selectedPanel, setSelectedPanel] = useState<"list" | "files">("list");
 
   const [modals, setModals] = useState({
     addInventory: false,
@@ -207,6 +207,7 @@ export default function DashboardDealerInventory() {
       setModals({ ...modals, addPdf: false });
       setUploadedFiles([]);
 
+      refetchGetVehicle();
       refetchGetInventoryFiles();
     } catch (error) {
       console.log(error);
