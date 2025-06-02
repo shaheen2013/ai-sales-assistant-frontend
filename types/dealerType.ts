@@ -32,3 +32,11 @@ export interface DealerRegistrationSourceCount {
     year: number;
     counts: DealerRegistrationSourceMonthlyData[];
 }
+
+export interface CardInfo {
+  brand: string;
+  last4: string;
+  exp_month: number;
+  exp_year: number;
+  display_brand: string;
+}

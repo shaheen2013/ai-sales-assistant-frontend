@@ -32,7 +32,7 @@ export type TalkToHumanResponseType = {
 export type TestDriveResponseType = {
     id: number;
     name: string;
-    starts_at: string;
+    start_at: string;
     booking_status: string;
 }
 

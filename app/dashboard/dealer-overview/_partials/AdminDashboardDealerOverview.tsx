@@ -94,12 +94,12 @@ function AdminDashboardDealerOverview() {
                                         {
                                             name: "organic",
                                             visitors: totalOrganicUser || 0,
-                                            fill: "var(--color-chrome)",
+                                            fill: "#34AD5D",
                                         },
                                         {
                                             name: "byAi",
                                             visitors: totalAiUser || 0,
-                                            fill: "var(--color-safari)",
+                                            fill: "#55BB78",
                                         }
                                     ]} />
                                 </div>

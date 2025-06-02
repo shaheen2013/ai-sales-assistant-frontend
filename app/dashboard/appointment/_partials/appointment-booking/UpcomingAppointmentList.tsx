@@ -13,11 +13,11 @@ const UpcomingAppointmentList: FC<UpcomingAppointmentListPropsType> = ({ data, t
     /*--Functions--*/
     const getAppoinmentTime = (item: TalkToHumanResponseType | TestDriveResponseType | StoreVisitResponseType) => {
         if ("preferred_date_time" in item) {
-            return moment(item?.preferred_date_time || "").format("hh:mm A");
+            return moment.utc(item?.preferred_date_time || "").format("hh:mm A");
         } else if ("prefered_time" in item) {
-            return moment(item?.prefered_time || "").format("hh:mm A");
+            return moment.utc(item?.prefered_time || "").format("hh:mm A");
         } else if ("start_at" in item) {
-            return moment(item?.start_at || "").format("hh:mm A");
+            return moment.utc(item?.start_at || "").format("hh:mm A");
         }
         return "";
     }

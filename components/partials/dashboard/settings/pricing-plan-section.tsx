@@ -1,6 +1,7 @@
 import { Button } from '@/components/shadcn/button';
 import PricingPlanSkeleton from '@/components/skeleton/PricingPlanSkeleton';
 import {
+  useCreateSubscriptionMutation,
   useGetCurrentSubscriptionPlanQuery,
   useGetDealerPricingPlansQuery,
   useUpgradeSubscriptionMutation,
@@ -34,6 +35,9 @@ export default function PricingPlanSection() {
 
   const [upgradeSubscription, { isLoading: isUpgrading }] =
     useUpgradeSubscriptionMutation();
+  const [
+    createSubscription, { isLoading: isLoadingCreateSubscription }
+  ] = useCreateSubscriptionMutation();
 
   const [selectedPriceMap, setSelectedPriceMap] = useState<
     Record<string, string>
@@ -45,19 +49,38 @@ export default function PricingPlanSection() {
   );
 
   const handleUpgradePlan = async (id: string) => {
-    try {
-      setUpgradingPlanId(id);
-      const res = await upgradeSubscription({
-        new_price_id: id,
-      }).unwrap();
-      if (res) {
-        toast('success', 'Subscription upgraded successfully');
+    if (!currentPlan) {
+      try {
+        const { data, error } = await createSubscription({
+          price_id: id,
+          success_url: `${window.location.origin}/dashboard/settings?tab=Your Plan`,
+          cancel_url: `${window.location.origin}`,
+        });
+
+        if (error) {
+          console.error("Error creating subscription:", error);
+          return;
+        }
+
+        window.location.href = data?.checkout_url;
+      } catch (error: any) {
+        console.error("Error creating subscription:", error);
       }
-    } catch (error: any) {
-      toast('error', handleApiError(error));
-      console.error('Error', error);
-    } finally {
-      setUpgradingPlanId(null);
+    } else {
+      try {
+        setUpgradingPlanId(id);
+        const res = await upgradeSubscription({
+          new_price_id: id,
+        }).unwrap();
+        if (res) {
+          toast('success', 'Subscription upgraded successfully');
+        }
+      } catch (error: any) {
+        toast('error', handleApiError(error));
+        console.error('Error', error);
+      } finally {
+        setUpgradingPlanId(null);
+      }
     }
   };
 
@@ -86,7 +109,7 @@ export default function PricingPlanSection() {
       </div>
 
       {/* Pricing Plans */}
-      {isLoadingPlans || isUpgrading ? (
+      {isLoadingPlans || isUpgrading || isLoadingCreateSubscription ? (
         <PricingPlanSkeleton />
       ) : (
         <div className="space-y-6">
@@ -95,9 +118,8 @@ export default function PricingPlanSection() {
             return (
               <div
                 key={plan.id}
-                className={`border ${
-                  isCurrentPlan ? 'border-primary-100' : 'border'
-                }  rounded-xl p-6 flex flex-col  md:items-center md:justify-between`}
+                className={`border ${isCurrentPlan ? 'border-primary-100' : 'border'
+                  }  rounded-xl p-6 flex flex-col  md:items-center md:justify-between`}
               >
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between w-full">
                   <div className="flex-1">
@@ -130,11 +152,10 @@ export default function PricingPlanSection() {
                               return (
                                 <div className="mt-2">
                                   <span
-                                    className={`${
-                                      isCurrentPlan
-                                        ? 'text-[#019935]'
-                                        : 'text-gray-500'
-                                    } text-5xl font-semibold`}
+                                    className={`${isCurrentPlan
+                                      ? 'text-[#019935]'
+                                      : 'text-gray-500'
+                                      } text-5xl font-semibold`}
                                   >
                                     {selectedPrice?.unit_amount || '0'}
                                   </span>
@@ -174,11 +195,10 @@ export default function PricingPlanSection() {
                   <div className="flex justify-between">
                     <Link
                       href="#"
-                      className={`${
-                        isCurrentPlan
-                          ? ' text-[#019935]'
-                          : 'text-gray-500 underline'
-                      } font-medium`}
+                      className={`${isCurrentPlan
+                        ? ' text-[#019935]'
+                        : 'text-gray-500 underline'
+                        } font-medium`}
                     >
                       Learn more
                     </Link>
@@ -201,24 +221,24 @@ export default function PricingPlanSection() {
                         className="text-[#019935] text-base shadow-md px-4 py-2.5 font-medium border-primary-100"
                       >
                         {upgradingPlanId ===
-                        (selectedPriceMap[plan.id] || plan.prices[0].id)
+                          (selectedPriceMap[plan.id] || plan.prices[0].id)
                           ? 'Upgrading...'
                           : 'Upgrade Plan'}
                         {upgradingPlanId !==
                           (selectedPriceMap[plan.id] || plan.prices[0].id) && (
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="20"
-                            height="20"
-                            viewBox="0 0 20 20"
-                            fill="none"
-                          >
-                            <path
-                              d="M7.99932 3.75007C7.99932 3.33582 8.33513 3 8.74938 3H16.2499C16.6642 3 17 3.33582 17 3.75007V11.2507C17 11.665 16.6642 12.0008 16.2499 12.0008C15.8357 12.0008 15.4999 11.665 15.4999 11.2507V5.56087L4.28042 16.7803C3.9875 17.0732 3.5126 17.0732 3.21968 16.7803C2.92677 16.4874 2.92677 16.0125 3.21969 15.7196L14.4391 4.50013H8.74938C8.33513 4.50013 7.99932 4.16432 7.99932 3.75007Z"
-                              fill="#019935"
-                            />
-                          </svg>
-                        )}
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="20"
+                              height="20"
+                              viewBox="0 0 20 20"
+                              fill="none"
+                            >
+                              <path
+                                d="M7.99932 3.75007C7.99932 3.33582 8.33513 3 8.74938 3H16.2499C16.6642 3 17 3.33582 17 3.75007V11.2507C17 11.665 16.6642 12.0008 16.2499 12.0008C15.8357 12.0008 15.4999 11.665 15.4999 11.2507V5.56087L4.28042 16.7803C3.9875 17.0732 3.5126 17.0732 3.21968 16.7803C2.92677 16.4874 2.92677 16.0125 3.21969 15.7196L14.4391 4.50013H8.74938C8.33513 4.50013 7.99932 4.16432 7.99932 3.75007Z"
+                                fill="#019935"
+                              />
+                            </svg>
+                          )}
                       </Button>
                     )}
                   </div>
