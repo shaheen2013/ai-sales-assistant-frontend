@@ -309,6 +309,7 @@ function SupportTable({
 
     {
       accessorKey: 'email',
+      accessorFn: (row) => row.dealer?.email,
       header: ({ column }) => {
         return (
           <h2
@@ -343,7 +344,7 @@ function SupportTable({
     },
 
     {
-      accessorKey: 'topic',
+      accessorKey: 'subject',
       header: ({ column }) => {
         return (
           <h2
@@ -507,7 +508,7 @@ function SupportTable({
     // },
 
     {
-      accessorKey: 'createdDate',
+      accessorKey: 'created_at',
       header: ({ column }) => {
         return (
           <h2
