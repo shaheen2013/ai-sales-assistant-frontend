@@ -60,18 +60,6 @@ export default function PricingPlans() {
     return "Something went wrong while fetching the data. Please try again later.";
   }
 
-  if (isFetching) {
-    return (
-      <div className="h-[500px] z-50 dev">
-        <div className="grid grid-cols-4 gap-4 dev">
-          <Skeleton className="h-[200px] bg-white dev" />
-          <Skeleton className="h-[200px] bg-white dev" />
-          <Skeleton className="h-[200px] bg-white dev" />
-        </div>
-      </div>
-    );
-  }
-
   return (
     <section className="text-gray-600">
       <div className="container px-5 py-12 mx-auto">
