@@ -1,9 +1,3 @@
-import React from 'react'
-
 export default function StatisticsSection() {
-  return (
-    <div>
-      
-    </div>
-  )
+  return <div>StatisticsSection</div>;
 }
