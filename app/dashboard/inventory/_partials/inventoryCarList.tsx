@@ -220,7 +220,7 @@ export default function InventoryCarList({
       },
       cell: ({ row }) => (
         <div className="text-gray-400">
-          <div>{row.original?.id}</div>
+          <div>{row.original?.id || "-"}</div>
         </div>
       ),
     },
@@ -320,7 +320,7 @@ export default function InventoryCarList({
             width="30"
             className="rounded-full"
           /> */}
-          <span className="text-gray-400">{row.original?.brand}</span>
+          <span className="text-gray-400">{row.original?.brand || "-"}</span>
         </div>
       ),
     },
@@ -353,26 +353,9 @@ export default function InventoryCarList({
         );
       },
       cell: ({ row }) => {
-        // const date = new Date(row.original?.vin).toLocaleDateString("en-US", {
-        //   day: "2-digit",
-        //   month: "short", // Outputs "Feb"
-        //   year: "numeric",
-        // });
-
-        // const time = new Date(row.original?.createdDate).toLocaleTimeString(
-        //   "en-US",
-        //   {
-        //     hour: "2-digit",
-        //     minute: "2-digit",
-        //     second: "2-digit", // Add seconds
-        //     hour12: true, // Ensures AM/PM format
-        //   }
-        // );
-
         return (
           <div className=" font-medium text-gray-400">
-            {row.original?.vin}
-            {/* <div>{time}</div> */}
+            {row.original?.vin || "-"}
           </div>
         );
       },
@@ -408,7 +391,7 @@ export default function InventoryCarList({
       cell: ({ row }) => {
         return (
           <div className=" font-medium text-gray-400">
-            {row.original?.model}
+            {row.original?.model || "-"}
           </div>
         );
       },
@@ -444,7 +427,7 @@ export default function InventoryCarList({
       cell: ({ row }) => {
         return (
           <div className=" font-medium text-gray-400">
-            {row.original?.mileage}
+            {row.original?.mileage || "-"}
           </div>
         );
       },
@@ -479,7 +462,9 @@ export default function InventoryCarList({
       },
       cell: ({ row }) => {
         return (
-          <div className=" font-medium text-gray-400">{row.original?.year}</div>
+          <div className=" font-medium text-gray-400">
+            {row.original?.year || "-"}
+          </div>
         );
       },
     },
