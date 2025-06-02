@@ -1,11 +1,21 @@
-import { Suspense } from "react";
+"use client";
 
-import AdminDashboardOverview from "./partials/AdminDashboardOverview";
+import { useSession } from "next-auth/react";
+import AdminDashboardOverview from "./_partials/admin/AdminDashboardOverview";
+import DealerDashboardOverview from "./_partials/dealer/DealerDashboardOverview";
 
-export default function page() {
+function DashboardOverview() {
+  const { data: session } = useSession();
+
   return (
-    <Suspense>
-      <AdminDashboardOverview />
-    </Suspense>
+    <>
+      {session?.user?.user_type === "admin" ? (
+        <AdminDashboardOverview />
+      ) : (
+        <DealerDashboardOverview />
+      )}
+    </>
   );
 }
+
+export default DashboardOverview;

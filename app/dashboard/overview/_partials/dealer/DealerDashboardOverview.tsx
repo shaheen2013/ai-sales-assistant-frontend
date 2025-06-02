@@ -5,34 +5,30 @@ import WavesurferPlayer from "@wavesurfer/react";
 
 import {
   Select,
-  SelectItem,
-  SelectValue,
-  SelectGroup,
-  SelectTrigger,
   SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from "@/components/shadcn/select";
-import classNames from "classnames";
 
 import {
   Dialog,
   DialogTitle,
-  DialogHeader,
   DialogContent,
+  DialogHeader,
 } from "@/components/shadcn/dialog";
 
+import StatisticsSection from "./StatisticsSection";
+import { Button } from "@/components/shadcn/button";
+import { Skeleton } from "@/components/shadcn/skeleton";
+import { useGetAdminDashboardOverviewQuery } from "@/features/admin/adminDashboardSlice";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/shadcn/accordion";
-
-import StatisticsSection from "./StatisticsSection";
-import { Button } from "@/components/shadcn/button";
-import { Skeleton } from "@/components/shadcn/skeleton";
-import { countryCodes } from "@/static/CountryCodes";
-import { InputPhoneNumber } from "@/components/shadcn/input";
-import { useGetAdminDashboardOverviewQuery } from "@/features/admin/adminDashboardSlice";
 
 const plans = [
   {
@@ -51,15 +47,6 @@ const AdminDashboardOverview = () => {
   const [wavesurfer, setWavesurfer] = useState<any>(null);
   const [isPlaying, setIsPlaying] = useState(false);
 
-  const [modals, setModals] = useState({
-    addTwilioNumber: false,
-  });
-
-  const [twillioState, setTwillioState] = useState({
-    phoneNumber: "",
-    selectedPlan: "old", // old, new
-  });
-
   const onReady = (ws: any) => {
     setWavesurfer(ws);
     setIsPlaying(false);
@@ -76,6 +63,10 @@ const AdminDashboardOverview = () => {
     // ...(isDifferentDate
     //   ? { created_at_before: endDate, created_at_after: startDate }
     //   : {}),
+  });
+
+  const [modals, setModals] = useState({
+    addTwilioNumber: false,
   });
 
   if (adminDashboardFetching) {
@@ -402,99 +393,80 @@ const AdminDashboardOverview = () => {
 
             {/* right */}
             <div className="flex flex-col gap-3">
-              {/* give me a twillio number */}
-              <div
-                onClick={() =>
-                  setTwillioState({ ...twillioState, selectedPlan: "old" })
-                }
-                className={classNames(
-                  `border rounded-lg p-4 cursor-pointer flex items-center gap-3`,
-                  {
-                    "border-primary-500": twillioState.selectedPlan === "old",
-                  }
-                )}
-              >
-                {/* icon */}
-                <div>
-                  <svg
-                    width="20"
-                    height="21"
-                    viewBox="0 0 20 21"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
+              {plans.map((plan, index) => {
+                return (
+                  <label
+                    key={index}
+                    className="has-[:checked]:border-primary-400 has-[:checked]:text-primary-900 has-[:checked]:ring-indigo-200 flex w-full border border-gray-50 rounded-xl pt-4 px-4 cursor-pointer transition-all gap-3 group flex-col"
                   >
-                    <path
-                      d="M10 0.697266C15.2467 0.697266 19.5 4.95056 19.5 10.1973C19.5 15.444 15.2467 19.6973 10 19.6973C4.7533 19.6973 0.5 15.444 0.5 10.1973C0.5 4.95056 4.7533 0.697266 10 0.697266Z"
-                      stroke="#D5D7DA"
-                    />
-                  </svg>
-                </div>
+                    <div className="flex gap-3">
+                      <input
+                        defaultChecked={index === 0} // Default to the first plan being selected
+                        name="plan"
+                        type="radio"
+                        className="box-content h-2 w-2 appearance-none rounded-full border-[5px] border-white bg-white bg-clip-padding outline-none ring-1 ring-gray-950/10 checked:border-primary-500 checked:ring-primary-500 mt-1"
+                      />
+                      <div className="flex justify-between w-full">
+                        {/* title, description */}
+                        <div className="">
+                          <h2 className="text-gray-400 font-semibold text-lg mb-1">
+                            {plan.name}
+                          </h2>
+                          <h4 className="text-xs text-gray-400">
+                            Perfect for sell used cars
+                          </h4>
+                        </div>
 
-                {/* content */}
-                <div>
-                  <h3 className="text-gray-400 text-lg font-semibold mb-1">
-                    Give me a Twilio Number
-                  </h3>
-                  <h4 className="text-xs text-gray-300">
-                    We will provide a number to you.
-                  </h4>
-                </div>
-              </div>
+                        {/* pricing */}
+                        <div className="">
+                          <span className="group-has-[:checked]:text-primary-400 text-gray-400">
+                            $
+                          </span>
+                          <span className="group-has-[:checked]:text-primary-400 text-gray-400 font-bold text-3xl">
+                            {plan.price}
+                          </span>
+                          /month
+                        </div>
+                      </div>
+                    </div>
 
-              {/* I  already have a twilio number */}
-              <div
-                onClick={() =>
-                  setTwillioState({ ...twillioState, selectedPlan: "new" })
-                }
-                className={classNames(
-                  `border rounded-lg p-4 cursor-pointer flex items-center gap-3`,
-                  {
-                    "border-primary-500": twillioState.selectedPlan === "new",
-                  }
-                )}
-              >
-                {/* icon */}
-                <div>
-                  <svg
-                    width="20"
-                    height="21"
-                    viewBox="0 0 20 21"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M10 0.697266C15.2467 0.697266 19.5 4.95056 19.5 10.1973C19.5 15.444 15.2467 19.6973 10 19.6973C4.7533 19.6973 0.5 15.444 0.5 10.1973C0.5 4.95056 4.7533 0.697266 10 0.697266Z"
-                      stroke="#D5D7DA"
-                    />
-                  </svg>
-                </div>
-
-                {/* content */}
-                <div>
-                  <h3 className="text-gray-400 text-lg font-semibold mb-1">
-                    Give me a Twilio Number
-                  </h3>
-                  <h4 className="text-xs text-gray-300">
-                    We will provide a number to you.
-                  </h4>
-
-                  <hr className="my-3" />
-
-                  <label htmlFor="">Enter your number</label>
-                  <InputPhoneNumber
-                    value={twillioState.phoneNumber}
-                    onChange={(e) =>
-                      setTwillioState({
-                        ...twillioState,
-                        phoneNumber: e.target.value,
-                      })
-                    }
-                    className="w-full"
-                    placeholder="Enter your Twilio number"
-                    countries={countryCodes}
-                  />
-                </div>
-              </div>
+                    {/* benefits  */}
+                    <div className="pl-[25px]">
+                      {plan?.benefits?.map((benefit, index) => {
+                        return (
+                          <div
+                            key={index}
+                            className="text-xs text-gray-300 mb-3 flex gap-2"
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="16"
+                              height="16"
+                              viewBox="0 0 16 16"
+                              fill="none"
+                            >
+                              <rect
+                                x="16"
+                                y="16"
+                                width="16"
+                                height="16"
+                                rx="8"
+                                transform="rotate(-180 16 16)"
+                                fill="#55BB78"
+                              />
+                              <path
+                                d="M6.98228 10.6663C6.77947 10.6663 6.58738 10.589 6.4643 10.4557L4.79846 8.65701C4.74695 8.60146 4.70935 8.53817 4.68781 8.47074C4.66626 8.40331 4.66118 8.33307 4.67287 8.26404C4.68457 8.195 4.71279 8.12853 4.75594 8.06842C4.79909 8.00831 4.85631 7.95573 4.92434 7.9137C4.99234 7.8715 5.06987 7.84068 5.15248 7.823C5.23509 7.80533 5.32115 7.80115 5.40574 7.8107C5.49033 7.82026 5.57178 7.84336 5.64542 7.87869C5.71906 7.91402 5.78345 7.96087 5.83489 8.01657L6.93099 9.19916L9.68688 5.58282C9.77828 5.46342 9.92389 5.37851 10.0918 5.34673C10.2597 5.31495 10.4362 5.33888 10.5825 5.41328C10.887 5.56796 10.9807 5.89561 10.7904 6.14478L7.53429 10.4157C7.47871 10.4889 7.40209 10.5499 7.3111 10.5935C7.2201 10.637 7.11747 10.6618 7.01212 10.6656C7.00186 10.6663 6.99254 10.6663 6.98228 10.6663Z"
+                                fill="white"
+                              />
+                            </svg>
+                            {benefit}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </label>
+                );
+              })}
             </div>
           </div>
 
