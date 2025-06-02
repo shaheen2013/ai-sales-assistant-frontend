@@ -6,6 +6,8 @@ import {
   useGetDealerPricingPlansQuery,
   useUpgradeSubscriptionMutation,
 } from "@/features/dealer/dealerProfileSlice";
+import { useToast } from "@/hooks/useToast";
+import { beautifyErrors } from "@/lib/utils";
 import { useSession } from "next-auth/react";
 
 interface PricingPlan {
@@ -20,6 +22,8 @@ interface PricingPlan {
 
 export default function PricingPlans() {
   const { data: session } = useSession();
+
+  const toast = useToast();
 
   const {
     isError,
@@ -39,20 +43,15 @@ export default function PricingPlans() {
     }
 
     try {
-      const { data, error } = await createSubscription({
+      const data = await createSubscription({
         price_id: priceId,
         success_url: `${window.location.origin}/dashboard/overview`,
         cancel_url: `${window.location.origin}`,
-      });
-
-      if (error) {
-        console.error("Error creating subscription:", error);
-        return;
-      }
+      }).unwrap();
 
       window.location.href = data?.checkout_url;
     } catch (error: any) {
-      console.error("Error creating subscription:", error);
+      toast("error", beautifyErrors(error));
     }
   };
 
