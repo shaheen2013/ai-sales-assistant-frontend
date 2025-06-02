@@ -48,6 +48,8 @@ import { Button } from "@/components/shadcn/button";
 import { Skeleton } from "@/components/shadcn/skeleton";
 import { Input, InputCopy } from "@/components/shadcn/input";
 import { useEditVehicleInventoryMutation } from "@/features/inventory/inventorySlice";
+import Pagination from "@/components/pagination/Pagination";
+import { useRouter, useSearchParams } from "next/navigation";
 
 type Inventory = {
   id: number;
@@ -76,6 +78,9 @@ export default function InventoryCarList({
   handleInventoryDelete,
 }: any) {
   const toast = useToast();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const page = searchParams.get("page") || 1;
 
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -545,6 +550,12 @@ export default function InventoryCarList({
     },
   ];
 
+  const onPageChange = (page: number) => {
+    const params = new URLSearchParams(searchParams);
+    params.set("page", page.toString());
+    router.push(`?${params.toString()}`);
+  };
+
   const data: Inventory[] = useMemo(
     () => getVehicleList?.results,
     [getVehicleList?.results]
@@ -572,6 +583,9 @@ export default function InventoryCarList({
   if (isLoading) {
     return <TableSkeleton />;
   }
+
+  const itemsPerPage = 10; // Assuming backend paginates 10 items per page
+  const totalPage = Math.ceil(getVehicleList?.count / itemsPerPage);
 
   return (
     <>
@@ -617,6 +631,14 @@ export default function InventoryCarList({
           )}
         </TableBody>
       </Table>
+
+      <div className="flex items-end justify-center my-4">
+        <Pagination
+          page={Number(page)}
+          onPageChange={onPageChange}
+          totalPage={totalPage}
+        />
+      </div>
 
       <Dialog
         open={modals.addInventory}

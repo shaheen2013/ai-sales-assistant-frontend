@@ -36,6 +36,7 @@ import {
 import { Button } from "@/components/shadcn/button";
 import { Skeleton } from "@/components/shadcn/skeleton";
 import Link from "next/link";
+import Pagination from "@/components/pagination/Pagination";
 
 export default function InventoryFilesList({
   isLoading,
@@ -311,6 +312,13 @@ export default function InventoryFilesList({
     );
   }
 
+  const onPageChange = (page: number) => {
+    // Handle page change logic here
+    // For example, you can call a function to fetch data for the new page
+    console.log(`Page changed to: ${page}`);
+    // refetchGetInventoryFiles(); // Uncomment if you want to refetch data on page change
+  };
+
   return (
     <>
       <Table>
@@ -355,6 +363,10 @@ export default function InventoryFilesList({
           )}
         </TableBody>
       </Table>
+
+      <div className="flex items-end justify-center pt-3">
+        <Pagination page={1} onPageChange={onPageChange} totalPage={10} />
+      </div>
     </>
   );
 }

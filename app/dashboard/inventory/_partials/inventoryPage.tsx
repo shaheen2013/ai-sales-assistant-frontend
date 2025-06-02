@@ -2,7 +2,7 @@
 
 import moment from "moment";
 import { useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
 import { useDebounceValue } from "usehooks-ts";
 
@@ -54,6 +54,7 @@ import SomethingWentWrong from "@/components/SomethingWentWrong";
 
 export default function DashboardDealerInventory() {
   const toast = useToast();
+  const router = useRouter();
   const searchParams = useSearchParams();
 
   const { control, handleSubmit, reset } = useForm({
@@ -100,8 +101,8 @@ export default function DashboardDealerInventory() {
     refetch: refetchGetVehicle,
   } = useGetVehicleInventoryQuery({
     search: debouncedSearchValue,
-    filter: filter,
-    sort: sort,
+    page: Number(searchParams.get("page")) || 1,
+    page_size: Number(searchParams.get("page_size")) || 10,
   });
 
   const {
@@ -125,6 +126,21 @@ export default function DashboardDealerInventory() {
 
   const [inventoryUpload, { isLoading: isLoadingVehicleInventoryUplaod }] =
     useVehicleInventoryUploadMutation();
+
+  const handleSectionChange = (section: "list" | "files") => {
+    setSelectedPanel(section);
+
+    const searchParams = new URLSearchParams(window.location.search);
+
+    // Reset specific query params
+    searchParams.delete("search");
+    searchParams.delete("filter");
+    searchParams.delete("sort");
+    searchParams.set("page", "1");
+
+    // Update the URL with the new params
+    router.push(`?${searchParams.toString()}`);
+  };
 
   const handleInventoryEdit = async (formData: any, id: any) => {
     console.log("edit id => ", id);
@@ -293,10 +309,10 @@ export default function DashboardDealerInventory() {
         <div className="rounded-md border p-3">
           {/* header */}
           <div className="flex justify-between items-center mb-4">
-            {/*  */}
+            {/* section selectors */}
             <div className="flex items-center  gap-3">
               <h2
-                onClick={() => setSelectedPanel("list")}
+                onClick={() => handleSectionChange("list")}
                 className={cn(
                   `text-base text-gray-500 font-medium cursor-pointer`,
                   {
@@ -310,7 +326,7 @@ export default function DashboardDealerInventory() {
 
               {/* <h2 className="text-lg text-gray-500">Inventory Files</h2> */}
               <h2
-                onClick={() => setSelectedPanel("files")}
+                onClick={() => handleSectionChange("files")}
                 className={cn(
                   `text-base text-gray-500 font-medium cursor-pointer`,
                   {
@@ -456,10 +472,6 @@ export default function DashboardDealerInventory() {
           )}
 
           <hr />
-
-          <div className="flex items-end justify-end pt-3">
-            <span className="text-primary-500 font-medium">View All</span>
-          </div>
         </div>
       </div>
 
