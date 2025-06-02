@@ -20,12 +20,12 @@ const chartConfig = {
     label: "Visitors",
     color: "#ddd",
   },
-  chrome: {
+  organic: {
     label: "Organic",
     color: "#34AD5D",
   },
-  safari: {
-    label: "by AI",
+  byAi: {
+    label: "By AI",
     color: "#55BB78",
   },
   // firefox: {
@@ -35,6 +35,7 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 export default function DashboardDealerOverviewPieChart({ data }: { data: { name: string, visitors: number, fill: string }[] }) {
+  console.log("data---->", data);
   return (
     <div className="flex">
       {/* chart */}
@@ -66,7 +67,7 @@ export default function DashboardDealerOverviewPieChart({ data }: { data: { name
         </div>
         <div className="text-gray-600 text-sm flex items-center gap-1">
           <div className="w-[6.16px] h-[6.16px] bg-[#8AD0A2] rounded-full" />
-          by Ai
+          By AI
         </div>
         {/* <div className="text-gray-600 text-sm">Referral</div> */}
       </div>

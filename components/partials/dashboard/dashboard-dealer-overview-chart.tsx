@@ -200,6 +200,7 @@ export default function DashboardDealerOverviewChart({data}: {data: DealerRegist
           />
           {/* <Legend /> */}
           <Bar
+            name={"Organic"}
             dataKey="organic"
             stackId="a"
             fill="#34AD5D"
@@ -207,6 +208,7 @@ export default function DashboardDealerOverviewChart({data}: {data: DealerRegist
             radius={[6, 6, 0, 0]}
           />
           <Bar
+            name={"By AI"}
             dataKey="by_ai"
             stackId="a"
             fill="#8AD0A2"
