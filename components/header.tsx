@@ -26,6 +26,7 @@ import { cn } from "@/lib/utils";
 import { navigationData } from "@/static/homepage";
 import Button from "./button";
 import { ClaraIcon } from "./partials/chat/svg-icons";
+import { useSession } from "next-auth/react";
 
 const products = [
   {
@@ -61,6 +62,9 @@ const products = [
 ];
 
 export default function Example() {
+  /*--Session--*/
+  const { data: session } = useSession();
+
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
@@ -191,8 +195,8 @@ export default function Example() {
 
         {/* right */}
         <div className="hidden lg:flex lg:flex-1 lg:justify-end gap-3">
-          <Button href="/login" variant="outline-primary">
-            <span>Sign In</span>
+          <Button href={session?.access ? "/dashboard/overview" : "/login"} variant="outline-primary">
+            <span>{session?.access ? "Dashboard" : "Sign In"}</span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="22"
