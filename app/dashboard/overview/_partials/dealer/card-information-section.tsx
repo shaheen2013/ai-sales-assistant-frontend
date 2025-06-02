@@ -58,7 +58,7 @@ const CardInformationSection = () => {
           </div> : <Accordion type='multiple' defaultValue={['card_0']}>
             {
               cardsData?.map((card, index) => (
-                <AccordionItem value={`card_${index}`} className='p-0 border-b border-[#eaebec]' key={index}>
+                <AccordionItem value={`card_${index}`} className='p-0 rounded-none border-b border-[#eaebec]' key={index}>
                   <AccordionTrigger className=''>
                     <div className="flex items-center justify-between py-3">
                       <div className="flex items-center">
