@@ -11,6 +11,7 @@ import {
   SelectTrigger,
   SelectContent,
 } from "@/components/shadcn/select";
+import classNames from "classnames";
 
 import {
   Dialog,
@@ -29,10 +30,9 @@ import {
 import StatisticsSection from "./StatisticsSection";
 import { Button } from "@/components/shadcn/button";
 import { Skeleton } from "@/components/shadcn/skeleton";
-import { useGetAdminDashboardOverviewQuery } from "@/features/admin/adminDashboardSlice";
-import { InputPhoneNumber } from "@/components/shadcn/input";
 import { countryCodes } from "@/static/CountryCodes";
-import classNames from "classnames";
+import { InputPhoneNumber } from "@/components/shadcn/input";
+import { useGetAdminDashboardOverviewQuery } from "@/features/admin/adminDashboardSlice";
 
 const plans = [
   {
@@ -52,7 +52,7 @@ const AdminDashboardOverview = () => {
   const [isPlaying, setIsPlaying] = useState(false);
 
   const [modals, setModals] = useState({
-    addTwilioNumber: true,
+    addTwilioNumber: false,
   });
 
   const [twillioState, setTwillioState] = useState({
