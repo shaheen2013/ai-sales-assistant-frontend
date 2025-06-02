@@ -37,6 +37,7 @@ import { Button } from "@/components/shadcn/button";
 import { Skeleton } from "@/components/shadcn/skeleton";
 import Link from "next/link";
 import Pagination from "@/components/pagination/Pagination";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function InventoryFilesList({
   isLoading,
@@ -49,6 +50,11 @@ export default function InventoryFilesList({
   refetchGetInventoryFiles?: () => void;
   dataGetInventoryFiles?: any;
 }) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const page = searchParams.get("file_page") || 1;
+
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
@@ -326,11 +332,13 @@ export default function InventoryFilesList({
   }
 
   const onPageChange = (page: number) => {
-    // Handle page change logic here
-    // For example, you can call a function to fetch data for the new page
-    console.log(`Page changed to: ${page}`);
-    // refetchGetInventoryFiles(); // Uncomment if you want to refetch data on page change
+    const params = new URLSearchParams(searchParams);
+    params.set("file_page", page.toString());
+    router.push(`?${params.toString()}`);
   };
+
+  const itemsPerPage = 10; // Assuming backend paginates 10 items per page
+  const totalPage = Math.ceil(dataGetInventoryFiles?.count / itemsPerPage);
 
   return (
     <>
@@ -378,7 +386,11 @@ export default function InventoryFilesList({
       </Table>
 
       <div className="flex items-end justify-center my-4">
-        <Pagination page={1} onPageChange={onPageChange} totalPage={10} />
+        <Pagination
+          page={Number(page)}
+          onPageChange={onPageChange}
+          totalPage={totalPage}
+        />
       </div>
     </>
   );

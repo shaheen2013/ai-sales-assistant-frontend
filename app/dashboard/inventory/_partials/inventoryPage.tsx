@@ -87,11 +87,16 @@ export default function DashboardDealerInventory() {
     selectPlan: false,
   });
 
-  // const search = searchParams.get("search");
+  // inventory search params
+  const page = searchParams.get("page");
+  const page_size = searchParams.get("page_size");
   const filter = searchParams.get("filter");
-  const sort = searchParams.get("sort");
-
   const [debouncedSearchValue, setSearch] = useDebounceValue("", 500);
+
+  // inventory files search params
+  const file_page = searchParams.get("file_page");
+  const file_filter = searchParams.get("file_filter");
+  const [debouncedFSearchValue] = useDebounceValue("", 500);
 
   // rtk query
   const {
@@ -101,8 +106,8 @@ export default function DashboardDealerInventory() {
     refetch: refetchGetVehicle,
   } = useGetVehicleInventoryQuery({
     search: debouncedSearchValue,
-    page: Number(searchParams.get("page")) || 1,
-    page_size: Number(searchParams.get("page_size")) || 10,
+    page: Number(page) || 1,
+    page_size: Number(page_size) || 10,
   });
 
   const {
@@ -112,9 +117,9 @@ export default function DashboardDealerInventory() {
     isFetching: isFetchingGetInventoryFiles,
     refetch: refetchGetInventoryFiles,
   } = useGetInventoryFilesQuery({
-    search: debouncedSearchValue,
-    filter: filter,
-    sort: sort,
+    search: debouncedFSearchValue,
+    page: Number(file_page) || 1,
+    page_size: Number(file_filter) || 10,
   });
 
   // rtk mutation
