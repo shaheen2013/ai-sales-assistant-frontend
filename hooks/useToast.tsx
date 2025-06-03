@@ -77,7 +77,6 @@ export const useToast = () => {
     if (type == "uploadInventory") {
       sonnerToast.custom(
         (id) => {
-          console.log("custom toast", id);
           return (
             <div className="bg-white rounded-xl shadow-md p-4 border border-gray-50 w-[360px] flex flex-col space-y-3">
               <div className="flex items-center justify-between">
