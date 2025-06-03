@@ -97,6 +97,66 @@ export default function DashboardSupport() {
             </div>
           </TabsTrigger>
 
+          <TabsTrigger value="in_progress">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M1.7964 2.09808C1.57549 1.93239 1.26208 1.97716 1.0964 2.19808C0.930714 2.41899 0.975485 2.73239 1.1964 2.89808L3.1984 4.39958C3.41932 4.56527 3.73272 4.5205 3.8984 4.29958C4.06409 4.07867 4.01932 3.76527 3.7984 3.59958L1.7964 2.09808ZM1 6.9996C0.723858 6.9996 0.5 7.22346 0.5 7.4996C0.5 7.77574 0.723858 7.9996 1 7.9996H2.5C2.77614 7.9996 3 7.77574 3 7.4996C3 7.22346 2.77614 6.9996 2.5 6.9996H1ZM9.99766 1.99957C13.1466 1.99957 15.7416 4.33445 15.9821 7.35498L15.9955 7.57719L16 7.80171L15.999 11.3976L16.9244 13.6197C16.947 13.6739 16.9647 13.7298 16.9774 13.7867L16.9926 13.8729L17.0013 14.0041C17.0013 14.4522 16.7048 14.8383 16.2521 14.9673L16.1358 14.9941L16.0013 15.0041L12.4996 15.0036L12.4946 15.1649C12.4095 16.4685 11.3252 17.4996 10 17.4996C8.67453 17.4996 7.58998 16.468 7.50533 15.1639L7.49962 15.0036L3.99891 15.0041C3.91096 15.0041 3.82358 14.9925 3.73902 14.9698L3.61456 14.9273C3.20378 14.7563 2.96181 14.3388 3.01221 13.8752L3.0333 13.7478L3.07572 13.6198L3.99902 11.4006L4.0001 7.79238L4.0044 7.56781C4.12702 4.45072 6.77104 1.99957 9.99766 1.99957ZM11.4996 15.0036H8.49962L8.50697 15.145C8.57552 15.8576 9.14275 16.4246 9.85556 16.4927L10 16.4996C10.7797 16.4996 11.4205 15.9047 11.4931 15.144L11.4996 15.0036ZM9.99766 2.99957C7.37511 2.99957 5.22717 4.92329 5.01715 7.38455L5.00393 7.5968L5.00002 7.80171V11.4996L4.96161 11.6917L3.9989 14.0041L15.9566 14.0061L16.0019 14.0041L15.0384 11.6918L15 11.4996L15.0001 7.81199L14.996 7.60788C14.8909 5.03448 12.6947 2.99957 9.99766 2.99957ZM18.9036 2.19808C18.7379 1.97716 18.4245 1.93239 18.2036 2.09808L16.2016 3.59958C15.9807 3.76527 15.9359 4.07867 16.1016 4.29958C16.2673 4.5205 16.5807 4.56527 16.8016 4.39958L18.8036 2.89808C19.0245 2.73239 19.0693 2.41899 18.9036 2.19808ZM19.5 7.4996C19.5 7.22346 19.2761 6.9996 19 6.9996H17.5C17.2239 6.9996 17 7.22346 17 7.4996C17 7.77574 17.2239 7.9996 17.5 7.9996H19C19.2761 7.9996 19.5 7.77574 19.5 7.4996Z"
+                fill={status === 'in_progress' ? 'white' : '#2196f3'}
+              />
+            </svg>
+            <span
+              className={cn(
+                'text-[#2196f3]',
+                status === 'in_progress' && 'text-white'
+              )}
+            >
+              In Progress
+            </span>
+            <div
+              className={cn(
+                'bg-blue-50 text-blue-400 border border-blue-400 text-xs rounded-xl px-2.5 py-0.5 font-medium ml-auto'
+              )}
+            >
+              {supportTicketsData?.status_counter?.in_progress_count || 0}
+            </div>
+          </TabsTrigger>
+
+          <TabsTrigger value="resolved">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M1.7964 2.09808C1.57549 1.93239 1.26208 1.97716 1.0964 2.19808C0.930714 2.41899 0.975485 2.73239 1.1964 2.89808L3.1984 4.39958C3.41932 4.56527 3.73272 4.5205 3.8984 4.29958C4.06409 4.07867 4.01932 3.76527 3.7984 3.59958L1.7964 2.09808ZM1 6.9996C0.723858 6.9996 0.5 7.22346 0.5 7.4996C0.5 7.77574 0.723858 7.9996 1 7.9996H2.5C2.77614 7.9996 3 7.77574 3 7.4996C3 7.22346 2.77614 6.9996 2.5 6.9996H1ZM9.99766 1.99957C13.1466 1.99957 15.7416 4.33445 15.9821 7.35498L15.9955 7.57719L16 7.80171L15.999 11.3976L16.9244 13.6197C16.947 13.6739 16.9647 13.7298 16.9774 13.7867L16.9926 13.8729L17.0013 14.0041C17.0013 14.4522 16.7048 14.8383 16.2521 14.9673L16.1358 14.9941L16.0013 15.0041L12.4996 15.0036L12.4946 15.1649C12.4095 16.4685 11.3252 17.4996 10 17.4996C8.67453 17.4996 7.58998 16.468 7.50533 15.1639L7.49962 15.0036L3.99891 15.0041C3.91096 15.0041 3.82358 14.9925 3.73902 14.9698L3.61456 14.9273C3.20378 14.7563 2.96181 14.3388 3.01221 13.8752L3.0333 13.7478L3.07572 13.6198L3.99902 11.4006L4.0001 7.79238L4.0044 7.56781C4.12702 4.45072 6.77104 1.99957 9.99766 1.99957ZM11.4996 15.0036H8.49962L8.50697 15.145C8.57552 15.8576 9.14275 16.4246 9.85556 16.4927L10 16.4996C10.7797 16.4996 11.4205 15.9047 11.4931 15.144L11.4996 15.0036ZM9.99766 2.99957C7.37511 2.99957 5.22717 4.92329 5.01715 7.38455L5.00393 7.5968L5.00002 7.80171V11.4996L4.96161 11.6917L3.9989 14.0041L15.9566 14.0061L16.0019 14.0041L15.0384 11.6918L15 11.4996L15.0001 7.81199L14.996 7.60788C14.8909 5.03448 12.6947 2.99957 9.99766 2.99957ZM18.9036 2.19808C18.7379 1.97716 18.4245 1.93239 18.2036 2.09808L16.2016 3.59958C15.9807 3.76527 15.9359 4.07867 16.1016 4.29958C16.2673 4.5205 16.5807 4.56527 16.8016 4.39958L18.8036 2.89808C19.0245 2.73239 19.0693 2.41899 18.9036 2.19808ZM19.5 7.4996C19.5 7.22346 19.2761 6.9996 19 6.9996H17.5C17.2239 6.9996 17 7.22346 17 7.4996C17 7.77574 17.2239 7.9996 17.5 7.9996H19C19.2761 7.9996 19.5 7.77574 19.5 7.4996Z"
+                fill={status === 'resolved' ? 'white' : '#654ce6'}
+              />
+            </svg>
+            <span
+              className={cn(
+                'text-[#654ce6]',
+                status === 'resolved' && 'text-white'
+              )}
+            >
+              Resolved
+            </span>
+            <div
+              className={cn(
+                'bg-purple-50 text-purple-400 border border-purple-400 text-xs rounded-xl px-2.5 py-0.5 font-medium ml-auto'
+              )}
+            >
+              {supportTicketsData?.status_counter?.resolved_count || 0}
+            </div>
+          </TabsTrigger>
+
           <TabsTrigger value="closed">
             <svg
               width="20"
@@ -177,6 +237,7 @@ import { beautifyErrors, cn } from '@/lib/utils';
 import { SupportTicketType } from '@/types/supportTicketType';
 import { MoreHorizontal } from 'lucide-react';
 import AdminSupportDialog from './_partials/AdminSupportDialog';
+import Spinner from '@/components/spinner/Spinner';
 
 function SupportTable({
   data,
@@ -247,6 +308,7 @@ function SupportTable({
 
     {
       accessorKey: 'email',
+      accessorFn: (row) => row.dealer?.email,
       header: ({ column }) => {
         return (
           <h2
@@ -281,7 +343,7 @@ function SupportTable({
     },
 
     {
-      accessorKey: 'topic',
+      accessorKey: 'subject',
       header: ({ column }) => {
         return (
           <h2
@@ -445,7 +507,7 @@ function SupportTable({
     // },
 
     {
-      accessorKey: 'createdDate',
+      accessorKey: 'created_at',
       header: ({ column }) => {
         return (
           <h2
@@ -549,7 +611,7 @@ function SupportTable({
 
     {
       id: 'actions',
-      header: ({}) => {
+      header: ({ }) => {
         return (
           <h2 className="flex items-center text-center gap-2 cursor-pointer">
             Action
@@ -604,7 +666,7 @@ function SupportTable({
                 }}
                 className={cn(
                   deleteTicketLoading &&
-                    'cursor-not-allowed opacity-70 pointer-events-none'
+                  'cursor-not-allowed opacity-70 pointer-events-none'
                 )}
               >
                 <svg
@@ -620,6 +682,12 @@ function SupportTable({
                   />
                 </svg>
                 <span className="font-medium text-red-500">Delete</span>
+                {
+                  deleteTicketLoading &&
+                  <Spinner
+                    className='size-3 text-red-500'
+                  />
+                }
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -683,9 +751,9 @@ function SupportTable({
                           {header.isPlaceholder
                             ? null
                             : flexRender(
-                                header.column.columnDef.header,
-                                header.getContext()
-                              )}
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
                         </TableHead>
                       );
                     })}

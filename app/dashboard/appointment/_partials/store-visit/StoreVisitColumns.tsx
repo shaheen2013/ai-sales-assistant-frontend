@@ -15,7 +15,7 @@ export const storeVisitColumns = ({ handleChangeVisitStatus }: { handleChangeVis
     {
       accessorKey: "schedule_date",
       header: "Scheduled Date & Time",
-      cell: ({ row }) => `${moment(row.original?.prefered_time).format("MMM DD, YYYY")} | ${moment(row.original?.prefered_time).format("hh:mm a")}`,
+      cell: ({ row }) => `${moment.utc(row.original?.prefered_time).format("MMM DD, YYYY")} | ${moment.utc(row.original?.prefered_time).format("hh:mm a")}`,
     },
     {
       accessorKey: "visit_reason",

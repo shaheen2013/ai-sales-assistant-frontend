@@ -176,6 +176,7 @@ import { SupportTicketType } from '@/types/supportTicketType';
 import { Eye, MoreHorizontal, Plus } from 'lucide-react';
 import { useDeleteDealerSupportTickerMutation, useGetDealerAllSupportTicketsQuery } from '@/features/dealer/dealerSlice';
 import AskSupportCreateDialog from './_partials/AskSupportCreateDialog';
+import Spinner from '@/components/spinner/Spinner';
 
 function AskSupportTable({
   data,
@@ -228,7 +229,7 @@ function AskSupportTable({
     },
 
     {
-      accessorKey: 'topic',
+      accessorKey: 'subject',
       header: ({ column }) => {
         return (
           <h2
@@ -262,8 +263,9 @@ function AskSupportTable({
       size: 650,
     },
     {
-      accessorKey: 'createdDate',
+      accessorKey: 'created_at',
       header: ({ column }) => {
+        console.log(column.getIsSorted());
         return (
           <h2
             className="flex items-center text-center gap-2 cursor-pointer"
@@ -428,6 +430,12 @@ function AskSupportTable({
                   />
                 </svg>
                 <span className="font-medium text-red-500">Delete</span>
+                {
+                  deleteTicketLoading &&
+                  <Spinner
+                    className='size-3 text-red-500'
+                  />
+                }
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
