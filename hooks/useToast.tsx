@@ -12,6 +12,7 @@ type ToastOptions = {
   title?: string;
   description?: string;
   duration?: number;
+  onView?: () => void;
 };
 
 export const useToast = () => {
@@ -115,8 +116,8 @@ export const useToast = () => {
               </ul>
               <button
                 onClick={() => {
-                  // Your handler to show details, e.g. open modal or download CSV
-                  console.log("View details clicked");
+                  options?.onView?.();
+                  sonnerToast.dismiss(id);
                 }}
                 className="self-start px-4 py-1 border border-gray-400 rounded hover:bg-black hover:text-white text-sm font-medium w-full"
               >

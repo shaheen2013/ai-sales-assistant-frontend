@@ -80,11 +80,15 @@ export default function DashboardDealerInventory() {
 
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
   const [selectedPanel, setSelectedPanel] = useState<"list" | "files">("list");
+  const [uploadSummery, setUploadSummery] = useState([]);
+
+  console.log("uploadSummery => ", uploadSummery);
 
   const [modals, setModals] = useState({
     addInventory: false,
     addPdf: false,
     selectPlan: false,
+    uploadSummeryDetails: true,
   });
 
   // inventory search params
@@ -208,6 +212,9 @@ export default function DashboardDealerInventory() {
   };
 
   const handleUploadInventoryFiles = async () => {
+    // reset upload summery
+    setUploadSummery([]);
+
     try {
       const formData = new FormData();
 
@@ -217,6 +224,7 @@ export default function DashboardDealerInventory() {
 
       if (error) {
         console.log(error);
+        setUploadSummery(error?.errors || []);
         toast("error", beautifyErrors(error));
         return;
       }
@@ -258,14 +266,21 @@ export default function DashboardDealerInventory() {
 
   return (
     <div className="">
-      <button
+      {/* <button
         className="mb-3"
         onClick={() => {
-          toast("uploadInventory", "Uploading inventory...");
+          toast("uploadInventory", "Uploading inventory...", {
+            onView: () => {
+              setModals({
+                ...modals,
+                uploadSummeryDetails: true,
+              });
+            },
+          });
         }}
       >
         hit
-      </button>
+      </button> */}
 
       {/* add inventory / place add pdf  */}
       <div className="flex gap-3 mb-6">
@@ -1261,6 +1276,74 @@ export default function DashboardDealerInventory() {
                   fill="white"
                 />
               </svg>
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* upload summery */}
+      <Dialog
+        open={modals.uploadSummeryDetails}
+        onOpenChange={(e) => {
+          setModals((prev) => ({
+            ...prev,
+            uploadSummeryDetails: !prev.uploadSummeryDetails,
+          }));
+        }}
+      >
+        <DialogContent className="sm:max-w-[900px] max-h-full overflow-auto">
+          <DialogHeader>
+            <DialogTitle>
+              <div className="flex items-center justify-between">
+                <h2 className="text-gray-400 font-bold text-2xl">
+                  Upload Summary
+                </h2>
+              </div>
+            </DialogTitle>
+          </DialogHeader>
+
+          <hr />
+
+          <div className="">
+            <table className="table-auto w-full border border-gray-100 rounded-xl">
+              <thead className="bg-gray-100">
+                <tr>
+                  <th className="border border-gray-300 px-4 py-2 text-left">
+                    Stock ID
+                  </th>
+                  <th className="border border-gray-300 px-4 py-2 text-left">
+                    Error
+                  </th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {Array.from({ length: 100 }).map((_, index) => (
+                  <tr key={index}>
+                    <td className="border border-gray-100 px-4 py-2">
+                      Stock ID {index + 1}
+                    </td>
+                    <td className="border border-gray-100 px-4 py-2">
+                      Error message {index + 1}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* footer */}
+          <div className="flex justify-end gap-3 mt-6">
+            <Button
+              variant="primary"
+              onClick={() => {
+                setModals((prev) => ({
+                  ...prev,
+                  uploadSummeryDetails: false,
+                }));
+              }}
+            >
+              Close
             </Button>
           </div>
         </DialogContent>
