@@ -258,6 +258,15 @@ export default function DashboardDealerInventory() {
 
   return (
     <div className="">
+      <button
+        className="mb-3"
+        onClick={() => {
+          toast("uploadInventory", "Uploading inventory...");
+        }}
+      >
+        hit
+      </button>
+
       {/* add inventory / place add pdf  */}
       <div className="flex gap-3 mb-6">
         <Button

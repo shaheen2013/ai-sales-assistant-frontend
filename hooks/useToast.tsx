@@ -1,6 +1,12 @@
 import { toast as sonnerToast } from "sonner";
 
-type ToastType = "default" | "success" | "error" | "warning" | "info";
+type ToastType =
+  | "default"
+  | "success"
+  | "error"
+  | "warning"
+  | "info"
+  | "uploadInventory";
 
 type ToastOptions = {
   title?: string;
@@ -66,6 +72,64 @@ export const useToast = () => {
         description: <div>{options?.description}</div>,
         ...options,
       });
+    }
+
+    if (type == "uploadInventory") {
+      sonnerToast.custom(
+        (id) => {
+          console.log("custom toast", id);
+          return (
+            <div className="bg-white rounded-xl shadow-md p-4 border border-gray-50 w-[360px] flex flex-col space-y-3">
+              <div className="flex items-center justify-between">
+                <h2 className="text-lg font-semibold text-gray-800">
+                  Upload Summary
+                </h2>
+
+                <button
+                  onClick={() => sonnerToast.dismiss(id)}
+                  className="text-gray-500 hover:text-gray-700 "
+                >
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M10 8.58579L14.1421 4.44361L15.5564 5.85786L11.4142 10L15.5564 14.1421L14.1421 15.5564L10 11.4142L5.85786 15.5564L4.44361 14.1421L8.58579 10L4.44361 5.85786L5.85786 4.44361L10 8.58579Z"
+                      fill="currentColor"
+                    />
+                  </svg>
+                </button>
+              </div>
+              <ul className="text-sm text-gray-700 space-y-1">
+                <li>
+                  <span className="font-medium">Total Rows:</span> 50
+                </li>
+                <li>
+                  <span className="font-medium">Successfully added:</span> 45
+                </li>
+                <li>
+                  <span className="font-medium">Skipped during import:</span> 5
+                </li>
+              </ul>
+              <button
+                onClick={() => {
+                  // Your handler to show details, e.g. open modal or download CSV
+                  console.log("View details clicked");
+                }}
+                className="self-start px-4 py-1 border border-gray-400 rounded hover:bg-black hover:text-white text-sm font-medium w-full"
+              >
+                View Details
+              </button>
+            </div>
+          );
+        },
+        {
+          duration: 100000,
+        }
+      );
     }
   };
 
