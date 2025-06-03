@@ -80,7 +80,7 @@ export default function DashboardDealerInventory() {
 
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
   const [selectedPanel, setSelectedPanel] = useState<"list" | "files">("list");
-  const [uploadSummery, setUploadSummery] = useState([]);
+  const [uploadSummery, setUploadSummery] = useState<any[]>([]);
 
   console.log("uploadSummery => ", uploadSummery);
 
@@ -228,12 +228,20 @@ export default function DashboardDealerInventory() {
         return;
       }
 
-      setUploadSummery(error?.errors || []);
-      toast("success", data?.message || "Successfull", {
-        duration: 10000,
+      console.log("upload data => ", data);
+
+      toast("uploadInventory", "Uploading inventory...", {
+        total: data?.total,
+        success: data?.success,
+        failed: data?.failed,
+
+        onView: () => {
+          setUploadSummery(data?.errors || []);
+          setModals((prev) => ({ ...prev, uploadSummeryDetails: true }));
+        },
       });
 
-      setModals({ ...modals, addPdf: false });
+      setModals((prev) => ({ ...prev, addPdf: false }));
       setUploadedFiles([]);
 
       refetchGetVehicle();
@@ -242,7 +250,6 @@ export default function DashboardDealerInventory() {
       console.log(error);
       toast("error", beautifyErrors(error));
     }
-    console.log("files => ", uploadedFiles);
   };
 
   if (errorGetVehicle || errorGetInventoryFiles) {
@@ -266,10 +273,14 @@ export default function DashboardDealerInventory() {
 
   return (
     <div className="">
-      {/* <button
+      <button
         className="mb-3"
         onClick={() => {
           toast("uploadInventory", "Uploading inventory...", {
+            total: "10",
+            success: "12",
+            failed: "sg",
+
             onView: () => {
               setModals({
                 ...modals,
@@ -280,7 +291,7 @@ export default function DashboardDealerInventory() {
         }}
       >
         hit
-      </button> */}
+      </button>
 
       {/* add inventory / place add pdf  */}
       <div className="flex gap-3 mb-6">
@@ -1318,16 +1329,18 @@ export default function DashboardDealerInventory() {
               </thead>
 
               <tbody>
-                {Array.from({ length: 100 }).map((_, index) => (
-                  <tr key={index}>
-                    <td className="border border-gray-100 px-4 py-2">
-                      Stock ID {index + 1}
-                    </td>
-                    <td className="border border-gray-100 px-4 py-2">
-                      Error message {index + 1}
-                    </td>
-                  </tr>
-                ))}
+                {uploadSummery.map((item, index) => {
+                  return (
+                    <tr key={index}>
+                      <td className="border border-gray-100 px-4 py-2">
+                        {item.stock_id}
+                      </td>
+                      <td className="border border-gray-100 px-4 py-2">
+                        {item.error}
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>

@@ -13,6 +13,9 @@ type ToastOptions = {
   description?: string;
   duration?: number;
   onView?: () => void;
+  total?: string;
+  success?: string;
+  failed?: string;
 };
 
 export const useToast = () => {
@@ -105,13 +108,16 @@ export const useToast = () => {
               </div>
               <ul className="text-sm text-gray-700 space-y-1">
                 <li>
-                  <span className="font-medium">Total Rows:</span> 50
+                  <span className="font-medium">Total Rows:</span>{" "}
+                  {options?.total || "N/A"}
                 </li>
                 <li>
-                  <span className="font-medium">Successfully added:</span> 45
+                  <span className="font-medium">Successfully added:</span>{" "}
+                  {options?.success || "N/A"}
                 </li>
                 <li>
-                  <span className="font-medium">Skipped during import:</span> 5
+                  <span className="font-medium">Skipped during import:</span>{" "}
+                  {options?.failed || "N/A"}
                 </li>
               </ul>
               <button
