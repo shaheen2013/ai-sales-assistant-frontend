@@ -1037,9 +1037,9 @@ export default function InventoryCarList({
                     // rules={{ required: "Date In is required" }}
                     render={({ field, formState: { errors } }) => (
                       <Input
-                        type="text"
+                        type="date"
                         id="dateIn"
-                        className="h-11"
+                        className="h-11 block"
                         placeholder="Date In"
                         error={errors?.dateIn?.message}
                         {...field}
@@ -1062,9 +1062,9 @@ export default function InventoryCarList({
                     // rules={{ required: "Date Out is required" }}
                     render={({ field, formState: { errors } }) => (
                       <Input
-                        type="text"
+                        type="date"
                         id="dateOut"
-                        className="h-11"
+                        className="h-11 block"
                         placeholder="Date Out"
                         error={errors?.dateOut?.message}
                         {...field}

@@ -274,7 +274,7 @@ export default function DashboardDealerInventory() {
   return (
     <div className="">
       <button
-        className="mb-3"
+        className="mb-3 hidden"
         onClick={() => {
           toast("uploadInventory", "Uploading inventory...", {
             total: "10",
@@ -928,9 +928,9 @@ export default function DashboardDealerInventory() {
                     // rules={{ required: "Date In is required" }}
                     render={({ field, formState: { errors } }) => (
                       <Input
-                        type="text"
+                        type="date"
                         id="dateIn"
-                        className="h-11"
+                        className="h-11 block"
                         placeholder="Date In"
                         error={errors?.dateIn?.message}
                         {...field}
@@ -953,9 +953,9 @@ export default function DashboardDealerInventory() {
                     // rules={{ required: "Date Out is required" }}
                     render={({ field, formState: { errors } }) => (
                       <Input
-                        type="text"
+                        type="date"
                         id="dateOut"
-                        className="h-11"
+                        className="h-11 block"
                         placeholder="Date Out"
                         error={errors?.dateOut?.message}
                         {...field}
