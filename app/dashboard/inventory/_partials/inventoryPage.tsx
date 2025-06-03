@@ -88,7 +88,7 @@ export default function DashboardDealerInventory() {
     addInventory: false,
     addPdf: false,
     selectPlan: false,
-    uploadSummeryDetails: true,
+    uploadSummeryDetails: false,
   });
 
   // inventory search params
@@ -224,11 +224,11 @@ export default function DashboardDealerInventory() {
 
       if (error) {
         console.log(error);
-        setUploadSummery(error?.errors || []);
         toast("error", beautifyErrors(error));
         return;
       }
 
+      setUploadSummery(error?.errors || []);
       toast("success", data?.message || "Successfull", {
         duration: 10000,
       });
