@@ -16,7 +16,6 @@ const UpgradePlanCtaCard = () => {
     isFetching: isFetchingGetCurrentSubscription,
   } = useGetCurrentSubscriptionPlanQuery();
 
-  console.log(" ==> ", dataGetCurrentSubscription);
 
   if (isFetchingGetCurrentSubscription) {
     return <Skeleton className="h-[220px] w-full" />;

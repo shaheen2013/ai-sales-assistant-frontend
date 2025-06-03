@@ -65,7 +65,7 @@ const Notification = () => {
             socketRef.current = socket;
 
             socket.onopen = () => {
-                console.log('WebSocket connected');
+                // console.log('WebSocket connected');
             };
 
             socket.onmessage = (event) => {
@@ -91,7 +91,7 @@ const Notification = () => {
         return () => {
             if (socketRef.current) {
                 socketRef.current.close();
-                console.log('WebSocket cleaned up');
+                // console.log('WebSocket cleaned up');
             }
         };
     }, [session?.access, toast, dispatch])

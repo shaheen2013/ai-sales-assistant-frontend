@@ -218,7 +218,6 @@ function SupportTable({
     }
   };
 
-  console.log('openActionDropdown', openActionDropdown);
 
   const columns: ColumnDef<SupportTicketType>[] = [
     {

@@ -83,7 +83,6 @@ export default function NotificationSection() {
   if (isNotificationLoading) {
     return <NotificationSectionSkeleton />;
   }
-  console.log(notificationData, 'notificationData >>');
   return (
     <div className="mx-auto p-6 bg-white rounded-2xl border border-gray-50">
       <h1 className="text-[#2b3545] text-2xl font-semibold mb-6">

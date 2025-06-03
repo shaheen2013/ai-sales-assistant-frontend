@@ -103,7 +103,7 @@ export default function DashboardForumsTableUI() {
     refetch: refetchGetNewsLetter,
   } = useGetNewsLetterQuery({});
 
-  console.log("debugging => ", getGetNewsLetter);
+  // console.log("debugging => ", getGetNewsLetter);
 
   // rtk mutation
   const [createVehicleInventory, { isLoading: isLoadingCreateVehicle }] =

@@ -30,7 +30,6 @@ const SubscriberList = () => {
         setSearch(value);
     }, 400);
 
-    console.log("dealersData?.results ", dealersData?.results)
 
     return (
         <div className='p-4 rounded-2xl outline outline-1 outline-offset-[-1px] outline-[#eaebec]'>

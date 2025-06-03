@@ -64,9 +64,6 @@ export function DashboardSidebar() {
                     {item.items.map((subItem, subIndex) => {
                       const isActive = pathname.startsWith(subItem.href);
 
-                      console.log("pathname", pathname);
-                      console.log("subItem.href", subItem.href);
-
                       return (
                         <Link
                           href={subItem.href}

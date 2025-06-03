@@ -16,8 +16,6 @@ import {
 export default function DashboardHeader() {
   const { data: session } = useSession();
 
-  console.log("session", session);
-
   const { toggleSidebar } = useSidebar();
 
   const handleOpenChange = (open: boolean) => {

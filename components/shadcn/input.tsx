@@ -249,8 +249,6 @@ const InputCopy = React.forwardRef<
       }, 2000);
     };
 
-    console.log("props => ", props);
-
     return (
       <div className={wrapperClassName}>
         {label && (
