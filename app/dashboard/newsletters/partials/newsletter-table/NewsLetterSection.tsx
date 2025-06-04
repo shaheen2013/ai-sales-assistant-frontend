@@ -9,13 +9,18 @@ import SimpleSelect from '@/components/select/SimpleSelect';
 import Button from '@/components/button';
 import Link from 'next/link';
 import { newsLetterColumns } from './NewsLetterColumn';
-import { useGetNewsLetterQuery } from '@/features/newsLetter/newsLetterSlice';
+import { useDeleteNewsLetterMutation, useGetNewsLetterQuery } from '@/features/newsLetter/newsLetterSlice';
 import NewsLetterView from './NewsLetterView';
 import { NewsLetterResponseType } from '@/types/newsletterType';
 import { Input } from '@/components/shadcn/input';
 import { debounce } from 'lodash';
+import { useToast } from '@/hooks/useToast';
+import { beautifyErrors } from '@/lib/utils';
 
 const NewsLetterSection = () => {
+    /*--Custom Hooks--*/
+    const toast = useToast();
+
     /*--React State--*/
     const [page, setPage] = useState(1);
     const [subscription, setSubscription] = useState<string>('');
@@ -30,17 +35,24 @@ const NewsLetterSection = () => {
         search,
         ...(subscription && { subscription_name: subscription }),
     });
-    const [updateTalkToHumanStatus] = useUpdateTalkToHumanStatusMutation();
+    const [deleteNewsLetter] = useDeleteNewsLetterMutation();
 
     /*--Functions--*/
-    const handleDeleteNewsLetter = (id: number) => {
-        updateTalkToHumanStatus({
-            id, queryParams: {
-                limit: 10,
-                offset: (page - 1) * 10,
-                ...(subscription && { subscription_name: subscription }),
-            }
-        });
+    const handleDeleteNewsLetter = async (id: number) => {
+        try {
+            const data = await deleteNewsLetter({
+                id, queryParams: {
+                    limit: 10,
+                    offset: (page - 1) * 10,
+                    search,
+                    ...(subscription && { subscription_name: subscription }),
+                }
+            }).unwrap();
+
+            toast("success", "NewsLetter deleted successfully");
+        } catch (err) {
+            toast("error", beautifyErrors(err));
+        }
     };
 
     return (

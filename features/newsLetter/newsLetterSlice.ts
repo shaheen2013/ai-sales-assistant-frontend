@@ -10,8 +10,30 @@ export const newsLetter = apiSlice.injectEndpoints({
         url: `/admin-dashboard/news-letter/`,
         params: queryParams,
       }),
+      providesTags: ["getNewsLetter"],
     }),
+    deleteNewsLetter: builder.mutation({
+      query: ({ id }) => ({
+        method: "DELETE",
+        url: `/admin-dashboard/news-letter/${id}/`,
+      }),
+      onQueryStarted: async (arg, { dispatch, queryFulfilled }) => {
+        const patchResults = dispatch(
+          newsLetter.util.updateQueryData("getNewsLetter", arg?.queryParams, (draft) => {
+            if (draft?.results) {
+              draft.results = draft.results.filter((item) => item.id !== arg.id)
+            }
+          })
+        )
+
+        try {
+          await queryFulfilled;
+        } catch (err) {
+          patchResults.undo();
+        }
+      }
+    })
   }),
 });
 
-export const { useGetNewsLetterQuery } = newsLetter;
+export const { useGetNewsLetterQuery, useDeleteNewsLetterMutation } = newsLetter;
