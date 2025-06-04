@@ -86,9 +86,7 @@ export default function AnonymousChat() {
 
     try {
       const payload = {
-        message: message,
-        email: email,
-        dealer: selectedDealer,
+        question: message,
       };
 
       const response = await startChat(payload).unwrap();
