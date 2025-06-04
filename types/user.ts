@@ -22,4 +22,12 @@ export interface UserDataType {
     user_type: string;
     groups: string[];
     user_permissions: string[];
+    dealer_details: {
+        id: number;
+        business_name?: string | null;
+        business_email?: string | null;
+        business_summary?: string | null;
+        created_at?: string;
+        updated_at?: string;
+    };
 }

@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import DashboardForumsTableUI from "./partials/DashboardForumsTableUI";
+import NewsLetterSection from "./partials/newsletter-table/NewsLetterSection";
 
 // import DashboardForumsUI from "./partials/DashboardForumsUI";
 
@@ -11,7 +12,7 @@ export const metadata = {
 export default function DashboardForumsPage() {
   return (
     <Suspense>
-      <DashboardForumsTableUI />
+      <NewsLetterSection />
     </Suspense>
   );
 }

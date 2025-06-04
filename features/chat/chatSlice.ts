@@ -10,7 +10,15 @@ export const chatSlice = apiSlice.injectEndpoints({
         credentials: "include",
       }),
     }),
+    dealerChat: builder.mutation({
+      query: (data) => ({
+        url: `/v1/chat/`,
+        method: 'POST',
+        body: data,
+        credentials: 'include',
+      }),
+    })
   }),
 });
 
-export const { useStartChatMutation } = chatSlice;
+export const { useStartChatMutation, useDealerChatMutation } = chatSlice;

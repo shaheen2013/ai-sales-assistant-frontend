@@ -68,8 +68,14 @@ export const dealerSlice = apiSlice.injectEndpoints({
                 method: "GET",
                 url: `/dealer-dashboard/cards/`,
             })
+        }),
+        getPublicDealers: builder.query<Dealer[], void>({
+            query: () => ({
+                method: "GET",
+                url: `/dealer-dashboard/public/profile/`,
+            })
         })
     }),
 });
 
-export const { useGetDealersQuery, useGetDealerStatisticsQuery, useGetDealerRegistrationCountQuery, useGetDealerAllSupportTicketsQuery, useCreateSupportTicketMutation, useUpdateDealerSupportTicketMutation, useDeleteDealerSupportTickerMutation, useGetDealerPublicProfileQuery, useGetDealerCardsQuery } = dealerSlice;
+export const { useGetDealersQuery, useGetDealerStatisticsQuery, useGetDealerRegistrationCountQuery, useGetDealerAllSupportTicketsQuery, useCreateSupportTicketMutation, useUpdateDealerSupportTicketMutation, useDeleteDealerSupportTickerMutation, useGetDealerPublicProfileQuery, useGetDealerCardsQuery, useGetPublicDealersQuery } = dealerSlice;
