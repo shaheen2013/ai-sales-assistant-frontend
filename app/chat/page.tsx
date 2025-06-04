@@ -1,28 +1,28 @@
-'use client';
+"use client";
 
-import { useStartChatMutation } from '@/features/chat/chatSlice';
-import { useEffect, useRef, useState } from 'react';
+import { useStartChatMutation } from "@/features/chat/chatSlice";
+import { useEffect, useRef, useState } from "react";
 
-import Header from '@/components/header';
-import AISalesInitializer from '@/components/partials/chat/ai-sales-initializer';
-import ChatApp from '@/components/partials/chat/chat-interface';
-import { useToast } from '@/hooks/useToast';
+import Header from "@/components/header";
+import AISalesInitializer from "@/components/partials/chat/ai-sales-initializer";
+import ChatApp from "@/components/partials/chat/chat-interface";
+import { useToast } from "@/hooks/useToast";
 
 export default function AnonymousChat() {
   const toast = useToast();
   const messageRef = useRef<HTMLInputElement | null>(null);
   const messagesRef = useRef<HTMLDivElement | null>(null);
-  const [email, setEmail] = useState('');
-  const [selectedDealer, setSelectedDealer] = useState('');
+  const [email, setEmail] = useState("");
+  const [selectedDealer, setSelectedDealer] = useState("");
   const [initiateChat, setInitiateChat] = useState(false);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([
     {
-      id: '5151',
+      id: "5151",
       isMe: false,
       message:
-        'Hello, I am Clara, from Teez AI. How can I assist you with your vehicle parts inventory today?',
-      timestamp: '2025-05-07T12:00:00Z',
+        "Hello, I am Clara, from Teez AI. How can I assist you with your vehicle parts inventory today?",
+      timestamp: "2025-05-07T12:00:00Z",
     },
   ]);
 
@@ -40,7 +40,7 @@ export default function AnonymousChat() {
   };
 
   const handleDealerChange = (value: string) => {
-    console.log('value in dealer change', value);
+    console.log("value in dealer change", value);
     setSelectedDealer(value);
   };
 
@@ -52,12 +52,12 @@ export default function AnonymousChat() {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (!email || !emailRegex.test(email)) {
-      toast('error', 'Email is invalid');
+      toast("error", "Email is invalid");
       return;
     }
 
     if (!selectedDealer) {
-      toast('error', 'Please select a dealer');
+      toast("error", "Please select a dealer");
 
       return;
     }
@@ -65,15 +65,16 @@ export default function AnonymousChat() {
     try {
       setInitiateChat(true);
     } catch (error) {
-      console.error('Error initiating chat', error);
+      console.error("Error initiating chat", error);
     }
   };
 
   const handleMessageSend = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (message.trim() === '') return;
+    if (message.trim() === "") return;
     // clear the input field
-    setMessage('');
+    setMessage("");
+
     const newMessage = {
       id: Date.now().toString(),
       isMe: true,
@@ -84,9 +85,13 @@ export default function AnonymousChat() {
     setMessages((prevMessages) => [...prevMessages, newMessage]);
 
     try {
-      const response = await startChat({
-        question: message,
-      }).unwrap();
+      const payload = {
+        message: message,
+        email: email,
+        dealer: selectedDealer,
+      };
+
+      const response = await startChat(payload).unwrap();
       setMessages((prevMessages) => [
         ...prevMessages,
         {
@@ -97,7 +102,7 @@ export default function AnonymousChat() {
         },
       ]);
     } catch (error) {
-      console.error('Failed to send message:', error);
+      console.error("Failed to send message:", error);
     }
   };
 
