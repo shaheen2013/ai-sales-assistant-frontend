@@ -176,16 +176,16 @@ export default function Example() {
           <NavigationMenu className="">
             <NavigationMenuList className="">
               <NavigationMenuItem>
-                <NavigationMenuTrigger>Solutions</NavigationMenuTrigger>
+                <NavigationMenuTrigger>Integrations</NavigationMenuTrigger>
                 <NavigationMenuContent>
                   <DropdownContent />
                 </NavigationMenuContent>
               </NavigationMenuItem>
 
               <NavigationMenuItem>
-                <Link href="/pricing" legacyBehavior passHref>
+                <Link href="/privacy-policy" legacyBehavior passHref>
                   <NavigationMenuLink className="font-medium">
-                    Pricing
+                    Primacy Policy
                   </NavigationMenuLink>
                 </Link>
               </NavigationMenuItem>
@@ -195,7 +195,10 @@ export default function Example() {
 
         {/* right */}
         <div className="hidden lg:flex lg:flex-1 lg:justify-end gap-3">
-          <Button href={session?.access ? "/dashboard/overview" : "/login"} variant="outline-primary">
+          <Button
+            href={session?.access ? "/dashboard/overview" : "/login"}
+            variant="outline-primary"
+          >
             <span>{session?.access ? "Dashboard" : "Sign In"}</span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
