@@ -12,18 +12,23 @@ import { newsLetterColumns } from './NewsLetterColumn';
 import { useGetNewsLetterQuery } from '@/features/newsLetter/newsLetterSlice';
 import NewsLetterView from './NewsLetterView';
 import { NewsLetterResponseType } from '@/types/newsletterType';
+import { Input } from '@/components/shadcn/input';
+import { debounce } from 'lodash';
 
 const NewsLetterSection = () => {
     /*--React State--*/
     const [page, setPage] = useState(1);
-    const [sortBy, setSortBy] = useState<string>('');
+    const [subscription, setSubscription] = useState<string>('');
     const [openViewModal, setOpenViewModal] = useState(false);
     const [selectedNewsLetter, setSelectedNewsLetter] = useState<NewsLetterResponseType | null>(null);
+    const [search, setSearch] = useState('');
 
     /*--RTK Query--*/
     const { data: newsLetterData, isFetching: newsLetterFetching } = useGetNewsLetterQuery({
         limit: 10,
         offset: (page - 1) * 10,
+        search,
+        ...(subscription && { subscription_name: subscription }),
     });
     const [updateTalkToHumanStatus] = useUpdateTalkToHumanStatusMutation();
 
@@ -33,7 +38,7 @@ const NewsLetterSection = () => {
             id, queryParams: {
                 limit: 10,
                 offset: (page - 1) * 10,
-                ...(sortBy && { sort_by: sortBy, order: "asc" }),
+                ...(subscription && { subscription_name: subscription }),
             }
         });
     };
@@ -56,24 +61,28 @@ const NewsLetterSection = () => {
             <div className="p-4 rounded-2xl outline outline-1 outline-offset-[-1px] outline-gray-50 mt-4">
                 <div className='flex items-center justify-between'>
                     <div className="flex flex-col items-center gap-3">
-                        
+                        <Input
+                            placeholder='Search...'
+                            className='xl:w-96'
+                            onChange={debounce((e) => setSearch(e.target.value), 300)}
+                        />
                     </div>
 
                     <SimpleSelect
                         options={[
                             {
-                                label: 'Time',
-                                value: 'created_at',
+                                label: 'Basic',
+                                value: 'basic',
                             },
                             {
-                                label: 'Preferred Date Time',
-                                value: 'preferred_date_time',
+                                label: 'Enterprise',
+                                value: 'enterprise',
                             }
                         ]}
-                        placeholder="Sort By"
+                        placeholder="Subscription"
                         triggerClassName="[&>span]:text-primary-500 [&>div>svg]:text-primary-500"
-                        value={sortBy}
-                        onChange={setSortBy}
+                        value={subscription}
+                        onChange={setSubscription}
                     />
                 </div>
 
@@ -90,7 +99,7 @@ const NewsLetterSection = () => {
 
 
                 {/* Newsletter view */}
-                <NewsLetterView 
+                <NewsLetterView
                     open={openViewModal}
                     onOpenChange={setOpenViewModal}
                     data={selectedNewsLetter}
