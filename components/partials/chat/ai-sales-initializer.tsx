@@ -9,6 +9,7 @@ import {
   SelectValue,
 } from '@/components/shadcn/select';
 import { TeezAILogoImageSVG } from './svg-icons';
+import { useGetPublicDealersQuery } from '@/features/dealer/dealerSlice';
 
 interface AISalesInitializerProps {
   emailValue: string;
@@ -25,7 +26,9 @@ export default function AISalesInitializer({
   onEmailSubmit,
   onDealerChange,
 }: AISalesInitializerProps) {
-  console.log('selected dealer', selectedDealer);
+  /*--RTK Query--*/
+  const { data: dealers } = useGetPublicDealersQuery();
+
   return (
     <div className="flex flex-col items-center lg:mt-32">
       <TeezAILogoImageSVG />
@@ -50,26 +53,13 @@ export default function AISalesInitializer({
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
-                <SelectItem value="continental-motors">
-                  Continental Motors
-                </SelectItem>
-                <SelectItem value="skyline-autohaus">
-                  Skyline Autohaus
-                </SelectItem>
-                <SelectItem value="ironclad-motors">Ironclad Motors</SelectItem>
-                <SelectItem value="velocity-garage">Velocity Garage</SelectItem>
-                <SelectItem value="crimson-ridge-motors">
-                  Crimson Ridge Motors
-                </SelectItem>
-                <SelectItem value="silverline-dealers">
-                  Silverline Dealers
-                </SelectItem>
-                <SelectItem value="northstar-auto-group">
-                  NorthStar Auto Group
-                </SelectItem>
-                <SelectItem value="urbancruise-motors">
-                  UrbanCruise Motors
-                </SelectItem>
+                {
+                  dealers?.map((dealer: any, index) => (
+                    <SelectItem value={dealer?.user?.dealer_details?.id} key={index}>
+                      {dealer?.business_name || "N/A"}
+                    </SelectItem>
+                  ))
+                }
               </SelectGroup>
             </SelectContent>
           </Select>

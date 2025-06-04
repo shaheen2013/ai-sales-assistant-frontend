@@ -1,3 +1,5 @@
+import { UserDataType } from "./user";
+
 export interface Dealer {
     id: number;
     status: string;
