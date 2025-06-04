@@ -10,11 +10,15 @@ import Button from '@/components/button';
 import Link from 'next/link';
 import { newsLetterColumns } from './NewsLetterColumn';
 import { useGetNewsLetterQuery } from '@/features/newsLetter/newsLetterSlice';
+import NewsLetterView from './NewsLetterView';
+import { NewsLetterResponseType } from '@/types/newsletterType';
 
 const NewsLetterSection = () => {
     /*--React State--*/
     const [page, setPage] = useState(1);
     const [sortBy, setSortBy] = useState<string>('');
+    const [openViewModal, setOpenViewModal] = useState(false);
+    const [selectedNewsLetter, setSelectedNewsLetter] = useState<NewsLetterResponseType | null>(null);
 
     /*--RTK Query--*/
     const { data: newsLetterData, isFetching: newsLetterFetching } = useGetNewsLetterQuery({
@@ -73,7 +77,7 @@ const NewsLetterSection = () => {
                     />
                 </div>
 
-                <NewsLetterDataTable columns={newsLetterColumns({ handleDelete: handleDeleteNewsLetter })} data={newsLetterData?.results || []} loading={newsLetterFetching} />
+                <NewsLetterDataTable columns={newsLetterColumns({ handleDelete: handleDeleteNewsLetter, setSelectedNewsLetter, setOpenViewModal })} data={newsLetterData?.results || []} loading={newsLetterFetching} />
 
                 {
                     typeof newsLetterData?.count === 'number' && newsLetterData?.count > 10 &&
@@ -83,6 +87,14 @@ const NewsLetterSection = () => {
                         totalPage={Math.ceil(newsLetterData?.count / 10)}
                     />
                 }
+
+
+                {/* Newsletter view */}
+                <NewsLetterView 
+                    open={openViewModal}
+                    onOpenChange={setOpenViewModal}
+                    data={selectedNewsLetter}
+                />
             </div>
         </div>
     )

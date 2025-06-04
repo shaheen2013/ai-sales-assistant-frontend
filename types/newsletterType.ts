@@ -1,4 +1,5 @@
 import { Dealer } from "./dealerType";
+import { UserDataType } from "./user";
 
 export type NewsLetterResponseType = {
   id: number;
@@ -7,6 +8,6 @@ export type NewsLetterResponseType = {
   name: string | null;
   subject: string;
   summary: string;
-  dealer: Dealer[]; // array of dealer IDs
+  dealer: UserDataType[]; // array of dealer IDs
   files: string[];  // array of file paths
 };

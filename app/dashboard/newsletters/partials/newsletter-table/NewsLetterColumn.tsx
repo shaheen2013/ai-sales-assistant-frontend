@@ -6,11 +6,17 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/comp
 import { shortenFileName } from '@/lib/utils';
 import { NewsLetterResponseType } from '@/types/newsletterType';
 import { ColumnDef } from '@tanstack/react-table';
-import { MoreHorizontal } from 'lucide-react';
+import { Eye, MoreHorizontal } from 'lucide-react';
 import moment from 'moment';
 import Link from 'next/link';
 
-export const newsLetterColumns = ({ handleDelete }: { handleDelete: (id: number) => void }): ColumnDef<NewsLetterResponseType>[] => {
+type NewsLetterColumnPropsType = { 
+  handleDelete: (id: number) => void;
+  setSelectedNewsLetter: (data: NewsLetterResponseType | null) => void;
+  setOpenViewModal: (open: boolean) => void;
+}
+
+export const newsLetterColumns = ({ handleDelete, setSelectedNewsLetter, setOpenViewModal }: NewsLetterColumnPropsType): ColumnDef<NewsLetterResponseType>[] => {
   return [
     {
       accessorKey: "name",
@@ -97,6 +103,15 @@ export const newsLetterColumns = ({ handleDelete }: { handleDelete: (id: number)
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
+              <DropdownMenuItem
+                onClick={() => {
+                  setSelectedNewsLetter(row.original);
+                  setOpenViewModal(true);
+                }}
+              >
+                <Eye className="h-5 w-5" />
+                <span className="text-gray-500">View</span>
+              </DropdownMenuItem>
               <DropdownMenuItem
                 onClick={() => handleDelete(row.original.id)}
               >
