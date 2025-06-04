@@ -264,3 +264,10 @@ export function linkifyHTML(htmlString: string) {
     },
   });
 }
+
+export function shortenFileName(name: string, maxLength = 30) {
+  if (name.length <= maxLength) return name;
+  const start = name.slice(0, 20);
+  const end = name.slice(-10);
+  return `${start}...${end}`;
+}
