@@ -32,6 +32,7 @@ import {
 import { useUpdateDealerAssistantVoiceMutation } from "@/features/dealer/dealerSlice";
 import { useToast } from "@/hooks/useToast";
 import { beautifyErrors } from "@/lib/utils";
+import { Checkbox } from "@/components/shadcn/checkbox";
 
 const plans = [
   {
@@ -54,9 +55,36 @@ const AdminDashboardOverview = () => {
   const [wavesurfer, setWavesurfer] = useState<any>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [modals, setModals] = useState({
-    addTwilioNumber: false,
+    addMoreMinute: true,
+    billingSummery: false,
   });
   const [voice, setVoice] = useState("alloy");
+
+  const [minutePlans, setMinutePlans] = useState([
+    {
+      name: "Quick Boost",
+      price: 30,
+      minutes: 150,
+      description: "For occasional overage",
+      isSelected: true,
+    },
+
+    {
+      name: "Dealer Max",
+      price: 120,
+      minutes: 600,
+      description: "For busier dealerships mid-month",
+      isSelected: false,
+    },
+
+    {
+      name: "Power Pack",
+      price: 300,
+      minutes: 2000,
+      description: "For high-volume operators",
+      isSelected: false,
+    },
+  ]);
 
   /*--RTK Query--*/
   const [updateDealerAssitantVoice] = useUpdateDealerAssistantVoiceMutation();
@@ -80,7 +108,7 @@ const AdminDashboardOverview = () => {
     } catch (error) {
       toast("error", beautifyErrors(error));
     }
-  }
+  };
 
   // if (adminDashboardFetching) {
   //   return (
@@ -132,9 +160,36 @@ const AdminDashboardOverview = () => {
           </div>
 
           <div className="flex items-center gap-3">
-            <div className=" border-white pr-3">
-              <h2 className="text-gray-400 text-xs">Balance</h2>
-              <h2 className="text-lg font-semibold">220/500 m</h2>
+            <div className="border-r-2 border-white pr-3">
+              <h2 className="text-gray-400 text-xs text-right">Start Date</h2>
+              <h2 className="text-lg font-semibold">1st Nov, 25</h2>
+            </div>
+
+            <div>
+              <button
+                className="flex justify-center items-center gap-2"
+                onClick={() => {
+                  setModals((prev) => ({
+                    ...prev,
+                    addMoreMinute: true,
+                  }));
+                }}
+              >
+                <svg
+                  width="12"
+                  height="12"
+                  viewBox="0 0 12 12"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M6.5 0.75C6.5 0.335786 6.16421 0 5.75 0C5.33579 0 5 0.335786 5 0.75V5H0.75C0.335786 5 0 5.33579 0 5.75C0 6.16421 0.335786 6.5 0.75 6.5H5V10.75C5 11.1642 5.33579 11.5 5.75 11.5C6.16421 11.5 6.5 11.1642 6.5 10.75V6.5H10.75C11.1642 6.5 11.5 6.16421 11.5 5.75C11.5 5.33579 11.1642 5 10.75 5H6.5V0.75Z"
+                    fill="#019935"
+                  />
+                </svg>
+
+                <span className="text-sm text-primary-500">Add Minutes</span>
+              </button>
             </div>
           </div>
         </div>
@@ -205,7 +260,11 @@ const AdminDashboardOverview = () => {
             The AI voice call will be tailored to your preferences.
           </p>
 
-          <Select defaultValue="alloy" value={voice} onValueChange={handleChangeDealerAssistanceVoice}>
+          <Select
+            defaultValue="alloy"
+            value={voice}
+            onValueChange={handleChangeDealerAssistanceVoice}
+          >
             <SelectTrigger
               className="w-full"
               postIcon={
@@ -237,7 +296,7 @@ const AdminDashboardOverview = () => {
           {/* audio player */}
           <div className="flex items-center gap-4">
             <div className="flex-1">
-              <WavesurferPlayer
+              {/* <WavesurferPlayer
                 url={`/sounds/${voice}.wav`}
                 onReady={onReady}
                 onPlay={() => setIsPlaying(true)}
@@ -266,7 +325,7 @@ const AdminDashboardOverview = () => {
                 autoScroll={true}
                 autoCenter={true}
                 sampleRate={8000}
-              />
+              /> */}
             </div>
             <button
               onClick={onPlayPause}
@@ -318,178 +377,99 @@ const AdminDashboardOverview = () => {
 
       {/* modals */}
       <Dialog
-        open={modals.addTwilioNumber}
+        open={modals.addMoreMinute}
         onOpenChange={() => {
           setModals((prev) => ({
             ...prev,
-            addTwilioNumber: !prev.addTwilioNumber,
+            addMoreMinute: !prev.addMoreMinute,
           }));
         }}
       >
-        <DialogContent className="sm:max-w-[900px] max-h-full overflow-auto">
+        <DialogContent className="sm:max-w-[1000px] max-h-full overflow-auto">
           <DialogHeader>
-            <DialogTitle className="">
-              <h2 className="text-gray-900 text-2xl font-bold text-center">
-                Add Twilio Number
-              </h2>
+            <DialogTitle className="mb-9">
+              <p className="text-gray-900 text-2xl font-bold text-center">
+                Add More Minute
+              </p>
 
               <p className="text-sm text-gray-400 text-center font-normal">
-                Connect your Twilio number to enable AI-powered voice calls.
-                This number will be used by Teez to make and receive calls on
-                your behalf. Voice features won&apos;t work without it.
+                Purchase additional minutes for your system to enhance its
+                capabilities and ensure seamless operation.
               </p>
             </DialogTitle>
           </DialogHeader>
 
-          <div className="grid grid-cols-2 gap-9">
-            {/* left */}
-            <div className="">
-              <h2 className="text-gray-400 font-bold text-2xl mt-2 mb-2">
-                FAQ&apos;s
-              </h2>
-
-              <Accordion
-                type="single"
-                collapsible
-                className="w-full"
-                defaultValue="item-1"
-              >
-                <AccordionItem
-                  value="item-1"
-                  className="p-0 pb-2 rounded-none mb-3"
+          <div className="grid lg:grid-cols-3 gap-4">
+            {minutePlans.map((plan, index) => {
+              return (
+                <div
+                  key={index}
+                  className="border rounded-xl p-4 cursor-pointer"
                 >
-                  <AccordionTrigger className="text-xs font-semibold text-gray-400">
-                    What&&apos;s included in the monthly voice minutes?
-                  </AccordionTrigger>
-                  <AccordionContent className="text-xs font-normal text-gray-300">
-                    Your plan&apos;s included minutes apply to all voice
-                    conversations handled by the AI assistant on behalf of your
-                    dealership. This includes inbound buyer inquiries,
-                    appointment bookings, trade-in discussions, and more.
-                  </AccordionContent>
-                </AccordionItem>
+                  {/* top */}
+                  <div className="flex justify-between mb-4">
+                    <div className="flex items-center gap-2">
+                      <svg
+                        width="20"
+                        height="18"
+                        viewBox="0 0 20 18"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M16 0C16.3367 0 16.6477 0.169088 16.8316 0.444602L16.8944 0.552786L19.8944 6.55279C20.0579 6.87968 20.0287 7.26588 19.827 7.5623L19.7433 7.66896L10.7699 17.6418C10.5903 17.861 10.3336 17.9796 10.0707 17.9976C10.0081 18.0019 9.94555 18.0005 9.88352 17.9932L9.77108 17.9743C9.56976 17.9284 9.38105 17.821 9.23871 17.6521L0.256722 7.66896C0.0122342 7.39731 -0.0623057 7.01725 0.0532894 6.67786L0.105589 6.55279L3.10559 0.552786C3.25616 0.251645 3.54648 0.0490966 3.87516 0.00780368L4.00002 0H16ZM12.576 8H7.423L10 14.342L12.576 8ZM16.753 8H14.735L13.074 12.088L16.753 8ZM5.264 8H3.246L6.924 12.087L5.264 8ZM6.622 2H4.61802L2.618 6H5.322L6.622 2ZM11.273 2H8.726L7.427 6H12.572L11.273 2ZM15.381 2H13.377L14.677 6H17.381L15.381 2Z"
+                          fill="#FAAE22"
+                        />
+                      </svg>
+                      <span>{plan?.name}</span>
+                    </div>
 
-                <AccordionItem
-                  value="item-2"
-                  className="p-0 pb-2 rounded-none mb-3"
-                >
-                  <AccordionTrigger className="text-xs font-semibold text-gray-400">
-                    What happens if we exceed our included voice minutes?
-                  </AccordionTrigger>
-                  <AccordionContent className="text-xs font-normal text-gray-300">
-                    If you exceed your included voice minutes, you will be
-                    charged for additional minutes at the rate specified in your
-                    plan. You can monitor your usage through the dashboard to
-                    avoid unexpected charges.
-                  </AccordionContent>
-                </AccordionItem>
+                    <div>
+                      <Checkbox id="terms" />
+                    </div>
+                  </div>
 
-                <AccordionItem
-                  value="item-3"
-                  className="p-0 pb-2 rounded-none border-none mb-3"
-                >
-                  <AccordionTrigger className="text-xs font-semibold text-gray-400">
-                    Is there a contract or can I cancel anytime?
-                  </AccordionTrigger>
-                  <AccordionContent className="text-xs font-normal text-gray-300">
-                    There is no long-term contract required. You can cancel your
-                    subscription at any time through your account settings. Your
-                    plan will remain active until the end of the current billing
-                    cycle.
-                  </AccordionContent>
-                </AccordionItem>
-              </Accordion>
-            </div>
+                  <div className="mb-4">
+                    <span className="text-2xl font-bold text-primary-500">
+                      ${plan?.price}
+                    </span>{" "}
+                    <span className="text-sm text-gray-500">
+                      / {plan?.minutes}
+                    </span>
+                  </div>
 
-            {/* right */}
-            <div className="flex flex-col gap-3">
-              {plans.map((plan, index) => {
-                return (
-                  <label
-                    key={index}
-                    className="has-[:checked]:border-primary-400 has-[:checked]:text-primary-900 has-[:checked]:ring-indigo-200 flex w-full border border-gray-50 rounded-xl pt-4 px-4 cursor-pointer transition-all gap-3 group flex-col"
-                  >
-                    <div className="flex gap-3">
-                      <input
-                        defaultChecked={index === 0} // Default to the first plan being selected
-                        name="plan"
-                        type="radio"
-                        className="box-content h-2 w-2 appearance-none rounded-full border-[5px] border-white bg-white bg-clip-padding outline-none ring-1 ring-gray-950/10 checked:border-primary-500 checked:ring-primary-500 mt-1"
+                  <div className="flex items-center gap-2 mb-4">
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 12 12"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M4.70112 0.0219504C4.76863 0.0449158 4.83458 0.0722335 4.89856 0.103732L5.6682 0.482659C5.87708 0.585501 6.12188 0.585501 6.33077 0.482659L7.10041 0.103732C7.91796 -0.298785 8.90702 0.0376683 9.30954 0.855221L9.35363 0.952615L9.39132 1.05266L9.66759 1.86482C9.74258 2.08524 9.91568 2.25834 10.1361 2.33332L10.9483 2.6096C11.811 2.90307 12.2724 3.84036 11.979 4.70307C11.956 4.77059 11.9287 4.83654 11.8972 4.90051L11.5183 5.67015C11.4154 5.87904 11.4154 6.12384 11.5183 6.33272L11.8972 7.10236C12.2997 7.91991 11.9633 8.90897 11.1457 9.31149C11.0817 9.34299 11.0158 9.37031 10.9483 9.39327L10.1361 9.66955C9.91568 9.74453 9.74258 9.91763 9.66759 10.1381L9.39132 10.9502C9.09784 11.8129 8.16056 12.2744 7.29784 11.9809C7.23033 11.958 7.16438 11.9306 7.10041 11.8991L6.33077 11.5202C6.12188 11.4174 5.87708 11.4174 5.6682 11.5202L4.89856 11.8991C4.08101 12.3017 3.09194 11.9652 2.68943 11.1477C2.65793 11.0837 2.63061 11.0177 2.60765 10.9502L2.33137 10.1381C2.25639 9.91763 2.08329 9.74453 1.86287 9.66955L1.05071 9.39327C0.187987 9.0998 -0.273478 8.16252 0.0199973 7.2998C0.0429627 7.23229 0.0702804 7.16633 0.101779 7.10236L0.480706 6.33272C0.583548 6.12384 0.583548 5.87904 0.480706 5.67015L0.101779 4.90051C-0.300738 4.08296 0.0357151 3.0939 0.853268 2.69138C0.917244 2.65988 0.983196 2.63257 1.05071 2.6096L1.86287 2.33332C2.08329 2.25834 2.25639 2.08524 2.33137 1.86482L2.60765 1.05266C2.90112 0.18994 3.8384 -0.271524 4.70112 0.0219504ZM8.08128 4.18324L4.82972 7.4348L3.64518 6.01335C3.48608 5.82243 3.20232 5.79663 3.0114 5.95574C2.82048 6.11484 2.79468 6.39859 2.95378 6.58952L4.45378 8.38952C4.62319 8.5928 4.93057 8.60674 5.11768 8.41963L8.71768 4.81963C8.89342 4.6439 8.89342 4.35897 8.71768 4.18324C8.54195 4.0075 8.25702 4.0075 8.08128 4.18324Z"
+                        fill="#019935"
                       />
-                      <div className="flex justify-between w-full">
-                        {/* title, description */}
-                        <div className="">
-                          <h2 className="text-gray-400 font-semibold text-lg mb-1">
-                            {plan.name}
-                          </h2>
-                          <h4 className="text-xs text-gray-400">
-                            Perfect for sell used cars
-                          </h4>
-                        </div>
+                    </svg>
 
-                        {/* pricing */}
-                        <div className="">
-                          <span className="group-has-[:checked]:text-primary-400 text-gray-400">
-                            $
-                          </span>
-                          <span className="group-has-[:checked]:text-primary-400 text-gray-400 font-bold text-3xl">
-                            {plan.price}
-                          </span>
-                          /month
-                        </div>
-                      </div>
-                    </div>
+                    <p className="text-sm text-gray-400 ">
+                      {plan?.description}
+                    </p>
+                  </div>
 
-                    {/* benefits  */}
-                    <div className="pl-[25px]">
-                      {plan?.benefits?.map((benefit, index) => {
-                        return (
-                          <div
-                            key={index}
-                            className="text-xs text-gray-300 mb-3 flex gap-2"
-                          >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="16"
-                              height="16"
-                              viewBox="0 0 16 16"
-                              fill="none"
-                            >
-                              <rect
-                                x="16"
-                                y="16"
-                                width="16"
-                                height="16"
-                                rx="8"
-                                transform="rotate(-180 16 16)"
-                                fill="#55BB78"
-                              />
-                              <path
-                                d="M6.98228 10.6663C6.77947 10.6663 6.58738 10.589 6.4643 10.4557L4.79846 8.65701C4.74695 8.60146 4.70935 8.53817 4.68781 8.47074C4.66626 8.40331 4.66118 8.33307 4.67287 8.26404C4.68457 8.195 4.71279 8.12853 4.75594 8.06842C4.79909 8.00831 4.85631 7.95573 4.92434 7.9137C4.99234 7.8715 5.06987 7.84068 5.15248 7.823C5.23509 7.80533 5.32115 7.80115 5.40574 7.8107C5.49033 7.82026 5.57178 7.84336 5.64542 7.87869C5.71906 7.91402 5.78345 7.96087 5.83489 8.01657L6.93099 9.19916L9.68688 5.58282C9.77828 5.46342 9.92389 5.37851 10.0918 5.34673C10.2597 5.31495 10.4362 5.33888 10.5825 5.41328C10.887 5.56796 10.9807 5.89561 10.7904 6.14478L7.53429 10.4157C7.47871 10.4889 7.40209 10.5499 7.3111 10.5935C7.2201 10.637 7.11747 10.6618 7.01212 10.6656C7.00186 10.6663 6.99254 10.6663 6.98228 10.6663Z"
-                                fill="white"
-                              />
-                            </svg>
-                            {benefit}
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </label>
-                );
-              })}
-            </div>
+                  <div className="text-sm text-gray-400">
+                    Your Current Plan{" "}
+                    <span className="text-green-500 underline">Basic</span>
+                  </div>
+                </div>
+              );
+            })}
           </div>
 
           {/* footer */}
           <div className="flex justify-end gap-3 mt-6">
-            <Button
-              variant="outline"
-              className="text-primary-400 border-primary-400"
-            >
-              Cancel
-            </Button>
             <Button variant="primary">
-              Update Twilio Number
+              Buy Minutes
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="20"
