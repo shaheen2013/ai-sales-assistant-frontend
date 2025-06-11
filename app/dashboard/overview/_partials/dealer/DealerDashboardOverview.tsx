@@ -29,6 +29,9 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/shadcn/accordion";
+import { useUpdateDealerAssistantVoiceMutation } from "@/features/dealer/dealerSlice";
+import { useToast } from "@/hooks/useToast";
+import { beautifyErrors } from "@/lib/utils";
 
 const plans = [
   {
@@ -44,8 +47,19 @@ const plans = [
 ];
 
 const AdminDashboardOverview = () => {
+  /*--Custom Hooks--*/
+  const toast = useToast();
+
+  /*--React State--*/
   const [wavesurfer, setWavesurfer] = useState<any>(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [modals, setModals] = useState({
+    addTwilioNumber: false,
+  });
+  const [voice, setVoice] = useState("alloy");
+
+  /*--RTK Query--*/
+  const [updateDealerAssitantVoice] = useUpdateDealerAssistantVoiceMutation();
 
   const onReady = (ws: any) => {
     setWavesurfer(ws);
@@ -56,36 +70,35 @@ const AdminDashboardOverview = () => {
     if (wavesurfer) wavesurfer.playPause();
   };
 
-  const {
-    data: adminDashboardOverviewData,
-    isFetching: adminDashboardFetching,
-  } = useGetAdminDashboardOverviewQuery({
-    // ...(isDifferentDate
-    //   ? { created_at_before: endDate, created_at_after: startDate }
-    //   : {}),
-  });
-
-  const [modals, setModals] = useState({
-    addTwilioNumber: false,
-  });
-
-  if (adminDashboardFetching) {
-    return (
-      <>
-        <div className="grid xl:grid-cols-2 lg:grid-cols-2 grid-cols-1 gap-3 mb-3">
-          <Skeleton className="h-[112px]" />
-          <Skeleton className="h-[112px]" />
-        </div>
-
-        <div className="flex flex-col gap-5 mt-12">
-          <Skeleton className="h-10" />
-          <Skeleton className="h-10" />
-          <Skeleton className="h-10" />
-          <Skeleton className="h-10" />
-        </div>
-      </>
-    );
+  const handleChangeDealerAssistanceVoice = async (voice: string) => {
+    setVoice(voice);
+    try {
+      const data = await updateDealerAssitantVoice({ voice }).unwrap();
+      if (data) {
+        toast("success", "Voice updated successfully!");
+      }
+    } catch (error) {
+      toast("error", beautifyErrors(error));
+    }
   }
+
+  // if (adminDashboardFetching) {
+  //   return (
+  //     <>
+  //       <div className="grid xl:grid-cols-2 lg:grid-cols-2 grid-cols-1 gap-3 mb-3">
+  //         <Skeleton className="h-[112px]" />
+  //         <Skeleton className="h-[112px]" />
+  //       </div>
+
+  //       <div className="flex flex-col gap-5 mt-12">
+  //         <Skeleton className="h-10" />
+  //         <Skeleton className="h-10" />
+  //         <Skeleton className="h-10" />
+  //         <Skeleton className="h-10" />
+  //       </div>
+  //     </>
+  //   );
+  // }
 
   return (
     <div className="py-2">
@@ -192,7 +205,7 @@ const AdminDashboardOverview = () => {
             The AI voice call will be tailored to your preferences.
           </p>
 
-          <Select defaultValue="clara">
+          <Select defaultValue="alloy" value={voice} onValueChange={handleChangeDealerAssistanceVoice}>
             <SelectTrigger
               className="w-full"
               postIcon={
@@ -214,12 +227,9 @@ const AdminDashboardOverview = () => {
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
-                <SelectItem value="clara">Clara (Default)</SelectItem>
-
-                <SelectItem value="mike">Mike</SelectItem>
-                <SelectItem value="jane">Jane</SelectItem>
-                <SelectItem value="john">John</SelectItem>
-                <SelectItem value="sophia">Sophia</SelectItem>
+                <SelectItem value="alloy">Alloy</SelectItem>
+                <SelectItem value="echo">Echo</SelectItem>
+                <SelectItem value="shimmer">Shimmer</SelectItem>
               </SelectGroup>
             </SelectContent>
           </Select>
@@ -228,7 +238,7 @@ const AdminDashboardOverview = () => {
           <div className="flex items-center gap-4">
             <div className="flex-1">
               <WavesurferPlayer
-                url="/sounds/sample-audio.mp3"
+                url={`/sounds/${voice}.wav`}
                 onReady={onReady}
                 onPlay={() => setIsPlaying(true)}
                 onPause={() => setIsPlaying(false)}
