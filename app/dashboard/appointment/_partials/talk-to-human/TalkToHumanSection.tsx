@@ -126,6 +126,7 @@ const TalkToHumanSection = () => {
                         page={page}
                         onPageChange={setPage}
                         totalPage={Math.ceil(talkToHumanCallLogsData?.count / 10)}
+                        className='mt-4 justify-end'
                     />
                 }
             </div>

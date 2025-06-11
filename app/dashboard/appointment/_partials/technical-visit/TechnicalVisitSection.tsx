@@ -117,6 +117,7 @@ const TechnicalVisitSection = () => {
                         page={page}
                         onPageChange={setPage}
                         totalPage={Math.ceil(testDriveData?.count / 10)}
+                        className='mt-4 justify-end'
                     />
                 }
 
@@ -126,6 +127,7 @@ const TechnicalVisitSection = () => {
                         page={page}
                         onPageChange={setPage}
                         totalPage={Math.ceil(storeVisitData?.count / 10)}
+                        className='mt-4 justify-end'
                     />
                 }
             </div>
