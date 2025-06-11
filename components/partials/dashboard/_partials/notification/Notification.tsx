@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuPortal, DropdownMenuTrigger } from '../../dashboard-dropdown';
 import { Button } from '@/components/shadcn/button';
 import { NotificationDataType } from '@/types/notificationSliceType';
@@ -24,6 +24,8 @@ const Notification = () => {
     const [open, setOpen] = useState(false);
     const [notifications, setNotifications] = useState<NotificationDataType[]>([]);
 
+    const socketRef = useRef<WebSocket | null>(null);
+
     /*--Redux--*/
     const dispatch = useDispatch();
     const totalUnread = useSelector((state: RootState) => state.notificationState).totalUnread;
@@ -39,7 +41,7 @@ const Notification = () => {
             setNotifications((prevNotifications) => prevNotifications.map((notification) => ({ ...notification, is_read: true })));
             dispatch(setTotalUnreadNotification(0));
             await markAllReadNotification().unwrap();
-        }catch(err){
+        } catch (err) {
             toast("error", beautifyErrors(err));
         }
     }
@@ -55,13 +57,11 @@ const Notification = () => {
         if (notificationUnreadCountData) {
             dispatch(setTotalUnreadNotification(notificationUnreadCountData?.total_count));
         }
-    }, [notificationUnreadCountData]);
+    }, [notificationUnreadCountData, dispatch]);
 
     useEffect(() => {
-        const socketRef = { current: null as WebSocket | null };
         if (session?.access && !socketRef.current) {
             const socket = new WebSocket(`wss://${process.env.NEXT_PUBLIC_API_BASE_DOMAIN}/ws/notification?token=${session?.access}`);
-
             socketRef.current = socket;
 
             socket.onopen = () => {
@@ -89,12 +89,14 @@ const Notification = () => {
         }
 
         return () => {
-            if (socketRef.current) {
+            if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
                 socketRef.current.close();
-                // console.log('WebSocket cleaned up');
+                socketRef.current = null;
             }
-        };
-    }, [session?.access, toast, dispatch])
+        }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [session?.access]);
 
     return (
         <div>
