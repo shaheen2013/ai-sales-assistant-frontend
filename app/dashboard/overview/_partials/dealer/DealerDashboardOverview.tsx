@@ -33,6 +33,7 @@ import { useUpdateDealerAssistantVoiceMutation } from "@/features/dealer/dealerS
 import { useToast } from "@/hooks/useToast";
 import { beautifyErrors } from "@/lib/utils";
 import { Checkbox } from "@/components/shadcn/checkbox";
+import classNames from "classnames";
 
 const plans = [
   {
@@ -404,7 +405,19 @@ const AdminDashboardOverview = () => {
               return (
                 <div
                   key={index}
-                  className="border rounded-xl p-4 cursor-pointer"
+                  className={classNames(
+                    `border rounded-xl p-4 cursor-pointer`,
+                    { "border-primary-500": plan.isSelected }
+                  )}
+                  onClick={() => {
+                    setMinutePlans((prev) =>
+                      prev.map((p) =>
+                        p.name === plan.name
+                          ? { ...p, isSelected: !p.isSelected }
+                          : { ...p, isSelected: false }
+                      )
+                    );
+                  }}
                 >
                   {/* top */}
                   <div className="flex justify-between mb-4">
@@ -425,7 +438,7 @@ const AdminDashboardOverview = () => {
                     </div>
 
                     <div>
-                      <Checkbox id="terms" />
+                      <Checkbox id="terms" checked={Boolean(plan.isSelected)} />
                     </div>
                   </div>
 
