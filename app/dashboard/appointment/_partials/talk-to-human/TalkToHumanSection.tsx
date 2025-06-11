@@ -144,23 +144,20 @@ const TalkToHumanSection = () => {
           />
         </div>
 
-        <TalkToHumanDataTable
-          columns={talkToHumanColumns({ handleChangeTalkStatus })}
-          data={talkToHumanCallLogsData?.results || []}
-          loading={talkToHumanCallLogsIsFetching}
-        />
+                <TalkToHumanDataTable columns={talkToHumanColumns({ handleChangeTalkStatus })} data={talkToHumanCallLogsData?.results || []} loading={talkToHumanCallLogsIsFetching} />
 
-        {typeof talkToHumanCallLogsData?.count === "number" &&
-          talkToHumanCallLogsData?.count > 10 && (
-            <Pagination
-              page={page}
-              onPageChange={setPage}
-              totalPage={Math.ceil(talkToHumanCallLogsData?.count / 10)}
-            />
-          )}
-      </div>
-    </div>
-  );
-};
+                {
+                    typeof talkToHumanCallLogsData?.count === 'number' && talkToHumanCallLogsData?.count > 10 &&
+                    <Pagination
+                        page={page}
+                        onPageChange={setPage}
+                        totalPage={Math.ceil(talkToHumanCallLogsData?.count / 10)}
+                        className='mt-4 justify-end'
+                    />
+                }
+            </div>
+        </div>
+    )
+}
 
 export default TalkToHumanSection;

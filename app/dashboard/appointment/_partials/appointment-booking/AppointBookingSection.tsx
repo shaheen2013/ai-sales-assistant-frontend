@@ -34,11 +34,11 @@ const AppointBookingSection = () => {
             <AppointmentSkeleton />
             <AppointmentSkeleton />
           </div> : <>
-          {
-            Object?.entries(appointmentsData?.data || {})?.some(([, value]) => value?.length > 0) 
-            ? Object.entries(appointmentsData?.data || {})?.map(([key, value]) => <UpcomingAppointmentList key={key} title={key?.split("_").join(" ")} data={value} />)
-            : <div className='font-medium text-sm text-gray-900'>No Upcoming Appointments!</div>
-          }
+            {
+              Object?.entries(appointmentsData?.data || {})?.some(([, value]) => value?.length > 0)
+                ? Object.entries(appointmentsData?.data || {})?.map(([key, value]) => value?.length > 0 && <UpcomingAppointmentList key={key} title={key?.split("_").join(" ")} data={value} />)
+                : <div className='font-medium text-sm text-gray-900'>No Upcoming Appointments!</div>
+            }
           </>
         }
 

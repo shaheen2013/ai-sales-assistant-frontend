@@ -183,7 +183,11 @@ export function createQueryParams(
 }
 
 export function formatShortTimeAgo(date: string): string {
-  const duration = moment.duration(moment().diff(moment(date)));
+  const duration = moment.duration(moment.utc().diff(moment.utc(date)));
+
+  if (duration.asSeconds() < 0) {
+    return "0s";
+  }
 
   if (duration.asSeconds() < 60) {
     return `${Math.floor(duration.asSeconds())}s`;

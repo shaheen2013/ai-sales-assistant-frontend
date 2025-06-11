@@ -8,7 +8,7 @@ import { useToast } from '@/hooks/useToast';
 import { beautifyErrors, formatShortTimeAgo } from '@/lib/utils';
 import { NotificationDataType } from '@/types/notificationSliceType';
 import { useSession } from 'next-auth/react';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch } from 'react-redux';
 
 const NotificationList = () => {
@@ -21,6 +21,8 @@ const NotificationList = () => {
     /*--React State--*/
     const [page, setPage] = useState(1);
     const [notifications, setNotifications] = useState<NotificationDataType[]>([]);
+    
+    const socketRef = useRef<WebSocket | null>(null);
 
     /*--Redux--*/
     const dispatch = useDispatch();
@@ -48,7 +50,6 @@ const NotificationList = () => {
     }, [notificationsData?.results]);
 
     useEffect(() => {
-        const socketRef = { current: null as WebSocket | null };
         if (session?.access && !socketRef.current) {
             const socket = new WebSocket(`wss://${process.env.NEXT_PUBLIC_API_BASE_DOMAIN}/ws/notification?token=${session?.access}`);
 
@@ -77,12 +78,14 @@ const NotificationList = () => {
         }
 
         return () => {
-            if (socketRef.current) {
+            if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
                 socketRef.current.close();
-                // console.log('WebSocket cleaned up');
+                socketRef.current = null;
             }
-        };
-    }, [session?.access, toast])
+        }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [session?.access])
 
     return (
         <div className="">

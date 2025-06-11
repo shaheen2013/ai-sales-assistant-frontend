@@ -43,7 +43,7 @@ export const dealerSlice = apiSlice.injectEndpoints({
             invalidatesTags: ["getDealerAllSupportTickets"],
         }),
         updateDealerSupportTicket: builder.mutation<SupportTicketType, Record<string, any>>({
-            query: ({ticketId, data}) => ({
+            query: ({ ticketId, data }) => ({
                 method: "PUT",
                 url: `/dealer-dashboard/tickets/${ticketId}/update/`,
                 body: data
@@ -74,8 +74,15 @@ export const dealerSlice = apiSlice.injectEndpoints({
                 method: "GET",
                 url: `/dealer-dashboard/public/profile/`,
             })
-        })
+        }),
+        updateDealerAssistantVoice: builder.mutation({
+            query: (data) => ({
+                method: "PATCH",
+                url: `/dealer-dashboard/voice-change/`,
+                body: data
+            })
+        }),
     }),
 });
 
-export const { useGetDealersQuery, useGetDealerStatisticsQuery, useGetDealerRegistrationCountQuery, useGetDealerAllSupportTicketsQuery, useCreateSupportTicketMutation, useUpdateDealerSupportTicketMutation, useDeleteDealerSupportTickerMutation, useGetDealerPublicProfileQuery, useGetDealerCardsQuery, useGetPublicDealersQuery } = dealerSlice;
+export const { useGetDealersQuery, useGetDealerStatisticsQuery, useGetDealerRegistrationCountQuery, useGetDealerAllSupportTicketsQuery, useCreateSupportTicketMutation, useUpdateDealerSupportTicketMutation, useDeleteDealerSupportTickerMutation, useGetDealerPublicProfileQuery, useGetDealerCardsQuery, useGetPublicDealersQuery, useUpdateDealerAssistantVoiceMutation } = dealerSlice;
