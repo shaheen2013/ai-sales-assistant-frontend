@@ -56,8 +56,8 @@ const AdminDashboardOverview = () => {
   const [wavesurfer, setWavesurfer] = useState<any>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [modals, setModals] = useState({
-    addMoreMinute: true,
-    billingSummery: false,
+    addMoreMinute: false,
+    billingSummery: true,
   });
   const [voice, setVoice] = useState("alloy");
 
@@ -224,34 +224,12 @@ const AdminDashboardOverview = () => {
           </div>
 
           <h2 className="text-center text-lg font-semibold text-gray-500">
-            For Start chat you have to set a Twilio number!
+            +15005550006
           </h2>
 
           <h3 className="text-center text-sm text-gray-300 mb-6">
-            You have not add Twilio number yet!
+            This is your Twilio number!
           </h3>
-
-          <div className="flex items-center justify-center">
-            <Button
-              onClick={() => setModals({ ...modals, addTwilioNumber: true })}
-              variant="outline"
-              className="text-primary-600 border-primary-100 h-11 rounded-lg"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="21"
-                height="21"
-                viewBox="0 0 21 21"
-                fill="none"
-              >
-                <path
-                  d="M10.3834 1.30946L10.5 1.30273C11.0128 1.30273 11.4355 1.68877 11.4933 2.18611L11.5 2.30273V9.30273H18.5C19.0128 9.30273 19.4355 9.68877 19.4933 10.1861L19.5 10.3027C19.5 10.8156 19.114 11.2382 18.6166 11.296L18.5 11.3027H11.5V18.3027C11.5 18.8156 11.114 19.2382 10.6166 19.296L10.5 19.3027C9.98716 19.3027 9.56449 18.9167 9.50673 18.4194L9.5 18.3027V11.3027H2.5C1.98716 11.3027 1.56449 10.9167 1.50673 10.4194L1.5 10.3027C1.5 9.7899 1.88604 9.36723 2.38338 9.30946L2.5 9.30273H9.5V2.30273C9.5 1.7899 9.88604 1.36723 10.3834 1.30946L10.5 1.30273L10.3834 1.30946Z"
-                  fill="#019935"
-                />
-              </svg>
-              Add Twilio Number
-            </Button>
-          </div>
         </div>
 
         {/* right */}
@@ -391,6 +369,138 @@ const AdminDashboardOverview = () => {
             <DialogTitle className="mb-9">
               <p className="text-gray-900 text-2xl font-bold text-center">
                 Add More Minute
+              </p>
+
+              <p className="text-sm text-gray-400 text-center font-normal">
+                Purchase additional minutes for your system to enhance its
+                capabilities and ensure seamless operation.
+              </p>
+            </DialogTitle>
+          </DialogHeader>
+
+          <div className="grid lg:grid-cols-3 gap-4">
+            {minutePlans.map((plan, index) => {
+              return (
+                <div
+                  key={index}
+                  className={classNames(
+                    `border rounded-xl p-4 cursor-pointer`,
+                    { "border-primary-500": plan.isSelected }
+                  )}
+                  onClick={() => {
+                    setMinutePlans((prev) =>
+                      prev.map((p) =>
+                        p.name === plan.name
+                          ? { ...p, isSelected: !p.isSelected }
+                          : { ...p, isSelected: false }
+                      )
+                    );
+                  }}
+                >
+                  {/* top */}
+                  <div className="flex justify-between mb-4">
+                    <div className="flex items-center gap-2">
+                      <svg
+                        width="20"
+                        height="18"
+                        viewBox="0 0 20 18"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M16 0C16.3367 0 16.6477 0.169088 16.8316 0.444602L16.8944 0.552786L19.8944 6.55279C20.0579 6.87968 20.0287 7.26588 19.827 7.5623L19.7433 7.66896L10.7699 17.6418C10.5903 17.861 10.3336 17.9796 10.0707 17.9976C10.0081 18.0019 9.94555 18.0005 9.88352 17.9932L9.77108 17.9743C9.56976 17.9284 9.38105 17.821 9.23871 17.6521L0.256722 7.66896C0.0122342 7.39731 -0.0623057 7.01725 0.0532894 6.67786L0.105589 6.55279L3.10559 0.552786C3.25616 0.251645 3.54648 0.0490966 3.87516 0.00780368L4.00002 0H16ZM12.576 8H7.423L10 14.342L12.576 8ZM16.753 8H14.735L13.074 12.088L16.753 8ZM5.264 8H3.246L6.924 12.087L5.264 8ZM6.622 2H4.61802L2.618 6H5.322L6.622 2ZM11.273 2H8.726L7.427 6H12.572L11.273 2ZM15.381 2H13.377L14.677 6H17.381L15.381 2Z"
+                          fill="#FAAE22"
+                        />
+                      </svg>
+                      <span>{plan?.name}</span>
+                    </div>
+
+                    <div>
+                      <Checkbox id="terms" checked={Boolean(plan.isSelected)} />
+                    </div>
+                  </div>
+
+                  <div className="mb-4">
+                    <span className="text-2xl font-bold text-primary-500">
+                      ${plan?.price}
+                    </span>{" "}
+                    <span className="text-sm text-gray-500">
+                      / {plan?.minutes}
+                    </span>
+                  </div>
+
+                  <div className="flex items-center gap-2 mb-4">
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 12 12"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M4.70112 0.0219504C4.76863 0.0449158 4.83458 0.0722335 4.89856 0.103732L5.6682 0.482659C5.87708 0.585501 6.12188 0.585501 6.33077 0.482659L7.10041 0.103732C7.91796 -0.298785 8.90702 0.0376683 9.30954 0.855221L9.35363 0.952615L9.39132 1.05266L9.66759 1.86482C9.74258 2.08524 9.91568 2.25834 10.1361 2.33332L10.9483 2.6096C11.811 2.90307 12.2724 3.84036 11.979 4.70307C11.956 4.77059 11.9287 4.83654 11.8972 4.90051L11.5183 5.67015C11.4154 5.87904 11.4154 6.12384 11.5183 6.33272L11.8972 7.10236C12.2997 7.91991 11.9633 8.90897 11.1457 9.31149C11.0817 9.34299 11.0158 9.37031 10.9483 9.39327L10.1361 9.66955C9.91568 9.74453 9.74258 9.91763 9.66759 10.1381L9.39132 10.9502C9.09784 11.8129 8.16056 12.2744 7.29784 11.9809C7.23033 11.958 7.16438 11.9306 7.10041 11.8991L6.33077 11.5202C6.12188 11.4174 5.87708 11.4174 5.6682 11.5202L4.89856 11.8991C4.08101 12.3017 3.09194 11.9652 2.68943 11.1477C2.65793 11.0837 2.63061 11.0177 2.60765 10.9502L2.33137 10.1381C2.25639 9.91763 2.08329 9.74453 1.86287 9.66955L1.05071 9.39327C0.187987 9.0998 -0.273478 8.16252 0.0199973 7.2998C0.0429627 7.23229 0.0702804 7.16633 0.101779 7.10236L0.480706 6.33272C0.583548 6.12384 0.583548 5.87904 0.480706 5.67015L0.101779 4.90051C-0.300738 4.08296 0.0357151 3.0939 0.853268 2.69138C0.917244 2.65988 0.983196 2.63257 1.05071 2.6096L1.86287 2.33332C2.08329 2.25834 2.25639 2.08524 2.33137 1.86482L2.60765 1.05266C2.90112 0.18994 3.8384 -0.271524 4.70112 0.0219504ZM8.08128 4.18324L4.82972 7.4348L3.64518 6.01335C3.48608 5.82243 3.20232 5.79663 3.0114 5.95574C2.82048 6.11484 2.79468 6.39859 2.95378 6.58952L4.45378 8.38952C4.62319 8.5928 4.93057 8.60674 5.11768 8.41963L8.71768 4.81963C8.89342 4.6439 8.89342 4.35897 8.71768 4.18324C8.54195 4.0075 8.25702 4.0075 8.08128 4.18324Z"
+                        fill="#019935"
+                      />
+                    </svg>
+
+                    <p className="text-sm text-gray-400 ">
+                      {plan?.description}
+                    </p>
+                  </div>
+
+                  <div className="text-sm text-gray-400">
+                    Your Current Plan{" "}
+                    <span className="text-green-500 underline">Basic</span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* footer */}
+          <div className="flex justify-end gap-3 mt-6">
+            <Button
+              variant="primary"
+              onClick={() => {
+                setModals((prev) => ({
+                  ...prev,
+                  addMoreMinute: false,
+                  billingSummery: true,
+                }));
+              }}
+            >
+              Buy Minutes
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
+                fill="none"
+              >
+                <path
+                  d="M7.73271 4.20694C8.03263 3.92125 8.50737 3.93279 8.79306 4.23271L13.7944 9.48318C14.0703 9.77285 14.0703 10.2281 13.7944 10.5178L8.79306 15.7682C8.50737 16.0681 8.03263 16.0797 7.73271 15.794C7.43279 15.5083 7.42125 15.0336 7.70694 14.7336L12.2155 10.0005L7.70694 5.26729C7.42125 4.96737 7.43279 4.49264 7.73271 4.20694Z"
+                  fill="white"
+                />
+              </svg>
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog
+        open={modals.billingSummery}
+        onOpenChange={() => {
+          setModals((prev) => ({
+            ...prev,
+            billingSummery: !prev.billingSummery,
+          }));
+        }}
+      >
+        <DialogContent className="sm:max-w-[1000px] max-h-full overflow-auto">
+          <DialogHeader>
+            <DialogTitle className="mb-9">
+              <p className="text-gray-900 text-2xl font-bold text-center">
+                Pay for your Minute Pack
               </p>
 
               <p className="text-sm text-gray-400 text-center font-normal">
