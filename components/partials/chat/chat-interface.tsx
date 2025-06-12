@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/shadcn/button";
 import {
   DropdownMenu,
@@ -18,11 +20,12 @@ import moment from "moment";
 import Image from "next/image";
 import { ClaraIcon } from "./svg-icons";
 import { linkifyHTML } from "@/components/partials/chat/linkfiy";
-import { PDFDownloadLink } from "@react-pdf/renderer";
 import ChatPdfTemplate from "./pdf/ChatPdfTemplate";
 import { formatChatForPdf } from "@/lib/utils";
 import Spinner from "@/components/spinner/Spinner";
 import { useGetPublicDealersQuery } from "@/features/dealer/dealerSlice";
+import { useEffect, useState } from "react";
+import { PDFDownloadLink } from "@react-pdf/renderer";
 
 interface Message {
   id: string;
@@ -55,7 +58,12 @@ export default function ChatApp({
   onMessageSend,
   selectedDealer,
 }: ChatAppProps) {
+  const [isClient, setIsClient] = useState(false)
   const { data: dealers } = useGetPublicDealersQuery();
+
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
   return (
     <div className="h-full py-6">
       <div className="flex flex-col h-full max-w-[930px] mx-auto border p-4 rounded-lg bg-white">
@@ -91,7 +99,8 @@ export default function ChatApp({
                 </svg>
               </Button>
             </div> */}
-            <PDFDownloadLink
+            {
+              isClient && <PDFDownloadLink
               document={<ChatPdfTemplate chat={formatChatForPdf(messages)} />}
               fileName="chat-history.pdf"
             >
@@ -116,6 +125,7 @@ export default function ChatApp({
                 </div>
               }
             </PDFDownloadLink>
+            }
           </header>
 
           {/* message list */}
