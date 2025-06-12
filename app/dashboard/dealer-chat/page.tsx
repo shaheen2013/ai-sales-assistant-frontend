@@ -7,6 +7,7 @@ import ChatApp from '@/components/partials/chat/chat-interface';
 import { useToast } from '@/hooks/useToast';
 import { useDealerChatMutation } from '@/features/chat/chatSlice';
 import { useGetPublicDealersQuery } from '@/features/dealer/dealerSlice';
+import moment from 'moment';
 
 export default function DealerChat() {
     const toast = useToast();
@@ -69,7 +70,8 @@ export default function DealerChat() {
                     if (index === 0) {
                         return {
                             ...message,
-                            message: `Hello! I'm Clara from the ${dealers?.find((dealer: any) => dealer?.user?.dealer_details?.id === selectedDealer)?.business_name} dealership. To serve you quickly—whether it's checking vehicle availability, booking a test drive or service appointment, or discussing a trade-in—I'll first need a few details. Could you please share your name, email, phone number, and address?`
+                            message: `Hello! I'm Clara from the ${dealers?.find((dealer: any) => dealer?.user?.dealer_details?.id === selectedDealer)?.business_name || "N/A"} dealership. To serve you quickly—whether it's checking vehicle availability, booking a test drive or service appointment, or discussing a trade-in—I'll first need a few details. Could you please share your name, email, phone number, and address?`,
+                            timestamp: moment().toISOString(),
                         }
                     }
                     return message
@@ -108,7 +110,7 @@ export default function DealerChat() {
                     id: (Date.now() + 1).toString(),
                     isMe: false,
                     message: response.response,
-                    timestamp: new Date().toISOString(),
+                    timestamp: moment().toISOString(),
                 },
             ]);
         } catch (error) {
