@@ -18,6 +18,11 @@ import moment from "moment";
 import Image from "next/image";
 import { ClaraIcon } from "./svg-icons";
 import { linkifyHTML } from "@/components/partials/chat/linkfiy";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import ChatPdfTemplate from "./pdf/ChatPdfTemplate";
+import { formatChatForPdf } from "@/lib/utils";
+import Spinner from "@/components/spinner/Spinner";
+import { useGetPublicDealersQuery } from "@/features/dealer/dealerSlice";
 
 interface Message {
   id: string;
@@ -50,20 +55,21 @@ export default function ChatApp({
   onMessageSend,
   selectedDealer,
 }: ChatAppProps) {
+  const { data: dealers } = useGetPublicDealersQuery();
   return (
     <div className="h-full py-6">
       <div className="flex flex-col h-full max-w-[930px] mx-auto border p-4 rounded-lg bg-white">
         {/* messages */}
         <div className="flex flex-col flex-1">
           {/* header */}
-          <header className="flex lg:flex-row flex-col justify-end lg:items-center border-b pb-4">
-            {/* <div>
+          <header className="flex lg:flex-row flex-col justify-between lg:items-center border-b pb-4">
+            <div>
               <h2 className="text-gray-[#2B3545] font-semibold lg:mb-0 mb-3">
-                Why the car is not starting?
+                {dealers?.find((dealer: any) => dealer?.user?.dealer_details?.id === selectedDealer)?.business_name || "N/A"}
               </h2>
-            </div> */}
+            </div>
 
-            <div className="flex items-center gap-2">
+            {/* <div className="flex items-center gap-2">
               <Button
                 variant="icon"
                 className="h-10 w-10"
@@ -84,7 +90,32 @@ export default function ChatApp({
                   />
                 </svg>
               </Button>
-            </div>
+            </div> */}
+            <PDFDownloadLink
+              document={<ChatPdfTemplate chat={formatChatForPdf(messages)} />}
+              fileName="chat-history.pdf"
+            >
+              {({ loading }) =>
+                <div className="h-10 w-10 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground flex items-center justify-center rounded-md cursor-pointer">
+                  {
+                    loading ? <Spinner className="h-5 w-5" /> : <svg
+                      className="!h-5 !w-5"
+                      viewBox="0 0 22 22"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M18.1496 13.3829V16.5607C18.1496 16.9821 17.9822 17.3863 17.6842 17.6842C17.3863 17.9822 16.9821 18.1496 16.5607 18.1496H5.4385C5.0171 18.1496 4.61296 17.9822 4.31498 17.6842C4.01701 17.3863 3.84961 16.9821 3.84961 16.5607V13.3829M7.02739 9.41072L10.9996 13.3829M10.9996 13.3829L14.9718 9.41072M10.9996 13.3829V3.84961"
+                        stroke="#2C2F3A"
+                        strokeWidth="1.65"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  }
+                </div>
+              }
+            </PDFDownloadLink>
           </header>
 
           {/* message list */}

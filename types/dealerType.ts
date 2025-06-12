@@ -42,3 +42,23 @@ export interface CardInfo {
   exp_year: number;
   display_brand: string;
 }
+
+interface Subscription {
+  start_date: string; 
+  end_date: string;  
+  status: 'active' | 'inactive' | 'cancelled';
+  remain_days: number;
+}
+
+interface TalkTime {
+  remaining: number;
+  used: number;
+  total: number;
+}
+
+export interface DealerOverviewResponseType {
+  subscription: Subscription;
+  phone_number: string | null;
+  voice: string;
+  talk_time: TalkTime;
+}

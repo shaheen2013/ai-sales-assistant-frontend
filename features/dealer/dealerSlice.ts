@@ -1,6 +1,6 @@
 import { PaginatedResponse } from "@/types/paginatedType";
 import { apiSlice } from "../api/apiSlice";
-import { CardInfo, Dealer, DealerRegistrationSourceCount, DealerStatisticsResponseType } from "@/types/dealerType";
+import { CardInfo, Dealer, DealerOverviewResponseType, DealerRegistrationSourceCount, DealerStatisticsResponseType } from "@/types/dealerType";
 import { SupportStatusCountType, SupportTicketType } from "@/types/supportTicketType";
 import { DealerProfileType, DealerPublicProfileType } from "@/types/dealerProfileSliceType";
 
@@ -11,6 +11,12 @@ export const dealerSlice = apiSlice.injectEndpoints({
                 method: "GET",
                 url: `/admin-dashboard/dealer`,
                 params: queryParams,
+            }),
+        }),
+        getDealerDashboardOverview: builder.query<DealerOverviewResponseType, void>({
+            query: () => ({
+                method: "GET",
+                url: `/dealer-dashboard/overview/`,
             }),
         }),
         getDealerStatistics: builder.query<DealerStatisticsResponseType, void>({
@@ -85,4 +91,4 @@ export const dealerSlice = apiSlice.injectEndpoints({
     }),
 });
 
-export const { useGetDealersQuery, useGetDealerStatisticsQuery, useGetDealerRegistrationCountQuery, useGetDealerAllSupportTicketsQuery, useCreateSupportTicketMutation, useUpdateDealerSupportTicketMutation, useDeleteDealerSupportTickerMutation, useGetDealerPublicProfileQuery, useGetDealerCardsQuery, useGetPublicDealersQuery, useUpdateDealerAssistantVoiceMutation } = dealerSlice;
+export const { useGetDealersQuery, useGetDealerStatisticsQuery, useGetDealerRegistrationCountQuery, useGetDealerAllSupportTicketsQuery, useCreateSupportTicketMutation, useUpdateDealerSupportTicketMutation, useDeleteDealerSupportTickerMutation, useGetDealerPublicProfileQuery, useGetDealerCardsQuery, useGetPublicDealersQuery, useUpdateDealerAssistantVoiceMutation, useGetDealerDashboardOverviewQuery } = dealerSlice;

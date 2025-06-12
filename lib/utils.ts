@@ -275,3 +275,26 @@ export function shortenFileName(name: string, maxLength = 30) {
   const end = name.slice(-10);
   return `${start}...${end}`;
 }
+
+export function formatChatForPdf(messages: any[]): {
+  isMe: boolean;
+  sender: string;
+  message: string;
+  timestamp: string;
+}[] {
+  return messages.map((item) => {
+    const time = moment(item.timestamp);
+    const displayTime = time.format("hh:mm A");
+
+    return {
+      isMe: item.isMe,
+      sender: item.isMe ? "You" : "Teez",
+      message: item.message,
+      timestamp: displayTime,
+    };
+  });
+}
+
+export function formateDate(date: string = "", format: string = "DD MMM, YYYY") {
+  return moment(date).format(format);
+}
