@@ -294,3 +294,7 @@ export function formatChatForPdf(messages: any[]): {
     };
   });
 }
+
+export function formateDate(date: string = "", format: string = "DD MMM, YYYY") {
+  return moment(date).format(format);
+}
