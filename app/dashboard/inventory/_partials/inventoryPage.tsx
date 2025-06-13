@@ -381,7 +381,7 @@ export default function DashboardDealerInventory() {
               {/* filter */}
               <Select>
                 <SelectTrigger
-                  value={""}
+                  value={"ss"}
                   className="w-[80px]"
                   postIcon={<div></div>}
                   preIcon={
@@ -403,17 +403,15 @@ export default function DashboardDealerInventory() {
                     </svg>
                   }
                 >
-                  <SelectValue placeholder="Filter" />
+                  <h2 className="text-gray-100">Filter</h2>
+                  {/* <SelectValue placeholder="Filter" defaultValue={""} /> */}
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectGroup>
-                    <SelectLabel>Filter</SelectLabel>
-                    <SelectItem value="apple">Apple</SelectItem>
-                    <SelectItem value="banana">Banana</SelectItem>
-                    <SelectItem value="blueberry">Blueberry</SelectItem>
-                    <SelectItem value="grapes">Grapes</SelectItem>
-                    <SelectItem value="pineapple">Pineapple</SelectItem>
-                  </SelectGroup>
+                  <SelectItem value="apple">Apple</SelectItem>
+                  <SelectItem value="banana">Banana</SelectItem>
+                  <SelectItem value="blueberry">Blueberry</SelectItem>
+                  <SelectItem value="grapes">Grapes</SelectItem>
+                  <SelectItem value="pineapple">Pineapple</SelectItem>
                 </SelectContent>
               </Select>
 
@@ -448,17 +446,14 @@ export default function DashboardDealerInventory() {
                     </svg>
                   }
                 >
-                  <SelectValue placeholder="Sort By" />
+                  <h2 className="text-gray-100">Sory By</h2>
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectGroup>
-                    <SelectLabel>Filter</SelectLabel>
-                    <SelectItem value="apple">Apple</SelectItem>
-                    <SelectItem value="banana">Banana</SelectItem>
-                    <SelectItem value="blueberry">Blueberry</SelectItem>
-                    <SelectItem value="grapes">Grapes</SelectItem>
-                    <SelectItem value="pineapple">Pineapple</SelectItem>
-                  </SelectGroup>
+                  <SelectItem value="apple">Apple</SelectItem>
+                  <SelectItem value="banana">Banana</SelectItem>
+                  <SelectItem value="blueberry">Blueberry</SelectItem>
+                  <SelectItem value="grapes">Grapes</SelectItem>
+                  <SelectItem value="pineapple">Pineapple</SelectItem>
                 </SelectContent>
               </Select>
             </div>
