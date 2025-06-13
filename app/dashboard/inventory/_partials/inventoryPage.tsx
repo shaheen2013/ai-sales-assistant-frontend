@@ -108,8 +108,6 @@ export default function DashboardDealerInventory() {
     page_size: Number(page_size) || 10,
   });
 
-  console.log("getVehicleList => ", getVehicleList);
-
   const {
     data: dataGetInventoryFiles,
     error: errorGetInventoryFiles,
@@ -126,8 +124,7 @@ export default function DashboardDealerInventory() {
   const [createVehicleInventory, { isLoading: isLoadingCreateVehicle }] =
     useCreateVehicleInventoryMutation();
 
-  const [deleteVehicleInventory, { isLoading: isLoadingDeleteVehicle }] =
-    useDeleteVehicleInventoryMutation();
+  const [deleteVehicleInventory] = useDeleteVehicleInventoryMutation();
 
   const [inventoryUpload, { isLoading: isLoadingVehicleInventoryUplaod }] =
     useVehicleInventoryUploadMutation();
@@ -880,6 +877,8 @@ export default function DashboardDealerInventory() {
         open={modals.addPdf}
         onOpenChange={() => {
           setModals((prev) => ({ ...prev, addPdf: !prev.addPdf }));
+
+          setUploadedFiles([]); // Reset uploaded files when modal is closed
         }}
       >
         <DialogContent className="sm:max-w-[700px]">
@@ -910,6 +909,7 @@ export default function DashboardDealerInventory() {
               onClick={(e) => {
                 e.preventDefault();
                 setModals({ ...modals, addPdf: false });
+                setUploadedFiles([]); // Reset uploaded files when modal is closed
               }}
             >
               Cancel
