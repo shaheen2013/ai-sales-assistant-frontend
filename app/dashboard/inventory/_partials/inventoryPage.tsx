@@ -88,7 +88,7 @@ export default function DashboardDealerInventory() {
   // inventory search params
   const page = searchParams.get("page");
   const page_size = searchParams.get("page_size");
-  const filter = searchParams.get("filter");
+  // const filter = searchParams.get("filter");
   const [debouncedSearchValue, setSearch] = useDebounceValue("", 500);
 
   // inventory files search params
@@ -161,7 +161,7 @@ export default function DashboardDealerInventory() {
       return;
     }
 
-    const { data, error } = await deleteVehicleInventory({ id: id });
+    const { error } = await deleteVehicleInventory({ id: id });
 
     if (error) {
       console.log(error);
@@ -746,7 +746,7 @@ export default function DashboardDealerInventory() {
                   <Controller
                     name="odometer_unit"
                     control={control}
-                    render={({ field, formState: { errors } }) => (
+                    render={({ field }) => (
                       // <Input
                       //   type="odometer_unit"
                       //   id="odometer_unit"
@@ -931,7 +931,7 @@ export default function DashboardDealerInventory() {
       {/* select plan modal */}
       <Dialog
         open={modals.selectPlan}
-        onOpenChange={(e) => {
+        onOpenChange={() => {
           setModals((prev) => ({
             ...prev,
             selectPlan: !prev.selectPlan,
@@ -1180,7 +1180,7 @@ export default function DashboardDealerInventory() {
       {/* upload summery */}
       <Dialog
         open={modals.uploadSummeryDetails}
-        onOpenChange={(e) => {
+        onOpenChange={() => {
           setModals((prev) => ({
             ...prev,
             uploadSummeryDetails: !prev.uploadSummeryDetails,
@@ -1218,7 +1218,7 @@ export default function DashboardDealerInventory() {
                   return (
                     <tr key={index}>
                       <td className="border border-gray-100 px-4 py-2">
-                        {item.stock_id}
+                        #{index}
                       </td>
                       <td className="border border-gray-100 px-4 py-2">
                         {item.error}

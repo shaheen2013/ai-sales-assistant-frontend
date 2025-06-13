@@ -120,15 +120,18 @@ export const useToast = () => {
                   {options?.failed || "N/A"}
                 </li>
               </ul>
-              <button
-                onClick={() => {
-                  options?.onView?.();
-                  sonnerToast.dismiss(id);
-                }}
-                className="self-start px-4 py-1 border border-gray-400 rounded hover:bg-black hover:text-white text-sm font-medium w-full"
-              >
-                View Details
-              </button>
+
+              {/* {Number(options?.failed) > 0 && (
+                <button
+                  onClick={() => {
+                    options?.onView?.();
+                    sonnerToast.dismiss(id);
+                  }}
+                  className="self-start px-4 py-1 border border-gray-400 rounded hover:bg-black hover:text-white text-sm font-medium w-full"
+                >
+                  View Details
+                </button>
+              )} */}
             </div>
           );
         },

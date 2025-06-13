@@ -15,7 +15,6 @@ import {
 
 import { useMemo, useState } from "react";
 
-import Image from "next/image";
 import { MoreHorizontal } from "lucide-react";
 
 import {
