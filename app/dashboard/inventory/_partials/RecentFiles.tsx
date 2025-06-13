@@ -45,6 +45,8 @@ export default function RecentFiles({
 
   const maxThreeResults = dataGetInventoryFiles?.results?.slice(0, 3);
 
+  console.log("maxThreeResults => ", maxThreeResults);
+
   return (
     <div>
       <h2 className="mb-4">Recent files</h2>
@@ -74,7 +76,9 @@ export default function RecentFiles({
                 </svg>
                 {shortenFilename(inventoryFile?.file_name)}
               </h3>
-              <p className="text-gray-600 text-sm">20 MB</p>
+              <p className="text-gray-600 text-sm">
+                {inventoryFile?.file_size}
+              </p>
             </div>
 
             <div className="">
