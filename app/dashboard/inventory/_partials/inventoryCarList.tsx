@@ -654,7 +654,16 @@ export default function InventoryCarList({
       cell: ({ row }) => {
         return (
           <div className=" font-medium text-gray-400">
-            {row.original?.exterior_color || "-"}
+            {row.original?.exterior_color ? (
+              <div
+                className="h-8 w-8 rounded-lg border cursor-pointer"
+                style={{
+                  backgroundColor: row.original?.exterior_color,
+                }}
+              ></div>
+            ) : (
+              "-"
+            )}
           </div>
         );
       },
@@ -690,7 +699,16 @@ export default function InventoryCarList({
       cell: ({ row }) => {
         return (
           <div className=" font-medium text-gray-400">
-            {row.original?.interior_color || "-"}
+            {row.original?.interior_color ? (
+              <div
+                className="h-8 w-8 rounded-lg border cursor-pointer"
+                style={{
+                  backgroundColor: row.original?.interior_color,
+                }}
+              ></div>
+            ) : (
+              "-"
+            )}
           </div>
         );
       },
@@ -1186,9 +1204,9 @@ export default function InventoryCarList({
                     control={control}
                     render={({ field, formState: { errors } }) => (
                       <Input
-                        type="exterior_color"
+                        type="color"
                         id="exterior_color"
-                        className="h-11"
+                        className="h-11 p-[6px]"
                         placeholder="Exterior Color"
                         error={errors?.exterior_color?.message}
                         {...field}
@@ -1197,7 +1215,7 @@ export default function InventoryCarList({
                   />
                 </div>
 
-                {/* exterior_color */}
+                {/* interior_color */}
                 <div className="flex flex-col mb-3">
                   <label
                     htmlFor="interior_color"
@@ -1210,9 +1228,9 @@ export default function InventoryCarList({
                     control={control}
                     render={({ field, formState: { errors } }) => (
                       <Input
-                        type="interior_color"
-                        id="interior_color"
-                        className="h-11"
+                        type="color"
+                        id="exterior_color"
+                        className="h-11 p-[6px]"
                         placeholder="Interior Color"
                         error={errors?.interior_color?.message}
                         {...field}

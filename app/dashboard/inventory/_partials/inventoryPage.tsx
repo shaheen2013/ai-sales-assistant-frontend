@@ -785,9 +785,9 @@ export default function DashboardDealerInventory() {
                     control={control}
                     render={({ field, formState: { errors } }) => (
                       <Input
-                        type="exterior_color"
+                        type="color"
                         id="exterior_color"
-                        className="h-11"
+                        className="h-11 p-[6px]"
                         placeholder="Exterior Color"
                         error={errors?.exterior_color?.message}
                         {...field}
@@ -796,7 +796,7 @@ export default function DashboardDealerInventory() {
                   />
                 </div>
 
-                {/* exterior_color */}
+                {/* interior_color */}
                 <div className="flex flex-col mb-3">
                   <label
                     htmlFor="interior_color"
@@ -809,9 +809,9 @@ export default function DashboardDealerInventory() {
                     control={control}
                     render={({ field, formState: { errors } }) => (
                       <Input
-                        type="interior_color"
-                        id="interior_color"
-                        className="h-11"
+                        type="color"
+                        id="exterior_color"
+                        className="h-11 p-[6px]"
                         placeholder="Interior Color"
                         error={errors?.interior_color?.message}
                         {...field}
