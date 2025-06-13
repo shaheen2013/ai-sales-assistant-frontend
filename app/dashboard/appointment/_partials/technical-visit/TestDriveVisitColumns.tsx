@@ -18,7 +18,7 @@ export const testDriveVisitsColumns = ({ handleChangeBookingStatus }: { handleCh
     {
       accessorKey: "name",
       header: "Name",
-      cell: ({ row }) => row.original?.name || "N/A",
+      cell: ({ row }) => row.original?.customer?.name || "N/A",
     },
     {
       accessorKey: "schedule_date",
