@@ -28,7 +28,7 @@ const NotificationList = () => {
     const dispatch = useDispatch();
 
     /*--RTK Query--*/
-    const { data: notificationsData, isFetching: notificationsFetching } = useGetNotificationsQuery({ limit: 10, offset: (page - 1) * 10 });
+    const { data: notificationsData, isFetching: notificationsFetching } = useGetNotificationsQuery({ limit: 10, offset: (page - 1) * 10 }, { refetchOnReconnect: true });
     const [markAllReadNotification] = useMarkAllReadNotificationMutation();
 
     /*--Function--*/

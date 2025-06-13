@@ -31,9 +31,14 @@ export type TalkToHumanResponseType = {
 
 export type TestDriveResponseType = {
     id: number;
-    name: string;
     start_at: string;
     booking_status: string;
+    customer: {
+        id: number;
+        name: string;
+        email: string;
+        phone_number: string;
+    }
 }
 
 export type StoreVisitResponseType = {
