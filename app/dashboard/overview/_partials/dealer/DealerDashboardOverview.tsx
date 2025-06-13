@@ -167,8 +167,8 @@ const AdminDashboardOverview = () => {
 
                 <div className="flex items-center gap-3">
                   <div className="border-r-2 border-white pr-3">
-                    <h2 className="text-gray-400 text-xs text-right">Start Date</h2>
-                    <h2 className="text-lg font-semibold">{formateDate(dealerDashboardOverviewData?.subscription?.start_date, "Do MMM, YYYY")}</h2>
+                    <h2 className="text-gray-400 text-xs text-right">Used</h2>
+                    <h2 className="text-lg font-semibold">{dealerDashboardOverviewData?.talk_time?.used}/{dealerDashboardOverviewData?.talk_time?.total} m</h2>
                   </div>
 
                   <div>

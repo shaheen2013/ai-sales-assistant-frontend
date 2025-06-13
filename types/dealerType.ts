@@ -62,3 +62,29 @@ export interface DealerOverviewResponseType {
   voice: string;
   talk_time: TalkTime;
 }
+
+export interface CallStatsResponseType {
+  current_month: {
+    total_calls: number;
+    total_duration: number;
+    growth_percentage: number;
+  };
+  last_month: {
+    total_calls: number;
+    total_duration: number;
+  };
+  call_history: {
+    Jan: number;
+    Feb: number;
+    Mar: number;
+    Apr: number;
+    May: number;
+    Jun: number;
+    Jul: number;
+    Aug: number;
+    Sep: number;
+    Oct: number;
+    Nov: number;
+    Dec: number;
+  };
+}
