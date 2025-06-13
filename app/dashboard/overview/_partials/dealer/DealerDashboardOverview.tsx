@@ -37,6 +37,7 @@ import classNames from "classnames";
 import Image from "next/image";
 import DealerDashboardOverviewSkeleton from "@/components/skeleton/DealerDashboardOverviewSkeleton";
 import DealerMinutePlanSkeleton from "@/components/skeleton/DealerMinutePlanSkeleton";
+import { useGetCurrentSubscriptionPlanQuery } from "@/features/dealer/dealerProfileSlice";
 
 const defaultPlans: { [key: string]: { minutes: number; description: string } } = {
   "Quick Boost": {
@@ -55,11 +56,11 @@ const defaultPlans: { [key: string]: { minutes: number; description: string } } 
 
 type PlanType = {
   id: string;
-    name: string;
-    price: string | number;
-    minutes: number;
-    description: string;
-    isSelected: boolean;
+  name: string;
+  price: string | number;
+  minutes: number;
+  description: string;
+  isSelected: boolean;
 }
 
 const AdminDashboardOverview = () => {
@@ -87,6 +88,7 @@ const AdminDashboardOverview = () => {
   const { data: dealerDashboardOverviewData, isLoading: dealerDashboardOverviewLoading } = useGetDealerDashboardOverviewQuery();
   const [updateDealerAssitantVoice] = useUpdateDealerAssistantVoiceMutation();
   const { data: dealerMinutePlans, isLoading: dealerMinutePlansLoading } = useGetDealerMinutePlansQuery(undefined, { skip: !modals.addMoreMinute });
+  const { data: dealerCurrentSubscription, isLoading: dealerCurrentSubscriptionLoading } = useGetCurrentSubscriptionPlanQuery(undefined, { skip: !modals.addMoreMinute });
 
   const onReady = (ws: any) => {
     setWavesurfer(ws);
@@ -460,10 +462,14 @@ const AdminDashboardOverview = () => {
                         </p>
                       </div>
 
-                      <div className="text-sm text-gray-400">
-                        Your Current Plan{" "}
-                        <span className="text-green-500 underline">Basic</span>
-                      </div>
+                      {
+                        dealerCurrentSubscriptionLoading ? <Skeleton className="h-5 w-24" /> :
+                          <div className="text-sm text-gray-400">
+                            Your Current Plan{" "}
+                            <span className="text-green-500 underline">{dealerCurrentSubscription?.subscription?.product?.name}</span>
+                          </div>
+
+                      }
                     </div>
                   );
                 })}
