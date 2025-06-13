@@ -1,10 +1,9 @@
 "use client";
 
-import moment from "moment";
 import { useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { Controller, useForm } from "react-hook-form";
 import { useDebounceValue } from "usehooks-ts";
+import { Controller, useForm } from "react-hook-form";
+import { useRouter, useSearchParams } from "next/navigation";
 
 import {
   Select,
@@ -59,30 +58,25 @@ export default function DashboardDealerInventory() {
 
   const { control, handleSubmit, reset } = useForm({
     defaultValues: {
-      stockId: "",
       vin: "",
       brand: "",
       model: "",
-      year: "",
+
       mileage: "",
-      numberPlate: "",
-      bodyStyle: "",
-      engineType: "",
-      fuelType: "",
+      year: "",
+      series: "",
+      trim: "",
       odometer: "",
-      color: "",
-      consign: "",
-      price: "",
-      dateIn: "",
-      dateOut: "",
+      odometer_unit: "km",
+      exterior_color: "",
+      interior_color: "",
+      options: "",
     },
   });
 
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
   const [selectedPanel, setSelectedPanel] = useState<"list" | "files">("list");
   const [uploadSummery, setUploadSummery] = useState<any[]>([]);
-
-  console.log("uploadSummery => ", uploadSummery);
 
   const [modals, setModals] = useState({
     addInventory: false,
@@ -113,6 +107,8 @@ export default function DashboardDealerInventory() {
     page: Number(page) || 1,
     page_size: Number(page_size) || 10,
   });
+
+  console.log("getVehicleList => ", getVehicleList);
 
   const {
     data: dataGetInventoryFiles,
@@ -178,22 +174,19 @@ export default function DashboardDealerInventory() {
 
   const handleAddInventory = async (formData: any) => {
     const payload = {
-      price: formData.price,
-      mileage: formData.mileage,
+      vin: formData.vin,
       brand: formData.brand,
       model: formData.model,
-      year: formData.year,
-      vin: formData.vin,
-      stock_id: formData.stockId,
-      plate_no: formData.numberPlate,
-      body_style: formData.bodyStyle,
-      engine_type: formData.engineType,
-      fuel_type: formData.fuelType,
+
+      mileage: formData.mileage,
+      ...(formData.year && { year: formData.year }),
+      series: formData.series,
+      trim: formData.trim,
       odometer: formData.odometer,
-      color: formData.color,
-      consign: formData.consign,
-      date_in: moment(formData.dateIn).format("YYYY-MM-DD"),
-      date_out: moment(formData.dateOut).format("YYYY-MM-DD"),
+      odometer_unit: formData.odometer_unit,
+      exterior_color: formData.exterior_color,
+      interior_color: formData.interior_color,
+      options: formData.options,
     };
 
     const { data, error } = await createVehicleInventory(payload);
@@ -272,27 +265,7 @@ export default function DashboardDealerInventory() {
   ];
 
   return (
-    <div className="">
-      <button
-        className="mb-3 hidden"
-        onClick={() => {
-          toast("uploadInventory", "Uploading inventory...", {
-            total: "10",
-            success: "12",
-            failed: "sg",
-
-            onView: () => {
-              setModals({
-                ...modals,
-                uploadSummeryDetails: true,
-              });
-            },
-          });
-        }}
-      >
-        hit
-      </button>
-
+    <>
       {/* add inventory / place add pdf  */}
       <div className="flex gap-3 mb-6">
         <Button
@@ -566,29 +539,6 @@ export default function DashboardDealerInventory() {
             {/* form */}
             <form onSubmit={handleSubmit(handleAddInventory)} className="">
               <div className="grid grid-cols-2 gap-x-4 mb-6 ">
-                {/* stock id */}
-                <div>
-                  <label
-                    htmlFor="stockId"
-                    className="text-sm mb-1 text-[#414651] font-medium"
-                  >
-                    Stock id
-                  </label>
-                  <Controller
-                    name="stockId"
-                    control={control}
-                    render={({ field, formState: { errors } }) => (
-                      <InputCopy
-                        type="stockId"
-                        id="stockId"
-                        error={errors.stockId?.message}
-                        copyText={field.value}
-                        {...field}
-                      />
-                    )}
-                  />
-                </div>
-
                 {/* vin number */}
                 <div className="flex flex-col mb-3">
                   <label
@@ -607,7 +557,6 @@ export default function DashboardDealerInventory() {
                         id="vin"
                         error={errors.vin?.message}
                         copyText={field.value}
-                        // disabled
                         {...field}
                       />
                     )}
@@ -617,7 +566,7 @@ export default function DashboardDealerInventory() {
                 {/* brand */}
                 <div className="flex flex-col mb-3">
                   <label
-                    htmlFor="email"
+                    htmlFor="brand"
                     className="text-sm mb-1 text-[#414651] font-medium"
                   >
                     Brand
@@ -642,7 +591,7 @@ export default function DashboardDealerInventory() {
                 {/* model */}
                 <div className="flex flex-col mb-3">
                   <label
-                    htmlFor="email"
+                    htmlFor="model"
                     className="text-sm mb-1 text-[#414651] font-medium"
                   >
                     Model
@@ -664,35 +613,10 @@ export default function DashboardDealerInventory() {
                   />
                 </div>
 
-                {/* year */}
-                <div className="flex flex-col mb-3">
-                  <label
-                    htmlFor="email"
-                    className="text-sm mb-1 text-[#414651] font-medium"
-                  >
-                    Year
-                  </label>
-                  <Controller
-                    name="year"
-                    control={control}
-                    // rules={{ required: "Year is required" }}
-                    render={({ field, formState: { errors } }) => (
-                      <Input
-                        type="year"
-                        id="year"
-                        className="h-11"
-                        placeholder="Year"
-                        error={errors?.year?.message}
-                        {...field}
-                      />
-                    )}
-                  />
-                </div>
-
                 {/* mileage */}
                 <div className="flex flex-col mb-3">
                   <label
-                    htmlFor="email"
+                    htmlFor="mileage"
                     className="text-sm mb-1 text-[#414651] font-medium"
                   >
                     Mileage
@@ -700,7 +624,6 @@ export default function DashboardDealerInventory() {
                   <Controller
                     name="mileage"
                     control={control}
-                    // rules={{ required: "Mileage is required" }}
                     render={({ field, formState: { errors } }) => (
                       <Input
                         type="number"
@@ -714,100 +637,74 @@ export default function DashboardDealerInventory() {
                   />
                 </div>
 
-                {/* number plate */}
+                {/* year */}
                 <div className="flex flex-col mb-3">
                   <label
-                    htmlFor="email"
+                    htmlFor="year"
                     className="text-sm mb-1 text-[#414651] font-medium"
                   >
-                    Number Plate
+                    Year
                   </label>
                   <Controller
-                    name="numberPlate"
+                    name="year"
                     control={control}
-                    // rules={{ required: "Number Plate is required" }}
                     render={({ field, formState: { errors } }) => (
                       <Input
-                        type="numberPlate"
-                        id="numberPlate"
-                        className="h-11"
-                        placeholder="Number Plate"
-                        error={errors?.numberPlate?.message}
+                        type="number"
+                        min="1900"
+                        max={new Date().getFullYear()}
+                        id="year"
+                        className="h-11 !w-full block"
+                        placeholder="Year"
+                        error={errors?.year?.message}
                         {...field}
                       />
                     )}
                   />
                 </div>
 
-                {/* body style */}
+                {/* series */}
                 <div className="flex flex-col mb-3">
                   <label
-                    htmlFor="bodyStyle"
+                    htmlFor="series"
                     className="text-sm mb-1 text-[#414651] font-medium"
                   >
-                    Body Style
+                    Series
                   </label>
                   <Controller
-                    name="bodyStyle"
+                    name="series"
                     control={control}
-                    // rules={{ required: " Body Style is required" }}
                     render={({ field, formState: { errors } }) => (
                       <Input
-                        type="bodyStyle"
-                        id="bodyStyle"
+                        type="series"
+                        id="series"
                         className="h-11"
-                        placeholder=" Body Style"
-                        error={errors?.bodyStyle?.message}
+                        placeholder="Series"
+                        error={errors?.series?.message}
                         {...field}
                       />
                     )}
                   />
                 </div>
 
-                {/* engine type */}
+                {/* trim */}
                 <div className="flex flex-col mb-3">
                   <label
-                    htmlFor="engineType"
+                    htmlFor="trim"
                     className="text-sm mb-1 text-[#414651] font-medium"
                   >
-                    Engine Type
+                    Trim
                   </label>
                   <Controller
-                    name="engineType"
+                    name="trim"
                     control={control}
-                    // rules={{ required: "Engine Type is required" }}
                     render={({ field, formState: { errors } }) => (
                       <Input
-                        type="engineType"
-                        id="engineType"
+                        type="trim"
+                        id="trim"
                         className="h-11"
-                        placeholder="Engine Type"
-                        error={errors?.engineType?.message}
-                        {...field}
-                      />
-                    )}
-                  />
-                </div>
-
-                {/* fuel type */}
-                <div className="flex flex-col mb-3">
-                  <label
-                    htmlFor="fuelType"
-                    className="text-sm mb-1 text-[#414651] font-medium"
-                  >
-                    Fuel Type
-                  </label>
-                  <Controller
-                    name="fuelType"
-                    control={control}
-                    // rules={{ required: "Fuel Type is required" }}
-                    render={({ field, formState: { errors } }) => (
-                      <Input
-                        type="fuelType"
-                        id="fuelType"
-                        className="h-11"
-                        placeholder="Fuel Type"
-                        error={errors?.fuelType?.message}
+                        placeholder="Trim"
+                        error={errors?.trim?.message}
                         {...field}
                       />
                     )}
@@ -817,7 +714,7 @@ export default function DashboardDealerInventory() {
                 {/* odometer */}
                 <div className="flex flex-col mb-3">
                   <label
-                    htmlFor="engineType"
+                    htmlFor="odometer"
                     className="text-sm mb-1 text-[#414651] font-medium"
                   >
                     Odometer
@@ -825,7 +722,6 @@ export default function DashboardDealerInventory() {
                   <Controller
                     name="odometer"
                     control={control}
-                    // rules={{ required: "Odometer is required" }}
                     render={({ field, formState: { errors } }) => (
                       <Input
                         type="odometer"
@@ -839,125 +735,112 @@ export default function DashboardDealerInventory() {
                   />
                 </div>
 
-                {/* color */}
+                {/* odometer_unit */}
                 <div className="flex flex-col mb-3">
                   <label
-                    htmlFor="color"
+                    htmlFor="odometer_unit"
                     className="text-sm mb-1 text-[#414651] font-medium"
                   >
-                    Color
+                    Odometer Unit
                   </label>
                   <Controller
-                    name="color"
+                    name="odometer_unit"
                     control={control}
-                    // rules={{ required: "Color is required" }}
+                    render={({ field, formState: { errors } }) => (
+                      // <Input
+                      //   type="odometer_unit"
+                      //   id="odometer_unit"
+                      //   className="h-11"
+                      //   placeholder="odometer_unit"
+                      //   error={errors?.odometer_unit?.message}
+                      //   {...field}
+                      // />
+
+                      <Select
+                        value={field.value}
+                        onValueChange={field.onChange}
+                        // className="h-11 w-full !border-[#D5D7DA]"
+                        // defaultValue="km"
+                      >
+                        <SelectTrigger className="h-11 w-full !border-[#D5D7DA]">
+                          <SelectValue placeholder="Select a fruit" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            <SelectItem value="km">KM</SelectItem>
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                    )}
+                  />
+                </div>
+
+                {/* exterior_color */}
+                <div className="flex flex-col mb-3">
+                  <label
+                    htmlFor="exterior_color"
+                    className="text-sm mb-1 text-[#414651] font-medium"
+                  >
+                    Exterior Color
+                  </label>
+                  <Controller
+                    name="exterior_color"
+                    control={control}
                     render={({ field, formState: { errors } }) => (
                       <Input
-                        type="text"
-                        id="color"
+                        type="exterior_color"
+                        id="exterior_color"
                         className="h-11"
-                        placeholder="Color"
-                        error={errors?.color?.message}
+                        placeholder="Exterior Color"
+                        error={errors?.exterior_color?.message}
                         {...field}
                       />
                     )}
                   />
                 </div>
 
-                {/* consign */}
+                {/* exterior_color */}
                 <div className="flex flex-col mb-3">
                   <label
-                    htmlFor="engineType"
+                    htmlFor="interior_color"
                     className="text-sm mb-1 text-[#414651] font-medium"
                   >
-                    Consign
+                    Interior Color
                   </label>
                   <Controller
-                    name="consign"
+                    name="interior_color"
                     control={control}
-                    // rules={{ required: "Consign is required" }}
                     render={({ field, formState: { errors } }) => (
                       <Input
-                        type="consign"
-                        id="consign"
+                        type="interior_color"
+                        id="interior_color"
                         className="h-11"
-                        placeholder="Consign"
-                        error={errors?.consign?.message}
+                        placeholder="Interior Color"
+                        error={errors?.interior_color?.message}
                         {...field}
                       />
                     )}
                   />
                 </div>
 
-                {/* price */}
+                {/* options */}
                 <div className="flex flex-col mb-3">
                   <label
-                    htmlFor="price"
+                    htmlFor="exterior_color"
                     className="text-sm mb-1 text-[#414651] font-medium"
                   >
-                    Price
+                    Option
                   </label>
                   <Controller
-                    name="price"
+                    name="options"
                     control={control}
-                    // rules={{ required: "Price is required" }}
                     render={({ field, formState: { errors } }) => (
                       <Input
-                        type="text"
-                        id="price"
+                        type="options"
+                        id="options"
                         className="h-11"
-                        placeholder="Price"
-                        error={errors?.price?.message}
-                        {...field}
-                      />
-                    )}
-                  />
-                </div>
-
-                {/* date in */}
-                <div className="flex flex-col mb-3">
-                  <label
-                    htmlFor="dateIn"
-                    className="text-sm mb-1 text-[#414651] font-medium"
-                  >
-                    Date In
-                  </label>
-                  <Controller
-                    name="dateIn"
-                    control={control}
-                    // rules={{ required: "Date In is required" }}
-                    render={({ field, formState: { errors } }) => (
-                      <Input
-                        type="date"
-                        id="dateIn"
-                        className="h-11 block"
-                        placeholder="Date In"
-                        error={errors?.dateIn?.message}
-                        {...field}
-                      />
-                    )}
-                  />
-                </div>
-
-                {/* date out */}
-                <div className="flex flex-col mb-3">
-                  <label
-                    htmlFor="dateOut"
-                    className="text-sm mb-1 text-[#414651] font-medium"
-                  >
-                    Date Out
-                  </label>
-                  <Controller
-                    name="dateOut"
-                    control={control}
-                    // rules={{ required: "Date Out is required" }}
-                    render={({ field, formState: { errors } }) => (
-                      <Input
-                        type="date"
-                        id="dateOut"
-                        className="h-11 block"
-                        placeholder="Date Out"
-                        error={errors?.dateOut?.message}
+                        placeholder="options"
+                        error={errors?.options?.message}
                         {...field}
                       />
                     )}
@@ -995,7 +878,7 @@ export default function DashboardDealerInventory() {
       {/* add pdf modal */}
       <Dialog
         open={modals.addPdf}
-        onOpenChange={(e) => {
+        onOpenChange={() => {
           setModals((prev) => ({ ...prev, addPdf: !prev.addPdf }));
         }}
       >
@@ -1361,6 +1244,6 @@ export default function DashboardDealerInventory() {
           </div>
         </DialogContent>
       </Dialog>
-    </div>
+    </>
   );
 }

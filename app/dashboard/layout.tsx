@@ -31,7 +31,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
     <Suspense>
       <SidebarProvider>
         <DashboardSidebar />
-        <main className="w-full h-screen flex flex-col">
+        <main className="w-[calc(100%-257px)] h-screen flex flex-col">
           <DashboardHeader />
 
           <div className="p-6 grow">
