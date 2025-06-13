@@ -1162,7 +1162,7 @@ export default function InventoryCarList({
                   <Controller
                     name="odometer_unit"
                     control={control}
-                    render={({ field, formState: { errors } }) => (
+                    render={({ field }) => (
                       // <Input
                       //   type="odometer_unit"
                       //   id="odometer_unit"
