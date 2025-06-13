@@ -1,6 +1,6 @@
 import { PaginatedResponse } from "@/types/paginatedType";
 import { apiSlice } from "../api/apiSlice";
-import { CardInfo, Dealer, DealerOverviewResponseType, DealerRegistrationSourceCount, DealerStatisticsResponseType } from "@/types/dealerType";
+import { CardInfo, Dealer, DealerCallStatsResponseType, DealerOverviewResponseType, DealerRegistrationSourceCount, DealerStatisticsResponseType } from "@/types/dealerType";
 import { SupportStatusCountType, SupportTicketType } from "@/types/supportTicketType";
 import { DealerProfileType, DealerPublicProfileType } from "@/types/dealerProfileSliceType";
 
@@ -17,6 +17,12 @@ export const dealerSlice = apiSlice.injectEndpoints({
             query: () => ({
                 method: "GET",
                 url: `/dealer-dashboard/overview/`,
+            }),
+        }),
+        getDealerCallHistoryStats: builder.query<DealerCallStatsResponseType, void>({
+            query: () => ({
+                method: "GET",
+                url: `/dealer-dashboard/overview/call-history/`,
             }),
         }),
         getDealerStatistics: builder.query<DealerStatisticsResponseType, void>({
@@ -91,4 +97,4 @@ export const dealerSlice = apiSlice.injectEndpoints({
     }),
 });
 
-export const { useGetDealersQuery, useGetDealerStatisticsQuery, useGetDealerRegistrationCountQuery, useGetDealerAllSupportTicketsQuery, useCreateSupportTicketMutation, useUpdateDealerSupportTicketMutation, useDeleteDealerSupportTickerMutation, useGetDealerPublicProfileQuery, useGetDealerCardsQuery, useGetPublicDealersQuery, useUpdateDealerAssistantVoiceMutation, useGetDealerDashboardOverviewQuery } = dealerSlice;
+export const { useGetDealersQuery, useGetDealerStatisticsQuery, useGetDealerRegistrationCountQuery, useGetDealerAllSupportTicketsQuery, useCreateSupportTicketMutation, useUpdateDealerSupportTicketMutation, useDeleteDealerSupportTickerMutation, useGetDealerPublicProfileQuery, useGetDealerCardsQuery, useGetPublicDealersQuery, useUpdateDealerAssistantVoiceMutation, useGetDealerDashboardOverviewQuery, useGetDealerCallHistoryStatsQuery } = dealerSlice;

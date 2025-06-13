@@ -63,7 +63,7 @@ export interface DealerOverviewResponseType {
   talk_time: TalkTime;
 }
 
-export interface CallStatsResponseType {
+export interface DealerCallStatsResponseType {
   current_month: {
     total_calls: number;
     total_duration: number;
