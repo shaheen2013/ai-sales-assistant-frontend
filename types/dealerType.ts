@@ -1,38 +1,38 @@
 import { UserDataType } from "./user";
 
 export interface Dealer {
-    id: number;
-    status: string;
-    profile_picture: string;
-    created_at: string;
-    updated_at: string;
-    business_name: string | null;
-    business_email: string | null;
-    business_summary: string | null;
-    user: number;
-    total_spend: number;
+  id: number;
+  status: string;
+  profile_picture: string;
+  created_at: string;
+  updated_at: string;
+  business_name: string | null;
+  business_email: string | null;
+  business_summary: string | null;
+  user: number;
+  total_spend: number;
 }
 
 interface DealerStatisticType {
-    count: number;
-    growth: number;
+  count: number;
+  growth: number;
 }
 
 export interface DealerStatisticsResponseType {
-    total_dealers: DealerStatisticType;
-    paid_dealers: DealerStatisticType;
-    paid_conversion_rate: DealerStatisticType
+  total_dealers: DealerStatisticType;
+  paid_dealers: DealerStatisticType;
+  paid_conversion_rate: DealerStatisticType
 }
 
 export interface DealerRegistrationSourceMonthlyData {
-    month: string;
-    organic: number;
-    by_ai: number;
+  month: string;
+  organic: number;
+  by_ai: number;
 }
 
 export interface DealerRegistrationSourceCount {
-    year: number;
-    counts: DealerRegistrationSourceMonthlyData[];
+  year: number;
+  counts: DealerRegistrationSourceMonthlyData[];
 }
 
 export interface CardInfo {
@@ -44,8 +44,8 @@ export interface CardInfo {
 }
 
 interface Subscription {
-  start_date: string; 
-  end_date: string;  
+  start_date: string;
+  end_date: string;
   status: 'active' | 'inactive' | 'cancelled';
   remain_days: number;
 }
@@ -87,4 +87,23 @@ export interface DealerCallStatsResponseType {
     Nov: number;
     Dec: number;
   };
+}
+
+interface ProductPrice {
+  id: string;
+  nickname: string;
+  unit_amount: number;
+  convert_amount: number;
+  currency: string;
+  recurring: null | {
+    interval: string;
+    interval_count: number;
+  };
+}
+
+export interface ProductResponseType {
+  id: string;
+  name: string;
+  description: string;
+  prices: ProductPrice[];
 }

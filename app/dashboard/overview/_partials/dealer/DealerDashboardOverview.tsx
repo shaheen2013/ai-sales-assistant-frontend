@@ -29,13 +29,38 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/shadcn/accordion";
-import { useGetDealerDashboardOverviewQuery, useUpdateDealerAssistantVoiceMutation } from "@/features/dealer/dealerSlice";
+import { useGetDealerDashboardOverviewQuery, useGetDealerMinutePlansQuery, useUpdateDealerAssistantVoiceMutation } from "@/features/dealer/dealerSlice";
 import { useToast } from "@/hooks/useToast";
 import { beautifyErrors, formateDate } from "@/lib/utils";
 import { Checkbox } from "@/components/shadcn/checkbox";
 import classNames from "classnames";
 import Image from "next/image";
 import DealerDashboardOverviewSkeleton from "@/components/skeleton/DealerDashboardOverviewSkeleton";
+import DealerMinutePlanSkeleton from "@/components/skeleton/DealerMinutePlanSkeleton";
+
+const defaultPlans: { [key: string]: { minutes: number; description: string } } = {
+  "Quick Boost": {
+    minutes: 150,
+    description: "For occasional overage",
+  },
+  "Dealer Max": {
+    minutes: 600,
+    description: "For busier dealerships mid-month",
+  },
+  "Power Pack": {
+    minutes: 2000,
+    description: "For high-volume operators",
+  },
+}
+
+type PlanType = {
+  id: string;
+    name: string;
+    price: string | number;
+    minutes: number;
+    description: string;
+    isSelected: boolean;
+}
 
 const AdminDashboardOverview = () => {
   /*--Custom Hooks--*/
@@ -50,31 +75,7 @@ const AdminDashboardOverview = () => {
   });
   const [voice, setVoice] = useState("alloy");
 
-  const [minutePlans, setMinutePlans] = useState([
-    {
-      name: "Quick Boost",
-      price: 30,
-      minutes: 150,
-      description: "For occasional overage",
-      isSelected: true,
-    },
-
-    {
-      name: "Dealer Max",
-      price: 120,
-      minutes: 600,
-      description: "For busier dealerships mid-month",
-      isSelected: false,
-    },
-
-    {
-      name: "Power Pack",
-      price: 300,
-      minutes: 2000,
-      description: "For high-volume operators",
-      isSelected: false,
-    },
-  ]);
+  const [minutePlans, setMinutePlans] = useState<PlanType[]>([]);
 
   const [creditCards, setCreditCards] = useState([
     { name: "Stripe", selected: true },
@@ -85,6 +86,7 @@ const AdminDashboardOverview = () => {
   /*--RTK Query--*/
   const { data: dealerDashboardOverviewData, isLoading: dealerDashboardOverviewLoading } = useGetDealerDashboardOverviewQuery();
   const [updateDealerAssitantVoice] = useUpdateDealerAssistantVoiceMutation();
+  const { data: dealerMinutePlans, isLoading: dealerMinutePlansLoading } = useGetDealerMinutePlansQuery(undefined, { skip: !modals.addMoreMinute });
 
   const onReady = (ws: any) => {
     setWavesurfer(ws);
@@ -107,29 +109,25 @@ const AdminDashboardOverview = () => {
     }
   };
 
-  // if (adminDashboardFetching) {
-  //   return (
-  //     <>
-  //       <div className="grid xl:grid-cols-2 lg:grid-cols-2 grid-cols-1 gap-3 mb-3">
-  //         <Skeleton className="h-[112px]" />
-  //         <Skeleton className="h-[112px]" />
-  //       </div>
-
-  //       <div className="flex flex-col gap-5 mt-12">
-  //         <Skeleton className="h-10" />
-  //         <Skeleton className="h-10" />
-  //         <Skeleton className="h-10" />
-  //         <Skeleton className="h-10" />
-  //       </div>
-  //     </>
-  //   );
-  // }
-
   useEffect(() => {
     if (dealerDashboardOverviewData) {
       setVoice(dealerDashboardOverviewData.voice || "alloy");
     }
   }, [dealerDashboardOverviewData]);
+
+  useEffect(() => {
+    if (dealerMinutePlans) {
+      const formattedPricingPlans = dealerMinutePlans.map((plan, index) => ({
+        id: plan?.id,
+        name: plan?.name,
+        price: plan?.prices?.[0]?.convert_amount?.toFixed(2) || 0,
+        minutes: defaultPlans[plan?.name]?.minutes || 0,
+        description: defaultPlans[plan?.name]?.description,
+        isSelected: index === 0,
+      }));
+      setMinutePlans(formattedPricingPlans);
+    }
+  }, [dealerMinutePlans]);
 
   return (
     <div className="py-2">
@@ -390,84 +388,88 @@ const AdminDashboardOverview = () => {
             </DialogTitle>
           </DialogHeader>
 
-          <div className="grid lg:grid-cols-3 gap-4">
-            {minutePlans.map((plan, index) => {
-              return (
-                <div
-                  key={index}
-                  className={classNames(
-                    `border rounded-xl p-4 cursor-pointer`,
-                    { "border-primary-500": plan.isSelected }
-                  )}
-                  onClick={() => {
-                    setMinutePlans((prev) =>
-                      prev.map((p) =>
-                        p.name === plan.name
-                          ? { ...p, isSelected: !p.isSelected }
-                          : { ...p, isSelected: false }
-                      )
-                    );
-                  }}
-                >
-                  {/* top */}
-                  <div className="flex justify-between mb-4">
-                    <div className="flex items-center gap-2">
-                      <svg
-                        width="20"
-                        height="18"
-                        viewBox="0 0 20 18"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M16 0C16.3367 0 16.6477 0.169088 16.8316 0.444602L16.8944 0.552786L19.8944 6.55279C20.0579 6.87968 20.0287 7.26588 19.827 7.5623L19.7433 7.66896L10.7699 17.6418C10.5903 17.861 10.3336 17.9796 10.0707 17.9976C10.0081 18.0019 9.94555 18.0005 9.88352 17.9932L9.77108 17.9743C9.56976 17.9284 9.38105 17.821 9.23871 17.6521L0.256722 7.66896C0.0122342 7.39731 -0.0623057 7.01725 0.0532894 6.67786L0.105589 6.55279L3.10559 0.552786C3.25616 0.251645 3.54648 0.0490966 3.87516 0.00780368L4.00002 0H16ZM12.576 8H7.423L10 14.342L12.576 8ZM16.753 8H14.735L13.074 12.088L16.753 8ZM5.264 8H3.246L6.924 12.087L5.264 8ZM6.622 2H4.61802L2.618 6H5.322L6.622 2ZM11.273 2H8.726L7.427 6H12.572L11.273 2ZM15.381 2H13.377L14.677 6H17.381L15.381 2Z"
-                          fill="#FAAE22"
-                        />
-                      </svg>
-                      <span>{plan?.name}</span>
-                    </div>
-
-                    <div>
-                      <Checkbox id="terms" checked={Boolean(plan.isSelected)} />
-                    </div>
-                  </div>
-
-                  <div className="mb-4">
-                    <span className="text-2xl font-bold text-primary-500">
-                      ${plan?.price}
-                    </span>{" "}
-                    <span className="text-sm text-gray-500">
-                      / {plan?.minutes}
-                    </span>
-                  </div>
-
-                  <div className="flex items-center gap-2 mb-4">
-                    <svg
-                      width="12"
-                      height="12"
-                      viewBox="0 0 12 12"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
+          {
+            dealerMinutePlansLoading ? <DealerMinutePlanSkeleton /> : (
+              <div className="grid lg:grid-cols-3 gap-4">
+                {minutePlans.map((plan, index) => {
+                  return (
+                    <div
+                      key={index}
+                      className={classNames(
+                        `border rounded-xl p-4 cursor-pointer`,
+                        { "border-primary-500": plan.isSelected }
+                      )}
+                      onClick={() => {
+                        setMinutePlans((prev) =>
+                          prev.map((p) =>
+                            p.name === plan.name
+                              ? { ...p, isSelected: !p.isSelected }
+                              : { ...p, isSelected: false }
+                          )
+                        );
+                      }}
                     >
-                      <path
-                        d="M4.70112 0.0219504C4.76863 0.0449158 4.83458 0.0722335 4.89856 0.103732L5.6682 0.482659C5.87708 0.585501 6.12188 0.585501 6.33077 0.482659L7.10041 0.103732C7.91796 -0.298785 8.90702 0.0376683 9.30954 0.855221L9.35363 0.952615L9.39132 1.05266L9.66759 1.86482C9.74258 2.08524 9.91568 2.25834 10.1361 2.33332L10.9483 2.6096C11.811 2.90307 12.2724 3.84036 11.979 4.70307C11.956 4.77059 11.9287 4.83654 11.8972 4.90051L11.5183 5.67015C11.4154 5.87904 11.4154 6.12384 11.5183 6.33272L11.8972 7.10236C12.2997 7.91991 11.9633 8.90897 11.1457 9.31149C11.0817 9.34299 11.0158 9.37031 10.9483 9.39327L10.1361 9.66955C9.91568 9.74453 9.74258 9.91763 9.66759 10.1381L9.39132 10.9502C9.09784 11.8129 8.16056 12.2744 7.29784 11.9809C7.23033 11.958 7.16438 11.9306 7.10041 11.8991L6.33077 11.5202C6.12188 11.4174 5.87708 11.4174 5.6682 11.5202L4.89856 11.8991C4.08101 12.3017 3.09194 11.9652 2.68943 11.1477C2.65793 11.0837 2.63061 11.0177 2.60765 10.9502L2.33137 10.1381C2.25639 9.91763 2.08329 9.74453 1.86287 9.66955L1.05071 9.39327C0.187987 9.0998 -0.273478 8.16252 0.0199973 7.2998C0.0429627 7.23229 0.0702804 7.16633 0.101779 7.10236L0.480706 6.33272C0.583548 6.12384 0.583548 5.87904 0.480706 5.67015L0.101779 4.90051C-0.300738 4.08296 0.0357151 3.0939 0.853268 2.69138C0.917244 2.65988 0.983196 2.63257 1.05071 2.6096L1.86287 2.33332C2.08329 2.25834 2.25639 2.08524 2.33137 1.86482L2.60765 1.05266C2.90112 0.18994 3.8384 -0.271524 4.70112 0.0219504ZM8.08128 4.18324L4.82972 7.4348L3.64518 6.01335C3.48608 5.82243 3.20232 5.79663 3.0114 5.95574C2.82048 6.11484 2.79468 6.39859 2.95378 6.58952L4.45378 8.38952C4.62319 8.5928 4.93057 8.60674 5.11768 8.41963L8.71768 4.81963C8.89342 4.6439 8.89342 4.35897 8.71768 4.18324C8.54195 4.0075 8.25702 4.0075 8.08128 4.18324Z"
-                        fill="#019935"
-                      />
-                    </svg>
+                      {/* top */}
+                      <div className="flex justify-between mb-4">
+                        <div className="flex items-center gap-2">
+                          <svg
+                            width="20"
+                            height="18"
+                            viewBox="0 0 20 18"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M16 0C16.3367 0 16.6477 0.169088 16.8316 0.444602L16.8944 0.552786L19.8944 6.55279C20.0579 6.87968 20.0287 7.26588 19.827 7.5623L19.7433 7.66896L10.7699 17.6418C10.5903 17.861 10.3336 17.9796 10.0707 17.9976C10.0081 18.0019 9.94555 18.0005 9.88352 17.9932L9.77108 17.9743C9.56976 17.9284 9.38105 17.821 9.23871 17.6521L0.256722 7.66896C0.0122342 7.39731 -0.0623057 7.01725 0.0532894 6.67786L0.105589 6.55279L3.10559 0.552786C3.25616 0.251645 3.54648 0.0490966 3.87516 0.00780368L4.00002 0H16ZM12.576 8H7.423L10 14.342L12.576 8ZM16.753 8H14.735L13.074 12.088L16.753 8ZM5.264 8H3.246L6.924 12.087L5.264 8ZM6.622 2H4.61802L2.618 6H5.322L6.622 2ZM11.273 2H8.726L7.427 6H12.572L11.273 2ZM15.381 2H13.377L14.677 6H17.381L15.381 2Z"
+                              fill="#FAAE22"
+                            />
+                          </svg>
+                          <span>{plan?.name}</span>
+                        </div>
 
-                    <p className="text-sm text-gray-400 ">
-                      {plan?.description}
-                    </p>
-                  </div>
+                        <div>
+                          <Checkbox id="terms" checked={Boolean(plan.isSelected)} />
+                        </div>
+                      </div>
 
-                  <div className="text-sm text-gray-400">
-                    Your Current Plan{" "}
-                    <span className="text-green-500 underline">Basic</span>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+                      <div className="mb-4">
+                        <span className="text-2xl font-bold text-primary-500">
+                          ${plan?.price}
+                        </span>{" "}
+                        <span className="text-sm text-gray-500">
+                          / {plan?.minutes} Mins
+                        </span>
+                      </div>
+
+                      <div className="flex items-center gap-2 mb-4">
+                        <svg
+                          width="12"
+                          height="12"
+                          viewBox="0 0 12 12"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M4.70112 0.0219504C4.76863 0.0449158 4.83458 0.0722335 4.89856 0.103732L5.6682 0.482659C5.87708 0.585501 6.12188 0.585501 6.33077 0.482659L7.10041 0.103732C7.91796 -0.298785 8.90702 0.0376683 9.30954 0.855221L9.35363 0.952615L9.39132 1.05266L9.66759 1.86482C9.74258 2.08524 9.91568 2.25834 10.1361 2.33332L10.9483 2.6096C11.811 2.90307 12.2724 3.84036 11.979 4.70307C11.956 4.77059 11.9287 4.83654 11.8972 4.90051L11.5183 5.67015C11.4154 5.87904 11.4154 6.12384 11.5183 6.33272L11.8972 7.10236C12.2997 7.91991 11.9633 8.90897 11.1457 9.31149C11.0817 9.34299 11.0158 9.37031 10.9483 9.39327L10.1361 9.66955C9.91568 9.74453 9.74258 9.91763 9.66759 10.1381L9.39132 10.9502C9.09784 11.8129 8.16056 12.2744 7.29784 11.9809C7.23033 11.958 7.16438 11.9306 7.10041 11.8991L6.33077 11.5202C6.12188 11.4174 5.87708 11.4174 5.6682 11.5202L4.89856 11.8991C4.08101 12.3017 3.09194 11.9652 2.68943 11.1477C2.65793 11.0837 2.63061 11.0177 2.60765 10.9502L2.33137 10.1381C2.25639 9.91763 2.08329 9.74453 1.86287 9.66955L1.05071 9.39327C0.187987 9.0998 -0.273478 8.16252 0.0199973 7.2998C0.0429627 7.23229 0.0702804 7.16633 0.101779 7.10236L0.480706 6.33272C0.583548 6.12384 0.583548 5.87904 0.480706 5.67015L0.101779 4.90051C-0.300738 4.08296 0.0357151 3.0939 0.853268 2.69138C0.917244 2.65988 0.983196 2.63257 1.05071 2.6096L1.86287 2.33332C2.08329 2.25834 2.25639 2.08524 2.33137 1.86482L2.60765 1.05266C2.90112 0.18994 3.8384 -0.271524 4.70112 0.0219504ZM8.08128 4.18324L4.82972 7.4348L3.64518 6.01335C3.48608 5.82243 3.20232 5.79663 3.0114 5.95574C2.82048 6.11484 2.79468 6.39859 2.95378 6.58952L4.45378 8.38952C4.62319 8.5928 4.93057 8.60674 5.11768 8.41963L8.71768 4.81963C8.89342 4.6439 8.89342 4.35897 8.71768 4.18324C8.54195 4.0075 8.25702 4.0075 8.08128 4.18324Z"
+                            fill="#019935"
+                          />
+                        </svg>
+
+                        <p className="text-sm text-gray-400 ">
+                          {plan?.description}
+                        </p>
+                      </div>
+
+                      <div className="text-sm text-gray-400">
+                        Your Current Plan{" "}
+                        <span className="text-green-500 underline">Basic</span>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )
+          }
 
           {/* footer */}
           <div className="flex justify-end gap-3 mt-6">
@@ -480,6 +482,7 @@ const AdminDashboardOverview = () => {
                   billingSummery: true,
                 }));
               }}
+              disabled={dealerMinutePlansLoading}
             >
               Buy Minutes
               <svg

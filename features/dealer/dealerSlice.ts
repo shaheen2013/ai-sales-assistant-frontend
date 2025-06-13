@@ -1,6 +1,6 @@
 import { PaginatedResponse } from "@/types/paginatedType";
 import { apiSlice } from "../api/apiSlice";
-import { CardInfo, Dealer, DealerCallStatsResponseType, DealerOverviewResponseType, DealerRegistrationSourceCount, DealerStatisticsResponseType } from "@/types/dealerType";
+import { CardInfo, Dealer, DealerCallStatsResponseType, DealerOverviewResponseType, DealerRegistrationSourceCount, DealerStatisticsResponseType, ProductResponseType } from "@/types/dealerType";
 import { SupportStatusCountType, SupportTicketType } from "@/types/supportTicketType";
 import { DealerProfileType, DealerPublicProfileType } from "@/types/dealerProfileSliceType";
 
@@ -94,7 +94,13 @@ export const dealerSlice = apiSlice.injectEndpoints({
                 body: data
             })
         }),
+        getDealerMinutePlans: builder.query<ProductResponseType[], void>({
+            query: () => ({
+                method: "GET",
+                url: `/stripe/subscriptions/available_minute_plans/`,
+            })
+        }),
     }),
 });
 
-export const { useGetDealersQuery, useGetDealerStatisticsQuery, useGetDealerRegistrationCountQuery, useGetDealerAllSupportTicketsQuery, useCreateSupportTicketMutation, useUpdateDealerSupportTicketMutation, useDeleteDealerSupportTickerMutation, useGetDealerPublicProfileQuery, useGetDealerCardsQuery, useGetPublicDealersQuery, useUpdateDealerAssistantVoiceMutation, useGetDealerDashboardOverviewQuery, useGetDealerCallHistoryStatsQuery } = dealerSlice;
+export const { useGetDealersQuery, useGetDealerStatisticsQuery, useGetDealerRegistrationCountQuery, useGetDealerAllSupportTicketsQuery, useCreateSupportTicketMutation, useUpdateDealerSupportTicketMutation, useDeleteDealerSupportTickerMutation, useGetDealerPublicProfileQuery, useGetDealerCardsQuery, useGetPublicDealersQuery, useUpdateDealerAssistantVoiceMutation, useGetDealerDashboardOverviewQuery, useGetDealerCallHistoryStatsQuery, useGetDealerMinutePlansQuery } = dealerSlice;
