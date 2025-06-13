@@ -10,6 +10,7 @@ import {
 } from '@/components/shadcn/select';
 import { TeezAILogoImageSVG } from './svg-icons';
 import { useGetPublicDealersQuery } from '@/features/dealer/dealerSlice';
+import { Combobox } from '@/components/shadcn/combo-box';
 
 interface AISalesInitializerProps {
   emailValue: string;
@@ -27,7 +28,7 @@ export default function AISalesInitializer({
   onDealerChange,
 }: AISalesInitializerProps) {
   /*--RTK Query--*/
-  const { data: dealers } = useGetPublicDealersQuery();
+  const { data: dealers, isLoading: dealersLoading } = useGetPublicDealersQuery();
 
   return (
     <div className="flex flex-col items-center lg:mt-32">
@@ -47,7 +48,7 @@ export default function AISalesInitializer({
             Select your Dealer: <span className="text-red-500">*</span>
           </label>
 
-          <Select onValueChange={onDealerChange}>
+          {/* <Select onValueChange={onDealerChange}>
             <SelectTrigger className="h-11 border-[#D5D7DA]">
               <SelectValue placeholder="Select a Dealer" />
             </SelectTrigger>
@@ -62,7 +63,19 @@ export default function AISalesInitializer({
                 }
               </SelectGroup>
             </SelectContent>
-          </Select>
+          </Select> */}
+          <Combobox
+            placeholder='Select a Dealer'
+            options={dealers?.map((dealer: any) => ({
+              value: dealer?.user?.dealer_details?.id,
+              label: dealer?.business_name || 'N/A',
+            })) || []}
+            value={selectedDealer}
+            onChange={onDealerChange}
+            className="h-11 border-[#D5D7DA] w-full"
+            width="xl:w-[350px]"
+            isLoading={dealersLoading}
+          />
         </div>
 
         {/* enter your email */}
