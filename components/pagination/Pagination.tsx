@@ -31,6 +31,7 @@ const Pagination: FC<PaginationPropsType> = ({
       nextLabel={<ChevronRight className="size-5 text-inherit" />}
       nextClassName="cursor-pointer text-gray-500 hover:text-gray-700 ml-2"
       activeClassName="bg-primary-500 text-white"
+      disabledClassName="!cursor-not-allowed !text-gray-100 [&>a]:!cursor-not-allowed"
     />
   );
 };
