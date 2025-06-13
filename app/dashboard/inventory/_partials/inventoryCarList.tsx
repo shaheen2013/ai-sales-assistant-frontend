@@ -32,6 +32,7 @@ import {
 import { useMemo, useState } from "react";
 import { MoreHorizontal } from "lucide-react";
 import { Controller, useForm } from "react-hook-form";
+import { useRouter, useSearchParams } from "next/navigation";
 
 import {
   Table,
@@ -55,8 +56,8 @@ import { Button } from "@/components/shadcn/button";
 import { Skeleton } from "@/components/shadcn/skeleton";
 import { Input, InputCopy } from "@/components/shadcn/input";
 import { useEditVehicleInventoryMutation } from "@/features/inventory/inventorySlice";
+
 import Pagination from "@/components/pagination/Pagination";
-import { useRouter, useSearchParams } from "next/navigation";
 
 export default function InventoryCarList({
   refetchGetVehicle,
@@ -165,7 +166,7 @@ export default function InventoryCarList({
         brand: formData.brand,
         model: formData.model,
 
-        mileage: formData.mileage,
+        ...(formData.mileage && { mileage: formData.mileage }),
         ...(formData.year && { year: formData.year }),
         series: formData.series,
         trim: formData.trim,

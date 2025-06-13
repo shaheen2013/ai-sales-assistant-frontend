@@ -178,7 +178,7 @@ export default function DashboardDealerInventory() {
       brand: formData.brand,
       model: formData.model,
 
-      mileage: formData.mileage,
+      ...(formData.mileage && { mileage: formData.mileage }),
       ...(formData.year && { year: formData.year }),
       series: formData.series,
       trim: formData.trim,
@@ -899,7 +899,9 @@ export default function DashboardDealerInventory() {
             />
           </div>
 
-          <div className="text-gray-400">Only support .pdf, .doc, .csv</div>
+          <div className="text-gray-400">
+            Only support .pdf, .doc, .csv & .numbers
+          </div>
 
           <div className="flex justify-end gap-3">
             <Button

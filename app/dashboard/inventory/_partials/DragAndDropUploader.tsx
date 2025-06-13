@@ -23,6 +23,7 @@ export default function DragAndDropUploader({
     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", // .xlsx
     "application/vnd.ms-excel", // .xls
     "text/csv", // .csv
+    "application/x-iwork-numbers-sffnumbers", // .numbers (most commonly reported)
   ];
   const allowedFileExtensions = [
     ".docx",
@@ -31,6 +32,7 @@ export default function DragAndDropUploader({
     ".xlsx",
     ".xls",
     ".csv",
+    ".numbers",
   ];
   const maxFileSize = 5 * 1024 * 1024;
   const allowedMultipleFiles = false;
