@@ -37,6 +37,9 @@ import { Skeleton } from "@/components/shadcn/skeleton";
 import Link from "next/link";
 import Pagination from "@/components/pagination/Pagination";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useDeleteVehicleInventoryFileMutation } from "@/features/inventory/inventorySlice";
+import { useToast } from "@/hooks/useToast";
+import { beautifyErrors } from "@/lib/utils";
 
 export default function InventoryFilesList({
   isLoading,
@@ -50,6 +53,7 @@ export default function InventoryFilesList({
   dataGetInventoryFiles?: any;
 }) {
   const router = useRouter();
+  const toast = useToast();
   const searchParams = useSearchParams();
 
   const page = searchParams.get("file_page") || 1;
@@ -59,11 +63,33 @@ export default function InventoryFilesList({
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = useState({});
 
+  const [deleteInventoryFile, { isLoading: isLoadingDeleteVehicleInventory }] =
+    useDeleteVehicleInventoryFileMutation();
+
   type Inventory = {
+    id: number;
     created_date: string;
     file_name: string;
     file: string;
     file_size: string;
+  };
+
+  const handleInventoryDelete = async (e: any) => {
+    try {
+      const { data, error } = await deleteInventoryFile({ id: e });
+
+      if (error) {
+        toast("error", beautifyErrors(error));
+        return;
+      }
+
+      toast("success", "Inventory file deleted successfully");
+      refetchGetInventoryFiles?.();
+
+      console.log("Inventory file deleted successfully:", data);
+    } catch (error) {
+      console.error("Error deleting inventory file:", error);
+    }
   };
 
   const columns: ColumnDef<Inventory>[] = [
@@ -266,9 +292,10 @@ export default function InventoryFilesList({
               </DropdownMenuItem>
 
               <DropdownMenuItem
-              // onClick={() => {
-              //   handleInventoryDelete(row?.original?.id);
-              // }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleInventoryDelete(row?.original?.id);
+                }}
               >
                 <svg
                   width="20"

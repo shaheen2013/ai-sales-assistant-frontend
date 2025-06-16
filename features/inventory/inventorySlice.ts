@@ -3,7 +3,6 @@ import { apiSlice } from "../api/apiSlice";
 
 export const inventorySlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    // v1
     vehicleInventoryUpload: builder.mutation({
       query: (data) => ({
         url: `/v1/dealer-vehicle-inventory-upload`,
@@ -11,6 +10,17 @@ export const inventorySlice = apiSlice.injectEndpoints({
         body: data,
         credentials: "include",
       }),
+    }),
+
+    deleteVehicleInventoryFile: builder.mutation({
+      query: (params) => {
+        const { id } = params;
+        return {
+          url: `/v1/dealer-vehicle-inventory-delete/${id}/`,
+          method: "DELETE",
+          credentials: "include",
+        };
+      },
     }),
 
     getVehicleInventory: builder.query({
@@ -81,6 +91,7 @@ export const inventorySlice = apiSlice.injectEndpoints({
 
 export const {
   useVehicleInventoryUploadMutation,
+  useDeleteVehicleInventoryFileMutation,
   useGetVehicleInventoryQuery,
   useCreateVehicleInventoryMutation,
   useEditVehicleInventoryMutation,
