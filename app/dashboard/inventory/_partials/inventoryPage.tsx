@@ -381,8 +381,7 @@ export default function DashboardDealerInventory() {
               <Select>
                 <SelectTrigger
                   value={"ss"}
-                  className="w-[80px]"
-                  postIcon={<div></div>}
+                  className="w-[100px]"
                   preIcon={
                     <svg
                       width="20"
@@ -403,18 +402,20 @@ export default function DashboardDealerInventory() {
                   }
                 >
                   <h2 className="text-gray-100">Filter</h2>
-                  {/* <SelectValue placeholder="Filter" defaultValue={""} /> */}
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="apple">Apple</SelectItem>
-                  <SelectItem value="banana">Banana</SelectItem>
-                  <SelectItem value="blueberry">Blueberry</SelectItem>
-                  <SelectItem value="grapes">Grapes</SelectItem>
-                  <SelectItem value="pineapple">Pineapple</SelectItem>
+                  <SelectItem value="-id">ID</SelectItem>
+                  <SelectItem value="-created_at">Created At</SelectItem>
+                  <SelectItem value="-updated_at">Updated At</SelectItem>
+                  <SelectItem value="-brand">Brand</SelectItem>
+                  <SelectItem value="-model">Model</SelectItem>
+                  <SelectItem value="-year">Year</SelectItem>
+                  <SelectItem value="-vin">VIN</SelectItem>
+                  <SelectItem value="-odometer">Odometer</SelectItem>
                 </SelectContent>
               </Select>
 
-              {/* date sort */}
+              {/* sort */}
               <Select>
                 <SelectTrigger
                   className="w-[120px]"
@@ -448,11 +449,14 @@ export default function DashboardDealerInventory() {
                   <h2 className="text-gray-100">Sory By</h2>
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="apple">Apple</SelectItem>
-                  <SelectItem value="banana">Banana</SelectItem>
-                  <SelectItem value="blueberry">Blueberry</SelectItem>
-                  <SelectItem value="grapes">Grapes</SelectItem>
-                  <SelectItem value="pineapple">Pineapple</SelectItem>
+                  <SelectItem value="id">ID</SelectItem>
+                  <SelectItem value="created_at">Created At</SelectItem>
+                  <SelectItem value="updated_at">Updated At</SelectItem>
+                  <SelectItem value="brand">Brand</SelectItem>
+                  <SelectItem value="model">Model</SelectItem>
+                  <SelectItem value="year">Year</SelectItem>
+                  <SelectItem value="vin">VIN</SelectItem>
+                  <SelectItem value="odometer">Odometer</SelectItem>
                 </SelectContent>
               </Select>
             </div>

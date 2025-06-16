@@ -45,8 +45,6 @@ export default function RecentFiles({
 
   const maxThreeResults = dataGetInventoryFiles?.results?.slice(0, 3);
 
-  console.log("maxThreeResults => ", maxThreeResults);
-
   return (
     <div>
       <h2 className="mb-4">Recent files</h2>

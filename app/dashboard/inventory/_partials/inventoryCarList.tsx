@@ -122,8 +122,6 @@ export default function InventoryCarList({
     setValue("exterior_color", selectedInventory?.exterior_color || "");
     setValue("interior_color", selectedInventory?.interior_color || "");
     setValue("options", selectedInventory?.options || "");
-
-    console.log("selectedInventory", selectedInventory);
   };
 
   const handleEditInventory = async (formData: any) => {
