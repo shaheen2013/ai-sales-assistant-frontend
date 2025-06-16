@@ -85,7 +85,6 @@ const TalkToHumanSection = () => {
     data: talkToHumanCallLogsData,
     isFetching: talkToHumanCallLogsIsFetching,
   } = useGetTalkToHumanCallLogsQuery({
-    dealer_id: session?.user?.id,
     limit: 10,
     offset: (page - 1) * 10,
     ...(sortBy && { sort_by: sortBy, order: "asc" }),

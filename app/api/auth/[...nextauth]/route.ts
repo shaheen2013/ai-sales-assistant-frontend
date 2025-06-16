@@ -41,7 +41,7 @@ async function refreshAccessToken(token: JWT) {
       refresh: data.refresh,
     };
   } catch (error: any) {
-    console.log("RefreshAccessTokenError => ", error.message);
+    console.log("RefreshAccessTokenError => ", error);
     return {
       ...token,
       error: "RefreshAccessTokenError",
@@ -190,6 +190,7 @@ const authOptions: AuthOptions = {
       session.refresh = token.refresh;
       session.user = token.user;
       session.accessTokenExpires = token.accessTokenExpires;
+      session.error = token.error;
 
       return session;
     },

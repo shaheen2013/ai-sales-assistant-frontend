@@ -68,7 +68,7 @@ export default function AISalesInitializer({
             placeholder='Select a Dealer'
             options={dealers?.map((dealer: any) => ({
               value: dealer?.user?.dealer_details?.id,
-              label: dealer?.business_name || 'N/A',
+              label: dealer?.business_name || dealer?.user?.email || 'N/A',
             })) || []}
             value={selectedDealer}
             onChange={onDealerChange}

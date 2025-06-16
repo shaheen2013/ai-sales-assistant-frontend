@@ -2,7 +2,7 @@
 
 import { Suspense } from "react";
 import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 
 import { SidebarProvider } from "@/components/shadcn/sidebar";
 import { DashboardSidebar } from "@/components/partials/dashboard/dashboard-sidebar";
@@ -24,6 +24,11 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
 
   if (!isAuthenticated && !isLoading) {
     router.push(`/login`);
+    return null;
+  }
+
+  if (session?.error === "RefreshAccessTokenError") {
+    signOut({ callbackUrl: "/login" });
     return null;
   }
 
