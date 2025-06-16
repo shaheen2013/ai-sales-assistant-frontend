@@ -487,7 +487,7 @@ export default function DashboardDealerInventory() {
       <Dialog
         open={modals.addInventory}
         onOpenChange={(e) => {
-          console.log(e);
+          reset();
           setModals((prev) => ({
             ...prev,
             addInventory: !prev.addInventory,
@@ -822,6 +822,8 @@ export default function DashboardDealerInventory() {
                   className="h-11 rounded-lg"
                   onClick={(e) => {
                     e.preventDefault();
+
+                    reset();
                     setModals({ ...modals, addInventory: false });
                   }}
                 >
