@@ -49,7 +49,7 @@ export default function RecentFiles({
     <div>
       <h2 className="mb-4">Recent files</h2>
 
-      <div className="grid lg:grid-cols-3 gap-4 mb-6">
+      <div className="grid xl:grid-cols-3 lg:grid-cols-2 grid-cols-1 gap-4 mb-6">
         {maxThreeResults?.map((inventoryFile: any, index: any) => (
           <div
             key={index}
