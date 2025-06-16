@@ -15,20 +15,11 @@ import {
   FormMessage,
 } from '@/components/shadcn/form';
 import { Input } from '@/components/shadcn/input';
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/shadcn/select';
 import { useAddDepartmentMutation } from '@/features/dealer/dealerManagementSlice';
 import { useToast } from '@/hooks/useToast';
 import { handleApiError } from '@/lib/utils';
 import { DepartmentDataType } from '@/types/dealerManagementSliceType';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Check, Undo2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
@@ -36,10 +27,10 @@ import * as z from 'zod';
 // Define form schema with validation
 const formSchema = z.object({
   department_name: z.string().min(1, 'Department name is required'),
-  department_email: z
-    .string()
-    .email('Invalid email format')
-    .min(1, 'Department email is required'),
+  department_email: z.union([
+    z.literal(''),
+    z.string().email('Invalid email address'),
+  ]),
 });
 
 // Type for form data
@@ -56,14 +47,6 @@ const AddNewDepartmentModal = ({
 }) => {
   const toast = useToast();
 
-  const staticDepartmentNames = [
-    'Sales Representative',
-    'Technical Advisor',
-    'Customer Support Agent',
-    'Finance Advisor',
-  ];
-
-  const [showCustomInput, setShowCustomInput] = useState(false);
   const [customDepartment, setCustomDepartment] = useState('');
   const [departments, setDepartments] = useState<string[]>([]);
 
@@ -75,7 +58,7 @@ const AddNewDepartmentModal = ({
 
     // Combine all department names, removing duplicates
     const allNames = [
-      ...new Set([...dynamicDepartmentNames, ...staticDepartmentNames]),
+      ...new Set([...dynamicDepartmentNames]),
     ];
 
     setDepartments(allNames);
@@ -108,20 +91,9 @@ const AddNewDepartmentModal = ({
     onOpenChange(false);
   };
 
-  // Handle custom department input
-  const handleAddCustomDepartment = () => {
-    if (customDepartment && !departments.includes(customDepartment)) {
-      setDepartments([...departments, customDepartment]);
-      form.setValue('department_name', customDepartment);
-      setCustomDepartment('');
-      setShowCustomInput(false);
-    }
-  };
-
   // Reset custom input when modal closes
   useEffect(() => {
     if (!open) {
-      setShowCustomInput(false);
       setCustomDepartment('');
       form.reset();
     }
@@ -132,7 +104,7 @@ const AddNewDepartmentModal = ({
       <DialogContent className="max-w-2xl p-4">
         <DialogHeader>
           <DialogTitle className="text-gray-300">
-            Add Department & Assign People
+            Add Department
           </DialogTitle>
         </DialogHeader>
         <DialogDescription className="hidden"></DialogDescription>
@@ -149,72 +121,11 @@ const AddNewDepartmentModal = ({
                       <FormLabel className="text-sm text-gray-700 font-medium">
                         Department Name <span className="text-red-500">*</span>
                       </FormLabel>
-                      {showCustomInput ? (
-                        <div className="flex gap-2">
-                          <Input
-                            value={customDepartment}
-                            onChange={(e) =>
-                              setCustomDepartment(e.target.value)
-                            }
-                            placeholder="Enter a new department"
-                            className="border-[#d5d7da] rounded-md focus:border-[#019935] focus:ring-[#019935]"
-                          />
-                          <Button
-                            type="button"
-                            onClick={handleAddCustomDepartment}
-                            className="bg-[#019935] hover:bg-[#018a30] text-white"
-                            disabled={!customDepartment}
-                          >
-                            <Check className="h-6 w-6 " />
-                          </Button>
-                          <Button
-                            type="button"
-                            onClick={() => {
-                              setCustomDepartment('');
-                              setShowCustomInput(false);
-                            }}
-                            className="bg-red-500 hover:bg-red-600 text-white"
-                          >
-                            <Undo2 className="h-6 w-6" />
-                          </Button>
-                        </div>
-                      ) : (
-                        <Select
-                          onValueChange={(value) => {
-                            if (value === 'custom') {
-                              setShowCustomInput(true);
-                            } else {
-                              field.onChange(value);
-                            }
-                          }}
-                          value={field.value}
-                        >
-                          <FormControl>
-                            <SelectTrigger className="border-[#d5d7da] focus:ring-[#019935] focus:border-[#019935]">
-                              <SelectValue placeholder="Choose Department" />
-                            </SelectTrigger>
-                          </FormControl>
-                          <SelectContent>
-                            <SelectGroup>
-                              {departments.map((dept) => (
-                                <SelectItem
-                                  key={dept}
-                                  value={dept}
-                                  className="flex items-center justify-between cursor-pointer"
-                                >
-                                  {dept}
-                                </SelectItem>
-                              ))}
-                              <SelectItem
-                                value="custom"
-                                className="text-[#019935] cursor-pointer font-semibold"
-                              >
-                                Add New Department
-                              </SelectItem>
-                            </SelectGroup>
-                          </SelectContent>
-                        </Select>
-                      )}
+                      <Input
+                        {...field}
+                        placeholder="Enter new department name"
+                        className="border-[#d5d7da] rounded-md focus:border-[#019935] focus:ring-[#019935]"
+                      />
                       <FormMessage />
                     </FormItem>
                   )}
@@ -229,8 +140,8 @@ const AddNewDepartmentModal = ({
                       </FormLabel>
                       <FormControl>
                         <Input
-                          type="email"
                           {...field}
+                          type="email"
                           placeholder="Enter department email"
                           className="border-[#d5d7da] rounded-md focus:border-[#019935] focus:ring-[#019935]"
                         />
