@@ -195,9 +195,6 @@ export default function DashboardDealerInventory() {
 
     setModals({ ...modals, addInventory: false });
     reset();
-    await refetchGetVehicle();
-
-    console.log("data => ", data);
   };
 
   const handleUploadInventoryFiles = async () => {

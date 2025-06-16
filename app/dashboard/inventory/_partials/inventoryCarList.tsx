@@ -153,9 +153,6 @@ export default function InventoryCarList({
 
       setModals({ ...modals, addInventory: false });
       reset();
-      await refetchGetVehicle();
-
-      console.log("data => ", data);
     } catch (error) {
       console.log("error => ", error);
       toast("error", "Something went wrong");
@@ -864,13 +861,15 @@ export default function InventoryCarList({
         </TableBody>
       </Table>
 
-      <div className="flex items-end justify-center my-4">
-        <Pagination
-          page={Number(page)}
-          onPageChange={onPageChange}
-          totalPage={totalPage}
-        />
-      </div>
+      {getVehicleList?.count ? (
+        <div className="flex items-end justify-center my-4">
+          <Pagination
+            page={Number(page)}
+            onPageChange={onPageChange}
+            totalPage={totalPage}
+          />
+        </div>
+      ) : null}
 
       <Dialog
         open={modals.addInventory}
@@ -914,6 +913,7 @@ export default function InventoryCarList({
                         {...field}
                       />
                     )}
+                    disabled
                   />
                 </div>
 

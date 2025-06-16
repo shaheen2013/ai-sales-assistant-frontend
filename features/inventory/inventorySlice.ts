@@ -33,6 +33,8 @@ export const inventorySlice = apiSlice.injectEndpoints({
           credentials: "include",
         };
       },
+
+      providesTags: ["getVehicleInventory"],
     }),
 
     createVehicleInventory: builder.mutation({
@@ -42,6 +44,8 @@ export const inventorySlice = apiSlice.injectEndpoints({
         body: data,
         credentials: "include",
       }),
+
+      invalidatesTags: ["getVehicleInventory"],
     }),
 
     editVehicleInventory: builder.mutation({
@@ -54,6 +58,8 @@ export const inventorySlice = apiSlice.injectEndpoints({
           credentials: "include",
         };
       },
+
+      invalidatesTags: ["getVehicleInventory"],
     }),
 
     deleteVehicleInventory: builder.mutation({
@@ -65,6 +71,8 @@ export const inventorySlice = apiSlice.injectEndpoints({
           credentials: "include",
         };
       },
+
+      invalidatesTags: ["getVehicleInventory"],
     }),
 
     getVehicles: builder.query({
