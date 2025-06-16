@@ -33,7 +33,7 @@ const AdminDashboardOverviewCard: FC<AdminDashboardOverviewCardProps> = ({
         </div>
 
         {/* right */}
-        <div className="">
+        {/* <div className="">
           <DropdownMenu>
             <DropdownMenuTrigger asChild className="outline-none">
               <button className="flex">
@@ -60,7 +60,7 @@ const AdminDashboardOverviewCard: FC<AdminDashboardOverviewCardProps> = ({
               </DropdownMenuGroup>
             </DropdownMenuContent>
           </DropdownMenu>
-        </div>
+        </div> */}
       </div>
 
       {/* buttom */}
