@@ -109,38 +109,6 @@ export default function InventoryCarList({
       (item: any) => item.id === id
     );
 
-    // @deprecared values
-    // setValue("stockId", String(selectedInventory?.id));
-    // setValue("vin", selectedInventory?.vin);
-    // setValue("brand", selectedInventory?.brand);
-    // setValue("model", selectedInventory?.model);
-    // setValue("year", selectedInventory?.year);
-    // setValue("mileage", selectedInventory?.mileage);
-    // setValue("numberPlate", selectedInventory?.number_plate);
-    // setValue("bodyStyle", selectedInventory?.body_style);
-    // setValue("engineType", selectedInventory?.engine_type);
-    // setValue("fuelType", selectedInventory?.fuel_type);
-    // setValue("odometer", selectedInventory?.odometer);
-    // setValue("color", selectedInventory?.color);
-    // setValue("consign", selectedInventory?.consign);
-    // setValue("price", selectedInventory?.price);
-    // setValue("dateIn", selectedInventory?.date_in);
-    // setValue("dateOut", selectedInventory?.date_out);
-
-    // @ new values
-    //     vin: "",
-    // brand: "",
-    // model: "",
-
-    // mileage: "",
-    // year: "",
-    // series: "",
-    // trim: "",
-    // odometer: "",
-    // odometer_unit: "km",
-    // exterior_color: "",
-    // interior_color: "",
-    // options: "",
     setValue("vin", selectedInventory?.vin || "");
     setValue("brand", selectedInventory?.brand || "");
     setValue("model", selectedInventory?.model || "");
@@ -924,34 +892,6 @@ export default function InventoryCarList({
           <div>
             <hr className="pb-8" />
 
-            {/* search */}
-            <div className="max-w-[320px] mx-auto mb-6">
-              <Input
-                className="h-11 rounded-xl"
-                placeholder="Search"
-                preIcon={
-                  <svg
-                    width="20"
-                    height="21"
-                    viewBox="0 0 20 21"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M9.58366 18.8743C4.87533 18.8743 1.04199 15.041 1.04199 10.3327C1.04199 5.62435 4.87533 1.79102 9.58366 1.79102C14.292 1.79102 18.1253 5.62435 18.1253 10.3327C18.1253 15.041 14.292 18.8743 9.58366 18.8743ZM9.58366 3.04102C5.55866 3.04102 2.29199 6.31602 2.29199 10.3327C2.29199 14.3493 5.55866 17.6243 9.58366 17.6243C13.6087 17.6243 16.8753 14.3493 16.8753 10.3327C16.8753 6.31602 13.6087 3.04102 9.58366 3.04102Z"
-                      fill="#A2A1A7"
-                    />
-                    <path
-                      d="M18.3335 19.7076C18.1752 19.7076 18.0169 19.6492 17.8919 19.5242L16.2252 17.8576C15.9835 17.6159 15.9835 17.2159 16.2252 16.9742C16.4669 16.7326 16.8669 16.7326 17.1085 16.9742L18.7752 18.6409C19.0169 18.8826 19.0169 19.2826 18.7752 19.5242C18.6502 19.6492 18.4919 19.7076 18.3335 19.7076Z"
-                      fill="#A2A1A7"
-                    />
-                  </svg>
-                }
-              />
-            </div>
-
-            <hr className="pb-8" />
-
             {/* form */}
             <form onSubmit={handleSubmit(handleEditInventory)} className="">
               <div className="grid grid-cols-2 gap-x-4 mb-6 ">
@@ -1163,20 +1103,9 @@ export default function InventoryCarList({
                     name="odometer_unit"
                     control={control}
                     render={({ field }) => (
-                      // <Input
-                      //   type="odometer_unit"
-                      //   id="odometer_unit"
-                      //   className="h-11"
-                      //   placeholder="odometer_unit"
-                      //   error={errors?.odometer_unit?.message}
-                      //   {...field}
-                      // />
-
                       <Select
                         value={field.value}
                         onValueChange={field.onChange}
-                        // className="h-11 w-full !border-[#D5D7DA]"
-                        // defaultValue="km"
                       >
                         <SelectTrigger className="h-11 w-full !border-[#D5D7DA]">
                           <SelectValue placeholder="Select a fruit" />
