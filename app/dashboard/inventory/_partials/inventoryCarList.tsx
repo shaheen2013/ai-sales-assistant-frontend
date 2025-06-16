@@ -818,7 +818,7 @@ export default function InventoryCarList({
 
   return (
     <>
-      <Table>
+      <Table wrapperClassName="max-h-[450px]">
         <TableHeader>
           {table?.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
