@@ -1,5 +1,9 @@
 import React from "react";
 
 export default function page() {
-  return <div>page</div>;
+  return (
+    <div className="h-screen flex items-center justify-center text-xl font-bold">
+      Terms of use page coming soon
+    </div>
+  );
 }

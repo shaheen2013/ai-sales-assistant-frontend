@@ -3,7 +3,7 @@ import React from "react";
 export default function page() {
   return (
     <div className="h-screen flex items-center justify-center text-xl font-bold">
-      Privacy Policy page coming soon
+      Licencing page coming soon
     </div>
   );
 }
