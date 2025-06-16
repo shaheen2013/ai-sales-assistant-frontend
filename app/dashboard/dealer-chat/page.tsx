@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 import AISalesInitializer from '@/components/partials/chat/ai-sales-initializer';
 import ChatApp from '@/components/partials/chat/chat-interface';
@@ -29,6 +29,10 @@ export default function DealerChat() {
 
     const [startChat, { isLoading, error }] = useDealerChatMutation();
     const { data: dealers } = useGetPublicDealersQuery();
+
+    const selectedDealerInfo: any = useMemo(() => {
+        return dealers?.find((dealer: any) => dealer?.user?.dealer_details?.id === selectedDealer);
+    }, [selectedDealer, dealers]);
 
     // Scroll to bottom whenever messages change
     useEffect(() => {
@@ -70,7 +74,7 @@ export default function DealerChat() {
                     if (index === 0) {
                         return {
                             ...message,
-                            message: `Hello! I'm Clara from the ${dealers?.find((dealer: any) => dealer?.user?.dealer_details?.id === selectedDealer)?.business_name || "N/A"} dealership. To serve you quickly—whether it's checking vehicle availability, booking a test drive or service appointment, or discussing a trade-in—I'll first need a few details. Could you please share your name, email, phone number, and address?`,
+                            message: `Hello! I'm Clara from the ${selectedDealerInfo?.business_name || selectedDealerInfo?.user?.email || "N/A"} dealership. To serve you quickly—whether it's checking vehicle availability, booking a test drive or service appointment, or discussing a trade-in—I'll first need a few details. Could you please share your name, email, phone number, and address?`,
                             timestamp: moment().toISOString(),
                         }
                     }

@@ -22,11 +22,15 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 import { PhoneInput } from '../../settings/phone-input-with-country-list';
+import { isValidPhoneNumber } from 'react-phone-number-input';
 
 // Define form schema with validation
 const formSchema = z.object({
   name: z.string().min(1, 'Employee name is required'),
-  phone_number: z.string().min(1, 'Employee phone is required'),
+  phone_number: z.string().min(1, "Phone number is required").refine((value) => {
+    return isValidPhoneNumber(value);
+  }, { message: "Invalid phone number" }
+  ),
 });
 
 // Type for form data
@@ -49,7 +53,7 @@ const AddEmployeeModal = ({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: '',
-      phone_number: '',
+      phone_number: '+1',
     },
   });
 
@@ -64,6 +68,8 @@ const AddEmployeeModal = ({
         data: payload,
       }).unwrap();
       toast('success', 'Employee added successfully');
+      form.reset();
+      onOpenChange(false);
     } catch (error: any) {
       if (error.status === 400) {
         toast(
@@ -74,8 +80,6 @@ const AddEmployeeModal = ({
         toast('error', handleApiError(error));
       }
     }
-    form.reset();
-    onOpenChange(false);
   };
 
   return (
@@ -88,7 +92,7 @@ const AddEmployeeModal = ({
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <div className="flex flex-col gap-4 border-t border-b border-[#EFF4FA] py-4">
-              <div className="flex flex-col md:flex-row gap-3 items-start md:items-center w-full justify-between">
+              <div className="flex flex-col md:flex-row gap-3 items-start w-full justify-between">
                 <FormField
                   control={form.control}
                   name="name"
@@ -118,8 +122,8 @@ const AddEmployeeModal = ({
                       </FormLabel>
                       <FormControl>
                         <PhoneInput
-                          defaultCountry="US"
                           {...field}
+                          defaultCountry="US"
                           placeholder="Enter phone number"
                           className="border-[#d5d7da] rounded-md focus:border-[#019935] focus:ring-[#019935]"
                         />

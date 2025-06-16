@@ -61,6 +61,7 @@ export const appointmentBookingSlice = apiSlice.injectEndpoints({
                 const patchResults = dispatch(
                     appointmentBookingSlice.util.updateQueryData("getTalkToHumanCallLogs", arg?.queryParams, (draft) => {
                         const item = draft.results?.find((visit) => visit.id === arg.id);
+                        console.log("item--->", item);
                         if (item) {
                             Object.assign(item, { ...item, ...arg.data });
                         }

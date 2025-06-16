@@ -75,7 +75,7 @@ const AllDepartmentsTable = ({
       header: 'Department Email',
       cell: ({ row }) => {
         const department_email: string = row.getValue('department_email');
-        return <div className="text-[#374151]">{department_email}</div>;
+        return <div className="text-[#374151]">{department_email || "N/A"}</div>;
       },
     },
     {
@@ -84,7 +84,7 @@ const AllDepartmentsTable = ({
       cell: ({ row }) => {
         const employees = row.getValue('employees');
         const count = Array.isArray(employees) ? employees.length : 0;
-        return <div className="text-[#374151] text-center">{count}</div>;
+        return <div className="text-[#374151]">{count}</div>;
       },
     },
     {
@@ -201,9 +201,9 @@ const AllDepartmentsTable = ({
                       {/* if error || no data found */}
                       <TableCell
                         colSpan={departmentColumns.length}
-                        className="h-24 text-center animate-pulse text-red-500 font-medium"
+                        className="h-24 text-center font-medium"
                       >
-                        {error?.data?.message}
+                        {error?.data?.message || "No data found"}
                       </TableCell>
                     </TableRow>
                   )}
