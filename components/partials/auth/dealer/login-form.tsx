@@ -225,7 +225,6 @@ export default function LoginForm() {
           <Controller
             name="terms"
             control={control}
-            rules={{ required: true }}
             render={({ field, formState: { errors } }) => (
               <Checkbox
                 id="remember"
