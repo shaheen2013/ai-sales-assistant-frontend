@@ -95,7 +95,7 @@ export default function Home() {
       </section>
 
       {/* trusted by */}
-      <section className="bg-[#06052F] lg:py-14 py-20">
+      <section className="bg-[#06052F] lg:py-14 py-20" id="solutions">
         <div className="container">
           {/* trusted by */}
           <h3 className="lg:text-5xl text-3xl font-semibold text-white text-center mb-9">
@@ -543,7 +543,7 @@ export default function Home() {
       </section>
 
       {/* how to begin */}
-      <section className="">
+      <section className="" id="how-it-helps">
         <div className="container py-14 md:flex-row flex-col grid lg:grid-cols-2 gap-14">
           {/* left */}
           <div className="flex flex-col md:items-start col-span-1">
@@ -725,7 +725,7 @@ export default function Home() {
       <div className="bg-[#10143E] h-[430px] p-3 mt-[-430px] lg:block hidden"></div>
 
       {/* your ask */}
-      <section className="bg-[#10143E] text-white py-14 lg:pb-12 pb-2">
+      <section className="bg-[#10143E] text-white py-14 lg:pb-12 pb-2" id="faqs">
         <div className="container">
           {/* badge */}
           <div className="flex items-center justify-center mb-4">
@@ -768,11 +768,11 @@ export default function Home() {
       {/* become pro seller */}
       <section>
         <div className="container">
-          <div className="max-w-[1100px] my-14 shadow-lg rounded-xl overflow-hidden mx-auto flex lg:flex-row flex-col border-2 border-gray-100 bg-white">
+          <div className="max-w-[1100px] mt-14 mb-16 xl:mb-24 shadow-lg rounded-xl overflow-hidden mx-auto flex lg:flex-row flex-col border-2 border-gray-100 bg-white">
             {/* left */}
             <div className=" ">
               <Image
-                src="https://dummyimage.com/460x300"
+                src="/images/become_pro_seller.png"
                 alt="Become Pro Seller"
                 width={480}
                 height={300}

@@ -49,11 +49,11 @@ const UpgradePlanCtaCard = () => {
           </h3>
         </div>
         <div className="mt-6 flex justify-between items-center gap-6">
-          <Button variant="link" className="text-[#2196f3] p-0 h-auto">
+          {/* <Button variant="link" className="text-[#2196f3] p-0 h-auto">
             Learn more
-          </Button>
+          </Button> */}
 
-          <Button className="w-full  bg-white text-primary-600 border border-primary-100 hover:bg-gray-50">
+          <Button href="/dashboard/settings?tab=Your Plan" className="w-full  bg-white text-primary-600 border border-primary-100 hover:bg-gray-50">
             Upgrade plan
             <ArrowUpRight className="ml-2 h-4 w-4" />
           </Button>

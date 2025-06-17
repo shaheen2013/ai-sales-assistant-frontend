@@ -64,6 +64,29 @@ const products = [
   },
 ];
 
+const navItems = [
+  {
+    name: "Solutions",
+    url: "#solutions"
+  },
+  {
+    name: "How It Helps",
+    url: "#how-it-helps"
+  },
+  {
+    name: "Testimonials",
+    url: "#testimonials"
+  },
+  {
+    name: "Plans",
+    url: "#plans"
+  },
+  {
+    name: "FAQ's",
+    url: "#faqs"
+  }
+]
+
 export default function Example() {
   /*--Session--*/
   const { data: session, status } = useSession();
@@ -165,33 +188,18 @@ export default function Example() {
         {/* menu */}
         <div className="hidden lg:flex">
           <NavigationMenu className="">
-            <NavigationMenuList className="">
-              <NavigationMenuItem className="">
-                <NavigationMenuTrigger>Solutions</NavigationMenuTrigger>
-
-                <NavigationMenuContent className="">
-                  <DropdownContent />
-                </NavigationMenuContent>
-              </NavigationMenuItem>
-            </NavigationMenuList>
-          </NavigationMenu>
-
-          <NavigationMenu className="">
-            <NavigationMenuList className="">
-              <NavigationMenuItem>
-                <NavigationMenuTrigger>Integrations</NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <DropdownContent />
-                </NavigationMenuContent>
-              </NavigationMenuItem>
-
-              <NavigationMenuItem>
-                <Link href="/privacy-policy" legacyBehavior passHref>
-                  <NavigationMenuLink className="font-medium">
-                    Primacy Policy
-                  </NavigationMenuLink>
-                </Link>
-              </NavigationMenuItem>
+            <NavigationMenuList className="flex items-center gap-6">
+              {
+                navItems?.map((item, index) => (
+                  <NavigationMenuItem key={index}>
+                    <Link href={item.url} legacyBehavior passHref>
+                      <NavigationMenuLink className="font-medium">
+                        {item.name}
+                      </NavigationMenuLink>
+                    </Link>
+                  </NavigationMenuItem>
+                ))
+              }
             </NavigationMenuList>
           </NavigationMenu>
         </div>
@@ -327,92 +335,25 @@ export default function Example() {
           <div className="mt-6 flow-root">
             <div className="-my-6 ">
               <div className="space-y-2 pt-6 mb-4">
-                <Link
-                  href="/"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-medium text-black text-center"
-                >
-                  Home
-                </Link>
-
-                <Disclosure as="div" className="-mx-3">
-                  <DisclosureButton className="group flex w-full items-center justify-center gap-2 rounded-lg py-2 pr-3.5 pl-3 text-base/7 text-[#828282] text-center">
-                    Solutions
-                    <ChevronDownIcon
-                      aria-hidden="true"
-                      className="size-5 flex-none group-data-open:rotate-180"
-                    />
-                  </DisclosureButton>
-                  <DisclosurePanel className="mt-2 space-y-2 bg-gray-50 rounded-xl text-center border">
-                    {[...products].map((item) => (
-                      <DisclosureButton
-                        key={item.name}
-                        as="a"
-                        href={item.href}
-                        className="block rounded-lg py-2 pr-3 pl-6 text-sm/7 font-semibold text-gray-900 hover:bg-gray-50"
-                      >
-                        {item.name}
-                      </DisclosureButton>
-                    ))}
-                  </DisclosurePanel>
-                </Disclosure>
-
-                <Disclosure as="div" className="-mx-3">
-                  <DisclosureButton className="group flex w-full items-center justify-center gap-2 rounded-lg py-2 pr-3.5 pl-3 text-base/7 text-[#828282] text-center">
-                    AI Suite
-                    <ChevronDownIcon
-                      aria-hidden="true"
-                      className="size-5 flex-none group-data-open:rotate-180"
-                    />
-                  </DisclosureButton>
-                  <DisclosurePanel className="mt-2 space-y-2 bg-gray-50 rounded-xl text-center border">
-                    {[...products].map((item) => (
-                      <DisclosureButton
-                        key={item.name}
-                        as="a"
-                        href={item.href}
-                        className="block rounded-lg py-2 pr-3 pl-6 text-sm/7 font-semibold text-gray-900 hover:bg-gray-50"
-                      >
-                        {item.name}
-                      </DisclosureButton>
-                    ))}
-                  </DisclosurePanel>
-                </Disclosure>
-
-                <Disclosure as="div" className="-mx-3">
-                  <DisclosureButton className="group flex w-full items-center justify-center gap-2 rounded-lg py-2 pr-3.5 pl-3 text-base/7 text-[#828282] text-center">
-                    Resources
-                    <ChevronDownIcon
-                      aria-hidden="true"
-                      className="size-5 flex-none group-data-open:rotate-180"
-                    />
-                  </DisclosureButton>
-                  <DisclosurePanel className="mt-2 space-y-2 bg-gray-50 rounded-xl text-center border">
-                    {[...products].map((item) => (
-                      <DisclosureButton
-                        key={item.name}
-                        as="a"
-                        href={item.href}
-                        className="block rounded-lg py-2 pr-3 pl-6 text-sm/7 font-semibold text-gray-900 hover:bg-gray-50"
-                      >
-                        {item.name}
-                      </DisclosureButton>
-                    ))}
-                  </DisclosurePanel>
-                </Disclosure>
-
-                <Link
-                  href="/"
-                  className="-mx-3 block rounded-lg px-3 py-2  text-[#828282] text-center"
-                >
-                  About Us
-                </Link>
+                {
+                  navItems?.map((item, index) =>
+                    <Link
+                      href={item.url}
+                      className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-medium text-black text-center"
+                      key={index}
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      {item.name}
+                    </Link>
+                  )
+                }
               </div>
 
-              <div className="">
+              {/* <div className="">
                 <Button variant="primary" className="w-full py-4">
                   Pricing
                 </Button>
-              </div>
+              </div> */}
             </div>
           </div>
         </DialogPanel>

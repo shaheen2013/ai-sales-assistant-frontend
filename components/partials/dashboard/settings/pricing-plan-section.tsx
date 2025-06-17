@@ -15,6 +15,7 @@ import BillingHistoryTable from './billing-history-table';
 interface Price {
   id: string;
   unit_amount: number;
+  convert_amount: number;
   recurring: {
     interval: string;
   };
@@ -49,40 +50,21 @@ export default function PricingPlanSection() {
   );
 
   const handleUpgradePlan = async (id: string) => {
-    if (!currentPlan) {
-      try {
-        const { data, error } = await createSubscription({
-          price_id: id,
-          success_url: `${window.location.origin}/dashboard/settings?tab=Your Plan`,
-          cancel_url: `${window.location.origin}`,
-        });
-
-        if (error) {
-          console.error("Error creating subscription:", error);
-          return;
-        }
-
-        window.location.href = data?.checkout_url;
-      } catch (error: any) {
-        console.error("Error creating subscription:", error);
+    try {
+      setUpgradingPlanId(id);
+      const res = await upgradeSubscription({
+        new_price_id: id,
+      }).unwrap();
+      if (res) {
+        toast('success', 'Subscription upgraded successfully');
       }
-    } else {
-      try {
-        setUpgradingPlanId(id);
-        const res = await upgradeSubscription({
-          new_price_id: id,
-        }).unwrap();
-        if (res) {
-          toast('success', 'Subscription upgraded successfully');
-        }
-      } catch (error: any) {
-        toast('error', handleApiError(error));
-        console.error('Error', error);
-      } finally {
-        setUpgradingPlanId(null);
-      }
+    } catch (error: any) {
+      toast('error', handleApiError(error));
+      console.error('Error', error);
+    } finally {
+      setUpgradingPlanId(null);
     }
-  };
+  }
 
   return (
     <div className="rounded-2xl px-4 py-12">
@@ -101,9 +83,6 @@ export default function PricingPlanSection() {
         <div className="inline-flex rounded-[48px] border border-[#019935] p-1">
           <button className="rounded-[48px] px-6 py-2 bg-[#019935] text-white">
             Monthly billing
-          </button>
-          <button className="rounded-[48px] px-6 py-2 text-[#707070]">
-            Annual billing
           </button>
         </div>
       </div>
@@ -157,7 +136,7 @@ export default function PricingPlanSection() {
                                       : 'text-gray-500'
                                       } text-5xl font-semibold`}
                                   >
-                                    {selectedPrice?.unit_amount || '0'}
+                                    {selectedPrice?.convert_amount || '0'}
                                   </span>
                                 </div>
                               );
