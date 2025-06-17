@@ -17,9 +17,9 @@ const BillingHistoryTable = () => {
           </p>
         </div>
         {/* TODO: Add a download all billing history functionality */}
-        <button className="mt-4 md:mt-0 flex items-center gap-2 text-[#2b3545] border border-[#eaebec] rounded-lg px-4 py-2">
+        {/* <button className="mt-4 md:mt-0 flex items-center gap-2 text-[#2b3545] border border-[#eaebec] rounded-lg px-4 py-2">
           Download All Billing History <Download size={16} />
-        </button>
+        </button> */}
       </div>
 
       {/* Billing Table */}
