@@ -95,7 +95,7 @@ export default function PricingPlans() {
                   <div className="h-[500px] col-span-3 lg:col-span-1 bg-gray-50 rounded-xl shadow" />
                 </div>
               ) : (
-                <div className="w-full grid lg:grid-cols-3 gap-6">
+                <div className="flex flex-wrap justify-center gap-6">
                   {dataGetDealerPricing.map(
                     (plan: PricingPlan, index: number) => {
                       const price = plan?.prices?.[0];
