@@ -1,4 +1,4 @@
-import { MessageCircleMore } from "lucide-react";
+import { MessageCircleMore, UserRound } from "lucide-react";
 
 interface SidebarItem {
   label: string;
@@ -280,6 +280,13 @@ export const dashboardDealerMenu: SidebarSection[] = [
   {
     label: "Tools",
     items: [
+      {
+        label: "My Profile",
+        href: "/dashboard/profile",
+        icon: (
+         <UserRound />
+        ),
+      },
       {
         label: "Settings",
         href: "/dashboard/settings",
