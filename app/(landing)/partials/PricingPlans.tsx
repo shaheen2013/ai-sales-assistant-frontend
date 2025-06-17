@@ -60,7 +60,7 @@ export default function PricingPlans() {
   }
 
   return (
-    <section className="text-gray-600">
+    <section className="text-gray-600" id="plans">
       <div className="container px-5 py-12 mx-auto">
         <div className="flex flex-col justify-center text-center">
           {/* badge */}

@@ -34,7 +34,7 @@ export default function Testimonials() {
   }, [api]);
 
   return (
-    <section className="container py-12">
+    <section className="container py-12" id="testimonials"> 
       {/* badge */}
       <div className="mb-4">
         <span className="border border-primary-600 py-2 px-6 rounded-lg text-primary-600 mb-9 inline-flex w-max">
