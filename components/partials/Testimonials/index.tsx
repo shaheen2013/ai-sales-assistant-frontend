@@ -33,6 +33,69 @@ export default function Testimonials() {
     });
   }, [api]);
 
+  const carourseltems = [
+    {
+      name: "Ronald Richards",
+      image: "https://picsum.photos/300/300?random=1",
+      rating: 3,
+      text: "Ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.",
+    },
+    {
+      name: "Eleanor Pena",
+      image: "https://picsum.photos/300/300?random=2",
+      rating: 4,
+      text: "Cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Duis aute irure dolor in reprehenderit.",
+    },
+    {
+      name: "Wade Warren",
+      image: "https://picsum.photos/300/300?random=3",
+      rating: 5,
+      text: "Laborum fugiat enim veniam consectetur. Magna fugiat sit ut eiusmod. Eu anim pariatur cillum Lorem dolore deserunt.",
+    },
+    {
+      name: "Darlene Robertson",
+      image: "https://picsum.photos/300/300?random=4",
+      rating: 2,
+      text: "Aute fugiat ex est exercitation ut et dolore officia sunt esse. Non nulla ad ullamco labore exercitation elit nostrud.",
+    },
+    {
+      name: "Guy Hawkins",
+      image: "https://picsum.photos/300/300?random=5",
+      rating: 3,
+      text: "Sint ex duis in ad voluptate exercitation laboris. Consectetur magna ex nulla reprehenderit amet anim.",
+    },
+    {
+      name: "Kristin Watson",
+      image: "https://picsum.photos/300/300?random=6",
+      rating: 5,
+      text: "Mollit ex ad tempor nisi fugiat. Dolore anim nisi est incididunt velit officia occaecat pariatur elit.",
+    },
+    {
+      name: "Brooklyn Simmons",
+      image: "https://picsum.photos/300/300?random=7",
+      rating: 1,
+      text: "Exercitation fugiat nulla tempor consequat elit occaecat sit amet. Magna enim laborum amet officia reprehenderit.",
+    },
+    {
+      name: "Savannah Nguyen",
+      image: "https://picsum.photos/300/300?random=8",
+      rating: 4,
+      text: "Quis amet voluptate culpa dolor cillum amet fugiat voluptate deserunt. Laborum ut pariatur id labore do.",
+    },
+    {
+      name: "Albert Flores",
+      image: "https://picsum.photos/300/300?random=9",
+      rating: 2,
+      text: "Nisi id voluptate aliqua elit magna. Sit officia ad reprehenderit non excepteur incididunt voluptate commodo.",
+    },
+    {
+      name: "Courtney Henry",
+      image: "https://picsum.photos/300/300?random=10",
+      rating: 5,
+      text: "Culpa nulla pariatur ullamco veniam nostrud. Duis esse aute cillum pariatur culpa mollit elit incididunt labore.",
+    },
+  ];
+
   return (
     <section className="container py-12">
       {/* badge */}
@@ -82,13 +145,16 @@ export default function Testimonials() {
       <div>
         <Carousel className="w-full max-w-full" setApi={setApi}>
           <CarouselContent>
-            {Array.from({ length: 5 }).map((_, index) => (
-              <CarouselItem key={index} className="lg:basis-[30%] basis-[80%]">
+            {carourseltems.map((item, index) => (
+              <CarouselItem
+                key={index}
+                className="lg:basis-[30%] basis-[80%] select-none"
+              >
                 <div className="p-6 border rounded-xl">
                   {/* header */}
                   <div className="flex justify-between mb-3">
                     <Image
-                      src="https://dummyimage.com/60x60"
+                      src={item.image}
                       alt="Testimonial"
                       width={60}
                       height={60}
@@ -96,25 +162,19 @@ export default function Testimonials() {
                     />
 
                     <div>
-                      <Ratings rating={3} totalStars={5} />
+                      <Ratings rating={item.rating} totalStars={5} />
                     </div>
                   </div>
 
                   <h2 className="mb-3 text-[#133240] font-medium text-2xl">
-                    Ronald Richards
+                    {item.name}
                   </h2>
 
-                  <p className="text-[#133240] text-base">
-                    ullamco est sit aliqua dolor do amet sint. Velit officia
-                    consequat duis enim velit mollit. Exercitation veniam
-                    consequat sunt nostrud amet.
-                  </p>
+                  <p className="text-[#133240] text-base">{item.text}</p>
                 </div>
               </CarouselItem>
             ))}
           </CarouselContent>
-          {/* <CarouselPrevious />
-          <CarouselNext /> */}
         </Carousel>
 
         {/* dots */}
