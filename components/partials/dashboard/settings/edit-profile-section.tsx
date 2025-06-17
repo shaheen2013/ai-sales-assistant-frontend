@@ -476,7 +476,7 @@ export default function EditProfileSection() {
             </div>
           </div>
           {/* Card Information */}
-          <CardInformations />
+          {/* <CardInformations /> */}
 
           {/* Action Buttons */}
           <div className="flex justify-start space-x-3 sm:space-x-4 mt-4">
