@@ -80,9 +80,9 @@ export default function Footer() {
             Copyright ©2025 Teez
           </div>
 
-          <div className="flex items-center gap-6">
-            <Link href="/term-of-use" className="font-normal text-base">
-              Term Of Use
+          <div className="flex items-center gap-5">
+            <Link href="/terms-of-use" className="font-normal text-base">
+              Terms Of Use
             </Link>
             <Link href="/privacy-policy" className="font-normal text-base">
               Privacy Policy
