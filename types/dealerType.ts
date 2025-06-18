@@ -61,6 +61,7 @@ export interface DealerOverviewResponseType {
   phone_number: string | null;
   voice: string;
   talk_time: TalkTime;
+  details: string;
 }
 
 export interface DealerCallStatsResponseType {

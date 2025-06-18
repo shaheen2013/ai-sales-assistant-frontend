@@ -1,7 +1,7 @@
 "use client";
 
 import DealerCallHistoryStatsSkeleton from "@/components/skeleton/DealerCallHistoryStatsSkeleton";
-import { useGetDealerCallHistoryStatsQuery } from "@/features/dealer/dealerSlice";
+import { useGetDealerCallHistoryStatsQuery, useGetDealerDashboardOverviewQuery } from "@/features/dealer/dealerSlice";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
@@ -27,7 +27,10 @@ export default function StatisticsSection() {
   const [graphData, setGraphData] = useState<{ [key: string]: string | number }[]>([]);
 
   /*--RTK Query--*/
-  const { data: dealerCallHistoryStatsData, isLoading: isDealerCallHistoryStatsLoading } = useGetDealerCallHistoryStatsQuery();
+  const { data: dealerDashboardOverviewData, isLoading: dealerDashboardOverviewLoading } = useGetDealerDashboardOverviewQuery();
+  const { data: dealerCallHistoryStatsData, isLoading: isDealerCallHistoryStatsLoading } = useGetDealerCallHistoryStatsQuery(undefined, {
+    skip: !dealerDashboardOverviewData || !!dealerDashboardOverviewData?.details
+  });
 
   /*--UseEffect--*/
   useEffect(() => {
@@ -43,7 +46,7 @@ export default function StatisticsSection() {
   return (
     <>
       {
-        isDealerCallHistoryStatsLoading ? <DealerCallHistoryStatsSkeleton /> : <div className="border rounded-xl p-4">
+        isDealerCallHistoryStatsLoading ? <DealerCallHistoryStatsSkeleton /> : dealerCallHistoryStatsData && <div className="border rounded-xl p-4">
           {/* top */}
           <div className="flex justify-between items-center mb-4">
             <div>
