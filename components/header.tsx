@@ -8,11 +8,14 @@ import {
   DisclosurePanel,
 } from "@headlessui/react";
 
-import classNames from "classnames";
-import { ChevronDownIcon } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
+import Image from "next/image";
+import classNames from "classnames";
+import { useSession } from "next-auth/react";
 import { forwardRef, useState } from "react";
+import { ChevronDownIcon } from "lucide-react";
+
+import Button from "./button";
 
 import {
   NavigationMenu,
@@ -22,11 +25,11 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/shadcn/navigation-menu";
+
 import { cn } from "@/lib/utils";
-import { navigationData } from "@/static/homepage";
-import Button from "./button";
 import { ClaraIcon } from "./partials/chat/svg-icons";
-import { useSession } from "next-auth/react";
+import { navigationData } from "@/static/homepage";
+import { Skeleton } from "./shadcn/skeleton";
 
 const products = [
   {
@@ -86,7 +89,7 @@ const navItems = [
 
 export default function Example() {
   /*--Session--*/
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -203,26 +206,32 @@ export default function Example() {
 
         {/* right */}
         <div className="hidden lg:flex lg:flex-1 lg:justify-end gap-3">
-          <Button
-            href={session?.access ? "/dashboard/overview" : "/login"}
-            variant="outline-primary"
-          >
-            <span>{session?.access ? "Dashboard" : "Sign In"}</span>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="22"
-              height="22"
-              viewBox="0 0 22 22"
-              fill="none"
+          {status === "loading" ? (
+            <Skeleton className="h-12 w-[180px]" />
+          ) : (
+            <Button
+              href={session?.access ? "/dashboard/overview" : "/login"}
+              variant="outline-primary"
             >
-              <path
-                d="M11.0002 3.9541C11.9169 9.4541 18.3336 11.2874 18.3336 11.2874M18.3336 11.2874C18.3336 11.2874 11.9169 13.1208 11.0002 18.6208M18.3336 11.2874L3.66689 11.3571"
-                stroke="#101010"
-                strokeWidth="1.1"
-                strokeLinejoin="bevel"
-              />
-            </svg>
-          </Button>
+              <span>{session?.access ? "Dashboard" : "Sign In"}</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="22"
+                height="22"
+                viewBox="0 0 22 22"
+                fill="none"
+              >
+                <path
+                  d="M11.0002 3.9541C11.9169 9.4541 18.3336 11.2874 18.3336 11.2874M18.3336 11.2874C18.3336 11.2874 11.9169 13.1208 11.0002 18.6208M18.3336 11.2874L3.66689 11.3571"
+                  stroke="#101010"
+                  strokeWidth="1.1"
+                  strokeLinejoin="bevel"
+                />
+              </svg>
+            </Button>
+          )}
+
+          {/* */}
 
           <Button href="/chat" variant="primary">
             <ClaraIcon />

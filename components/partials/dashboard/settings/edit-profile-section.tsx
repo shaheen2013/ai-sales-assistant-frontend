@@ -1,42 +1,42 @@
-'use client';
-import { Button } from '@/components/shadcn/button';
+"use client";
+import { Button } from "@/components/shadcn/button";
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormMessage,
-} from '@/components/shadcn/form';
-import { Input } from '@/components/shadcn/input';
-import { Textarea } from '@/components/shadcn/textarea';
+} from "@/components/shadcn/form";
+import { Input } from "@/components/shadcn/input";
+import { Textarea } from "@/components/shadcn/textarea";
 import {
   useGetDealerProfileQuery,
   useUpdateDealerProfileMutation,
-} from '@/features/dealer/dealerProfileSlice';
-import { useToast } from '@/hooks/useToast';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { CircleHelp, Upload } from 'lucide-react';
-import Image from 'next/image';
-import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { isValidPhoneNumber } from 'react-phone-number-input';
-import * as z from 'zod';
-import EditProfileSectionSkeleton from '../skeleton/edit-profile-section-skeleton';
-import { AvatarImage } from '../svg-icons';
-import CardInformations from './card-informations';
-import { CountryDropdown } from './country-list-dropdown';
-import { PhoneInput } from './phone-input-with-country-list';
+} from "@/features/dealer/dealerProfileSlice";
+import { useToast } from "@/hooks/useToast";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { CircleHelp, Upload } from "lucide-react";
+import Image from "next/image";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { isValidPhoneNumber } from "react-phone-number-input";
+import * as z from "zod";
+import EditProfileSectionSkeleton from "../skeleton/edit-profile-section-skeleton";
+import { AvatarImage } from "../svg-icons";
+import CardInformations from "./card-informations";
+import { CountryDropdown } from "./country-list-dropdown";
+import { PhoneInput } from "./phone-input-with-country-list";
 
 // Form validation schema
 const formSchema = z.object({
-  name: z.string().min(1, 'Name is required'),
-  email: z.string().email('Invalid email address').min(1, 'Email is required'),
+  name: z.string().min(1, "Name is required"),
+  email: z.string().email("Invalid email address").min(1, "Email is required"),
   phone_number: z
     .string()
-    .min(1, 'Phone number is required')
-    .max(20, 'Phone number must be less than 20 characters')
+    .min(1, "Phone number is required")
+    .max(20, "Phone number must be less than 20 characters")
     .refine((value) => isValidPhoneNumber(value), {
-      message: 'Invalid phone number for the selected country',
+      message: "Invalid phone number for the selected country",
     }),
   profile_picture: z.instanceof(File).optional(),
   street_address: z.string().optional(),
@@ -51,11 +51,14 @@ const formSchema = z.object({
 export type TUpdateDealerProfileValues = z.infer<typeof formSchema>;
 
 export default function EditProfileSection() {
-  const [profileImage, setProfileImage] = useState<File | null>(null);
   const toast = useToast();
+
+  const [profileImage, setProfileImage] = useState<File | null>(null);
+
   const { data, isLoading } = useGetDealerProfileQuery(undefined, {
     refetchOnMountOrArgChange: true,
   });
+
   const dealerProfileData = data?.data;
 
   const [updateDealerProfile, { isLoading: isUpdating }] =
@@ -64,30 +67,30 @@ export default function EditProfileSection() {
   const form = useForm<TUpdateDealerProfileValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: '',
-      email: '',
-      phone_number: '',
-      street_address: '',
-      city: '',
-      state: '',
-      country: '',
-      zip_code: '',
-      about: '',
+      name: "",
+      email: "",
+      phone_number: "",
+      street_address: "",
+      city: "",
+      state: "",
+      country: "",
+      zip_code: "",
+      about: "",
     },
   });
 
   useEffect(() => {
     if (dealerProfileData) {
       form.reset({
-        name: dealerProfileData.name || '',
-        email: dealerProfileData.email || '',
-        phone_number: dealerProfileData.phone_number || '',
-        street_address: dealerProfileData.street_address || '',
-        city: dealerProfileData.city || '',
-        state: dealerProfileData.state || '',
-        country: dealerProfileData.country || '',
-        zip_code: dealerProfileData.zip_code || '',
-        about: dealerProfileData.about || '',
+        name: dealerProfileData.name || "",
+        email: dealerProfileData.email || "",
+        phone_number: dealerProfileData.phone_number || "",
+        street_address: dealerProfileData.street_address || "",
+        city: dealerProfileData.city || "",
+        state: dealerProfileData.state || "",
+        country: dealerProfileData.country || "",
+        zip_code: dealerProfileData.zip_code || "",
+        about: dealerProfileData.about || "",
       });
     }
   }, [dealerProfileData, form]);
@@ -96,7 +99,7 @@ export default function EditProfileSection() {
     const file = event.target.files?.[0];
     if (file) {
       setProfileImage(file);
-      form.setValue('profile_picture', file);
+      form.setValue("profile_picture", file);
     }
   };
 
@@ -104,28 +107,28 @@ export default function EditProfileSection() {
     try {
       const formData = new FormData();
       // Append all non-file fields
-      formData.append('name', data.name);
-      formData.append('email', data.email);
-      formData.append('phone_number', data.phone_number);
-      formData.append('street_address', data.street_address || '');
-      formData.append('city', data.city || '');
-      formData.append('state', data.state || '');
-      formData.append('country', data.country || '');
-      formData.append('zip_code', data.zip_code || '');
-      formData.append('about', data.about || '');
+      formData.append("name", data.name);
+      formData.append("email", data.email);
+      formData.append("phone_number", data.phone_number);
+      formData.append("street_address", data.street_address || "");
+      formData.append("city", data.city || "");
+      formData.append("state", data.state || "");
+      formData.append("country", data.country || "");
+      formData.append("zip_code", data.zip_code || "");
+      formData.append("about", data.about || "");
 
       // Append profile picture if exists
       if (profileImage instanceof File) {
-        formData.append('profile_picture', profileImage);
+        formData.append("profile_picture", profileImage);
       }
 
       // Call the mutation with FormData
       const response = await updateDealerProfile(formData).unwrap();
       if (response) {
-        toast('success', response.detail || 'Profile updated successfully');
+        toast("success", response.detail || "Profile updated successfully");
       }
     } catch (error: any) {
-      toast('error', error.data.detail || 'Failed to update profile');
+      toast("error", error.data.detail || "Failed to update profile");
     }
   };
 
@@ -153,7 +156,19 @@ export default function EditProfileSection() {
                   className="w-full h-full rounded-full object-cover"
                 />
               ) : (
-                <AvatarImage />
+                <>
+                  {dealerProfileData?.profile_picture ? (
+                    <Image
+                      src={dealerProfileData.profile_picture}
+                      alt="Profile"
+                      width={130}
+                      height={130}
+                      className="w-full h-full rounded-full object-cover"
+                    />
+                  ) : (
+                    <AvatarImage />
+                  )}
+                </>
               )}
             </div>
             <div
@@ -161,46 +176,46 @@ export default function EditProfileSection() {
               onDragOver={(e) => {
                 e.preventDefault();
                 e.currentTarget.classList.add(
-                  'border-[#019935]',
-                  'bg-[#f0f9f2]',
-                  'border-dashed',
-                  'border-2',
-                  'scale-[1.02]'
+                  "border-[#019935]",
+                  "bg-[#f0f9f2]",
+                  "border-dashed",
+                  "border-2",
+                  "scale-[1.02]"
                 );
               }}
               onDragEnter={(e) => {
                 e.preventDefault();
                 e.currentTarget.classList.add(
-                  'border-[#019935]',
-                  'bg-[#f0f9f2]',
-                  'border-dashed',
-                  'border-2',
-                  'scale-[1.02]'
+                  "border-[#019935]",
+                  "bg-[#f0f9f2]",
+                  "border-dashed",
+                  "border-2",
+                  "scale-[1.02]"
                 );
               }}
               onDragLeave={(e) => {
                 e.preventDefault();
                 e.currentTarget.classList.remove(
-                  'border-[#019935]',
-                  'bg-[#f0f9f2]',
-                  'border-dashed',
-                  'border-2',
-                  'scale-[1.02]'
+                  "border-[#019935]",
+                  "bg-[#f0f9f2]",
+                  "border-dashed",
+                  "border-2",
+                  "scale-[1.02]"
                 );
               }}
               onDrop={(e) => {
                 e.preventDefault();
                 e.currentTarget.classList.remove(
-                  'border-[#019935]',
-                  'bg-[#f0f9f2]',
-                  'border-dashed',
-                  'border-2',
-                  'scale-[1.02]'
+                  "border-[#019935]",
+                  "bg-[#f0f9f2]",
+                  "border-dashed",
+                  "border-2",
+                  "scale-[1.02]"
                 );
                 const file = e.dataTransfer.files[0];
-                if (file && file.type.startsWith('image/')) {
+                if (file && file.type.startsWith("image/")) {
                   setProfileImage(file);
-                  form.setValue('profile_picture', file);
+                  form.setValue("profile_picture", file);
                 }
               }}
             >
@@ -486,7 +501,7 @@ export default function EditProfileSection() {
               className="border-[#d5d7da] text-[#555d6a] text-xs sm:text-sm px-2 sm:px-4 py-1 sm:py-2"
               onClick={() => {
                 form.reset();
-                toast('success', 'Changes removed!');
+                toast("success", "Changes removed!");
               }}
             >
               Discard
@@ -495,7 +510,7 @@ export default function EditProfileSection() {
               type="submit"
               className="bg-[#019935] hover:bg-[#018a30] text-white text-xs sm:text-sm px-2 sm:px-4 py-1 sm:py-2"
             >
-              {isUpdating ? 'Saving...' : 'Save Changes'}
+              {isUpdating ? "Saving..." : "Save Changes"}
             </Button>
           </div>
         </div>

@@ -14,7 +14,8 @@ export default function DealerProfile() {
     refetchOnMountOrArgChange: true,
   });
   const dealerProfileData = data?.data;
-  // if (isLoading) return <DealerProfileOverviewSkeleton />;
+  if (isLoading) return <DealerProfileOverviewSkeleton />;
+
   return (
     <div className="mx-auto bg-white rounded-lg overflow-hidden flex flex-col gap-6">
       {/* Header Section */}

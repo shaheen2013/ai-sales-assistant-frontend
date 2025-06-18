@@ -7,7 +7,5 @@ export const metadata = {
 };
 
 export default function DashboardNotification() {
-  return (
-    <NotificationList />
-  );
+  return <NotificationList />;
 }

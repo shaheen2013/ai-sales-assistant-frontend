@@ -864,6 +864,7 @@ export default function InventoryCarList({
       {getVehicleList?.count ? (
         <div className="flex items-end justify-center my-4">
           <Pagination
+            isEnd={getVehicleList?.next === null}
             page={Number(page)}
             onPageChange={onPageChange}
             totalPage={totalPage}
