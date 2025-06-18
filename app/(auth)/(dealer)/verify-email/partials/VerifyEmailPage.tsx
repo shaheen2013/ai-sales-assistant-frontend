@@ -3,6 +3,7 @@
 import Spinner from "@/components/spinner/Spinner";
 import { useEmailVerificationQuery } from "@/features/auth/authSlice";
 import { useToast } from "@/hooks/useToast";
+import { beautifyErrors } from "@/lib/utils";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 
@@ -14,7 +15,7 @@ export default function VerifyEmailPage() {
   const uid = params.get("uid");
   const token = params.get("token");
 
-  const { isError, isFetching, data } = useEmailVerificationQuery({
+  const { error, isFetching, data } = useEmailVerificationQuery({
     uid: uid,
     token: token,
   });
@@ -27,7 +28,11 @@ export default function VerifyEmailPage() {
     );
   }
 
-  toast("success", data?.detail || "Email verified successfully");
+  if (error) {
+    toast("error", beautifyErrors(error));
+  } else {
+    toast("success", data?.detail || "Email verified successfully");
+  }
   router.push("/login");
 
   return <div>VerifyEmailPage</div>;
