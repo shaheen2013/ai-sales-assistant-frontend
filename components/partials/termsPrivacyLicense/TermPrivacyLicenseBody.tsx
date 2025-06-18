@@ -20,7 +20,7 @@ const TermPrivacyLicenseBody: FC<TermPrivacyLicenseBodyPropsType> = ({
 }) => {
     const lastWordOfTitle = title.split(" ").pop();
     return (
-        <div className="px-4 py-9 xl:px-24 xl:pt-12 xl:pb-[86px]">
+        <div className="px-4 py-9 xl:px-0 xl:pt-12 xl:pb-[86px] max-w-[1248px] mx-auto">
             <div className="text-center text-gray-900 text-2xl xl:text-4xl font-bold">
                 {title} <span className="text-[#019935]">{lastWordOfTitle}</span>
             </div>

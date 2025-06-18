@@ -6,6 +6,7 @@ type TermPrivacyLicenseListPropsType = {
         title: string,
         description: string | string[],
         email?: string
+        isDashed?: boolean;
     }[]
 }
 
@@ -26,7 +27,7 @@ const TermPrivacyLicenseList:FC<TermPrivacyLicenseListPropsType> = ({ data }) =>
                                                     'xl:mb-7',
                                                     index === item?.description?.length - 1 && 'xl:mb-0'
                                                 )
-                                            }>- {subItem}</p>
+                                            }>{item?.isDashed !== false && '- '}{subItem}</p>
                                         ))
                                     }
                                 </div>

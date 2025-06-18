@@ -79,6 +79,14 @@ export const dealerProfileSlice = apiSlice.injectEndpoints({
       invalidatesTags: ["pricingPlans"],
     }),
 
+    createMinuteSubscription: builder.mutation<{ checkout_url: string }, { price_id: string, success_url: string, cancel_url: string }>({
+      query: (data) => ({
+        url: "/stripe/subscriptions/create_minute_subscription/",
+        method: "POST",
+        body: data,
+      }),
+    }),
+
     upgradeSubscription: builder.mutation<any, any>({
       query: (data) => ({
         url: "/stripe/subscriptions/upgrade_subscription/",
@@ -110,4 +118,5 @@ export const {
   useCreateSubscriptionMutation,
   useUpgradeSubscriptionMutation,
   useGetBillingHistoryQuery,
+  useCreateMinuteSubscriptionMutation,
 } = dealerProfileSlice;
