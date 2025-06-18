@@ -37,7 +37,7 @@ import classNames from "classnames";
 import Image from "next/image";
 import DealerDashboardOverviewSkeleton from "@/components/skeleton/DealerDashboardOverviewSkeleton";
 import DealerMinutePlanSkeleton from "@/components/skeleton/DealerMinutePlanSkeleton";
-import { useGetCurrentSubscriptionPlanQuery } from "@/features/dealer/dealerProfileSlice";
+import { useCreateMinuteSubscriptionMutation, useGetCurrentSubscriptionPlanQuery } from "@/features/dealer/dealerProfileSlice";
 
 const defaultPlans: { [key: string]: { minutes: number; description: string } } = {
   "Quick Boost": {
@@ -60,7 +60,6 @@ type PlanType = {
   price: string | number;
   minutes: number;
   description: string;
-  isSelected: boolean;
 }
 
 const AdminDashboardOverview = () => {
@@ -77,6 +76,7 @@ const AdminDashboardOverview = () => {
   const [voice, setVoice] = useState("alloy");
 
   const [minutePlans, setMinutePlans] = useState<PlanType[]>([]);
+  const [selectedMinutePlan, setSelectedMinutePlan] = useState<PlanType | null>(null);
 
   const [creditCards, setCreditCards] = useState([
     { name: "Stripe", selected: true },
@@ -89,6 +89,7 @@ const AdminDashboardOverview = () => {
   const [updateDealerAssitantVoice] = useUpdateDealerAssistantVoiceMutation();
   const { data: dealerMinutePlans, isLoading: dealerMinutePlansLoading } = useGetDealerMinutePlansQuery(undefined, { skip: !modals.addMoreMinute });
   const { data: dealerCurrentSubscription, isLoading: dealerCurrentSubscriptionLoading } = useGetCurrentSubscriptionPlanQuery(undefined, { skip: !modals.addMoreMinute });
+  const [createMinuteSubscription, { isLoading: createMinuteSubscriptionLoading }] = useCreateMinuteSubscriptionMutation();
 
   const onReady = (ws: any) => {
     setWavesurfer(ws);
@@ -111,6 +112,25 @@ const AdminDashboardOverview = () => {
     }
   };
 
+  const handleBuyMinutes = async () => {
+    if (!selectedMinutePlan?.id) {
+      toast("error", "Please select a plan to buy minutes");
+      return;
+    }
+
+    try {
+      const data = await createMinuteSubscription({
+        price_id: selectedMinutePlan?.id,
+        success_url: `${window.location.origin}/dashboard/overview`,
+        cancel_url: `${window.location.origin}/dashboard/overview`,
+      }).unwrap();
+
+      window.location.href = data?.checkout_url;
+    } catch (err) {
+      toast("error", beautifyErrors(err));
+    }
+  }
+
   useEffect(() => {
     if (dealerDashboardOverviewData) {
       setVoice(dealerDashboardOverviewData.voice || "alloy");
@@ -119,15 +139,15 @@ const AdminDashboardOverview = () => {
 
   useEffect(() => {
     if (dealerMinutePlans) {
-      const formattedPricingPlans = dealerMinutePlans.map((plan, index) => ({
-        id: plan?.id,
+      const formattedPricingPlans = dealerMinutePlans.map((plan) => ({
+        id: plan?.prices?.[0]?.id,
         name: plan?.name,
         price: plan?.prices?.[0]?.convert_amount?.toFixed(2) || 0,
         minutes: defaultPlans[plan?.name]?.minutes || 0,
         description: defaultPlans[plan?.name]?.description,
-        isSelected: index === 0,
       }));
       setMinutePlans(formattedPricingPlans);
+      setSelectedMinutePlan(formattedPricingPlans[0]);
     }
   }, [dealerMinutePlans]);
 
@@ -399,17 +419,9 @@ const AdminDashboardOverview = () => {
                       key={index}
                       className={classNames(
                         `border rounded-xl p-4 cursor-pointer`,
-                        { "border-primary-500": plan.isSelected }
+                        { "border-primary-500": selectedMinutePlan?.id === plan?.id }
                       )}
-                      onClick={() => {
-                        setMinutePlans((prev) =>
-                          prev.map((p) =>
-                            p.name === plan.name
-                              ? { ...p, isSelected: !p.isSelected }
-                              : { ...p, isSelected: false }
-                          )
-                        );
-                      }}
+                      onClick={() => setSelectedMinutePlan(plan)}
                     >
                       {/* top */}
                       <div className="flex justify-between mb-4">
@@ -430,7 +442,7 @@ const AdminDashboardOverview = () => {
                         </div>
 
                         <div>
-                          <Checkbox id="terms" checked={Boolean(plan.isSelected)} />
+                          <Checkbox id="terms" checked={Boolean(selectedMinutePlan?.id === plan?.id)} />
                         </div>
                       </div>
 
@@ -481,28 +493,12 @@ const AdminDashboardOverview = () => {
           <div className="flex justify-end gap-3 mt-6">
             <Button
               variant="primary"
-              onClick={() => {
-                setModals((prev) => ({
-                  ...prev,
-                  addMoreMinute: false,
-                  billingSummery: true,
-                }));
-              }}
+              onClick={handleBuyMinutes}
+              loading={createMinuteSubscriptionLoading}
               disabled={dealerMinutePlansLoading}
+              className="min-w-[117px]"
             >
               Buy Minutes
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                viewBox="0 0 20 20"
-                fill="none"
-              >
-                <path
-                  d="M7.73271 4.20694C8.03263 3.92125 8.50737 3.93279 8.79306 4.23271L13.7944 9.48318C14.0703 9.77285 14.0703 10.2281 13.7944 10.5178L8.79306 15.7682C8.50737 16.0681 8.03263 16.0797 7.73271 15.794C7.43279 15.5083 7.42125 15.0336 7.70694 14.7336L12.2155 10.0005L7.70694 5.26729C7.42125 4.96737 7.43279 4.49264 7.73271 4.20694Z"
-                  fill="white"
-                />
-              </svg>
             </Button>
           </div>
         </DialogContent>
