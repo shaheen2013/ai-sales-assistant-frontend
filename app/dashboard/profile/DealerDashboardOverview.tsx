@@ -156,7 +156,7 @@ const AdminDashboardOverview = () => {
               <div className="p-4 rounded-xl bg-[#E5DCFA] flex justify-between">
                 <div>
                   <h3 className="text-sm text-gray-400 mb-1">Remaining for</h3>
-                  <h3 className="text-gray-500 text-2xl font-semibold">{dealerDashboardOverviewData?.subscription?.remain_days ? `${dealerDashboardOverviewData?.subscription?.remain_days} days` : "NA"}</h3>
+                  <h3 className="text-gray-500 text-2xl font-semibold">{dealerDashboardOverviewData?.subscription?.remain_days ? `${dealerDashboardOverviewData?.subscription?.remain_days} Days` : "NA"}</h3>
                 </div>
 
                 <div className="flex items-center gap-3">
@@ -182,7 +182,7 @@ const AdminDashboardOverview = () => {
                 <div className="flex items-center gap-3">
                   <div className="border-r-2 border-white pr-3">
                     <h2 className="text-gray-400 text-xs text-right">Used</h2>
-                    <h2 className="text-lg font-semibold">{dealerDashboardOverviewData?.talk_time?.used || "NA"}/{dealerDashboardOverviewData?.talk_time?.total || "NA"} {dealerDashboardOverviewData?.talk_time && "m"}</h2>
+                    <h2 className="text-lg font-semibold">{dealerDashboardOverviewData?.talk_time?.used ?? "NA"}/{dealerDashboardOverviewData?.talk_time?.total ?? "NA"} {dealerDashboardOverviewData?.talk_time && "m"}</h2>
                   </div>
 
                   <div>
