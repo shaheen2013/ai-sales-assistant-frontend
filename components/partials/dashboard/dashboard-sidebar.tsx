@@ -32,11 +32,6 @@ export function DashboardSidebar() {
   const isDashboardReady = status !== "loading" && status == "authenticated";
   const dashboardMenu = isAdmin ? dashboardUserMenu : dashboardDealerMenu;
 
-  console.log(
-    "session?.user?.profile_picture  => ",
-    session?.user?.profile_picture
-  );
-
   return (
     <Sidebar>
       <SidebarContent className="pb-[150px]">
