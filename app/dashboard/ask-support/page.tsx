@@ -92,7 +92,7 @@ export default function DashboardAskSupport() {
                 'bg-green-50 text-primary-400 border border-primary-400 text-xs rounded-xl px-2.5 py-0.5 font-medium ml-auto'
               )}
             >
-              {supportTicketsData?.status_counter?.open_count || 0}
+              {supportTicketsData?.status_counter?.open || 0}
             </div>
           </TabsTrigger>
 
@@ -119,7 +119,7 @@ export default function DashboardAskSupport() {
               Closed
             </span>
             <div className="text-red-400 border border-red-400 bg-red-50 text-xs rounded-xl px-2.5 py-0.5 font-medium ml-auto">
-              {supportTicketsData?.status_counter?.closed_count || 0}
+              {supportTicketsData?.status_counter?.closed || 0}
             </div>
           </TabsTrigger>
         </TabsList>

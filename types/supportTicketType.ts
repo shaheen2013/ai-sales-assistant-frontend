@@ -16,9 +16,9 @@ export interface SupportTicketType {
 
 export interface SupportStatusCountType {
     status_counter: {
-        open_count: number,
-        closed_count: number,
-        in_progress_count: number,
-        resolved_count: number
+        open: number,
+        closed: number,
+        in_progress: number,
+        resolved: number
     }
 }
