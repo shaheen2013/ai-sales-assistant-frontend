@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDebounceValue } from "usehooks-ts";
 import { Controller, useForm } from "react-hook-form";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -49,6 +49,7 @@ import {
 } from "@/features/inventory/inventorySlice";
 
 import SomethingWentWrong from "@/components/SomethingWentWrong";
+import { useGetCurrentSubscriptionPlanQuery } from "@/features/dealer/dealerProfileSlice";
 
 export default function DashboardDealerInventory() {
   const toast = useToast();
@@ -106,6 +107,7 @@ export default function DashboardDealerInventory() {
     page: Number(page) || 1,
     page_size: Number(page_size) || 10,
   });
+  const { data: currentSubscriptionData } = useGetCurrentSubscriptionPlanQuery(undefined, { refetchOnMountOrArgChange: true });
 
   const {
     data: dataGetInventoryFiles,
@@ -238,6 +240,12 @@ export default function DashboardDealerInventory() {
     }
   };
 
+  useEffect(() => {
+    if (!currentSubscriptionData?.subscription) {
+      setModals((prev) => ({ ...prev, selectPlan: true }));
+    }
+  }, [currentSubscriptionData?.subscription])
+
   if (errorGetVehicle || errorGetInventoryFiles) {
     return <SomethingWentWrong />;
   }
@@ -256,6 +264,7 @@ export default function DashboardDealerInventory() {
     { name: "Business Plan", price: "300" },
     { name: "Enterprise Plan", price: "999" },
   ];
+
 
   return (
     <>
@@ -637,8 +646,8 @@ export default function DashboardDealerInventory() {
                       <Select
                         value={field.value}
                         onValueChange={field.onChange}
-                        // className="h-11 w-full !border-[#D5D7DA]"
-                        // defaultValue="km"
+                      // className="h-11 w-full !border-[#D5D7DA]"
+                      // defaultValue="km"
                       >
                         <SelectTrigger className="h-11 w-full !border-[#D5D7DA]">
                           <SelectValue placeholder="Select a fruit" />
