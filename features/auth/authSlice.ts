@@ -8,7 +8,6 @@ export const authSlice = apiSlice.injectEndpoints({
         method: "POST",
         body: data,
         params: queryParams,
-        credentials: "include",
       }),
       invalidatesTags: ["user"],
     }),
