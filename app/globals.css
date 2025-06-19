@@ -1,104 +1,6 @@
-@import "tailwindcss";
-@source "./components";
-
-@theme {
-  /* container */
-  --container-max-width: 1400px;
-  --container-padding-x: 1rem;
-
-  /* font weight */
-  --font-weight-regular: 400;
-  --font-weight-medium: 500;
-  --font-weight-semibold: 600;
-  --font-weight-bold: 700;
-
-  /* display text */
-  --text-display-3xl: 96px;
-  --text-display-2xl: 72px;
-  --text-display-xl: 60px;
-  --text-display-lg: 48px;
-  --text-display-md: 36px;
-  --text-display-sm: 30px;
-  --text-display-xs: 24px;
-
-  /* display text line height */
-  --line-height-display-3xl: 120px;
-  --line-height-display-2xl: 90px;
-  --line-height-display-xl: 72px;
-  --line-height-display-lg: 60px;
-  --line-height-display-md: 44px;
-  --line-height-display-sm: 38px;
-  --line-height-display-xs: 32px;
-
-  /* primary color */
-  --color-primary-25: #eef5f0;
-  --color-primary-50: #e6f5eb;
-  --color-primary-100: #b0dfc0;
-  --color-primary-200: #8ad0a2;
-  --color-primary-300: #55bb78;
-  --color-primary-400: #34ad5d;
-  --color-primary-500: #019935;
-  --color-primary-600: #018b30;
-  --color-primary-700: #016d26;
-  --color-primary-800: #01541d;
-  --color-primary-900: #004016;
-
-  /* gray color */
-  --color-gray-25: #f2f3f5;
-  --color-gray-50: #eaebed;
-  --color-gray-100: #bfc2c8;
-  --color-gray-200: #9fa4ad;
-  --color-gray-300: #747b87;
-  --color-gray-400: #596170;
-  --color-gray-500: #2f3a4c;
-  --color-gray-600: #2b3545;
-  --color-gray-700: #212936;
-  --color-gray-800: #1a202a;
-  --color-gray-900: #141820;
-
-  /* danger color */
-  --color-danger-25: #fbf1f1;
-  --color-danger-50: #fbeae9;
-  --color-danger-100: #f3beba;
-  --color-danger-200: #ee9e99;
-  --color-danger-300: #e6726a;
-  --color-danger-400: #e1574d;
-  --color-danger-500: #d92d21;
-  --color-danger-600: #c5291e;
-  --color-danger-700: #9a2017;
-  --color-danger-800: #771912;
-  --color-danger-900: #5b130e;
-
-  /* warning color */
-  --color-warning-25: #fffaf2;
-  --color-warning-50: #fff7e9;
-  --color-warning-100: #fee7ba;
-  --color-warning-200: #fedb99;
-  --color-warning-300: #feca6b;
-  --color-warning-400: #fdc04e;
-  --color-warning-500: #fdb022;
-  --color-warning-600: #e6a01f;
-  --color-warning-700: #b47d18;
-  --color-warning-800: #8b6113;
-  --color-warning-900: #6a4a0e;
-
-  /* success color */
-  --color-success-25: #eef8f3;
-  --color-success-50: #e7f8f0;
-  --color-success-100: #b6e9d1;
-  --color-success-200: #92deba;
-  --color-success-300: #60cf9b;
-  --color-success-400: #41c588;
-  --color-success-500: #12b76a;
-  --color-success-600: #10a760;
-  --color-success-700: #0d824b;
-  --color-success-800: #0a653a;
-  --color-success-900: #084d2d;
-}
-
-@plugin "daisyui" {
-  themes: light --default;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 .dev {
   border: 2px solid red !important;
@@ -107,3 +9,99 @@
 .dev2 {
   border: 2px solid blue !important;
 }
+
+.rdrDefinedRangesWrapper {
+  display: none;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 96px;
+}
+
+@media screen and (max-width: 768px) {
+  html {
+    scroll-padding-top: 84px;
+  }
+  
+}
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.9%;
+    --primary: 0 0% 9%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 0 0% 96.1%;
+    --secondary-foreground: 0 0% 9%;
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 45.1%;
+    --accent: 0 0% 96.1%;
+    --accent-foreground: 0 0% 9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 0 0% 3.9%;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+    --radius: 0.5rem;
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+  .dark {
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  .message-scrollbar::-webkit-scrollbar {
+    width: 10px;
+    height: 20px;
+  }
+
+  .message-scrollbar::-webkit-scrollbar-track {
+    border-radius: 100vh;
+    background: #f7f4ed; /* Light background stays the same for contrast */
+  }
+
+  .message-scrollbar::-webkit-scrollbar-thumb {
+    background: #4caf50; /* Primary green */
+    border-radius: 100vh;
+  }
+
+  .message-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #388e3c; /* Darker green on hover */
+  }
+}
+
+/* .bg-gradient-to-b {
+  background: linear-gradient(#0a0a23 50%, #fff 0%);
+} */
