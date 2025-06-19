@@ -1,5 +1,11 @@
 "use client";
-import { Button } from "@/components/shadcn/button";
+
+import * as z from "zod";
+import Image from "next/image";
+import { useForm } from "react-hook-form";
+import { useEffect, useState } from "react";
+import { CircleHelp, Upload } from "lucide-react";
+
 import {
   Form,
   FormControl,
@@ -7,25 +13,23 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/shadcn/form";
+
 import { Input } from "@/components/shadcn/input";
+import { Button } from "@/components/shadcn/button";
 import { Textarea } from "@/components/shadcn/textarea";
+
+import { AvatarImage } from "../svg-icons";
+import { useToast } from "@/hooks/useToast";
+import { CountryDropdown } from "./country-list-dropdown";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { PhoneInput } from "./phone-input-with-country-list";
+import { isValidPhoneNumber } from "react-phone-number-input";
+import EditProfileSectionSkeleton from "../skeleton/edit-profile-section-skeleton";
+
 import {
   useGetDealerProfileQuery,
   useUpdateDealerProfileMutation,
 } from "@/features/dealer/dealerProfileSlice";
-import { useToast } from "@/hooks/useToast";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { CircleHelp, Upload } from "lucide-react";
-import Image from "next/image";
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { isValidPhoneNumber } from "react-phone-number-input";
-import * as z from "zod";
-import EditProfileSectionSkeleton from "../skeleton/edit-profile-section-skeleton";
-import { AvatarImage } from "../svg-icons";
-import CardInformations from "./card-informations";
-import { CountryDropdown } from "./country-list-dropdown";
-import { PhoneInput } from "./phone-input-with-country-list";
 
 // Form validation schema
 const formSchema = z.object({
@@ -45,7 +49,7 @@ const formSchema = z.object({
   country: z.string().optional(),
   zip_code: z.string().optional(),
   about: z.string().optional(),
-  // services: z.array(z.string()).min(1, 'At least one service is required'),
+  website: z.string().optional(),
 });
 
 export type TUpdateDealerProfileValues = z.infer<typeof formSchema>;
@@ -76,11 +80,13 @@ export default function EditProfileSection() {
       country: "",
       zip_code: "",
       about: "",
+      website: "",
     },
   });
 
   useEffect(() => {
     if (dealerProfileData) {
+      console.log("dealerProfileData => ", dealerProfileData);
       form.reset({
         name: dealerProfileData.name || "",
         email: dealerProfileData.email || "",
@@ -91,6 +97,7 @@ export default function EditProfileSection() {
         country: dealerProfileData.country || "",
         zip_code: dealerProfileData.zip_code || "",
         about: dealerProfileData.about || "",
+        website: dealerProfileData.website || "",
       });
     }
   }, [dealerProfileData, form]);
@@ -116,6 +123,7 @@ export default function EditProfileSection() {
       formData.append("country", data.country || "");
       formData.append("zip_code", data.zip_code || "");
       formData.append("about", data.about || "");
+      formData.append("website", data.website || "");
 
       // Append profile picture if exists
       if (profileImage instanceof File) {
@@ -457,6 +465,32 @@ export default function EditProfileSection() {
                 )}
               />
             </div>
+
+            {/* website */}
+            <div className="space-y-1 sm:space-y-2 col-span-2">
+              <label
+                htmlFor="website"
+                className="text-[#555d6a] text-sm sm:text-base"
+              >
+                Website
+              </label>
+              <FormField
+                control={form.control}
+                name="website"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        placeholder="Website URL Here"
+                        className="border-[#d5d7da] rounded-md focus:border-[#019935] focus:ring-[#019935]"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
           </div>
 
           {/* Form Fields - Fifth Row */}
@@ -490,8 +524,6 @@ export default function EditProfileSection() {
               </p>
             </div>
           </div>
-          {/* Card Information */}
-          {/* <CardInformations /> */}
 
           {/* Action Buttons */}
           <div className="flex justify-start space-x-3 sm:space-x-4 mt-4">

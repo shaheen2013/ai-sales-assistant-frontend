@@ -13,6 +13,7 @@ export type DealerProfileType = {
     is_verified?: boolean;
     street_address?: string;
     zip_code?: string; // maxLength: 255
+    website?: string; // maxLength: 255
     city?: string; // maxLength: 255
     state?: string; // maxLength: 255
     country?: string; // maxLength: 255
@@ -39,8 +40,8 @@ export type DealerPublicProfileType = DealerProfileType["data"] & {
     department_name: string;
     department_email: string;
     employees: EmployeeDataType[];
-  }[]
-}
+  }[];
+};
 
 export type DealerUpdatePasswordType = {
   old_password: string;
@@ -48,13 +49,13 @@ export type DealerUpdatePasswordType = {
 };
 
 export type NotificationMethodType =
-  | 'send_email_notification'
-  | 'once_an_hour_at_most'
-  | 'never';
+  | "send_email_notification"
+  | "once_an_hour_at_most"
+  | "never";
 export type SignInNotificationMethodType =
-  | 'most_secure'
-  | 'standard'
-  | 'dont_send';
+  | "most_secure"
+  | "standard"
+  | "dont_send";
 
 export interface DealerNotificationSettingsType {
   notification_method: NotificationMethodType;

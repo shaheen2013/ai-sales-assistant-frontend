@@ -3,14 +3,14 @@ import {
   CardContent,
   CardHeader,
   CardTitle,
-} from '@/components/shadcn/card';
-import { DealerProfileType } from '@/types/dealerProfileSliceType';
-import { LinkIcon, Mail, MapPin, Phone } from 'lucide-react';
+} from "@/components/shadcn/card";
+import { DealerProfileType } from "@/types/dealerProfileSliceType";
+import { LinkIcon, Mail, MapPin, Phone } from "lucide-react";
 
 const ContactInformationCard = ({
   data,
 }: {
-  data: DealerProfileType['data'] | undefined;
+  data: DealerProfileType["data"] | undefined;
 }) => {
   if (!data) {
     return (
@@ -29,7 +29,8 @@ const ContactInformationCard = ({
     );
   }
 
-  const { email, street_address, city, state, country, phone_number } = data;
+  const { email, street_address, city, state, country, phone_number, website } =
+    data;
   return (
     <Card>
       <CardHeader>
@@ -65,7 +66,7 @@ const ContactInformationCard = ({
             <Phone className="w-4 h-4 text-[#13c56b]" />
           </div>
           <div>
-            <p className="text-gray-400 font-medium">{phone_number || 'N/A'}</p>
+            <p className="text-gray-400 font-medium">{phone_number || "N/A"}</p>
           </div>
         </div>
         <div className="flex items-center">
@@ -73,9 +74,7 @@ const ContactInformationCard = ({
             <LinkIcon className="w-4 h-4 text-[#13c56b]" />
           </div>
           <div>
-            <p className="text-gray-400 font-medium">
-              {'wwww.demowebsite.com'}
-            </p>
+            <p className="text-gray-400 font-medium">{website || "N/A"}</p>
           </div>
         </div>
       </CardContent>
