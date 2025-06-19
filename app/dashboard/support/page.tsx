@@ -61,9 +61,9 @@ export default function DashboardSupport() {
 
             <div className="bg-white text-primary-400 text-xs rounded-xl px-1.5 py-0.5 font-medium ml-auto">
               {Object.values(supportTicketsData?.status_counter || {}).reduce(
-                (acc, cur) => acc + cur,
+                (acc, cur) => (acc as number) + (cur as number),
                 0
-              )}
+              ) as React.ReactNode}
             </div>
           </TabsTrigger>
 

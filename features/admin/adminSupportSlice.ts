@@ -4,7 +4,7 @@ import { PaginatedResponse } from "@/types/paginatedType";
 
 export const adminSupportSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
-        getAdminAllSupportTickets: builder.query<PaginatedResponse<SupportTicketType> & SupportStatusCountType, Record<string, any>>({
+        getAdminAllSupportTickets: builder.query({
             query: (queryParams) => ({
                 method: "GET",
                 url: `/admin-dashboard/support-tickets`,
