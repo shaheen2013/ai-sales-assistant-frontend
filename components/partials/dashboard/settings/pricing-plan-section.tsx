@@ -198,6 +198,7 @@ export default function PricingPlanSection() {
                         disabled={
                           upgradingPlanId ===
                           (selectedPriceMap[plan.id] || plan.prices[0].id)
+                          || plan.prices[0].convert_amount < (currentPlan?.prices?.[0].convert_amount || 0)
                         }
                         className="text-[#019935] text-base shadow-md px-4 py-2.5 font-medium border-primary-100"
                       >
