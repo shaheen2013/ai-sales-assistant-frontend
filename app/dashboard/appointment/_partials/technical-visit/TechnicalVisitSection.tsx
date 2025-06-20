@@ -15,6 +15,7 @@ const TechnicalVisitSection = () => {
     /*--React State--*/
     const [page, setPage] = useState(1);
     const [sortBy, setSortBy] = useState<string>('');
+    const [filterBy, setFilterBy] = useState<string>('');
     const [tab, setTab] = useState('test_drive');
 
     /*--RTK Query--*/
@@ -22,11 +23,13 @@ const TechnicalVisitSection = () => {
         limit: 10,
         offset: (page - 1) * 10,
         ...(sortBy && { sort_by: sortBy }),
+        ...(filterBy && { medium: filterBy })
     }, { skip: tab !== "test_drive" });
     const { data: storeVisitData, isFetching: storeVisitIsFetching } = useGetStoreVisitQuery({
         limit: 10,
         offset: (page - 1) * 10,
         ...(sortBy && { sort_by: sortBy }),
+        ...(filterBy && { medium: filterBy })
     }, { skip: tab !== "store_visit" });
     const [updateStoreVisitStatus] = useUpdateStoreVisitStatusMutation();
     const [updateTestDriveBookingStatus] = useUpdateTestDriveBookingStatusMutation();
@@ -41,6 +44,7 @@ const TechnicalVisitSection = () => {
                 limit: 10,
                 offset: (page - 1) * 10,
                 ...(sortBy && { sort_by: sortBy }),
+                ...(filterBy && { medium: filterBy })
             }
         });
     }
@@ -56,6 +60,7 @@ const TechnicalVisitSection = () => {
                 limit: 10,
                 offset: (page - 1) * 10,
                 ...(sortBy && { sort_by: sortBy }),
+                ...(filterBy && { medium: filterBy })
             }
         });
     }
@@ -66,7 +71,10 @@ const TechnicalVisitSection = () => {
             <h4 className="text-gray-400 text-xl font-semibold">Technical Visit</h4>
             <div className="text-gray-300 text-sm font-normal mt-1">AI-generated list of test drive appointments based on customer interactions for seamless scheduling.</div>
             <div className="p-4 rounded-2xl outline outline-1 outline-offset-[-1px] outline-gray-50 mt-4">
-                <Tabs value={tab} onValueChange={setTab} defaultValue='test_drive'>
+                <Tabs value={tab} onValueChange={(value) => {
+                    setTab(value);
+                    setPage(1);
+                }} defaultValue='test_drive'>
                     <TabsList className='flex items-center justify-between gap-4'>
                         <div>
                             <TabsTrigger value="test_drive" className='border-b-2 border-b-transparent data-[state=active]:border-b-2 data-[state=active]:border-b-primary-500 pb-3 transition-all group/technicalVisitTabs'>
@@ -84,22 +92,42 @@ const TechnicalVisitSection = () => {
                                 </div>
                             </TabsTrigger>
                         </div>
-                        <SimpleSelect
-                            options={[
-                                {
-                                    label: 'Time',
-                                    value: 'created_at',
-                                },
-                                {
-                                    label: 'Preferred Date Time',
-                                    value: 'preferred_date_time',
-                                }
-                            ]}
-                            placeholder="Sort By"
-                            triggerClassName="[&>span]:text-primary-500 [&>div>svg]:text-primary-500"
-                            value={sortBy}
-                            onChange={setSortBy}
-                        />
+                        <div className='flex items-end gap-4'>
+                            <SimpleSelect
+                                options={[
+                                    {
+                                        label: 'Text',
+                                        value: 'text',
+                                    },
+                                    {
+                                        label: 'Call',
+                                        value: 'call',
+                                    }
+                                ]}
+                                placeholder="Filter By"
+                                triggerClassName="[&>span]:text-primary-500 [&>div>svg]:text-primary-500"
+                                value={filterBy}
+                                onChange={setFilterBy}
+                                label={filterBy && "Filter By"}
+                            />
+                            <SimpleSelect
+                                options={[
+                                    {
+                                        label: 'Time',
+                                        value: 'created_at',
+                                    },
+                                    {
+                                        label: 'Preferred Date Time',
+                                        value: 'preferred_date_time',
+                                    }
+                                ]}
+                                placeholder="Sort By"
+                                triggerClassName="[&>span]:text-primary-500 [&>div>svg]:text-primary-500"
+                                value={sortBy}
+                                onChange={setSortBy}
+                                label={sortBy && "Sort By"}
+                            />
+                        </div>
                     </TabsList>
 
 

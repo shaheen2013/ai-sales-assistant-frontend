@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDebounceValue } from "usehooks-ts";
 import { Controller, useForm } from "react-hook-form";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -49,6 +49,19 @@ import {
 } from "@/features/inventory/inventorySlice";
 
 import SomethingWentWrong from "@/components/SomethingWentWrong";
+import { useCreateSubscriptionMutation, useGetCurrentSubscriptionPlanQuery, useGetDealerPricingPlansQuery } from "@/features/dealer/dealerProfileSlice";
+import InventoryPricingPlanSkeleton from "@/components/skeleton/InventoryPricingPlanSkeleton";
+import Link from "next/link";
+
+interface PricingPlan {
+  name?: string;
+  type?: string;
+  price?: number;
+  description?: string;
+  prices?: any[];
+  subtitle?: string;
+  features?: string[];
+}
 
 export default function DashboardDealerInventory() {
   const toast = useToast();
@@ -76,6 +89,7 @@ export default function DashboardDealerInventory() {
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
   const [selectedPanel, setSelectedPanel] = useState<"list" | "files">("list");
   const [uploadSummery, setUploadSummery] = useState<any[]>([]);
+  const [selectedPriceId, setSelectedPriceId] = useState<string>("");
 
   const [modals, setModals] = useState({
     addInventory: false,
@@ -106,6 +120,15 @@ export default function DashboardDealerInventory() {
     page: Number(page) || 1,
     page_size: Number(page_size) || 10,
   });
+  const { data: currentSubscriptionData, isLoading: isLoadingCurrentSubscription } = useGetCurrentSubscriptionPlanQuery(undefined, { refetchOnMountOrArgChange: true });
+  const {
+    isFetching: isFetchingPricingPlans,
+    data: pricingPlans,
+  } = useGetDealerPricingPlansQuery();
+  const [
+    createSubscription,
+    { isLoading: isLoadingCreateSubscription },
+  ] = useCreateSubscriptionMutation();
 
   const {
     data: dataGetInventoryFiles,
@@ -238,6 +261,32 @@ export default function DashboardDealerInventory() {
     }
   };
 
+  const handleChoosePlan = async () => {
+    try {
+      const data = await createSubscription({
+        price_id: selectedPriceId,
+        success_url: `${window.location.origin}/dashboard/inventory`,
+        cancel_url: `${window.location.origin}`,
+      }).unwrap();
+
+      window.location.href = data?.checkout_url;
+    } catch (error: any) {
+      toast("error", beautifyErrors(error));
+    }
+  };
+
+  useEffect(() => {
+    if (!isLoadingCurrentSubscription && !currentSubscriptionData?.subscription) {
+      setModals((prev) => ({ ...prev, selectPlan: true }));
+    }
+  }, [currentSubscriptionData?.subscription, isLoadingCurrentSubscription]);
+
+  useEffect(() => {
+    if (pricingPlans) {
+      setSelectedPriceId(pricingPlans?.[0]?.prices?.[0]?.id);
+    }
+  }, [pricingPlans])
+
   if (errorGetVehicle || errorGetInventoryFiles) {
     return <SomethingWentWrong />;
   }
@@ -246,16 +295,17 @@ export default function DashboardDealerInventory() {
     {
       name: "Pro Plan",
       price: "150",
-      benefits: [
-        "500 voice minutes",
-        "$0.15 per minute",
-        "Small to mid-size independent dealerships",
-        "Optional $250 one-time if integrations are needed",
-      ],
+      // benefits: [
+      //   "500 voice minutes",
+      //   "$0.15 per minute",
+      //   "Small to mid-size independent dealerships",
+      //   "Optional $250 one-time if integrations are needed",
+      // ],
     },
     { name: "Business Plan", price: "300" },
     { name: "Enterprise Plan", price: "999" },
   ];
+
 
   return (
     <>
@@ -637,8 +687,8 @@ export default function DashboardDealerInventory() {
                       <Select
                         value={field.value}
                         onValueChange={field.onChange}
-                        // className="h-11 w-full !border-[#D5D7DA]"
-                        // defaultValue="km"
+                      // className="h-11 w-full !border-[#D5D7DA]"
+                      // defaultValue="km"
                       >
                         <SelectTrigger className="h-11 w-full !border-[#D5D7DA]">
                           <SelectValue placeholder="Select a fruit" />
@@ -952,84 +1002,100 @@ export default function DashboardDealerInventory() {
 
             {/* right */}
             <div className="flex flex-col gap-3">
-              {plans.map((plan, index) => {
-                return (
-                  <label
-                    key={index}
-                    className="has-[:checked]:border-primary-400 has-[:checked]:text-primary-900 has-[:checked]:ring-indigo-200 flex w-full border border-gray-50 rounded-xl pt-4 px-4 cursor-pointer transition-all gap-3 group flex-col"
-                  >
-                    <div className="flex gap-3">
-                      <input
-                        defaultChecked={index === 0} // Default to the first plan being selected
-                        name="plan"
-                        type="radio"
-                        className="box-content h-2 w-2 appearance-none rounded-full border-[5px] border-white bg-white bg-clip-padding outline-none ring-1 ring-gray-950/10 checked:border-primary-500 checked:ring-primary-500 mt-1"
-                      />
-                      <div className="flex justify-between w-full">
-                        {/* title, description */}
-                        <div className="">
-                          <h2 className="text-gray-400 font-semibold text-lg mb-1">
-                            {plan.name}
-                          </h2>
-                          <h4 className="text-xs text-gray-400">
-                            Perfect for sell used cars
-                          </h4>
-                        </div>
+              {
+                isFetchingPricingPlans ? <>
+                  <InventoryPricingPlanSkeleton />
+                  <InventoryPricingPlanSkeleton />
+                </> : <>
+                  {pricingPlans?.map((plan: PricingPlan, index: number) => {
+                    const price = plan?.prices?.[0];
 
-                        {/* pricing */}
-                        <div className="">
-                          <span className="group-has-[:checked]:text-primary-400 text-gray-400">
-                            $
-                          </span>
-                          <span className="group-has-[:checked]:text-primary-400 text-gray-400 font-bold text-3xl">
-                            {plan.price}
-                          </span>
-                          /month
-                        </div>
-                      </div>
-                    </div>
+                    return (
+                      <label
+                        key={index}
+                        className="has-[:checked]:border-primary-400 has-[:checked]:text-primary-900 has-[:checked]:ring-indigo-200 flex w-full border border-gray-50 rounded-xl pt-4 px-4 cursor-pointer transition-all gap-3 group flex-col"
+                      >
+                        <div className="flex gap-3">
+                          <input
+                            name="plan"
+                            type="radio"
+                            className="box-content h-2 w-2 appearance-none rounded-full border-[5px] border-white bg-white bg-clip-padding outline-none ring-1 ring-gray-950/10 checked:border-primary-500 checked:ring-primary-500 mt-1"
+                            value={price?.id}
+                            onChange={(e) => setSelectedPriceId(e.target.value)}
+                            checked={selectedPriceId === price?.id}
+                          />
+                          <div className="flex justify-between w-full">
+                            {/* title, description */}
+                            <div className="">
+                              <h2 className="text-gray-400 font-semibold text-lg mb-1">
+                                {plan.name}
+                              </h2>
+                              <h4 className="text-xs text-gray-400">
+                                {plan.description || "Perfect for sell used cars"}
+                              </h4>
+                            </div>
 
-                    {/* benefits  */}
-                    <div className="pl-[25px]">
-                      {plan?.benefits?.map((benefit, index) => {
-                        return (
-                          <div
-                            key={index}
-                            className="text-xs text-gray-300 mb-3 flex gap-2"
-                          >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="16"
-                              height="16"
-                              viewBox="0 0 16 16"
-                              fill="none"
-                            >
-                              <rect
-                                x="16"
-                                y="16"
-                                width="16"
-                                height="16"
-                                rx="8"
-                                transform="rotate(-180 16 16)"
-                                fill="#55BB78"
-                              />
-                              <path
-                                d="M6.98228 10.6663C6.77947 10.6663 6.58738 10.589 6.4643 10.4557L4.79846 8.65701C4.74695 8.60146 4.70935 8.53817 4.68781 8.47074C4.66626 8.40331 4.66118 8.33307 4.67287 8.26404C4.68457 8.195 4.71279 8.12853 4.75594 8.06842C4.79909 8.00831 4.85631 7.95573 4.92434 7.9137C4.99234 7.8715 5.06987 7.84068 5.15248 7.823C5.23509 7.80533 5.32115 7.80115 5.40574 7.8107C5.49033 7.82026 5.57178 7.84336 5.64542 7.87869C5.71906 7.91402 5.78345 7.96087 5.83489 8.01657L6.93099 9.19916L9.68688 5.58282C9.77828 5.46342 9.92389 5.37851 10.0918 5.34673C10.2597 5.31495 10.4362 5.33888 10.5825 5.41328C10.887 5.56796 10.9807 5.89561 10.7904 6.14478L7.53429 10.4157C7.47871 10.4889 7.40209 10.5499 7.3111 10.5935C7.2201 10.637 7.11747 10.6618 7.01212 10.6656C7.00186 10.6663 6.99254 10.6663 6.98228 10.6663Z"
-                                fill="white"
-                              />
-                            </svg>
-                            {benefit}
+                            {/* pricing */}
+                            <div className="">
+                              <span className="group-has-[:checked]:text-primary-400 text-gray-400">
+                                $
+                              </span>
+                              <span className="group-has-[:checked]:text-primary-400 text-gray-400 font-bold text-3xl">
+                                {price?.convert_amount}
+                              </span>
+                              /month
+                            </div>
                           </div>
-                        );
-                      })}
-                    </div>
-                  </label>
-                );
-              })}
+                        </div>
 
-              <span className="underline text-xs font-medium text-primary-400 flex items-end justify-end cursor-pointer">
+                        {/* benefits  */}
+                        <div className="pl-[25px]">
+                          {[
+                            "Manage up to 20 car listings",
+                            "AI-powered customer inquiries via text",
+                            "Basic lead generation assistance"
+                          ]?.map((benefit, index) => {
+                            return (
+                              <div
+                                key={index}
+                                className="text-xs text-gray-300 mb-3 flex gap-2"
+                              >
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="16"
+                                  height="16"
+                                  viewBox="0 0 16 16"
+                                  fill="none"
+                                >
+                                  <rect
+                                    x="16"
+                                    y="16"
+                                    width="16"
+                                    height="16"
+                                    rx="8"
+                                    transform="rotate(-180 16 16)"
+                                    fill="#55BB78"
+                                  />
+                                  <path
+                                    d="M6.98228 10.6663C6.77947 10.6663 6.58738 10.589 6.4643 10.4557L4.79846 8.65701C4.74695 8.60146 4.70935 8.53817 4.68781 8.47074C4.66626 8.40331 4.66118 8.33307 4.67287 8.26404C4.68457 8.195 4.71279 8.12853 4.75594 8.06842C4.79909 8.00831 4.85631 7.95573 4.92434 7.9137C4.99234 7.8715 5.06987 7.84068 5.15248 7.823C5.23509 7.80533 5.32115 7.80115 5.40574 7.8107C5.49033 7.82026 5.57178 7.84336 5.64542 7.87869C5.71906 7.91402 5.78345 7.96087 5.83489 8.01657L6.93099 9.19916L9.68688 5.58282C9.77828 5.46342 9.92389 5.37851 10.0918 5.34673C10.2597 5.31495 10.4362 5.33888 10.5825 5.41328C10.887 5.56796 10.9807 5.89561 10.7904 6.14478L7.53429 10.4157C7.47871 10.4889 7.40209 10.5499 7.3111 10.5935C7.2201 10.637 7.11747 10.6618 7.01212 10.6656C7.00186 10.6663 6.99254 10.6663 6.98228 10.6663Z"
+                                    fill="white"
+                                  />
+                                </svg>
+                                {benefit}
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </label>
+                    );
+                  })}
+                </>
+              }
+
+
+              <Link href={"/#plans"} target="_blank" className="underline text-xs font-medium text-primary-400 flex items-end justify-end cursor-pointer">
                 Show all plan Detail View
-              </span>
+              </Link>
             </div>
           </div>
 
@@ -1041,20 +1107,8 @@ export default function DashboardDealerInventory() {
             >
               Cancel
             </Button>
-            <Button variant="primary">
+            <Button variant="primary" onClick={handleChoosePlan} disabled={isLoadingCreateSubscription || isFetchingPricingPlans} loading={isLoadingCreateSubscription} className="min-w-[168px]">
               Choose & Continue{" "}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                viewBox="0 0 20 20"
-                fill="none"
-              >
-                <path
-                  d="M7.73271 4.20694C8.03263 3.92125 8.50737 3.93279 8.79306 4.23271L13.7944 9.48318C14.0703 9.77285 14.0703 10.2281 13.7944 10.5178L8.79306 15.7682C8.50737 16.0681 8.03263 16.0797 7.73271 15.794C7.43279 15.5083 7.42125 15.0336 7.70694 14.7336L12.2155 10.0005L7.70694 5.26729C7.42125 4.96737 7.43279 4.49264 7.73271 4.20694Z"
-                  fill="white"
-                />
-              </svg>
             </Button>
           </div>
         </DialogContent>
