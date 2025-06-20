@@ -140,6 +140,7 @@ const TalkToHumanSection = () => {
             triggerClassName="[&>span]:text-primary-500 [&>div>svg]:text-primary-500"
             value={sortBy}
             onChange={setSortBy}
+            label={sortBy && "Sort By"}
           />
         </div>
 
