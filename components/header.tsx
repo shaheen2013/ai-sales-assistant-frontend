@@ -67,25 +67,25 @@ const products = [
 const navItems = [
   {
     name: "Solutions",
-    url: "#solutions"
+    url: "#solutions",
   },
   {
     name: "How It Helps",
-    url: "#how-it-helps"
+    url: "#how-it-helps",
   },
   {
     name: "Testimonials",
-    url: "#testimonials"
+    url: "#testimonials",
   },
   {
     name: "Plans",
-    url: "#plans"
+    url: "#plans",
   },
   {
     name: "FAQ's",
-    url: "#faqs"
-  }
-]
+    url: "#faqs",
+  },
+];
 
 export default function Example() {
   /*--Session--*/
@@ -189,17 +189,15 @@ export default function Example() {
         <div className="hidden lg:flex">
           <NavigationMenu className="">
             <NavigationMenuList className="flex items-center gap-6">
-              {
-                navItems?.map((item, index) => (
-                  <NavigationMenuItem key={index}>
-                    <Link href={item.url} legacyBehavior passHref>
-                      <NavigationMenuLink className="font-medium">
-                        {item.name}
-                      </NavigationMenuLink>
-                    </Link>
-                  </NavigationMenuItem>
-                ))
-              }
+              {navItems?.map((item, index) => (
+                <NavigationMenuItem key={index}>
+                  <Link href={item.url} legacyBehavior passHref>
+                    <NavigationMenuLink className="font-medium">
+                      {item.name}
+                    </NavigationMenuLink>
+                  </Link>
+                </NavigationMenuItem>
+              ))}
             </NavigationMenuList>
           </NavigationMenu>
         </div>
@@ -230,8 +228,6 @@ export default function Example() {
               </svg>
             </Button>
           )}
-
-          {/* */}
 
           <Button href="/chat" variant="primary">
             <ClaraIcon />
@@ -335,18 +331,16 @@ export default function Example() {
           <div className="mt-6 flow-root">
             <div className="-my-6 ">
               <div className="space-y-2 pt-6 mb-4">
-                {
-                  navItems?.map((item, index) =>
-                    <Link
-                      href={item.url}
-                      className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-medium text-black text-center"
-                      key={index}
-                      onClick={() => setMobileMenuOpen(false)}
-                    >
-                      {item.name}
-                    </Link>
-                  )
-                }
+                {navItems?.map((item, index) => (
+                  <Link
+                    href={item.url}
+                    className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-medium text-black text-center"
+                    key={index}
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    {item.name}
+                  </Link>
+                ))}
               </div>
 
               {/* <div className="">
@@ -354,6 +348,39 @@ export default function Example() {
                   Pricing
                 </Button>
               </div> */}
+
+              <div className="flex flex-col items-center justify-center gap-3 mt-6">
+                {status === "loading" ? (
+                  <Skeleton className="h-12 w-full" />
+                ) : (
+                  <Button
+                    href={session?.access ? "/dashboard/overview" : "/login"}
+                    variant="outline-primary"
+                    className="!w-full"
+                  >
+                    <span>{session?.access ? "Dashboard" : "Sign In"}</span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="22"
+                      height="22"
+                      viewBox="0 0 22 22"
+                      fill="none"
+                    >
+                      <path
+                        d="M11.0002 3.9541C11.9169 9.4541 18.3336 11.2874 18.3336 11.2874M18.3336 11.2874C18.3336 11.2874 11.9169 13.1208 11.0002 18.6208M18.3336 11.2874L3.66689 11.3571"
+                        stroke="#101010"
+                        strokeWidth="1.1"
+                        strokeLinejoin="bevel"
+                      />
+                    </svg>
+                  </Button>
+                )}
+
+                <Button href="/chat" variant="primary" className="!w-full">
+                  <ClaraIcon />
+                  <span> Ask Me Now</span>
+                </Button>
+              </div>
             </div>
           </div>
         </DialogPanel>
