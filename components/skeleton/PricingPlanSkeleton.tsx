@@ -1,9 +1,9 @@
-import { Skeleton } from '@/components/shadcn/skeleton';
+import { Skeleton } from "@/components/shadcn/skeleton";
 
 const PricingPlanSkeleton = () => {
   return (
     <div className="space-y-6">
-      {[1, 2, 3].map((item) => (
+      {[1, 2].map((item) => (
         <div
           key={item}
           className="border rounded-xl p-6 flex flex-col md:items-center md:justify-between"
