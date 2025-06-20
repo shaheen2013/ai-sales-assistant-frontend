@@ -281,6 +281,11 @@ export default function DashboardDealerInventory() {
   };
 
   useEffect(() => {
+    console.log(
+      " isLoadingCurrentSubscription => ",
+      isLoadingCurrentSubscription
+    );
+    console.log(" currentSubscriptionData => ", currentSubscriptionData);
     if (
       !isLoadingCurrentSubscription &&
       !currentSubscriptionData?.subscription
@@ -355,7 +360,7 @@ export default function DashboardDealerInventory() {
               fill="#5D6679"
             />
           </svg>
-          Place/Add pdf
+          Bulk Upload
         </Button>
       </div>
 
