@@ -177,52 +177,14 @@ export function DashboardSidebar() {
 
         {/* user widget */}
         <div className="absolute bg-white bottom-0 left-[16px] right-[16px] p-3 border rounded-lg mb-4">
-          {/* <div className="flex justify-between mb-1">
-            <div className="flex items-center justify-center gap-2 mb-[6px]">
-              <svg
-                width="15"
-                height="16"
-                viewBox="0 0 15 16"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M14.7983 6.21503C14.7592 6.09857 14.6887 5.99516 14.5946 5.91623C14.5005 5.83729 14.3864 5.78589 14.2649 5.76769L10.0103 5.11769L8.10094 1.05103C8.0471 0.936497 7.96177 0.839655 7.85494 0.771823C7.7481 0.70399 7.62416 0.667969 7.4976 0.667969C7.37105 0.667969 7.24711 0.70399 7.14027 0.771823C7.03343 0.839655 6.94811 0.936497 6.89427 1.05103L4.98494 5.11769L0.73027 5.76769C0.609084 5.78617 0.495337 5.8377 0.401534 5.91662C0.307731 5.99554 0.237505 6.09879 0.198574 6.21503C0.159644 6.33127 0.153517 6.45599 0.180867 6.57549C0.208218 6.69499 0.267987 6.80463 0.353603 6.89236L3.45427 10.067L2.72094 14.559C2.70092 14.6823 2.71594 14.8087 2.76428 14.9239C2.81262 15.039 2.89234 15.1383 2.99434 15.2104C3.09635 15.2824 3.21655 15.3244 3.34124 15.3314C3.46593 15.3385 3.5901 15.3104 3.6996 15.2504L7.4996 13.1517L11.2996 15.2504C11.4091 15.3109 11.5334 15.3395 11.6584 15.3327C11.7833 15.3259 11.9039 15.2841 12.0062 15.2121C12.1085 15.14 12.1884 15.0406 12.2369 14.9252C12.2854 14.8099 12.3004 14.6832 12.2803 14.5597L11.5469 10.0677L14.6456 6.89236C14.7308 6.80438 14.7901 6.69462 14.8171 6.57514C14.844 6.45565 14.8375 6.33106 14.7983 6.21503Z"
-                  fill="url(#paint0_linear_1353_7212)"
-                />
-                <defs>
-                  <linearGradient
-                    id="paint0_linear_1353_7212"
-                    x1="7.49873"
-                    y1="0.667969"
-                    x2="15.2555"
-                    y2="0.667969"
-                    gradientUnits="userSpaceOnUse"
-                  >
-                    <stop stopColor="#019935" />
-                    <stop offset="1" stopColor="#55BB78" />
-                  </linearGradient>
-                </defs>
-              </svg>
-
-              <span className="text-gray-400 text-xs">Goal</span>
-            </div>
-
-            <div className="text-gray-400 text-xs">20/45</div>
-          </div> */}
-
-          {/* <Progress value={50} className="mb-5" /> */}
-
-          {/* <hr className="mb-5" /> */}
-
-          {
-            isAdmin ? <div className="flex justify-between cursor-pointer">
+          {isAdmin ? (
+            <div className="flex justify-between cursor-pointer">
               <div className="flex">
                 {session?.user?.profile_picture ? (
                   <div className="w-9 h-9 border-2 border-primary-500 p-[2px] rounded-full overflow-hidden">
                     {/* image */}
                     <Image
-                      src="https://dummyimage.com/500x500"
+                      src={session?.user?.profile_picture}
                       alt="user"
                       width={40}
                       height={40}
@@ -254,7 +216,9 @@ export function DashboardSidebar() {
                   </div>
                 </div>
               </div>
-            </div> : <DropdownMenu>
+            </div>
+          ) : (
+            <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <div className="flex justify-between cursor-pointer">
                   <div className="flex">
@@ -262,7 +226,7 @@ export function DashboardSidebar() {
                       <div className="w-9 h-9 border-2 border-primary-500 p-[2px] rounded-full overflow-hidden">
                         {/* image */}
                         <Image
-                          src="https://dummyimage.com/500x500"
+                          src={session?.user?.profile_picture}
                           alt="user"
                           width={40}
                           height={40}
@@ -317,10 +281,14 @@ export function DashboardSidebar() {
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
                   <Link href="/dashboard/profile" className="block">
-                    <DropdownMenuItem className="cursor-pointer">Profile</DropdownMenuItem>
+                    <DropdownMenuItem className="cursor-pointer">
+                      Profile
+                    </DropdownMenuItem>
                   </Link>
                   <Link href="/dashboard/settings" className="block">
-                    <DropdownMenuItem className="cursor-pointer">Settings</DropdownMenuItem>
+                    <DropdownMenuItem className="cursor-pointer">
+                      Settings
+                    </DropdownMenuItem>
                   </Link>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
@@ -334,7 +302,7 @@ export function DashboardSidebar() {
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-          }
+          )}
         </div>
       </SidebarContent>
       <SidebarFooter />
