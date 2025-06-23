@@ -7,7 +7,11 @@ const ProfileHeader = () => {
   const { data } = useGetDealerProfileQuery(undefined, {
     refetchOnMountOrArgChange: true,
   });
+
   const dealerProfileData = data?.data;
+
+  console.log("dealerProfileData => ", dealerProfileData);
+
   return (
     <div className="relative border rounded-2xl min-h-[252px] md:h-[252px]">
       <div className="w-full bg-[#2b3545] overflow-hidden rounded-t-2xl h-[100px]">
@@ -36,13 +40,13 @@ const ProfileHeader = () => {
 
           <div className="text-center md:text-left">
             <h1 className="text-xl md:text-2xl font-semibold text-[#2b3545]">
-              {dealerProfileData?.name || "Your Business Name"}
+              {dealerProfileData?.dealer_details?.business_name || "N/A"}
             </h1>
             <div className="mt-2 space-y-1">
               <div className="flex items-center text-[#555d6a] justify-center md:justify-start">
                 <Mail className="w-4 h-4 text-[#018b30] mr-2" />
                 <span className="text-sm md:text-base">
-                  {dealerProfileData?.email || "Your Business Email"}
+                  {dealerProfileData?.dealer_details?.business_email || "N/A"}
                 </span>
               </div>
               <div className="flex items-center text-[#555d6a] justify-center md:justify-start">

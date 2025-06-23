@@ -1,18 +1,21 @@
 "use client";
-import ProfileHeader from "@/components/partials/dashboard/profile/profile-header";
-import DealerProfileOverviewSkeleton from "@/components/partials/dashboard/skeleton/dealer-profile-overview-skeleton";
-import { useGetDealerProfileQuery } from "@/features/dealer/dealerProfileSlice";
+
+import ShortBioSection from "./short-bio-section";
+import PublicEmbedCodeCard from "./embeded-code-card";
+import UpgradePlanCtaCard from "./upgrade-plan-cta-card";
+import ServicesOfferedSection from "./services-offered-section";
 import CardInformationSection from "./card-information-section";
 import ContactInformationCard from "./contact-information-card";
-import PublicEmbedCodeCard from "./embeded-code-card";
-import ServicesOfferedSection from "./services-offered-section";
-import ShortBioSection from "./short-bio-section";
-import UpgradePlanCtaCard from "./upgrade-plan-cta-card";
+import ProfileHeader from "@/components/partials/dashboard/profile/profile-header";
+import DealerProfileOverviewSkeleton from "@/components/partials/dashboard/skeleton/dealer-profile-overview-skeleton";
+
+import { useGetDealerProfileQuery } from "@/features/dealer/dealerProfileSlice";
 
 export default function DealerProfile() {
   const { data, isLoading } = useGetDealerProfileQuery(undefined, {
     refetchOnMountOrArgChange: true,
   });
+
   const dealerProfileData = data?.data;
   if (isLoading) return <DealerProfileOverviewSkeleton />;
 
