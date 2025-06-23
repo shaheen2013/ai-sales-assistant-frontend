@@ -11,6 +11,7 @@ import {
 import { TeezAILogoImageSVG } from './svg-icons';
 import { useGetPublicDealersQuery } from '@/features/dealer/dealerSlice';
 import { Combobox } from '@/components/shadcn/combo-box';
+import { cn } from '@/lib/utils';
 
 interface AISalesInitializerProps {
   emailValue: string;
@@ -18,6 +19,7 @@ interface AISalesInitializerProps {
   onEmailChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onDealerChange: (value: string) => void;
   onEmailSubmit: () => void;
+  showDealerDropDown?: boolean;
 }
 
 export default function AISalesInitializer({
@@ -26,6 +28,7 @@ export default function AISalesInitializer({
   onEmailChange,
   onEmailSubmit,
   onDealerChange,
+  showDealerDropDown
 }: AISalesInitializerProps) {
   /*--RTK Query--*/
   const { data: dealers, isLoading: dealersLoading } = useGetPublicDealersQuery();
@@ -43,12 +46,13 @@ export default function AISalesInitializer({
 
       <div className="w-full max-w-3xl grid lg:grid-cols-2 grid-cols-1 gap-5 mb-6 px-6">
         {/* select your dealer */}
-        <div>
-          <label htmlFor="" className="text-gray-700 font-semibold mb-2 block">
-            Select your Dealer: <span className="text-red-500">*</span>
-          </label>
+        {
+          showDealerDropDown && <div>
+            <label htmlFor="" className="text-gray-700 font-semibold mb-2 block">
+              Select your Dealer: <span className="text-red-500">*</span>
+            </label>
 
-          {/* <Select onValueChange={onDealerChange}>
+            {/* <Select onValueChange={onDealerChange}>
             <SelectTrigger className="h-11 border-[#D5D7DA]">
               <SelectValue placeholder="Select a Dealer" />
             </SelectTrigger>
@@ -64,22 +68,25 @@ export default function AISalesInitializer({
               </SelectGroup>
             </SelectContent>
           </Select> */}
-          <Combobox
-            placeholder='Select a Dealer'
-            options={dealers?.map((dealer: any) => ({
-              value: dealer?.user?.dealer_details?.id,
-              label: dealer?.business_name || dealer?.user?.email || 'N/A',
-            })) || []}
-            value={selectedDealer}
-            onChange={onDealerChange}
-            className="h-11 border-[#D5D7DA] w-full"
-            width="xl:w-[350px]"
-            isLoading={dealersLoading}
-          />
-        </div>
+            <Combobox
+              placeholder='Select a Dealer'
+              options={dealers?.map((dealer: any) => ({
+                value: dealer?.user?.dealer_details?.id,
+                label: dealer?.business_name || dealer?.user?.email || 'N/A',
+              })) || []}
+              value={selectedDealer}
+              onChange={onDealerChange}
+              className="h-11 border-[#D5D7DA] w-full"
+              width="xl:w-[350px]"
+              isLoading={dealersLoading}
+            />
+          </div>
+        }
 
         {/* enter your email */}
-        <div>
+        <div className={cn(
+          !showDealerDropDown && 'col-span-2'
+        )}>
           <label htmlFor="" className="text-gray-700 font-semibold mb-2 block">
             Enter your email: <span className="text-red-500">*</span>
           </label>
