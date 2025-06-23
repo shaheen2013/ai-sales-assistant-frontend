@@ -1,25 +1,38 @@
-import { AlertCircle } from "lucide-react";
+import { CircleAlert } from "lucide-react";
 
 export default function SomethingWentWrong() {
   return (
-    <div className="min-h-[calc(100vh-200px)] flex items-center justify-center px-4">
-      <div className="bg-white border border-green-300 rounded-2xl shadow-md p-8 max-w-md w-full text-center">
-        <div className="text-green-600 text-6xl mb-4">
-          <AlertCircle className="h-12 w-12 text-green-500 mb-4 mx-auto" />
+    <div className="min-h-[calc(100vh-200px)] flex items-center justify-center  px-4">
+      <div className="bg-white  rounded-3xl max-w-md w-full p-8 sm:p-10">
+        <div className="flex flex-col items-center text-center space-y-6">
+          {/* icon */}
+          <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center">
+            <CircleAlert
+              className="w-8 h-8 text-green-600"
+              aria-label="Error Icon"
+            />
+          </div>
+
+          {/* Heading */}
+          <div>
+            <h1 className="text-2xl font-bold text-green-600 mb-1">
+              Something Went Wrong
+            </h1>
+
+            <p className="text-sm font-normal text-green-600 leading-relaxed">
+              An unexpected error occurred. Please try again, or contact support
+              if the issue persists.
+            </p>
+          </div>
+
+          {/* Action */}
+          <button
+            onClick={() => window.location.reload()}
+            className="inline-flex items-center justify-center px-6 py-2.5 text-sm font-medium bg-green-600 hover:bg-green-700 text-white rounded-xl transition-shadow shadow-md hover:shadow-lg"
+          >
+            Try Again
+          </button>
         </div>
-        <h1 className="text-2xl font-bold text-green-500 mb-2">
-          Something Went Wrong
-        </h1>
-        <p className="text-green-800 mb-6">
-          We encountered an unexpected error. Please try again later or contact
-          support if the problem persists.
-        </p>
-        <button
-          onClick={() => window.location.reload()}
-          className="mt-2 bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-xl transition"
-        >
-          Try Again
-        </button>
       </div>
     </div>
   );

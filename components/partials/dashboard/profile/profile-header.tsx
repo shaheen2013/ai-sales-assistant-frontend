@@ -1,7 +1,8 @@
 "use client";
-import { useGetDealerProfileQuery } from "@/features/dealer/dealerProfileSlice";
-import { Mail, MapPin } from "lucide-react";
+
 import Image from "next/image";
+import { Mail, MapPin } from "lucide-react";
+import { useGetDealerProfileQuery } from "@/features/dealer/dealerProfileSlice";
 
 const ProfileHeader = () => {
   const { data } = useGetDealerProfileQuery(undefined, {

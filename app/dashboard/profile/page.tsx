@@ -10,14 +10,20 @@ import ProfileHeader from "@/components/partials/dashboard/profile/profile-heade
 import DealerProfileOverviewSkeleton from "@/components/partials/dashboard/skeleton/dealer-profile-overview-skeleton";
 
 import { useGetDealerProfileQuery } from "@/features/dealer/dealerProfileSlice";
+import SomethingWentWrong from "@/components/SomethingWentWrong";
 
 export default function DealerProfile() {
-  const { data, isLoading } = useGetDealerProfileQuery(undefined, {
+  const { data, isLoading, isError } = useGetDealerProfileQuery(undefined, {
     refetchOnMountOrArgChange: true,
   });
 
   const dealerProfileData = data?.data;
+
   if (isLoading) return <DealerProfileOverviewSkeleton />;
+
+  if (isError) {
+    return <SomethingWentWrong />;
+  }
 
   return (
     <div className="mx-auto bg-white rounded-lg overflow-hidden flex flex-col gap-6">
