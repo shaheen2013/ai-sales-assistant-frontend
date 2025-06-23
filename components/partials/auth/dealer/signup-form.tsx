@@ -8,31 +8,27 @@ import { useForm, Controller } from "react-hook-form";
 
 // components
 import Button from "@/components/button";
-
-import {
-  useRegisterDealerMutation,
-  useRegisterWithGoogleMutation,
-} from "@/features/auth/authSlice";
+import DealerRegistration from "@/components/partials/auth/dealer/dealer-registration";
 
 import { beautifyErrors } from "@/lib/utils";
 import { useToast } from "@/hooks/useToast";
 import { Checkbox } from "@/components/shadcn/checkbox";
-
 import { Input, InputPassword } from "@/components/shadcn/input";
-import DealerRegistration from "@/components/partials/auth/dealer/dealer-registration";
+import { useRegisterDealerMutation } from "@/features/auth/authSlice";
 
 export default function SignupForm() {
   const toast = useToast();
   const router = useRouter();
+
   const searchParams = useSearchParams();
   const source = searchParams.get("source");
   const session_id = searchParams.get("session_id");
 
+
   const { status } = useSession();
 
-  const [registerProgress, setRegisterProgress] = useState(0);
+  const [registerProgress, setRegisterProgress] = useState(100);
 
-  const [registerWithGoogle] = useRegisterWithGoogleMutation();
   const [register, { isLoading: isLoadingRegister }] =
     useRegisterDealerMutation();
 
@@ -53,26 +49,10 @@ export default function SignupForm() {
   });
 
   const handleGoogleRegister = async () => {
-    const data = await signIn("google", {
+    await signIn("google", {
       redirect: false,
       callbackUrl: `${window.location.origin}/login`,
     });
-
-    console.log("data", data);
-
-    // toast("error", "Google Authentication coming soon");
-    // return;
-
-    // const { error, data } = await registerWithGoogle({ token: "123" });
-
-    // if (error) {
-    //   toast("error", beautifyErrors(error));
-    //   console.log("error", beautifyErrors(error));
-
-    //   return;
-    // }
-
-    // console.log("data", data);
   };
 
   const onSubmit = async (formData: FormValues) => {
@@ -89,13 +69,13 @@ export default function SignupForm() {
         queryParams = {
           ...queryParams,
           source: source,
-          session_id: session_id
-        }
+          session_id: session_id,
+        };
       }
 
       const { error, data } = await register({
         data: payload,
-        queryParams
+        queryParams,
       });
 
       if (error) {
@@ -120,7 +100,7 @@ export default function SignupForm() {
           clearInterval(interval);
           // After reaching 100, reset back to 0
           toast("success", data?.detail || "Registration successful");
-          setTimeout(() => { }, 3000); // small pause before reset (optional)
+          setTimeout(() => {}, 3000); // small pause before reset (optional)
         }
       }, 30); // 20ms per update = smooth
     } catch (error) {

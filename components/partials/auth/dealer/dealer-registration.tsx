@@ -1,4 +1,7 @@
-import { Button } from "@/components/shadcn/button";
+import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+
+import Button from "@/components/button";
 import { Progress } from "@/components/shadcn/progress";
 
 interface DealerRegistrationProps {
@@ -10,6 +13,10 @@ export default function DealerRegistration({
   progress = 50,
   onClose = () => {},
 }: DealerRegistrationProps) {
+  const searchParams = useSearchParams();
+
+  const email = searchParams.get("email");
+
   return (
     <div className="absolute top-0 left-0 right-0 bottom-0 bg-white z-10">
       <header className="pt-10 lg:px-20 px-6">
@@ -69,58 +76,54 @@ export default function DealerRegistration({
       <div className="h-[calc(100vh-100px)] flex justify-center items-center">
         <div className="w-[600px] mx-3 max-w-[600px]">
           {progress === 100 ? (
-            <div className="flex flex-col items-center justify-center h-full p-6 border rounded-xl relative">
-              <div
-                className="absolute top-6 right-6 h-10 w-12 border-2 shadow-sm p-2 rounded-lg flex justify-center items-center bg-white cursor-pointer select-none"
-                onClick={onClose}
-              >
-                <svg
-                  width="21"
-                  height="20"
-                  viewBox="0 0 21 20"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M3.00643 2.55379L3.07904 2.46967C3.34531 2.2034 3.76198 2.1792 4.05559 2.39705L4.13971 2.46967L10.6094 8.939L17.079 2.46967C17.3719 2.17678 17.8468 2.17678 18.1397 2.46967C18.4326 2.76256 18.4326 3.23744 18.1397 3.53033L11.6704 10L18.1397 16.4697C18.406 16.7359 18.4302 17.1526 18.2123 17.4462L18.1397 17.5303C17.8734 17.7966 17.4568 17.8208 17.1632 17.6029L17.079 17.5303L10.6094 11.061L4.13971 17.5303C3.84681 17.8232 3.37194 17.8232 3.07904 17.5303C2.78615 17.2374 2.78615 16.7626 3.07904 16.4697L9.54838 10L3.07904 3.53033C2.81278 3.26406 2.78857 2.8474 3.00643 2.55379L3.07904 2.46967L3.00643 2.55379Z"
-                    fill="#5D6679"
-                  />
-                </svg>
+            <div className="h-[calc(100vh-100px)] flex justify-center items-center">
+              <div className="max-w-[700px] w-[700px] border rounded-xl p-6">
+                {/* svg icon */}
+                <div className="flex justify-center mb-2">
+                  <svg
+                    width="120"
+                    height="120"
+                    viewBox="0 0 120 120"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M93 24C101.284 24 108 30.7157 108 39V87C108 95.2843 101.284 102 93 102H27C18.7157 102 12 95.2843 12 87V39C12 30.7157 18.7157 24 27 24H93ZM102 47.766L61.5211 71.5858C60.7387 72.046 59.7997 72.1227 58.9651 71.8159L58.4789 71.5858L18 47.778V87C18 91.9706 22.0294 96 27 96H93C97.9706 96 102 91.9706 102 87V47.766ZM93 30H27C22.0294 30 18 34.0294 18 39V40.812L60 65.5195L102 40.806V39C102 34.0294 97.9706 30 93 30Z"
+                      fill="#5D6679"
+                    />
+                  </svg>
+                </div>
+
+                {/* title */}
+                <h2 className="text-center text-gray-500 text-2xl font-semibold mb-3">
+                  Confirm Your Email & Finish Setting Up Your Profile!
+                </h2>
+
+                {/* subtitle */}
+                <p className="text-center text-gray-400 mb-9">
+                  We&apos;ve sent a link to your email{" "}
+                  {email && (
+                    <span className="text-primary-400">({email}) </span>
+                  )}
+                  address. If you don&apos;t see it, check your spam or junk
+                  folder.
+                </p>
+
+                {/* buttons */}
+                <div className="flex justify-center gap-4 mb-9 lg:flex-row flex-col">
+                  <Button variant="outline-gray">Contact Support</Button>
+                  <Button variant="primary">Resend Mail</Button>
+                </div>
+
+                <div className="">
+                  <Link
+                    href="/privacy-policy"
+                    className="block text-center text-gray-400 underline text-sm"
+                  >
+                    Terms of Use & Privacy Policy
+                  </Link>
+                </div>
               </div>
-
-              <div className="bg-primary-50 rounded-full p-6 mb-6">
-                <svg
-                  width="60"
-                  height="60"
-                  viewBox="0 0 60 60"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M22.5 30L27.5 35L38.75 23.75M18.3344 9.54674C20.344 9.38637 22.2518 8.59614 23.7862 7.28855C27.3668 4.23715 32.6332 4.23715 36.2138 7.28855C37.7482 8.59614 39.656 9.38637 41.6656 9.54674C46.3551 9.92097 50.079 13.6449 50.4533 18.3344C50.6136 20.344 51.4039 22.2518 52.7115 23.7862C55.7628 27.3668 55.7628 32.6332 52.7115 36.2138C51.4039 37.7482 50.6136 39.656 50.4533 41.6656C50.079 46.3551 46.3551 50.079 41.6656 50.4533C39.656 50.6136 37.7482 51.4039 36.2138 52.7115C32.6332 55.7628 27.3668 55.7628 23.7862 52.7115C22.2518 51.4039 20.344 50.6136 18.3344 50.4533C13.6449 50.079 9.92097 46.3551 9.54674 41.6656C9.38637 39.656 8.59614 37.7482 7.28855 36.2138C4.23715 32.6332 4.23715 27.3668 7.28855 23.7862C8.59614 22.2518 9.38637 20.344 9.54674 18.3344C9.92097 13.6449 13.6449 9.92097 18.3344 9.54674Z"
-                    stroke="#019935"
-                    strokeWidth="3.33333"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </div>
-
-              <h2 className="text-gray-300 text-3xl font-semibold mb-2">
-                Account Created Successfully!
-              </h2>
-
-              <p className="text-gray-500 font-normal text-center text-lg mb-9">
-                Congratulations on reaching this milestone! You&apos;re one step
-                closer to your goal!
-              </p>
-
-              <Button
-                className="bg-primary-500 text-white px-4 rounded-md w-full !py-6 text-base"
-                href="/login"
-              >
-                Explore Features
-              </Button>
             </div>
           ) : (
             <div className="">

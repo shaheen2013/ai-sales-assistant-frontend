@@ -29,14 +29,14 @@ export default function AccountCreated() {
 
         {/* subtitle */}
         <p className="text-center text-gray-400 mb-9">
-          We've sent a link to your email (yourmail@gmail.com) address. If you
-          don't see it, check your spam or junk folder.
+          We&aposve sent a link to your email (yourmail@gmail.com) address. If you
+          don&apost see it, check your spam or junk folder.
         </p>
 
         {/* buttons */}
         <div className="flex justify-center gap-4 mb-9 lg:flex-row flex-col">
           <Button variant="outline-gray">Contact Support</Button>
-          <Button variant="primary">Resent Mail</Button>
+          <Button variant="primary">Resend Mail</Button>
         </div>
 
         <div className="">
