@@ -1,16 +1,18 @@
-import { Button } from '@/components/shadcn/button';
-import PricingPlanSkeleton from '@/components/skeleton/PricingPlanSkeleton';
+import { Button } from "@/components/shadcn/button";
+import PricingPlanSkeleton from "@/components/skeleton/PricingPlanSkeleton";
 import {
   useCreateSubscriptionMutation,
   useGetCurrentSubscriptionPlanQuery,
   useGetDealerPricingPlansQuery,
   useUpgradeSubscriptionMutation,
-} from '@/features/dealer/dealerProfileSlice';
-import { useToast } from '@/hooks/useToast';
-import { handleApiError } from '@/lib/utils';
-import Link from 'next/link';
-import { useState } from 'react';
-import BillingHistoryTable from './billing-history-table';
+} from "@/features/dealer/dealerProfileSlice";
+import { useToast } from "@/hooks/useToast";
+import { beautifyErrors, handleApiError } from "@/lib/utils";
+import Link from "next/link";
+import { useState } from "react";
+import BillingHistoryTable from "./billing-history-table";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/shadcn/dialog";
+import TickIcon from "@/components/icons/TickIcon";
 
 interface Price {
   id: string;
@@ -28,6 +30,28 @@ interface PricingPlan {
   prices: Price[];
 }
 
+const plansDetails = [
+  {
+    name: "Business Plan",
+    for: "Mid-size independent dealerships (3-5 reps)",
+    api_setup_fee: "$250 one-time (CRM, booking, parts)",
+  },
+  {
+    name: "Enterprise Plan",
+
+    for: "Franchise dealerships with multiple departments/locations",
+    api_setup_fee: "$250 one-time (includes full CRM, service calendar, parts inventory, and SIP routing support)",
+    extras: "Multi-location call routing, custom AI voice persona, CRM/DMS integration, priority onboarding",
+  },
+];
+
+const planCommonFeatures = [
+  "AI Voice Assistant powered by GPT-4o",
+  "Unlimited website chatbot (text)",
+  "Call routing via mobile or extension",
+  "Dealer branding (custom greetings)",
+];
+
 export default function PricingPlanSection() {
   const toast = useToast();
   const { data: pricingPlans, isLoading: isLoadingPlans } =
@@ -36,13 +60,17 @@ export default function PricingPlanSection() {
 
   const [upgradeSubscription, { isLoading: isUpgrading }] =
     useUpgradeSubscriptionMutation();
-  const [
-    createSubscription, { isLoading: isLoadingCreateSubscription }
-  ] = useCreateSubscriptionMutation();
+  const [createSubscription, { isLoading: isLoadingCreateSubscription }] =
+    useCreateSubscriptionMutation();
 
   const [selectedPriceMap, setSelectedPriceMap] = useState<
     Record<string, string>
   >({});
+  const [openLearnMoreModal, setOpenLearnMoreModal] = useState(false);
+  const [selectedLearnMorePlan, setSelectedLearnMorePlan] = useState<any>("");
+  const selectedPlanDetails = plansDetails.find(
+    (plan) => plan?.name === selectedLearnMorePlan?.name
+  )
 
   const [upgradingPlanId, setUpgradingPlanId] = useState<string | null>(null);
   const currentPlan = pricingPlans?.find(
@@ -56,15 +84,15 @@ export default function PricingPlanSection() {
         new_price_id: id,
       }).unwrap();
       if (res) {
-        toast('success', 'Subscription upgraded successfully');
+        toast("success", "Subscription upgraded successfully");
       }
     } catch (error: any) {
-      toast('error', handleApiError(error));
-      console.error('Error', error);
+      toast("error", beautifyErrors(error));
+      console.error("Error", error);
     } finally {
       setUpgradingPlanId(null);
     }
-  }
+  };
 
   return (
     <div className="rounded-2xl px-4 py-12">
@@ -97,7 +125,7 @@ export default function PricingPlanSection() {
             return (
               <div
                 key={plan.id}
-                className={`border ${isCurrentPlan ? 'border-primary-100' : 'border'
+                className={`border ${isCurrentPlan ? "border-primary-100" : "border"
                   }  rounded-xl p-6 flex flex-col  md:items-center md:justify-between`}
               >
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between w-full">
@@ -111,7 +139,7 @@ export default function PricingPlanSection() {
                       </span>
                     </div>
                     <p className="text-[#707070] mb-4">
-                      {plan.description || 'Description Will be Here'}
+                      {plan.description || "Description Will be Here"}
                     </p>
                   </div>
                   {plan.prices.length > 0 && (
@@ -132,11 +160,11 @@ export default function PricingPlanSection() {
                                 <div className="mt-2">
                                   <span
                                     className={`${isCurrentPlan
-                                      ? 'text-[#019935]'
-                                      : 'text-gray-500'
+                                      ? "text-[#019935]"
+                                      : "text-gray-500"
                                       } text-5xl font-semibold`}
                                   >
-                                    {selectedPrice?.convert_amount || '0'}
+                                    {selectedPrice?.convert_amount || "0"}
                                   </span>
                                 </div>
                               );
@@ -172,22 +200,22 @@ export default function PricingPlanSection() {
                 <div className="w-full">
                   <hr className="border-t border-[#eaebec] my-4" />
                   <div className="flex justify-between">
-                    <Link
-                      href="#"
-                      className={`${isCurrentPlan
-                        ? ' text-[#019935]'
-                        : 'text-gray-500 underline'
-                        } font-medium`}
+                    <div
+                      className={`text-gray-500 underline font-medium cursor-pointer select-none`}
+                      onClick={() => {
+                        setSelectedLearnMorePlan(plan);
+                        setOpenLearnMoreModal(true);
+                      }}
                     >
                       Learn more
-                    </Link>
+                    </div>
                     {isCurrentPlan ? (
                       <p className="text-[#019935] mt-2">
                         This is the current plan
                       </p>
                     ) : (
                       <Button
-                        variant={'outline'}
+                        variant={"outline"}
                         onClick={() =>
                           handleUpgradePlan(
                             selectedPriceMap[plan.id] || plan.prices[0].id
@@ -196,13 +224,14 @@ export default function PricingPlanSection() {
                         disabled={
                           upgradingPlanId ===
                           (selectedPriceMap[plan.id] || plan.prices[0].id)
+                          || plan.prices[0].convert_amount < (currentPlan?.prices?.[0].convert_amount || 0)
                         }
                         className="text-[#019935] text-base shadow-md px-4 py-2.5 font-medium border-primary-100"
                       >
                         {upgradingPlanId ===
                           (selectedPriceMap[plan.id] || plan.prices[0].id)
-                          ? 'Upgrading...'
-                          : 'Upgrade Plan'}
+                          ? "Upgrading..."
+                          : "Upgrade Plan"}
                         {upgradingPlanId !==
                           (selectedPriceMap[plan.id] || plan.prices[0].id) && (
                             <svg
@@ -230,6 +259,78 @@ export default function PricingPlanSection() {
 
       {/* Billing History */}
       <BillingHistoryTable />
+
+      {/* Learn More Dialog */}
+      <Dialog open={openLearnMoreModal} onOpenChange={setOpenLearnMoreModal}>
+
+        <DialogContent className="sm:max-w-[700px] max-h-full overflow-auto">
+          <DialogHeader>
+            <DialogTitle>
+              Plan Details
+            </DialogTitle>
+          </DialogHeader>
+
+          <div
+            className="border-2 border-primary-100 rounded-xl p-6 flex flex-col bg-white"
+          >
+            {/* badge */}
+            <div className="flex justify-center mb-4">
+              <span className="border bg-primary-400 py-1 px-4 rounded-lg text-white inline-block font-normal">
+                {selectedLearnMorePlan?.name}
+              </span>
+            </div>
+
+            {/* pricing */}
+            <div className="flex items-end justify-center mb-6">
+              <span className="text-[#555D6A] text-lg font-medium">
+                $
+              </span>
+              <h2 className="text-6xl font-semibold text-gray-900">
+                {selectedLearnMorePlan?.prices?.[0]?.convert_amount}
+              </h2>
+              <span className="text-[#555D6A]">/ {selectedLearnMorePlan.prices?.[0]?.recurring?.interval}</span>
+            </div>
+
+            <hr className="mb-9" />
+
+            {/* features */}
+            <div className="mb-6">
+              {
+                Object.entries(selectedPlanDetails || {})?.map(([key, value]) => (key !== "name") && (
+                  <div
+                    key={key}
+                    className="flex text-[#2B3545] mb-2 gap-2"
+                  >
+                    <div>
+                      <TickIcon />
+                    </div>
+
+                    <p className="text-[#555D6A] text-base font-normal">
+                      <span className="text-[#242424] font-bold capitalize">{key?.split("_")?.join(" ")}: </span> {value}
+                    </p>
+                  </div>
+                ))
+              }
+              {planCommonFeatures.map((feature, index) => {
+                return (
+                  <div
+                    key={index}
+                    className="flex text-[#2B3545] mb-2 gap-2"
+                  >
+                    <div>
+                      <TickIcon />
+                    </div>
+
+                    <span className="text-[#555D6A] text-base font-normal">
+                      {feature}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

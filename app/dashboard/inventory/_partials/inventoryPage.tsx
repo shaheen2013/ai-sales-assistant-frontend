@@ -49,7 +49,11 @@ import {
 } from "@/features/inventory/inventorySlice";
 
 import SomethingWentWrong from "@/components/SomethingWentWrong";
-import { useCreateSubscriptionMutation, useGetCurrentSubscriptionPlanQuery, useGetDealerPricingPlansQuery } from "@/features/dealer/dealerProfileSlice";
+import {
+  useCreateSubscriptionMutation,
+  useGetCurrentSubscriptionPlanQuery,
+  useGetDealerPricingPlansQuery,
+} from "@/features/dealer/dealerProfileSlice";
 import InventoryPricingPlanSkeleton from "@/components/skeleton/InventoryPricingPlanSkeleton";
 import Link from "next/link";
 
@@ -120,15 +124,16 @@ export default function DashboardDealerInventory() {
     page: Number(page) || 1,
     page_size: Number(page_size) || 10,
   });
-  const { data: currentSubscriptionData, isLoading: isLoadingCurrentSubscription } = useGetCurrentSubscriptionPlanQuery(undefined, { refetchOnMountOrArgChange: true });
   const {
-    isFetching: isFetchingPricingPlans,
-    data: pricingPlans,
-  } = useGetDealerPricingPlansQuery();
-  const [
-    createSubscription,
-    { isLoading: isLoadingCreateSubscription },
-  ] = useCreateSubscriptionMutation();
+    data: currentSubscriptionData,
+    isLoading: isLoadingCurrentSubscription,
+  } = useGetCurrentSubscriptionPlanQuery(undefined, {
+    refetchOnMountOrArgChange: true,
+  });
+  const { isFetching: isFetchingPricingPlans, data: pricingPlans } =
+    useGetDealerPricingPlansQuery();
+  const [createSubscription, { isLoading: isLoadingCreateSubscription }] =
+    useCreateSubscriptionMutation();
 
   const {
     data: dataGetInventoryFiles,
@@ -276,7 +281,15 @@ export default function DashboardDealerInventory() {
   };
 
   useEffect(() => {
-    if (!isLoadingCurrentSubscription && !currentSubscriptionData?.subscription) {
+    console.log(
+      " isLoadingCurrentSubscription => ",
+      isLoadingCurrentSubscription
+    );
+    console.log(" currentSubscriptionData => ", currentSubscriptionData);
+    if (
+      !isLoadingCurrentSubscription &&
+      !currentSubscriptionData?.subscription
+    ) {
       setModals((prev) => ({ ...prev, selectPlan: true }));
     }
   }, [currentSubscriptionData?.subscription, isLoadingCurrentSubscription]);
@@ -285,7 +298,7 @@ export default function DashboardDealerInventory() {
     if (pricingPlans) {
       setSelectedPriceId(pricingPlans?.[0]?.prices?.[0]?.id);
     }
-  }, [pricingPlans])
+  }, [pricingPlans]);
 
   if (errorGetVehicle || errorGetInventoryFiles) {
     return <SomethingWentWrong />;
@@ -305,7 +318,6 @@ export default function DashboardDealerInventory() {
     { name: "Business Plan", price: "300" },
     { name: "Enterprise Plan", price: "999" },
   ];
-
 
   return (
     <>
@@ -348,7 +360,7 @@ export default function DashboardDealerInventory() {
               fill="#5D6679"
             />
           </svg>
-          Place/Add pdf
+          Bulk Upload
         </Button>
       </div>
 
@@ -687,8 +699,8 @@ export default function DashboardDealerInventory() {
                       <Select
                         value={field.value}
                         onValueChange={field.onChange}
-                      // className="h-11 w-full !border-[#D5D7DA]"
-                      // defaultValue="km"
+                        // className="h-11 w-full !border-[#D5D7DA]"
+                        // defaultValue="km"
                       >
                         <SelectTrigger className="h-11 w-full !border-[#D5D7DA]">
                           <SelectValue placeholder="Select a fruit" />
@@ -1002,11 +1014,13 @@ export default function DashboardDealerInventory() {
 
             {/* right */}
             <div className="flex flex-col gap-3">
-              {
-                isFetchingPricingPlans ? <>
+              {isFetchingPricingPlans ? (
+                <>
                   <InventoryPricingPlanSkeleton />
                   <InventoryPricingPlanSkeleton />
-                </> : <>
+                </>
+              ) : (
+                <>
                   {pricingPlans?.map((plan: PricingPlan, index: number) => {
                     const price = plan?.prices?.[0];
 
@@ -1031,7 +1045,8 @@ export default function DashboardDealerInventory() {
                                 {plan.name}
                               </h2>
                               <h4 className="text-xs text-gray-400">
-                                {plan.description || "Perfect for sell used cars"}
+                                {plan.description ||
+                                  "Perfect for sell used cars"}
                               </h4>
                             </div>
 
@@ -1053,7 +1068,7 @@ export default function DashboardDealerInventory() {
                           {[
                             "Manage up to 20 car listings",
                             "AI-powered customer inquiries via text",
-                            "Basic lead generation assistance"
+                            "Basic lead generation assistance",
                           ]?.map((benefit, index) => {
                             return (
                               <div
@@ -1090,10 +1105,13 @@ export default function DashboardDealerInventory() {
                     );
                   })}
                 </>
-              }
+              )}
 
-
-              <Link href={"/#plans"} target="_blank" className="underline text-xs font-medium text-primary-400 flex items-end justify-end cursor-pointer">
+              <Link
+                href={"/#plans"}
+                target="_blank"
+                className="underline text-xs font-medium text-primary-400 flex items-end justify-end cursor-pointer"
+              >
                 Show all plan Detail View
               </Link>
             </div>
@@ -1104,10 +1122,22 @@ export default function DashboardDealerInventory() {
             <Button
               variant="outline"
               className="text-primary-400 border-primary-400"
+              onClick={() => {
+                setModals((prev) => ({
+                  ...prev,
+                  selectPlan: false,
+                }));
+              }}
             >
               Cancel
             </Button>
-            <Button variant="primary" onClick={handleChoosePlan} disabled={isLoadingCreateSubscription || isFetchingPricingPlans} loading={isLoadingCreateSubscription} className="min-w-[168px]">
+            <Button
+              variant="primary"
+              onClick={handleChoosePlan}
+              disabled={isLoadingCreateSubscription || isFetchingPricingPlans}
+              loading={isLoadingCreateSubscription}
+              className="min-w-[168px]"
+            >
               Choose & Continue{" "}
             </Button>
           </div>
