@@ -24,10 +24,9 @@ export default function SignupForm() {
   const source = searchParams.get("source");
   const session_id = searchParams.get("session_id");
 
-
   const { status } = useSession();
 
-  const [registerProgress, setRegisterProgress] = useState(100);
+  const [registerProgress, setRegisterProgress] = useState(0);
 
   const [register, { isLoading: isLoadingRegister }] =
     useRegisterDealerMutation();
@@ -100,6 +99,12 @@ export default function SignupForm() {
           clearInterval(interval);
           // After reaching 100, reset back to 0
           toast("success", data?.detail || "Registration successful");
+          // add email query param to redirect
+          const emailQueryParam = new URLSearchParams({
+            email: formData.email,
+          }).toString();
+
+          router.push(`/account-created?${emailQueryParam}`);
           setTimeout(() => {}, 3000); // small pause before reset (optional)
         }
       }, 30); // 20ms per update = smooth
