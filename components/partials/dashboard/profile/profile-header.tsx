@@ -10,8 +10,6 @@ const ProfileHeader = () => {
 
   const dealerProfileData = data?.data;
 
-  console.log("dealerProfileData => ", dealerProfileData);
-
   return (
     <div className="relative border rounded-2xl min-h-[252px] md:h-[252px]">
       <div className="w-full bg-[#2b3545] overflow-hidden rounded-t-2xl h-[100px]">
