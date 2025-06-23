@@ -553,30 +553,6 @@ export default function DashboardDealerInventory() {
                   />
                 </div>
 
-                {/* mileage */}
-                <div className="flex flex-col mb-3">
-                  <label
-                    htmlFor="mileage"
-                    className="text-sm mb-1 text-[#414651] font-medium"
-                  >
-                    Mileage
-                  </label>
-                  <Controller
-                    name="mileage"
-                    control={control}
-                    render={({ field, formState: { errors } }) => (
-                      <Input
-                        type="number"
-                        id="mileage"
-                        className="h-11"
-                        placeholder="Mileage"
-                        error={errors?.mileage?.message}
-                        {...field}
-                      />
-                    )}
-                  />
-                </div>
-
                 {/* year */}
                 <div className="flex flex-col mb-3">
                   <label

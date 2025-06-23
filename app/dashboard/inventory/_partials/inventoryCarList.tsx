@@ -83,7 +83,6 @@ export default function InventoryCarList({
       brand: "",
       model: "",
 
-      mileage: "",
       year: "",
       series: "",
       trim: "",
@@ -113,7 +112,6 @@ export default function InventoryCarList({
     setValue("brand", selectedInventory?.brand || "");
     setValue("model", selectedInventory?.model || "");
 
-    setValue("mileage", selectedInventory?.mileage || "");
     setValue("year", selectedInventory?.year || "");
     setValue("series", selectedInventory?.series || "");
     setValue("trim", selectedInventory?.trim || "");
@@ -962,30 +960,6 @@ export default function InventoryCarList({
                         className="h-11"
                         placeholder="Model"
                         error={errors?.model?.message}
-                        {...field}
-                      />
-                    )}
-                  />
-                </div>
-
-                {/* mileage */}
-                <div className="flex flex-col mb-3">
-                  <label
-                    htmlFor="mileage"
-                    className="text-sm mb-1 text-[#414651] font-medium"
-                  >
-                    Mileage
-                  </label>
-                  <Controller
-                    name="mileage"
-                    control={control}
-                    render={({ field, formState: { errors } }) => (
-                      <Input
-                        type="number"
-                        id="mileage"
-                        className="h-11"
-                        placeholder="Mileage"
-                        error={errors?.mileage?.message}
                         {...field}
                       />
                     )}
