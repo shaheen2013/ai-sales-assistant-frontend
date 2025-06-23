@@ -22,20 +22,21 @@ export const adminDashboardSlice = apiSlice.injectEndpoints({
         url: `/admin-dashboard/dealer/dealer-overview/`,
       }),
     }),
-    // sendNewsletter: builder.mutation<void, FormData>({
-    //   query: (formData) => ({
-    //     method: 'POST',
-    //     url: `/admin-dashboard/news-letter/`,
-    //     body: formData,
-    //     formData: true,
-    //     credentials: 'include',
-    //   }),
-    // }),
+    sendNewsletter: builder.mutation<void, FormData>({
+      query: (formData) => ({
+        method: 'POST',
+        url: `/admin-dashboard/news-letter/`,
+        body: formData,
+        formData: true,
+        credentials: 'include',
+      }),
+      invalidatesTags: ['getNewsLetter']
+    }),
   }),
 });
 
 export const {
   useGetAdminDashboardOverviewQuery,
   useGetAdminDashboardDealerOverviewQuery,
-  // useSendNewsletterMutation,
+  useSendNewsletterMutation,
 } = adminDashboardSlice;
