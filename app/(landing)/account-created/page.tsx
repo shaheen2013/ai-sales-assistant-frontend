@@ -5,7 +5,7 @@ import React from "react";
 export default function AccountCreated() {
   return (
     <div className="h-[calc(100vh-100px)] flex justify-center items-center">
-      <div className="max-w-[700px] w-[700px] border rounded-lg p-6">
+      <div className="max-w-[700px] w-[700px] border rounded-xl p-6">
         {/* svg icon */}
         <div className="flex justify-center mb-2">
           <svg
@@ -34,12 +34,12 @@ export default function AccountCreated() {
         </p>
 
         {/* buttons */}
-        <div className="flex justify-center gap-4 mb-9">
+        <div className="flex justify-center gap-4 mb-9 lg:flex-row flex-col">
           <Button variant="outline-gray">Contact Support</Button>
           <Button variant="primary">Resent Mail</Button>
         </div>
 
-        <div>
+        <div className="">
           <Link
             href="/privacy-policy"
             className="block text-center text-gray-400 underline text-sm"
