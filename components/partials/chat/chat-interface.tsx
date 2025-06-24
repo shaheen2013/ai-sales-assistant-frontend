@@ -70,10 +70,10 @@ export default function ChatApp({
         {/* messages */}
         <div className="flex flex-col flex-1">
           {/* header */}
-          <header className="flex lg:flex-row flex-col justify-between lg:items-center border-b pb-4">
+          <header className="flex justify-between lg:items-center border-b pb-4">
             <div>
               <h2 className="text-gray-[#2B3545] font-semibold lg:mb-0 mb-3">
-                {dealers?.find((dealer: any) => dealer?.user?.dealer_details?.id === selectedDealer)?.business_name || "N/A"}
+                {dealers?.find((dealer: any) => dealer?.user?.dealer_details?.id?.toString() === String(selectedDealer))?.business_name || "N/A"}
               </h2>
             </div>
 

@@ -4,7 +4,7 @@ import { Badge } from "@/components/shadcn/badge";
 import { Button } from "@/components/shadcn/button";
 import { Input } from "@/components/shadcn/input";
 import { Textarea } from "@/components/shadcn/textarea";
-import {} from "@/features/admin/adminDashboardSlice";
+import { useSendNewsletterMutation } from "@/features/admin/adminDashboardSlice";
 import { useToast } from "@/hooks/useToast";
 import { cn } from "@/lib/utils";
 import { Paperclip, XCircle } from "lucide-react";
@@ -35,6 +35,8 @@ export default function DashboardForumsUI() {
 
   const [files, setFiles] = React.useState<File[]>([]);
   const [fileError, setFileError] = React.useState<string>("");
+
+  const [sendNewsletter, { isLoading: isCreateNewletterLoading }] = useSendNewsletterMutation();
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = event.target.files;
@@ -95,7 +97,7 @@ export default function DashboardForumsUI() {
       }
 
       try {
-        // await sendNewsletter(payload).unwrap();
+        await sendNewsletter(payload).unwrap();
         toast("success", "Newsletter sent successfully!");
         reset();
         setFiles([]);
@@ -263,10 +265,11 @@ export default function DashboardForumsUI() {
           <Button
             variant="primary"
             type="submit"
-            // disabled={isLoading}
-            className="!font-medium"
+            disabled={isCreateNewletterLoading}
+            loading={isCreateNewletterLoading}
+            className="!font-medium min-w-[145px]"
           >
-            {false ? "Sending..." : "Send Newsletter"}
+            Send Newsletter
           </Button>
         </div>
       </form>

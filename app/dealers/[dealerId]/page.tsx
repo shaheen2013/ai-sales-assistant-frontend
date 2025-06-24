@@ -1,9 +1,9 @@
 import React from 'react'
-import PublicDealerProfile from './_partials/PublicDealerProfile'
+import PublicDealerChat from './_partials/PublicDealerChat'
 
 const page = () => {
   return (
-    <PublicDealerProfile />
+    <PublicDealerChat />
   )
 }
 
