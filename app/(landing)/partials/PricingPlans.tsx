@@ -82,11 +82,6 @@ export default function PricingPlans() {
 
         <div>
           <Tabs defaultValue="monthly" className="">
-            {/* <TabsList className="grid grid-cols-2 w-[270px] mb-11 mx-auto">
-                <TabsTrigger value="monthly">Monthly billing</TabsTrigger>
-                <TabsTrigger value="annually">Annually billing</TabsTrigger>
-              </TabsList> */}
-
             <TabsContent value="monthly">
               {isFetching ? (
                 <div className="h-[500px] grid grid-cols-3 gap-6">
@@ -96,7 +91,7 @@ export default function PricingPlans() {
                 </div>
               ) : (
                 <div className="flex flex-wrap justify-center gap-6">
-                  {dataGetDealerPricing.map(
+                  {dataGetDealerPricing?.map(
                     (plan: PricingPlan, index: number) => {
                       const price = plan?.prices?.[0];
 

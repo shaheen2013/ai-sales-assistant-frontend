@@ -36,65 +36,29 @@ export interface NavigationSection {
 }
 
 export interface NavigationData {
-  buyers: NavigationSection;
-  sellers: NavigationSection;
+  name: string;
+  url: string;
 }
 
-export const navigationData: NavigationData = {
-  buyers: {
-    title: "For Buyers",
-    description:
-      "Empower Your Learning with Comprehensive Training & Resources",
-
-    items: [
-      {
-        name: "Buyer Option 1",
-        description:
-          "Step-by-step visual guides on how to utilize various features of CRM Runner.",
-      },
-      {
-        name: "Buyer Option 2",
-        description:
-          "Detailed instructional documents available for download to help you navigate and master the CRM at your own pace.",
-      },
-      {
-        name: "Buyer Option 3",
-        description:
-          "Answers to commonly asked questions to help troubleshoot and clarify routine queries.",
-      },
-      {
-        name: "Buyer Option 4",
-        description:
-          "Access a library of resources to enhance your CRM skills.",
-      },
-    ],
+export const navigationData: NavigationData[] = [
+  {
+    name: "Solutions",
+    url: "/#solutions",
   },
-
-  sellers: {
-    title: "For Sellers",
-    description:
-      "Empower Your Learning with Comprehensive Training & Resources",
-    items: [
-      {
-        name: "Option 1",
-        description:
-          "Step-by-step visual guides on how to utilize various features of CRM Runner.",
-      },
-      {
-        name: "Option 2",
-        description:
-          "Detailed instructional documents available for download to help you navigate and master the CRM at your own pace.",
-      },
-      {
-        name: "Option 3",
-        description:
-          "Answers to commonly asked questions to help troubleshoot and clarify routine queries.",
-      },
-      {
-        name: "Option 4",
-        description:
-          "Access a library of resources to enhance your CRM skills.",
-      },
-    ],
+  {
+    name: "How It Helps",
+    url: "/#how-it-helps",
   },
-};
+  {
+    name: "Testimonials",
+    url: "/#testimonials",
+  },
+  {
+    name: "Plans",
+    url: "/#plans",
+  },
+  {
+    name: "FAQ's",
+    url: "/#faqs",
+  },
+];

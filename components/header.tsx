@@ -1,91 +1,23 @@
 "use client";
 
-import {
-  Dialog,
-  DialogPanel,
-  Disclosure,
-  DisclosureButton,
-  DisclosurePanel,
-} from "@headlessui/react";
-
 import Link from "next/link";
-import Image from "next/image";
-import classNames from "classnames";
+
 import { useSession } from "next-auth/react";
 import { forwardRef, useState } from "react";
-import { ChevronDownIcon } from "lucide-react";
+import { Dialog, DialogPanel } from "@headlessui/react";
 
 import Button from "./button";
+import { cn } from "@/lib/utils";
+import { Skeleton } from "./shadcn/skeleton";
 
 import {
   NavigationMenu,
-  NavigationMenuContent,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-  NavigationMenuTrigger,
 } from "@/components/shadcn/navigation-menu";
-
-import { cn } from "@/lib/utils";
 import { ClaraIcon } from "./partials/chat/svg-icons";
 import { navigationData } from "@/static/homepage";
-import { Skeleton } from "./shadcn/skeleton";
-
-const products = [
-  {
-    name: "Solutions",
-    description: "Get a better understanding of your traffic",
-    href: "#",
-    // icon: ChartPieIcon,
-  },
-  {
-    name: "Engagement",
-    description: "Speak directly to your customers",
-    href: "#",
-    // icon: CursorArrowRaysIcon,
-  },
-  {
-    name: "Security",
-    description: "Your customers’ data will be safe and secure",
-    href: "#",
-    // icon: FingerPrintIcon,
-  },
-  {
-    name: "Integrations",
-    description: "Connect with third-party tools",
-    href: "#",
-    // icon: SquaresPlusIcon,
-  },
-  {
-    name: "Automations",
-    description: "Build strategic funnels that will convert",
-    href: "#",
-    // icon: ArrowPathIcon,
-  },
-];
-
-const navItems = [
-  {
-    name: "Solutions",
-    url: "#solutions",
-  },
-  {
-    name: "How It Helps",
-    url: "#how-it-helps",
-  },
-  {
-    name: "Testimonials",
-    url: "#testimonials",
-  },
-  {
-    name: "Plans",
-    url: "#plans",
-  },
-  {
-    name: "FAQ's",
-    url: "#faqs",
-  },
-];
 
 export default function Example() {
   /*--Session--*/
@@ -189,7 +121,7 @@ export default function Example() {
         <div className="hidden lg:flex">
           <NavigationMenu className="">
             <NavigationMenuList className="flex items-center gap-6">
-              {navItems?.map((item, index) => (
+              {navigationData?.map((item, index) => (
                 <NavigationMenuItem key={index}>
                   <Link href={item.url} legacyBehavior passHref>
                     <NavigationMenuLink className="font-medium">
@@ -331,7 +263,7 @@ export default function Example() {
           <div className="mt-6 flow-root">
             <div className="-my-6 ">
               <div className="space-y-2 pt-6 mb-4">
-                {navItems?.map((item, index) => (
+                {navigationData?.map((item, index) => (
                   <Link
                     href={item.url}
                     className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-medium text-black text-center"
@@ -415,169 +347,3 @@ const ListItem = forwardRef<
 });
 
 ListItem.displayName = "ListItem";
-
-function DropdownContent() {
-  const [selected, setSelected] = useState<"buyers" | "sellers">("buyers");
-
-  const menus = navigationData[selected] as any;
-
-  return (
-    <div className="px-6 py-2 grid grid-cols-3 gap-3">
-      {/* left menu */}
-      <div className="col-span-1">
-        {Object.keys(navigationData).map((item: string, index: number) => {
-          const nav = navigationData[item as keyof typeof navigationData];
-
-          return (
-            <div
-              key={index}
-              className={classNames(
-                "rounded-lg p-4 flex items-start gap-2 border-b ",
-                {
-                  "border-primary-300 bg-primary-50 group is-published":
-                    item == selected,
-                }
-              )}
-              onClick={() => setSelected(item as any)}
-            >
-              {/* menu icon */}
-              <div className="group-[.is-published]:bg-primary-400 group-[.is-published]:text-white rounded-md p-1">
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M7 14C9.21001 14 11 12.21 11 10C11 7.79 9.21001 6 7 6C4.79 6 3.00001 7.79 3.00001 10C3.00001 12.21 4.79 14 7 14ZM7 8C8.10001 8 9.00001 8.9 9.00001 10C9.00001 11.1 8.10001 12 7 12C5.9 12 5 11.1 5 10C5 8.9 5.9 8 7 8ZM14 23C14 23.55 13.55 24 12.9999 24C12.45 24 12 23.55 12 23C12 20.24 9.76 18 7 18C4.24 18 2 20.24 2 23C2 23.55 1.55 24 1 24C0.450005 24 0 23.55 0 23C0 19.14 3.14 16 7 16C10.86 16 14 19.14 14 23ZM24 5V13C24 15.76 21.7599 18 18.9999 18H15C14.45 18 14 17.55 14 17C14 16.45 14.45 16 15 16H18.9999C20.6499 16 21.9999 14.65 21.9999 13V5C21.9999 3.35 20.6499 2 18.9999 2H9.46C8.39 2 7.4 2.58 6.86 3.5C6.58 3.98 5.97001 4.14 5.49001 3.87C5.01001 3.59 4.85 2.98 5.13001 2.5C6.03001 0.96 7.69 0 9.46 0H18.9999C21.7599 0 24 2.24 24 5ZM13.67 10.92L16.59 8H15C14.45 8 14 7.55 14 7C14 6.45 14.45 6 15 6H18C19.1 6 20 6.9 20 8V11C20 11.55 19.55 12 18.9999 12C18.45 12 18 11.55 18 11V9.41L15.08 12.33C14.6199 12.79 14 13.04 13.37 13.04C13.1499 13.04 12.93 13.01 12.71 12.95C12.18 12.8 11.87 12.25 12.02 11.72C12.17 11.19 12.72 10.88 13.26 11.03C13.38 11.06 13.5399 11.05 13.67 10.92Z"
-                    fill="currentColor"
-                  />
-                </svg>
-              </div>
-
-              {/* content */}
-              <div>
-                <h2 className="text-base font-semibold text-[#292929]">
-                  {nav.title}
-                </h2>
-                <p className="text-[#7C7C7C] text-sm">{nav.description}</p>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-
-      {/* middle list  */}
-      <div className="col-span-1 py-2">
-        {menus.items.slice(0, 3).map((item: any, index: number) => {
-          return (
-            <div className="flex gap-2 p-3 mb-3 cursor-pointer" key={index}>
-              <div>
-                <svg
-                  width="21"
-                  height="20"
-                  viewBox="0 0 21 20"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <g clipPath="url(#clip0_452_6919)">
-                    <path
-                      d="M16.7576 20H5.09098C3.98632 19.9987 2.92728 19.5593 2.14617 18.7782C1.36505 17.997 0.92564 16.938 0.924316 15.8333L0.924316 4.16667C0.92564 3.062 1.36505 2.00296 2.14617 1.22185C2.92728 0.440735 3.98632 0.00132321 5.09098 0L16.7576 0C17.8623 0.00132321 18.9214 0.440735 19.7025 1.22185C20.4836 2.00296 20.923 3.062 20.9243 4.16667V15.8333C20.923 16.938 20.4836 17.997 19.7025 18.7782C18.9214 19.5593 17.8623 19.9987 16.7576 20ZM5.09098 1.66667C4.42794 1.66667 3.79206 1.93006 3.32322 2.3989C2.85438 2.86774 2.59098 3.50363 2.59098 4.16667V15.8333C2.59098 16.4964 2.85438 17.1323 3.32322 17.6011C3.79206 18.0699 4.42794 18.3333 5.09098 18.3333H16.7576C17.4207 18.3333 18.0566 18.0699 18.5254 17.6011C18.9943 17.1323 19.2576 16.4964 19.2576 15.8333V4.16667C19.2576 3.50363 18.9943 2.86774 18.5254 2.3989C18.0566 1.93006 17.4207 1.66667 16.7576 1.66667H5.09098ZM8.70932 14.1708C8.36192 14.1697 8.02099 14.0768 7.72098 13.9017C7.4246 13.732 7.17861 13.4867 7.00818 13.1908C6.83774 12.8949 6.74898 12.559 6.75098 12.2175V7.7825C6.7507 7.44095 6.84025 7.10534 7.01063 6.80933C7.18102 6.51332 7.42626 6.26733 7.72175 6.09603C8.01723 5.92474 8.35257 5.83416 8.69411 5.83339C9.03566 5.83263 9.3714 5.9217 9.66765 6.09167L14.066 8.2875C14.3715 8.45243 14.6274 8.69606 14.807 8.99315C14.9867 9.29025 15.0836 9.62998 15.0878 9.97715C15.0919 10.3243 15.0032 10.6663 14.8307 10.9676C14.6582 11.2689 14.4083 11.5186 14.1068 11.6908L9.62682 13.93C9.34741 14.0894 9.03098 14.1724 8.70932 14.1708ZM8.68848 7.50417C8.64256 7.50415 8.59743 7.51622 8.55765 7.53917C8.51443 7.5632 8.47857 7.59855 8.4539 7.64142C8.42924 7.68428 8.41671 7.73305 8.41765 7.7825V12.2175C8.41793 12.2662 8.43088 12.314 8.45522 12.3562C8.47956 12.3984 8.51446 12.4335 8.55649 12.4582C8.59852 12.4828 8.64623 12.4961 8.69494 12.4967C8.74365 12.4973 8.79168 12.4852 8.83432 12.4617L13.3143 10.2217C13.3477 10.1956 13.3742 10.1618 13.3916 10.1232C13.409 10.0845 13.4168 10.0423 13.4143 10C13.4154 9.95043 13.4028 9.90153 13.3779 9.85863C13.3531 9.81572 13.317 9.78045 13.2735 9.75667L8.87848 7.56083C8.82118 7.52568 8.75568 7.50614 8.68848 7.50417Z"
-                      fill="#2B3545"
-                    />
-                  </g>
-                  <defs>
-                    <clipPath id="clip0_452_6919">
-                      <rect
-                        width="20"
-                        height="20"
-                        fill="white"
-                        transform="translate(0.924316)"
-                      />
-                    </clipPath>
-                  </defs>
-                </svg>
-              </div>
-
-              <div>
-                <h4 className="text-[#2B3545] text-base font-semibold">
-                  {item.name}
-                </h4>
-                <h4 className="text-sm font-normal text-[#7C7C7C]">
-                  {item.description}
-                </h4>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-
-      {/* right list */}
-      <div className="col-span-1 py-2">
-        {menus.items.slice(3, 4).map((item: any, index: number) => {
-          return (
-            <div className="flex gap-2 p-3 mb-3 cursor-pointer" key={index}>
-              <div>
-                <svg
-                  width="21"
-                  height="20"
-                  viewBox="0 0 21 20"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <g clipPath="url(#clip0_452_6919)">
-                    <path
-                      d="M16.7576 20H5.09098C3.98632 19.9987 2.92728 19.5593 2.14617 18.7782C1.36505 17.997 0.92564 16.938 0.924316 15.8333L0.924316 4.16667C0.92564 3.062 1.36505 2.00296 2.14617 1.22185C2.92728 0.440735 3.98632 0.00132321 5.09098 0L16.7576 0C17.8623 0.00132321 18.9214 0.440735 19.7025 1.22185C20.4836 2.00296 20.923 3.062 20.9243 4.16667V15.8333C20.923 16.938 20.4836 17.997 19.7025 18.7782C18.9214 19.5593 17.8623 19.9987 16.7576 20ZM5.09098 1.66667C4.42794 1.66667 3.79206 1.93006 3.32322 2.3989C2.85438 2.86774 2.59098 3.50363 2.59098 4.16667V15.8333C2.59098 16.4964 2.85438 17.1323 3.32322 17.6011C3.79206 18.0699 4.42794 18.3333 5.09098 18.3333H16.7576C17.4207 18.3333 18.0566 18.0699 18.5254 17.6011C18.9943 17.1323 19.2576 16.4964 19.2576 15.8333V4.16667C19.2576 3.50363 18.9943 2.86774 18.5254 2.3989C18.0566 1.93006 17.4207 1.66667 16.7576 1.66667H5.09098ZM8.70932 14.1708C8.36192 14.1697 8.02099 14.0768 7.72098 13.9017C7.4246 13.732 7.17861 13.4867 7.00818 13.1908C6.83774 12.8949 6.74898 12.559 6.75098 12.2175V7.7825C6.7507 7.44095 6.84025 7.10534 7.01063 6.80933C7.18102 6.51332 7.42626 6.26733 7.72175 6.09603C8.01723 5.92474 8.35257 5.83416 8.69411 5.83339C9.03566 5.83263 9.3714 5.9217 9.66765 6.09167L14.066 8.2875C14.3715 8.45243 14.6274 8.69606 14.807 8.99315C14.9867 9.29025 15.0836 9.62998 15.0878 9.97715C15.0919 10.3243 15.0032 10.6663 14.8307 10.9676C14.6582 11.2689 14.4083 11.5186 14.1068 11.6908L9.62682 13.93C9.34741 14.0894 9.03098 14.1724 8.70932 14.1708ZM8.68848 7.50417C8.64256 7.50415 8.59743 7.51622 8.55765 7.53917C8.51443 7.5632 8.47857 7.59855 8.4539 7.64142C8.42924 7.68428 8.41671 7.73305 8.41765 7.7825V12.2175C8.41793 12.2662 8.43088 12.314 8.45522 12.3562C8.47956 12.3984 8.51446 12.4335 8.55649 12.4582C8.59852 12.4828 8.64623 12.4961 8.69494 12.4967C8.74365 12.4973 8.79168 12.4852 8.83432 12.4617L13.3143 10.2217C13.3477 10.1956 13.3742 10.1618 13.3916 10.1232C13.409 10.0845 13.4168 10.0423 13.4143 10C13.4154 9.95043 13.4028 9.90153 13.3779 9.85863C13.3531 9.81572 13.317 9.78045 13.2735 9.75667L8.87848 7.56083C8.82118 7.52568 8.75568 7.50614 8.68848 7.50417Z"
-                      fill="#2B3545"
-                    />
-                  </g>
-                  <defs>
-                    <clipPath id="clip0_452_6919">
-                      <rect
-                        width="20"
-                        height="20"
-                        fill="white"
-                        transform="translate(0.924316)"
-                      />
-                    </clipPath>
-                  </defs>
-                </svg>
-              </div>
-
-              <div>
-                <h4 className="text-[#2B3545] text-base font-semibold">
-                  {item.name}
-                </h4>
-                <h4 className="text-sm font-normal text-[#7C7C7C]">
-                  {item.description}
-                </h4>
-              </div>
-            </div>
-          );
-        })}
-
-        <div className="h-[200px] flex justify-end items-end pr-6">
-          {selected == "buyers" ? (
-            <Image
-              src="/icons/homepage/dropdown-buyer.svg"
-              height={130}
-              width={200}
-              alt=""
-              className="h-[130px] w-[200px]"
-              priority
-            />
-          ) : (
-            <Image
-              src="/icons/homepage/dropdown-seller.svg"
-              className="h-[130px] w-[200px]"
-              height={130}
-              width={200}
-              alt=""
-              priority
-            />
-          )}
-        </div>
-      </div>
-    </div>
-  );
-}
