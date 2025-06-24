@@ -14,7 +14,6 @@ import {
 } from "@tanstack/react-table";
 
 import { useMemo, useState } from "react";
-
 import { MoreHorizontal } from "lucide-react";
 
 import {
@@ -403,7 +402,7 @@ export default function InventoryFilesList({
             ))
           ) : (
             <TableRow>
-              <TableCell colSpan={columns.length} className="h-24 text-center">
+              <TableCell colSpan={columns.length} className="h-52 text-center">
                 No results.
               </TableCell>
             </TableRow>
@@ -411,13 +410,15 @@ export default function InventoryFilesList({
         </TableBody>
       </Table>
 
-      <div className="flex items-end justify-center my-4">
-        <Pagination
-          page={Number(page)}
-          onPageChange={onPageChange}
-          totalPage={totalPage}
-        />
-      </div>
+      {dataGetInventoryFiles?.count > 0 && (
+        <div className="flex items-end justify-center my-4">
+          <Pagination
+            page={Number(page)}
+            onPageChange={onPageChange}
+            totalPage={totalPage}
+          />
+        </div>
+      )}
     </>
   );
 }
