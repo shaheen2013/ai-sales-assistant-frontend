@@ -171,7 +171,7 @@ export default function InventoryCarList({
             className="flex items-center gap-2 cursor-pointer"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            Stock Id
+            Id
             <svg
               width="16"
               height="16"
@@ -816,7 +816,7 @@ export default function InventoryCarList({
 
   return (
     <>
-      <Table wrapperClassName="max-h-[450px]">
+      <Table wrapperClassName="max-h-[450px]" className=" min-w-max table-auto">
         <TableHeader>
           {table?.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
@@ -851,7 +851,7 @@ export default function InventoryCarList({
             ))
           ) : (
             <TableRow>
-              <TableCell colSpan={columns.length} className="h-24 text-center">
+              <TableCell colSpan={columns.length} className="h-52 text-center">
                 No results.
               </TableCell>
             </TableRow>
