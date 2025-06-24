@@ -86,7 +86,6 @@ export default function EditProfileSection() {
 
   useEffect(() => {
     if (dealerProfileData) {
-      console.log("dealerProfileData => ", dealerProfileData);
       form.reset({
         name: dealerProfileData.name || "",
         email: dealerProfileData.email || "",

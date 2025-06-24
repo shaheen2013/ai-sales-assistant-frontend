@@ -1,5 +1,5 @@
-import { useGetBillingHistoryQuery } from '@/features/dealer/dealerProfileSlice';
-import { Check, Download, X } from 'lucide-react';
+import { useGetBillingHistoryQuery } from "@/features/dealer/dealerProfileSlice";
+import { Check, Download, X } from "lucide-react";
 
 const BillingHistoryTable = () => {
   const { data: billingHistory } = useGetBillingHistoryQuery();
@@ -47,7 +47,7 @@ const BillingHistoryTable = () => {
           <tbody>
             {invoicesData?.length === 0 ? (
               <tr>
-                <td colSpan={5} className="py-4 px-4 text-center">
+                <td colSpan={5} className="px-4 text-center py-20">
                   No invoices found
                 </td>
               </tr>
@@ -59,10 +59,10 @@ const BillingHistoryTable = () => {
                   </td>
                   <td className="py-4 px-4 text-[#2b3545]">{invoice.total}</td>
                   <td className="py-4 px-4 text-[#2b3545]">
-                    {new Date(invoice.created)?.toLocaleDateString('en-US', {
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric',
+                    {new Date(invoice.created)?.toLocaleDateString("en-US", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
                     })}
                   </td>
                   <td className="py-4 px-4">
