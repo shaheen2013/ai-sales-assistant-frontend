@@ -1,14 +1,14 @@
-import { Button } from "@/components/shadcn/button";
-import { Skeleton } from "@/components/shadcn/skeleton";
-import { Tabs, TabsContent } from "@/components/shadcn/tabs";
+import { useSession } from "next-auth/react";
+
 import {
   useCreateSubscriptionMutation,
   useGetDealerPricingPlansQuery,
-  useUpgradeSubscriptionMutation,
 } from "@/features/dealer/dealerProfileSlice";
-import { useToast } from "@/hooks/useToast";
+
 import { beautifyErrors } from "@/lib/utils";
-import { useSession } from "next-auth/react";
+import { useToast } from "@/hooks/useToast";
+import { Button } from "@/components/shadcn/button";
+import { Tabs, TabsContent } from "@/components/shadcn/tabs";
 
 interface PricingPlan {
   name?: string;
@@ -21,9 +21,8 @@ interface PricingPlan {
 }
 
 export default function PricingPlans() {
-  const { data: session } = useSession();
-
   const toast = useToast();
+  const { data: session } = useSession();
 
   const {
     isError,

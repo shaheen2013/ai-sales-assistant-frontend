@@ -7,9 +7,10 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import {
   Carousel,
   CarouselApi,
-  CarouselContent,
   CarouselItem,
+  CarouselContent,
 } from "@/components/shadcn/carousel";
+
 import Button from "@/components/button";
 import { useDotButton } from "@/components/shadcn/EmblaCarouselDotButton";
 
@@ -97,7 +98,7 @@ export default function Testimonials() {
   ];
 
   return (
-    <section className="container py-12" id="testimonials"> 
+    <section className="container py-12" id="testimonials">
       {/* badge */}
       <div className="mb-4">
         <span className="border border-primary-600 py-2 px-6 rounded-lg text-primary-600 mb-9 inline-flex w-max">

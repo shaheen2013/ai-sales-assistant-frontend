@@ -8,9 +8,9 @@ import Testimonials from "@/components/partials/Testimonials";
 
 import {
   Accordion,
-  AccordionContent,
   AccordionItem,
   AccordionTrigger,
+  AccordionContent,
 } from "@/components/shadcn/accordion";
 
 import PricingPlans from "./partials/PricingPlans";
@@ -725,7 +725,10 @@ export default function Home() {
       <div className="bg-[#10143E] h-[430px] p-3 mt-[-430px] lg:block hidden"></div>
 
       {/* your ask */}
-      <section className="bg-[#10143E] text-white py-14 lg:pb-12 pb-2" id="faqs">
+      <section
+        className="bg-[#10143E] text-white py-14 lg:pb-12 pb-2"
+        id="faqs"
+      >
         <div className="container">
           {/* badge */}
           <div className="flex items-center justify-center mb-4">
