@@ -1,4 +1,5 @@
 import { Button } from "@/components/shadcn/button";
+
 import {
   Dialog,
   DialogContent,
@@ -6,6 +7,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/shadcn/dialog";
+
 import {
   Form,
   FormControl,
@@ -14,32 +16,12 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/shadcn/form";
-import { Input } from "@/components/shadcn/input";
-import { useAddEmployeeToDepartmentMutation } from "@/features/dealer/dealerManagementSlice";
-import { useToast } from "@/hooks/useToast";
-import { beautifyErrors, handleApiError } from "@/lib/utils";
-import { zodResolver } from "@hookform/resolvers/zod";
+
 import { useForm } from "react-hook-form";
-import * as z from "zod";
+import { useToast } from "@/hooks/useToast";
+import { Input } from "@/components/shadcn/input";
 import { PhoneInput } from "../../settings/phone-input-with-country-list";
-import { isValidPhoneNumber } from "react-phone-number-input";
-
-// Define form schema with validation
-// const formSchema = z.object({
-//   name: z.string().min(1, "Employee name is required"),
-//   phone_number: z
-//     .string()
-//     .min(1, "Phone number is required")
-//     .refine(
-//       (value) => {
-//         return isValidPhoneNumber(value);
-//       },
-//       { message: "Invalid phone number" }
-//     ),
-// });
-
-// Type for form data
-// type FormData = z.infer<typeof formSchema>;
+import { useAddEmployeeToDepartmentMutation } from "@/features/dealer/dealerManagementSlice";
 
 const AddEmployeeModal = ({
   open,
@@ -54,8 +36,8 @@ const AddEmployeeModal = ({
 
   const [addEmployeeToDepartment, { isLoading }] =
     useAddEmployeeToDepartmentMutation();
+
   const form = useForm({
-    // resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
       phone_number: "+1",
