@@ -38,6 +38,7 @@ const Notification = () => {
 
   /*--Redux--*/
   const dispatch = useDispatch();
+
   const totalUnread = useSelector(
     (state: RootState) => state.notificationState
   ).totalUnread;
@@ -45,6 +46,7 @@ const Notification = () => {
   /*--RTK Query--*/
   const { data: notificationsData, isLoading: notificationsLoading } =
     useGetNotificationsQuery({ limit: 5 }, { skip: !open });
+
   const { data: notificationUnreadCountData } =
     useGetNotificationunreadCountQuery();
   const [markAllReadNotification] = useMarkAllReadNotificationMutation();
@@ -101,7 +103,8 @@ const Notification = () => {
             ...prevNotifications?.slice(0, 4),
           ]);
         } else {
-          toast("error", data?.error);
+          console.log("WebSocket error data:", data);
+          // toast("error", data?.error);
         }
       };
 
