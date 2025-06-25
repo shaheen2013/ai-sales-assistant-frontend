@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 function CustomTooltip({ payload }: any) {
-  console.log("payload", payload);
   return (
     <div className="p-4 relative bg-white border border-gray-50 rounded-lg shadow-[0px_4px_12px_rgba(0,0,0,0.1)] flex justify-center items-center">
       {payload.map((item: any, index: number) => {

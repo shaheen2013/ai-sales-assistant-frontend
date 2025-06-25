@@ -38,12 +38,9 @@ export default function SettingsPanelTabs() {
             onClick={() => {
               setActiveTab(tab);
 
-              // Update URL with the selected tab
-              if (typeof window !== "undefined") {
-                const url = new URL(window.location.href);
-                url.searchParams.set("tab", tab);
-                window.history.replaceState({}, "", url.toString());
-              }
+              const url = new URL(window.location.href);
+              url.searchParams.set("tab", tab);
+              window.history.replaceState({}, "", url.toString());
             }}
             className={`${
               activeTab === tab ? "bg-primary-500 text-white" : "text-gray-600"

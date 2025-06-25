@@ -23,6 +23,7 @@ import { Button } from "@/components/shadcn/button";
 import TickIcon from "@/components/icons/TickIcon";
 import BillingHistoryTable from "./billing-history-table";
 import PricingPlanSkeleton from "@/components/skeleton/PricingPlanSkeleton";
+import classNames from "classnames";
 
 interface Price {
   id: string;
@@ -72,8 +73,13 @@ export default function PricingPlanSection() {
 
   const { data: dataCurrentPlan } = useGetCurrentSubscriptionPlanQuery();
 
-  const [upgradeSubscription, { isLoading: isUpgrading }] =
-    useUpgradeSubscriptionMutation();
+  const [
+    upgradeSubscription,
+    {
+      isLoading: isLoadingUpgradeSubscription,
+      originalArgs: originalArgsUpgradeSubscription,
+    },
+  ] = useUpgradeSubscriptionMutation();
 
   const [
     createSubscription,
@@ -82,11 +88,6 @@ export default function PricingPlanSection() {
       originalArgs: originalArgsCreateSubscription,
     },
   ] = useCreateSubscriptionMutation();
-
-  console.log(
-    "originalArgsCreateSubscription => ",
-    originalArgsCreateSubscription
-  );
 
   const [selectedPriceMap, setSelectedPriceMap] = useState<
     Record<string, string>
@@ -99,13 +100,12 @@ export default function PricingPlanSection() {
     (plan: any) => plan.id === dataCurrentPlan?.subscription?.product?.id
   );
 
-  console.log("dataCurrentPlan => ", dataCurrentPlan);
-
   const currentPlanDetails = plansDetails.find(
     (plan) => plan?.name === selectedLearnMorePlan?.name
   );
 
-  console.log("currentPlan => ", currentPlan);
+  // console.log("pricingPlans => ", pricingPlans);
+  // console.log("isCurrentPlan => ", currentPlan);
 
   const handleUpgradePlan = async (id: string) => {
     try {
@@ -123,16 +123,15 @@ export default function PricingPlanSection() {
     } catch (error: any) {
       toast("error", beautifyErrors(error));
       console.error("Error", error);
-    } finally {
     }
   };
 
-  const handlePurchasePlan = async (priceId: string) => {
+  const handleCreateSubscription = async (priceId: string) => {
     try {
       const { data, error } = await createSubscription({
         price_id: priceId,
-        success_url: `${window.location.origin}/dashboard/settings`,
-        cancel_url: `${window.location.origin}/dashboard/settings`,
+        success_url: `${window.location.origin}/dashboard/settings?tab=Your Plan`,
+        cancel_url: `${window.location.origin}/dashboard/settings?tab=Your Plan`,
       });
 
       if (error) {
@@ -147,7 +146,17 @@ export default function PricingPlanSection() {
     } catch (error: any) {
       toast("error", beautifyErrors(error));
       console.error("Error", error);
-    } finally {
+    }
+  };
+
+  const handlePurchasePlan = async (priceId: string) => {
+    console.log("currentPlan => ", currentPlan);
+    if (currentPlan) {
+      // If current plan exists, upgrade it
+      await handleUpgradePlan(priceId);
+    } else {
+      // If no current plan, create a new subscription
+      await handleCreateSubscription(priceId);
     }
   };
 
@@ -180,6 +189,20 @@ export default function PricingPlanSection() {
           {pricingPlans?.map((plan: PricingPlan) => {
             const isCurrentPlan = plan.id === currentPlan?.id;
 
+            // const isUpgradable =
+
+            console.log(
+              "currentPlan => ",
+              currentPlan?.prices?.[0]?.convert_amount
+            );
+            console.log("plan => ", plan?.prices?.[0]?.convert_amount);
+            const isUpgradable =
+              currentPlan?.prices?.[0]?.convert_amount >
+              plan?.prices?.[0]?.convert_amount;
+
+            console.log("isUpgradable => ", isUpgradable);
+            console.log("\n");
+
             return (
               <div
                 key={plan.id}
@@ -201,7 +224,7 @@ export default function PricingPlanSection() {
                       {plan.description || "Description Will be Here"}
                     </p>
                   </div>
-                  
+
                   {plan.prices.length > 0 && (
                     <div className="py-2">
                       <div className="flex items-start">
@@ -276,35 +299,68 @@ export default function PricingPlanSection() {
                         This is the current plan
                       </p>
                     ) : (
-                      <Button
-                        variant={"outline"}
-                        onClick={() => handlePurchasePlan(plan.prices[0].id)}
-                        // disabled={
-                        //   // upgradingPlanId ===
-                        //   //   (selectedPriceMap[plan.id] || plan.prices[0].id) ||
-                        //   // plan.prices[0].convert_amount <
-                        //   //   (currentPlan?.prices?.[0].convert_amount || 0)
-                        // }
-                        className="text-[#019935] text-base shadow-md px-4 py-2.5 font-medium border-primary-100"
-                      >
-                        {isLoadingCreateSubscription &&
-                        originalArgsCreateSubscription?.price_id ===
-                          plan.prices[0].id
-                          ? "Purchasing..."
-                          : "Purchase Plan"}
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="20"
-                          height="20"
-                          viewBox="0 0 20 20"
-                          fill="none"
-                        >
-                          <path
-                            d="M7.99932 3.75007C7.99932 3.33582 8.33513 3 8.74938 3H16.2499C16.6642 3 17 3.33582 17 3.75007V11.2507C17 11.665 16.6642 12.0008 16.2499 12.0008C15.8357 12.0008 15.4999 11.665 15.4999 11.2507V5.56087L4.28042 16.7803C3.9875 17.0732 3.5126 17.0732 3.21968 16.7803C2.92677 16.4874 2.92677 16.0125 3.21969 15.7196L14.4391 4.50013H8.74938C8.33513 4.50013 7.99932 4.16432 7.99932 3.75007Z"
-                            fill="#019935"
-                          />
-                        </svg>
-                      </Button>
+                      <>
+                        {currentPlan ? (
+                          <Button
+                            variant={"outline"}
+                            disabled={isUpgradable}
+                            onClick={() =>
+                              handlePurchasePlan(plan.prices[0].id)
+                            }
+                            className={classNames(
+                              `text-[#019935] text-base shadow-md px-4 py-2.5 font-medium border-primary-100`,
+                              {
+                                "!cursor-not-allowed": isUpgradable,
+                              }
+                            )}
+                          >
+                            {isLoadingUpgradeSubscription &&
+                            originalArgsUpgradeSubscription?.new_price_id ===
+                              plan.prices[0].id
+                              ? "Upgrading..."
+                              : "Upgrade Plan"}
+
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="20"
+                              height="20"
+                              viewBox="0 0 20 20"
+                              fill="none"
+                            >
+                              <path
+                                d="M7.99932 3.75007C7.99932 3.33582 8.33513 3 8.74938 3H16.2499C16.6642 3 17 3.33582 17 3.75007V11.2507C17 11.665 16.6642 12.0008 16.2499 12.0008C15.8357 12.0008 15.4999 11.665 15.4999 11.2507V5.56087L4.28042 16.7803C3.9875 17.0732 3.5126 17.0732 3.21968 16.7803C2.92677 16.4874 2.92677 16.0125 3.21969 15.7196L14.4391 4.50013H8.74938C8.33513 4.50013 7.99932 4.16432 7.99932 3.75007Z"
+                                fill="#019935"
+                              />
+                            </svg>
+                          </Button>
+                        ) : (
+                          <Button
+                            variant={"outline"}
+                            onClick={() =>
+                              handlePurchasePlan(plan.prices[0].id)
+                            }
+                            className="text-[#019935] text-base shadow-md px-4 py-2.5 font-medium border-primary-100"
+                          >
+                            {isLoadingCreateSubscription &&
+                            originalArgsCreateSubscription?.price_id ===
+                              plan.prices[0].id
+                              ? "Purchasing..."
+                              : "Purchase Plan"}
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="20"
+                              height="20"
+                              viewBox="0 0 20 20"
+                              fill="none"
+                            >
+                              <path
+                                d="M7.99932 3.75007C7.99932 3.33582 8.33513 3 8.74938 3H16.2499C16.6642 3 17 3.33582 17 3.75007V11.2507C17 11.665 16.6642 12.0008 16.2499 12.0008C15.8357 12.0008 15.4999 11.665 15.4999 11.2507V5.56087L4.28042 16.7803C3.9875 17.0732 3.5126 17.0732 3.21968 16.7803C2.92677 16.4874 2.92677 16.0125 3.21969 15.7196L14.4391 4.50013H8.74938C8.33513 4.50013 7.99932 4.16432 7.99932 3.75007Z"
+                                fill="#019935"
+                              />
+                            </svg>
+                          </Button>
+                        )}
+                      </>
                     )}
                   </div>
                 </div>
