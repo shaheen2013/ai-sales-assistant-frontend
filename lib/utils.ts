@@ -1,10 +1,11 @@
-import { clsx, type ClassValue } from "clsx";
 import moment from "moment";
-import { twMerge } from "tailwind-merge";
-import parse, { domToReact } from "html-react-parser";
 import LinkifyIt from "linkify-it";
+import parse from "html-react-parser";
+import { twMerge } from "tailwind-merge";
+import { clsx, type ClassValue } from "clsx";
 
 const linkify = new LinkifyIt();
+
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
@@ -295,6 +296,9 @@ export function formatChatForPdf(messages: any[]): {
   });
 }
 
-export function formateDate(date: string = "", format: string = "DD MMM, YYYY") {
+export function formateDate(
+  date: string = "",
+  format: string = "DD MMM, YYYY"
+) {
   return moment(date).format(format);
 }

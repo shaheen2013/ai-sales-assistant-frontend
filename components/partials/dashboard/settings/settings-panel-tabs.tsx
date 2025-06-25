@@ -1,25 +1,25 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import EditProfileSection from './edit-profile-section';
-import NotificationSection from './notification-section';
-import PasswordAndSecuritySection from './password-security-section';
-import PricingPlanSection from './pricing-plan-section';
-import { useSearchParams } from 'next/navigation';
+import { useEffect, useState } from "react";
+import EditProfileSection from "./edit-profile-section";
+import NotificationSection from "./notification-section";
+import PasswordAndSecuritySection from "./password-security-section";
+import PricingPlanSection from "./pricing-plan-section";
+import { useSearchParams } from "next/navigation";
 
 const tabs = [
-  'Edit Profile',
-  'Notifications',
-  'Your Plan',
-  'Password & Security',
+  "Edit Profile",
+  "Notifications",
+  "Your Plan",
+  "Password & Security",
 ];
 
 export default function SettingsPanelTabs() {
   /*--React Hooks--*/
   const searchParams = useSearchParams();
-  const tab = searchParams.get('tab');
+  const tab = searchParams.get("tab");
 
-  const [activeTab, setActiveTab] = useState('Edit Profile');
+  const [activeTab, setActiveTab] = useState("Edit Profile");
 
   /*--UseEffect--*/
   useEffect(() => {
@@ -35,9 +35,19 @@ export default function SettingsPanelTabs() {
         {tabs.map((tab) => (
           <div
             key={tab}
-            onClick={() => setActiveTab(tab)}
-            className={`${activeTab === tab ? 'bg-primary-500 text-white' : 'text-gray-600'
-              } flex items-center justify-start  rounded-[10px] px-2 sm:px-4 py-2 sm:py-3 my-0 sm:my-2 font-medium  cursor-pointer text-[12px] sm:text-base w-full`}
+            onClick={() => {
+              setActiveTab(tab);
+
+              // Update URL with the selected tab
+              if (typeof window !== "undefined") {
+                const url = new URL(window.location.href);
+                url.searchParams.set("tab", tab);
+                window.history.replaceState({}, "", url.toString());
+              }
+            }}
+            className={`${
+              activeTab === tab ? "bg-primary-500 text-white" : "text-gray-600"
+            } flex items-center justify-start  rounded-[10px] px-2 sm:px-4 py-2 sm:py-3 my-0 sm:my-2 font-medium  cursor-pointer text-[12px] sm:text-base w-full`}
           >
             {tab}
           </div>
@@ -46,10 +56,10 @@ export default function SettingsPanelTabs() {
 
       {/* Content based on active tab */}
       <div className="w-full sm:flex-1">
-        {activeTab === 'Edit Profile' && <EditProfileSection />}
-        {activeTab === 'Notifications' && <NotificationSection />}
-        {activeTab === 'Your Plan' && <PricingPlanSection />}
-        {activeTab === 'Password & Security' && <PasswordAndSecuritySection />}
+        {activeTab === "Edit Profile" && <EditProfileSection />}
+        {activeTab === "Notifications" && <NotificationSection />}
+        {activeTab === "Your Plan" && <PricingPlanSection />}
+        {activeTab === "Password & Security" && <PasswordAndSecuritySection />}
       </div>
     </div>
   );

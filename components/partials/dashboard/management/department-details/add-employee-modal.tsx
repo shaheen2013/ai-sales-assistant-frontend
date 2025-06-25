@@ -1,11 +1,11 @@
-import { Button } from '@/components/shadcn/button';
+import { Button } from "@/components/shadcn/button";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from '@/components/shadcn/dialog';
+} from "@/components/shadcn/dialog";
 import {
   Form,
   FormControl,
@@ -13,28 +13,33 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/shadcn/form';
-import { Input } from '@/components/shadcn/input';
-import { useAddEmployeeToDepartmentMutation } from '@/features/dealer/dealerManagementSlice';
-import { useToast } from '@/hooks/useToast';
-import { handleApiError } from '@/lib/utils';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import * as z from 'zod';
-import { PhoneInput } from '../../settings/phone-input-with-country-list';
-import { isValidPhoneNumber } from 'react-phone-number-input';
+} from "@/components/shadcn/form";
+import { Input } from "@/components/shadcn/input";
+import { useAddEmployeeToDepartmentMutation } from "@/features/dealer/dealerManagementSlice";
+import { useToast } from "@/hooks/useToast";
+import { beautifyErrors, handleApiError } from "@/lib/utils";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
+import { PhoneInput } from "../../settings/phone-input-with-country-list";
+import { isValidPhoneNumber } from "react-phone-number-input";
 
 // Define form schema with validation
-const formSchema = z.object({
-  name: z.string().min(1, 'Employee name is required'),
-  phone_number: z.string().min(1, "Phone number is required").refine((value) => {
-    return isValidPhoneNumber(value);
-  }, { message: "Invalid phone number" }
-  ),
-});
+// const formSchema = z.object({
+//   name: z.string().min(1, "Employee name is required"),
+//   phone_number: z
+//     .string()
+//     .min(1, "Phone number is required")
+//     .refine(
+//       (value) => {
+//         return isValidPhoneNumber(value);
+//       },
+//       { message: "Invalid phone number" }
+//     ),
+// });
 
 // Type for form data
-type FormData = z.infer<typeof formSchema>;
+// type FormData = z.infer<typeof formSchema>;
 
 const AddEmployeeModal = ({
   open,
@@ -49,36 +54,45 @@ const AddEmployeeModal = ({
 
   const [addEmployeeToDepartment, { isLoading }] =
     useAddEmployeeToDepartmentMutation();
-  const form = useForm<FormData>({
-    resolver: zodResolver(formSchema),
+  const form = useForm({
+    // resolver: zodResolver(formSchema),
     defaultValues: {
-      name: '',
-      phone_number: '+1',
+      name: "",
+      phone_number: "+1",
     },
   });
 
-  const onSubmit = async (data: FormData) => {
+  const onSubmit = async (data: any) => {
     const payload = {
       name: data.name,
       phone_number: data.phone_number,
     };
+
     try {
-      await addEmployeeToDepartment({
+      const { data, error }: any = await addEmployeeToDepartment({
         id: departmentId,
         data: payload,
-      }).unwrap();
-      toast('success', 'Employee added successfully');
+      });
+
+      if (error) {
+        console.error(
+          "Error adding employee:",
+          error?.data?.message?.employees
+        );
+
+        toast(
+          "error",
+          error?.data?.message?.employees || "Failed to add employee"
+        );
+        return;
+      }
+
+      console.log("Employee added successfully:", data);
+
       form.reset();
       onOpenChange(false);
     } catch (error: any) {
-      if (error.status === 400) {
-        toast(
-          'error',
-          'Bad Request, Please check the employee phone number already exists!'
-        );
-      } else {
-        toast('error', handleApiError(error));
-      }
+      console.log("Error adding employee:", error);
     }
   };
 
@@ -151,7 +165,7 @@ const AddEmployeeModal = ({
                 disabled={isLoading}
                 className="bg-[#019935] hover:bg-[#018a30] text-white"
               >
-                {isLoading ? 'Adding...' : 'Add Employee'}
+                {isLoading ? "Adding..." : "Add Employee"}
               </Button>
             </div>
           </form>
