@@ -325,4 +325,41 @@ const InputCopy = React.forwardRef<
 );
 InputCopy.displayName = "InputCopy";
 
-export { Input, InputPassword, InputPhoneNumber, InputCopy };
+const InputFile = React.forwardRef<
+  HTMLInputElement,
+  InputProps & { accept?: string }
+>(({ className, error, accept = "", value, ...props }, ref) => {
+  console.log("value", value);
+  return (
+    <div>
+      <div className="relative flex items-center justify-center">
+        <div className="relative w-full max-w-md">
+          <input
+            type="file"
+            id="fileUpload"
+            accept={accept}
+            className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+            ref={ref}
+            {...props}
+          />
+          <div className="flex items-center justify-between h-10 w-full rounded-md border border-gray-300 bg-white px-4 text-sm shadow-sm focus-within:ring-2 focus-within:ring-blue-500">
+            <span className="text-gray-500 truncate pointer-events-none">
+              {value?.name || "Choose file..."}
+            </span>
+            <label
+              htmlFor="fileUpload"
+              className="ml-4 inline-block cursor-pointer rounded-md bg-primary-600 px-3 py-1 text-white text-sm font-medium hover:bg-primary-700 transition"
+            >
+              Browse
+            </label>
+          </div>
+        </div>
+      </div>
+
+      {error && <span className="text-red-500 text-sm mt-1">{error}</span>}
+    </div>
+  );
+});
+InputFile.displayName = "InputFile";
+
+export { Input, InputPassword, InputPhoneNumber, InputCopy, InputFile };
