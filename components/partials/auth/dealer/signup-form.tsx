@@ -118,15 +118,7 @@ export default function SignupForm() {
   }
 
   if (registerProgress > 0) {
-    return (
-      <DealerRegistration
-        progress={registerProgress}
-        onClose={() => {
-          setRegisterProgress(0);
-          router.push("/login");
-        }}
-      />
-    );
+    return <DealerRegistration progress={registerProgress} />;
   }
 
   return (

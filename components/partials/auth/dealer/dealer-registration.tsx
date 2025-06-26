@@ -1,22 +1,12 @@
-import Link from "next/link";
-import { useSearchParams } from "next/navigation";
-
-import Button from "@/components/button";
 import { Progress } from "@/components/shadcn/progress";
 
 interface DealerRegistrationProps {
   progress: number;
-  onClose: () => void;
 }
 
 export default function DealerRegistration({
   progress = 50,
-  onClose = () => {},
 }: DealerRegistrationProps) {
-  const searchParams = useSearchParams();
-
-  const email = searchParams.get("email");
-
   return (
     <div className="absolute top-0 left-0 right-0 bottom-0 bg-white z-10">
       <header className="pt-10 lg:px-20 px-6">
@@ -75,74 +65,23 @@ export default function DealerRegistration({
 
       <div className="h-[calc(100vh-100px)] flex justify-center items-center">
         <div className="lg:w-[600px] mx-3 lg:max-w-[600px] w-full">
-          {progress === 100 ? (
-            <div className="h-[calc(100vh-100px)] flex justify-center items-center lg:py-0 py-6">
-              <div className="max-w-[700px] w-[700px] border rounded-xl p-6">
-                {/* svg icon */}
-                <div className="flex justify-center mb-2">
-                  <svg
-                    viewBox="0 0 120 120"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="w-16 h-16 lg:w-32 lg:h-32"
-                  >
-                    <path
-                      d="M93 24C101.284 24 108 30.7157 108 39V87C108 95.2843 101.284 102 93 102H27C18.7157 102 12 95.2843 12 87V39C12 30.7157 18.7157 24 27 24H93ZM102 47.766L61.5211 71.5858C60.7387 72.046 59.7997 72.1227 58.9651 71.8159L58.4789 71.5858L18 47.778V87C18 91.9706 22.0294 96 27 96H93C97.9706 96 102 91.9706 102 87V47.766ZM93 30H27C22.0294 30 18 34.0294 18 39V40.812L60 65.5195L102 40.806V39C102 34.0294 97.9706 30 93 30Z"
-                      fill="#5D6679"
-                    />
-                  </svg>
-                </div>
+          <div className="">
+            <h2 className="text-gray-300 text-3xl font-medium mb-9">
+              Creating your account is almost done!
+            </h2>
 
-                {/* title */}
-                <h2 className="text-center text-gray-500 text-2xl font-semibold mb-3">
-                  Confirm Your Email & Finish Setting Up Your Profile!
-                </h2>
-
-                {/* subtitle */}
-                <p className="text-center text-gray-400 mb-9">
-                  We&apos;ve sent a link to your email{" "}
-                  {email && (
-                    <span className="text-primary-400">({email}) </span>
-                  )}
-                  address. If you don&apos;t see it, check your spam or junk
-                  folder.
-                </p>
-
-                {/* buttons */}
-                <div className="flex justify-center gap-4 mb-9 lg:flex-row flex-col">
-                  <Button variant="outline-gray">Contact Support</Button>
-                  <Button variant="primary">Resend Mail</Button>
-                </div>
-
-                <div className="">
-                  <Link
-                    href="/privacy-policy"
-                    className="block text-center text-gray-400 underline text-sm"
-                  >
-                    Terms of Use & Privacy Policy
-                  </Link>
-                </div>
-              </div>
+            <div className="border border-primary-400 p-2 rounded-md bg-primary-50 mb-6">
+              <Progress
+                value={progress}
+                className="h-6 rounded-md"
+                bgColor="transparent"
+              />
             </div>
-          ) : (
-            <div className="">
-              <h2 className="text-gray-300 text-3xl font-medium mb-9">
-                Creating your account is almost done!
-              </h2>
 
-              <div className="border border-primary-400 p-2 rounded-md bg-primary-50 mb-6">
-                <Progress
-                  value={progress}
-                  className="h-6 rounded-md"
-                  bgColor="transparent"
-                />
-              </div>
-
-              <h4 className="text-center text-primary-300 font-medium text-2xl">
-                Loading...
-              </h4>
-            </div>
-          )}
+            <h4 className="text-center text-primary-300 font-medium text-2xl">
+              Loading...
+            </h4>
+          </div>
         </div>
       </div>
     </div>
