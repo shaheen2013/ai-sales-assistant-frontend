@@ -29,9 +29,9 @@ export default function AccountCreatedSection() {
       }
 
       if (data) {
-        console.log("Email verification resent successfully:", data);
-        alert(
-          "Email verification link has been resent. Please check your inbox."
+        toast(
+          "success",
+          data?.detail || "Email verification resent successfully"
         );
       }
     } catch (error) {
@@ -65,14 +65,16 @@ export default function AccountCreatedSection() {
 
         {/* subtitle */}
         <p className="text-center text-gray-400 mb-9">
-          We&aposve sent a link to your email{" "}
+          We&apos;ve sent a link to your email{" "}
           <span className="text-primary-500">{email && `(${email})`}</span>{" "}
-          address. If you don&apost see it, check your spam or junk folder.
+          address. If you don&apos;t see it, check your spam or junk folder.
         </p>
 
         {/* buttons */}
         <div className="flex justify-center gap-4 mb-9 lg:flex-row flex-col">
-          <Button variant="outline-gray">Contact Support</Button>
+          <Button variant="outline-gray" href="/">
+            Contact Support
+          </Button>
           <Button
             variant="primary"
             // loading={isLoading}
