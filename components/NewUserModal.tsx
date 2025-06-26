@@ -1,9 +1,15 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
-import { useRouter, useSearchParams } from "next/navigation";
 
+import {
+  Accordion,
+  AccordionItem,
+  AccordionContent,
+  AccordionTrigger,
+} from "./shadcn/accordion";
 import Steps from "@/components/Steps";
 
 import {
@@ -15,18 +21,12 @@ import {
 import { countryCodes } from "@/static/CountryCodes";
 import { Button } from "@/components/shadcn/button";
 import { Input, InputPhoneNumber } from "@/components/shadcn/input";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "./shadcn/accordion";
 
 export default function NewUserModal() {
   const router = useRouter();
 
-  const searchParams = useSearchParams();
-  const newuser = searchParams.get("onboarding");
+  // const searchParams = useSearchParams();
+  // const newuser = searchParams.get("onboarding");
 
   const [modals, setModals] = useState({
     basicProfile: true,
@@ -40,7 +40,7 @@ export default function NewUserModal() {
 
       window.localStorage.removeItem("onboarding");
     }
-  }, [newuser]);
+  }, []);
 
   const stepData = [
     { title: "1", description: "Personal Information" },
@@ -76,8 +76,6 @@ export default function NewUserModal() {
 
   const handleBasicPersonalInfo = () => {
     handleSubmit(onSubmit)();
-
-    // setModals({ ...modals, basicProfile: false });
   };
 
   const onSubmit = async () => {
@@ -126,7 +124,7 @@ export default function NewUserModal() {
       <AlertDialogTitle></AlertDialogTitle>
       <AlertDialogContent className="lg:max-w-[1000px] max-w-[400px] max-h-screen overflow-y-auto">
         {/* header */}
-        {/* <AlertDialogHeader></AlertDialogHeader> */}
+        <AlertDialogHeader></AlertDialogHeader>
 
         {/* body */}
         <ContentSwitcher value="1" currentStep={step}>
