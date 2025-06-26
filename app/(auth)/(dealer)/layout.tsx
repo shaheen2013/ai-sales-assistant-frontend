@@ -23,7 +23,7 @@ export default function GeneralLayout({
   return (
     <div className="w-full lg:grid grid-cols-12 h-screen">
       {/* left */}
-      <div className="lg:col-span-6 col-span-12 p-4 h-screen flex flex-col">
+      <div className="lg:col-span-6 col-span-12 p-4 lg:h-screen flex flex-col">
         {/* header */}
         <div className="lg:mb-36">
           <AuthHeader />

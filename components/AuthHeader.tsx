@@ -11,8 +11,8 @@ import Link from "next/link";
 
 export default function AuthHeader() {
   return (
-    <div className="flex justify-between items-center lg:px-20 mb-10 mt-6 lg:mb-0 px-3">
-      <Link href="/">
+    <div className="flex md:flex-row flex-col justify-between items-center lg:px-20 md:mb-10 mb-6 mt-6 lg:mb-0 px-3">
+      <Link href="/" className="md:mb-0 mb-3">
         <svg
           width="158"
           height="45"
@@ -72,7 +72,7 @@ export default function AuthHeader() {
       </Link>
 
       {/* language */}
-      <div>
+      <div className=" w-full md:w-auto">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <div className="cursor-pointer px-3 py-2 rounded-lg border relative flex gap-3 justify-center items-center h-[42px]">
@@ -87,7 +87,7 @@ export default function AuthHeader() {
                 />
               </div>
 
-              <span className="text-gray-300 text-lg">Eng (US)</span>
+              <span className="text-gray-300 text-md">Eng (US)</span>
 
               {/* arrow  */}
               <svg
