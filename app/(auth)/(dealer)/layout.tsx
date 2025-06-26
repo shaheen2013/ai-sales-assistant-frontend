@@ -25,7 +25,7 @@ export default function GeneralLayout({
       {/* left */}
       <div className="lg:col-span-6 col-span-12 p-4 h-screen flex flex-col">
         {/* header */}
-        <div className="mb-36">
+        <div className="lg:mb-36">
           <AuthHeader />
         </div>
 
