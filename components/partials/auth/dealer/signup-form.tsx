@@ -348,7 +348,7 @@ export default function SignupForm() {
       </form>
 
       <Link
-        href="/terms-and-privacy"
+        href="/privacy-policy"
         className="text-center block text-xs underline mb-2"
       >
         Terms of Use & Privacy Policy

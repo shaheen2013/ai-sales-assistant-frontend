@@ -71,6 +71,15 @@ export const authSlice = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+
+    resendEmailVerification: builder.mutation({
+      query: (data) => ({
+        url: `/resend-email-verification`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["user"],
+    })
   }),
 });
 
@@ -84,4 +93,5 @@ export const {
   useForgotPasswordMutation,
   useResetPasswordMutation,
   useEmailVerificationQuery,
+  useResendEmailVerificationMutation,
 } = authSlice;

@@ -35,5 +35,5 @@ export default function VerifyEmailPage() {
   }
   router.push("/login");
 
-  return <div>VerifyEmailPage</div>;
+  return <div></div>;
 }
