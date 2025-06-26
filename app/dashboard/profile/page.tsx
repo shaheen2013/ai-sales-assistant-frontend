@@ -1,16 +1,16 @@
 "use client";
 
+import ProfileHeader from "./ProfileHeader";
 import ShortBioSection from "./short-bio-section";
 import PublicEmbedCodeCard from "./embeded-code-card";
 import UpgradePlanCtaCard from "./upgrade-plan-cta-card";
 import ServicesOfferedSection from "./services-offered-section";
 import CardInformationSection from "./card-information-section";
 import ContactInformationCard from "./contact-information-card";
-import ProfileHeader from "@/components/partials/dashboard/profile/profile-header";
+import SomethingWentWrong from "@/components/SomethingWentWrong";
 import DealerProfileOverviewSkeleton from "@/components/partials/dashboard/skeleton/dealer-profile-overview-skeleton";
 
 import { useGetDealerProfileQuery } from "@/features/dealer/dealerProfileSlice";
-import SomethingWentWrong from "@/components/SomethingWentWrong";
 
 export default function DealerProfile() {
   const { data, isLoading, isError } = useGetDealerProfileQuery(undefined, {
