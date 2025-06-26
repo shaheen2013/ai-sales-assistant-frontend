@@ -26,17 +26,19 @@ export default function NewUserModal() {
   const router = useRouter();
 
   const searchParams = useSearchParams();
-  const newuser = searchParams.get("newuser");
+  const newuser = searchParams.get("onboarding");
 
   const [modals, setModals] = useState({
-    basicProfile: false,
+    basicProfile: true,
   });
 
-  const [step] = useState<number>(3);
+  const [step] = useState<number>(1);
 
   useEffect(() => {
-    if (newuser) {
+    if (window.localStorage.getItem("onboarding") == "true") {
       setModals({ ...modals, basicProfile: true });
+
+      window.localStorage.removeItem("onboarding");
     }
   }, [newuser]);
 
@@ -374,6 +376,9 @@ export default function NewUserModal() {
               <Button
                 variant="outline"
                 className="text-primary-500 border-primary-200"
+                onClick={() => {
+                  setModals({ ...modals, basicProfile: false });
+                }}
               >
                 Skip for Now
               </Button>
@@ -492,6 +497,9 @@ export default function NewUserModal() {
               <Button
                 variant="outline"
                 className="text-primary-500 border-primary-200"
+                onClick={() => {
+                  setModals({ ...modals, basicProfile: false });
+                }}
               >
                 Skip for Now
               </Button>
@@ -698,6 +706,9 @@ export default function NewUserModal() {
               <Button
                 variant="outline"
                 className="text-primary-500 border-primary-200"
+                onClick={() => {
+                  setModals({ ...modals, basicProfile: false });
+                }}
               >
                 Skip for Now
               </Button>

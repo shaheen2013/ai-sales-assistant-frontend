@@ -7,15 +7,11 @@ import DealerDashboardOverview from "../profile/DealerDashboardOverview";
 function DashboardOverview() {
   const { data: session } = useSession();
 
-  return (
-    <>
-      {session?.user?.user_type === "admin" ? (
-        <AdminDashboardOverview />
-      ) : (
-        <DealerDashboardOverview />
-      )}
-    </>
-  );
+  if (session?.user?.user_type == "admin") {
+    return <AdminDashboardOverview />;
+  }
+
+  return <DealerDashboardOverview />;
 }
 
 export default DashboardOverview;

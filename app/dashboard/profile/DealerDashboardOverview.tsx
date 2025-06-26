@@ -39,6 +39,7 @@ import {
   useCreateMinuteSubscriptionMutation,
   useGetCurrentSubscriptionPlanQuery,
 } from "@/features/dealer/dealerProfileSlice";
+import NewUserModal from "@/components/NewUserModal";
 
 const defaultPlans: {
   [key: string]: { minutes: number; description: string };
@@ -453,6 +454,9 @@ const AdminDashboardOverview = () => {
 
       {/* statistics section */}
       <StatisticsSection />
+
+      {/* additional modals information */}
+      <NewUserModal />
 
       {/* modals */}
       <Dialog

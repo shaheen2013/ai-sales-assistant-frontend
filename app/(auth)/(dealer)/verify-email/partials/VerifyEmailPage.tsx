@@ -1,11 +1,13 @@
 "use client";
 
-import Spinner from "@/components/spinner/Spinner";
-import { useEmailVerificationQuery } from "@/features/auth/authSlice";
-import { useToast } from "@/hooks/useToast";
-import { beautifyErrors } from "@/lib/utils";
-import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
+
+import { beautifyErrors } from "@/lib/utils";
+import { useToast } from "@/hooks/useToast";
+import Spinner from "@/components/spinner/Spinner";
+
+import { useEmailVerificationQuery } from "@/features/auth/authSlice";
 
 export default function VerifyEmailPage() {
   const params = useSearchParams();
@@ -30,10 +32,15 @@ export default function VerifyEmailPage() {
 
   if (error) {
     toast("error", beautifyErrors(error));
+    router.push("/login");
   } else {
     toast("success", data?.detail || "Email verified successfully");
   }
-  router.push("/login");
+
+  if (window && window.localStorage) {
+    window.localStorage.setItem("onboarding", "true");
+    router.push("/login");
+  }
 
   return <div></div>;
 }

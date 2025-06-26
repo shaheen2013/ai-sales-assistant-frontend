@@ -50,9 +50,6 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
             )}
           </div>
         </main>
-
-        {/* additional modals information */}
-        <NewUserModal />
       </SidebarProvider>
     </Suspense>
   );

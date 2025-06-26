@@ -200,6 +200,7 @@ const InputPhoneNumber = React.forwardRef<
                 "pl-[90px]": countries.length,
                 "pl-10": preIcon,
                 "pr-10": postIcon,
+                "border-red-500": error,
               },
               className
             )}
