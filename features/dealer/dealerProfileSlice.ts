@@ -27,6 +27,16 @@ export const dealerProfileSlice = apiSlice.injectEndpoints({
       invalidatesTags: ["dealerProfile"],
     }),
 
+    updateDealerBusinessProfile: builder.mutation<DealerProfileType, FormData>({
+      query: (formData) => ({
+        url: "/update-dealer-business-profile",
+        method: "PATCH",
+        body: formData,
+        credentials: "include",
+      }),
+      invalidatesTags: ["dealerProfile"],
+    }),
+
     getNotificationSettings: builder.query({
       query: () => ({
         url: "/notification-settings-configuration",
@@ -79,7 +89,10 @@ export const dealerProfileSlice = apiSlice.injectEndpoints({
       invalidatesTags: ["pricingPlans"],
     }),
 
-    createMinuteSubscription: builder.mutation<{ checkout_url: string }, { price_id: string, success_url: string, cancel_url: string }>({
+    createMinuteSubscription: builder.mutation<
+      { checkout_url: string },
+      { price_id: string; success_url: string; cancel_url: string }
+    >({
       query: (data) => ({
         url: "/stripe/subscriptions/create_minute_subscription/",
         method: "POST",
@@ -110,6 +123,7 @@ export const dealerProfileSlice = apiSlice.injectEndpoints({
 export const {
   useGetDealerProfileQuery,
   useUpdateDealerProfileMutation,
+  useUpdateDealerBusinessProfileMutation,
   useGetNotificationSettingsQuery,
   useUpdateNotificationSettingsMutation,
   useUpdateDealerPasswordMutation,

@@ -1,8 +1,9 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Image from "next/image";
-import { Mail, MapPin } from "lucide-react";
-import { useState } from "react";
+import { Mail, MapPin, SquarePen } from "lucide-react";
+import { Controller, useForm } from "react-hook-form";
 
 import {
   Dialog,
@@ -11,46 +12,75 @@ import {
   DialogHeader,
   DialogDescription,
 } from "@/components/shadcn/dialog";
-import { useGetDealerProfileQuery } from "@/features/dealer/dealerProfileSlice";
+import {
+  useGetDealerProfileQuery,
+  useUpdateDealerBusinessProfileMutation,
+} from "@/features/dealer/dealerProfileSlice";
 import { Button } from "@/components/shadcn/button";
-import { Controller, useForm } from "react-hook-form";
 import { Input, InputFile } from "@/components/shadcn/input";
+import { useToast } from "@/hooks/useToast";
+import { beautifyErrors } from "@/lib/utils";
 
 const ProfileHeader = () => {
+  const toast = useToast();
+
   const { data } = useGetDealerProfileQuery(undefined, {
     refetchOnMountOrArgChange: true,
   });
 
+  const [updateDealerBusinessProfile] =
+    useUpdateDealerBusinessProfileMutation();
+
   const { control, handleSubmit, setValue, reset } = useForm({
     defaultValues: {
-      // vin: "",
-      // brand: "",
-      // model: "",
-
-      // year: "",
-      // series: "",
-      // trim: "",
-      // odometer: "",
-      // odometer_unit: "km",
-      // exterior_color: "",
-      // interior_color: "",
-      // options: "",
-
-      profile_cover: "",
-      profile_picture: "",
       business_name: "",
       business_email: "",
     },
   });
 
+  useEffect(() => {
+    // Set default values from dealer profile data
+    if (data?.data) {
+      const { dealer_details } = data.data;
+
+      setValue("business_name", dealer_details?.business_name || "");
+      setValue("business_email", dealer_details?.business_email || "");
+    }
+  }, [data]);
+
   const [modals, setModals] = useState({
-    editProfile: true,
+    editProfile: false,
   });
 
   const dealerProfileData = data?.data;
 
-  const handleEditDealerProfile = (formData: any) => {
+  const handleEditDealerProfile = async (formData: any) => {
     console.log("Form Data:", formData);
+
+    const payload = new FormData();
+    payload.append("business_name", formData.business_name);
+    payload.append("business_email", formData.business_email);
+
+    try {
+      const { data, error } = await updateDealerBusinessProfile(payload);
+
+      if (error) {
+        console.error("Error updating dealer profile:", error);
+        toast("error", beautifyErrors(error));
+        return;
+      }
+
+      if (data) {
+        console.log("Dealer profile updated successfully:", data);
+
+        toast("success", data?.detail || "Profile updated successfully");
+
+        reset(); // Reset the form after successful update
+        setModals((prev) => ({ ...prev, editProfile: false }));
+      }
+    } catch (error) {
+      console.error("Error updating dealer profile:", error);
+    }
   };
 
   return (
@@ -81,8 +111,14 @@ const ProfileHeader = () => {
           </div>
 
           <div className="text-center md:text-left">
-            <h1 className="text-xl md:text-2xl font-semibold text-[#2b3545]">
-              {dealerProfileData?.dealer_details?.business_name || "N/A"}
+            <h1 className="text-xl md:text-2xl font-semibold text-[#2b3545] flex items-center justify-center md:justify-start gap-2">
+              {dealerProfileData?.dealer_details?.business_name || "N/A"}{" "}
+              <SquarePen
+                className="cursor-pointer"
+                onClick={() => {
+                  setModals((prev) => ({ ...prev, editProfile: true }));
+                }}
+              />
             </h1>
             <div className="mt-2 space-y-1">
               <div className="flex items-center text-[#555d6a] justify-center md:justify-start">
@@ -100,16 +136,6 @@ const ProfileHeader = () => {
             </div>
           </div>
         </div>
-      </div>
-
-      {/* edit button */}
-      <div className="absolute bottom-4 right-4 md:top-6 md:right-6">
-        <button
-          className="px-4 py-2 bg-[#018b30] text-white rounded-lg shadow hover:bg-[#016f24] transition-colors"
-          onClick={() => setModals((prev) => ({ ...prev, editProfile: true }))}
-        >
-          Edit Profile
-        </button>
       </div>
 
       {/* modals */}
@@ -131,55 +157,49 @@ const ProfileHeader = () => {
           <div className="">
             <form onSubmit={handleSubmit(handleEditDealerProfile)} className="">
               <div className="grid grid-cols-2 gap-x-4 mb-6 ">
-                {/* Cover Profile */}
+                {/* Business Name */}
                 <div className="flex flex-col mb-3">
                   <label
-                    htmlFor="profile_cover"
+                    htmlFor="business_name"
                     className="text-sm mb-1 text-[#414651] font-medium"
                   >
-                    Profile Cover
+                    Business Name
                   </label>
                   <Controller
-                    name="profile_cover"
+                    name="business_name"
                     control={control}
-                    rules={{ required: "Profile Cover is required" }}
+                    rules={{ required: "Business Name is required" }}
                     render={({ field, formState: { errors } }) => (
-                      <InputFile
-                        id="profile_cover"
+                      <Input
+                        id="business_name"
                         className="h-11"
-                        placeholder="profile_cover"
-                        error={errors?.profile_cover?.message}
+                        placeholder="Business Name"
+                        error={errors?.business_name?.message}
                         {...field}
-                        onChange={(e: any) => {
-                          setValue("profile_cover", e.target.files);
-                        }}
                       />
                     )}
                   />
                 </div>
 
-                {/* Cover Profile */}
+                {/* Business Email */}
                 <div className="flex flex-col mb-3">
                   <label
-                    htmlFor="profile_cover"
+                    htmlFor="business_email"
                     className="text-sm mb-1 text-[#414651] font-medium"
                   >
-                    Profile Cover
+                    Business Email
                   </label>
                   <Controller
-                    name="profile_cover"
+                    name="business_email"
                     control={control}
-                    rules={{ required: "Profile Cover is required" }}
+                    rules={{ required: "Business Email is required" }}
                     render={({ field, formState: { errors } }) => (
-                      <InputFile
-                        id="profile_cover"
+                      <Input
+                        id="business_email"
                         className="h-11"
-                        placeholder="profile_cover"
-                        error={errors?.profile_cover?.message}
+                        placeholder="Business Email"
+                        error={errors?.business_email?.message}
                         {...field}
-                        onChange={(e: any) => {
-                          setValue("profile_cover", e.target);
-                        }}
                       />
                     )}
                   />

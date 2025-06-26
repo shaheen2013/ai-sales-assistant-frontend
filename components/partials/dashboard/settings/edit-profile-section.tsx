@@ -152,32 +152,11 @@ export default function EditProfileSection() {
         </h1>
         <div className="flex flex-col space-y-4 sm:space-y-6">
           {/* Profile Image Upload */}
-          <div className="flex flex-col sm:flex-row items-center gap-4">
-            <div className="size-[100px] sm:size-[130px] bg-[#f5f5f5] rounded-full flex items-center justify-center">
-              {profileImage ? (
-                <Image
-                  src={URL.createObjectURL(profileImage)}
-                  alt="Profile"
-                  width={130}
-                  height={130}
-                  className="w-full h-full rounded-full object-cover"
-                />
-              ) : (
-                <>
-                  {dealerProfileData?.profile_picture ? (
-                    <Image
-                      src={dealerProfileData.profile_picture}
-                      alt="Profile"
-                      width={130}
-                      height={130}
-                      className="w-full h-full rounded-full object-cover"
-                    />
-                  ) : (
-                    <AvatarImage />
-                  )}
-                </>
-              )}
-            </div>
+          <div className="gap-4">
+            <h2 className="text-[#555d6a] flex items-center text-sm sm:text-base mb-2">
+              Profile Image
+            </h2>
+
             <div
               className="flex-1 w-full border border-[#d5d7da] rounded-lg p-3 sm:p-4 flex flex-col items-center justify-center min-h-[100px] sm:min-h-[120px] transition-all duration-200"
               onDragOver={(e) => {
@@ -246,6 +225,85 @@ export default function EditProfileSection() {
                 </p>
                 <p className="text-[#717882] text-xs sm:text-sm mt-1 text-center">
                   PNG, JPG or GIF (max. 800×400px)
+                </p>
+              </label>
+            </div>
+          </div>
+
+          {/* Profile Cover */}
+          <div className="gap-4">
+            <h2 className="text-[#555d6a] flex items-center text-sm sm:text-base mb-2">
+              Profile Cover Image
+            </h2>
+
+            <div
+              className="flex-1 w-full border border-[#d5d7da] rounded-lg p-3 sm:p-4 flex flex-col items-center justify-center min-h-[100px] sm:min-h-[120px] transition-all duration-200"
+              onDragOver={(e) => {
+                e.preventDefault();
+                e.currentTarget.classList.add(
+                  "border-[#019935]",
+                  "bg-[#f0f9f2]",
+                  "border-dashed",
+                  "border-2",
+                  "scale-[1.02]"
+                );
+              }}
+              onDragEnter={(e) => {
+                e.preventDefault();
+                e.currentTarget.classList.add(
+                  "border-[#019935]",
+                  "bg-[#f0f9f2]",
+                  "border-dashed",
+                  "border-2",
+                  "scale-[1.02]"
+                );
+              }}
+              onDragLeave={(e) => {
+                e.preventDefault();
+                e.currentTarget.classList.remove(
+                  "border-[#019935]",
+                  "bg-[#f0f9f2]",
+                  "border-dashed",
+                  "border-2",
+                  "scale-[1.02]"
+                );
+              }}
+              onDrop={(e) => {
+                e.preventDefault();
+                e.currentTarget.classList.remove(
+                  "border-[#019935]",
+                  "bg-[#f0f9f2]",
+                  "border-dashed",
+                  "border-2",
+                  "scale-[1.02]"
+                );
+                const file = e.dataTransfer.files[0];
+                if (file && file.type.startsWith("image/")) {
+                  setProfileImage(file);
+                  form.setValue("profile_picture", file);
+                }
+              }}
+            >
+              <input
+                type="file"
+                id="profile_picture"
+                accept="image/*"
+                className="hidden"
+                onChange={handleImageUpload}
+              />
+              <label
+                htmlFor="profile_picture"
+                className="cursor-pointer flex flex-col items-center"
+              >
+                <Upload className="h-5 w-5 text-[#019935] mb-2" />
+                <p className="text-center text-sm sm:text-base">
+                  <span className="text-[#019935] font-medium">
+                    Click to upload
+                  </span>
+                  <span className="text-[#555d6a]"> or drag and drop</span>
+                </p>
+                <p className="text-[#717882] text-xs sm:text-sm mt-1 text-center">
+                  PNG, JPG or GIF (max. 800x400px)
                 </p>
               </label>
             </div>
