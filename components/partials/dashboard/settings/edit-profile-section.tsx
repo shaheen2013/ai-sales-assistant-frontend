@@ -1,7 +1,6 @@
 "use client";
 
 import * as z from "zod";
-import Image from "next/image";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { CircleHelp, Upload } from "lucide-react";
@@ -18,7 +17,6 @@ import { Input } from "@/components/shadcn/input";
 import { Button } from "@/components/shadcn/button";
 import { Textarea } from "@/components/shadcn/textarea";
 
-import { AvatarImage } from "../svg-icons";
 import { useToast } from "@/hooks/useToast";
 import { CountryDropdown } from "./country-list-dropdown";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -597,6 +595,7 @@ export default function EditProfileSection() {
             </Button>
             <Button
               type="submit"
+              disabled={isUpdating}
               className="bg-[#019935] hover:bg-[#018a30] text-white text-xs sm:text-sm px-2 sm:px-4 py-1 sm:py-2"
             >
               {isUpdating ? "Saving..." : "Save Changes"}

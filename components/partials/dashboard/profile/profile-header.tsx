@@ -17,7 +17,7 @@ import {
   useUpdateDealerBusinessProfileMutation,
 } from "@/features/dealer/dealerProfileSlice";
 import { Button } from "@/components/shadcn/button";
-import { Input, InputFile } from "@/components/shadcn/input";
+import { Input } from "@/components/shadcn/input";
 import { useToast } from "@/hooks/useToast";
 import { beautifyErrors } from "@/lib/utils";
 
@@ -28,7 +28,7 @@ const ProfileHeader = () => {
     refetchOnMountOrArgChange: true,
   });
 
-  const [updateDealerBusinessProfile] =
+  const [updateDealerBusinessProfile, { isLoading }] =
     useUpdateDealerBusinessProfileMutation();
 
   const { control, handleSubmit, setValue, reset } = useForm({
@@ -55,8 +55,6 @@ const ProfileHeader = () => {
   const dealerProfileData = data?.data;
 
   const handleEditDealerProfile = async (formData: any) => {
-    console.log("Form Data:", formData);
-
     const payload = new FormData();
     payload.append("business_name", formData.business_name);
     payload.append("business_email", formData.business_email);
@@ -223,7 +221,7 @@ const ProfileHeader = () => {
                   variant={"primary"}
                   type={"submit"}
                   className="h-11 rounded-lg"
-                  // loading={isLoadingEditVehicle}
+                  loading={isLoading}
                 >
                   Update
                 </Button>
