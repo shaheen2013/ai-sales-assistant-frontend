@@ -49,7 +49,7 @@ const ProfileHeader = () => {
   }, [data]);
 
   const [modals, setModals] = useState({
-    editProfile: false,
+    editProfile: true,
   });
 
   const dealerProfileData = data?.data;
@@ -109,15 +109,19 @@ const ProfileHeader = () => {
           </div>
 
           <div className="text-center md:text-left">
-            <h1 className="text-xl md:text-2xl font-semibold text-[#2b3545] flex items-center justify-center md:justify-start gap-2">
-              {dealerProfileData?.dealer_details?.business_name || "N/A"}{" "}
+            <div className="flex items-center justify-center md:justify-start gap-2">
+              <h1 className="text-xl md:text-2xl font-semibold text-[#2b3545] ">
+                {dealerProfileData?.dealer_details?.business_name || "N/A"}{" "}
+              </h1>
+
               <SquarePen
                 className="cursor-pointer"
                 onClick={() => {
                   setModals((prev) => ({ ...prev, editProfile: true }));
                 }}
               />
-            </h1>
+            </div>
+
             <div className="mt-2 space-y-1">
               <div className="flex items-center text-[#555d6a] justify-center md:justify-start">
                 <Mail className="w-4 h-4 text-[#018b30] mr-2" />
@@ -145,7 +149,7 @@ const ProfileHeader = () => {
       >
         <DialogContent className="sm:max-w-[700px]">
           <DialogHeader>
-            <DialogTitle>Edit Details</DialogTitle>
+            <DialogTitle>Edit Business Details</DialogTitle>
             <DialogDescription>
               Add your documents here, and you can upload up to 5 files max
             </DialogDescription>
