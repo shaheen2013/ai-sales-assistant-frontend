@@ -1,13 +1,13 @@
 "use client";
 
-import React, { use } from "react";
+import React from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 
-import Button from "@/components/button";
-import { useResendEmailVerificationMutation } from "@/features/auth/authSlice";
-import { useToast } from "@/hooks/useToast";
 import { beautifyErrors } from "@/lib/utils";
+import Button from "@/components/button";
+import { useToast } from "@/hooks/useToast";
+import { useResendEmailVerificationMutation } from "@/features/auth/authSlice";
 
 export default function AccountCreatedSection() {
   const params = useSearchParams();
