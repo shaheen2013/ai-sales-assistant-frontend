@@ -72,7 +72,7 @@ export default function Home() {
           </h2>
 
           <p className="text-[#787878] text-center max-w-[1000px] mx-auto lg:text-xl mb-8 text-base">
-            Teez is your dealership's AI frontliner ,built to engage, guide, and
+            Teez is your dealership&apos;s AI frontliner ,built to engage, guide, and
             convert. It answers calls, books appointments, suggests vehicles,
             and captures leads 24/7 so your team can focus on closing sales.
           </p>
@@ -386,7 +386,7 @@ export default function Home() {
           </h2>
 
           <p className="lg:mb-20 mb-12 text-white text-center">
-            It's not just AI , It's your smartest hire, working 24/7 to turn
+            It&apos;s not just AI , It&apos;s your smartest hire, working 24/7 to turn
             every call into a customer.
           </p>
 
@@ -566,8 +566,8 @@ export default function Home() {
             </h1>
 
             <p className="text-[#6F6F6F] lg:text-2xl text-base mb-6">
-              TEEZ isn't just software — it's your AI frontliner ready from day
-              one. Once connected to your dealership's phone and digital
+              TEEZ isn&apos;t just software — it&apos;s your AI frontliner ready from day
+              one. Once connected to your dealership&apos;s phone and digital
               channels, she starts:
               <ul className="my-9 list-disc pl-6 ">
                 <li className="mb-1">
@@ -701,14 +701,14 @@ export default function Home() {
             </span>
 
             <h1 className="lg:text-4xl text-3xl mb-6 font-semibold text-gray-900">
-              How TEEZ Elevates the Buyer's Experience
+              How TEEZ Elevates the Buyer&apos;s Experience
             </h1>
 
             <p className="text-[#414141] lg:text-2xl text-base mb-mb-6 mb-2">
               - Provides instant answers about vehicles, hours, and services
             </p>
             <p className="text-[#414141] lg:text-2xl text-base mb-mb-6 mb-2">
-              - Suggests alternatives when the vehicle they want isn't available
+              - Suggests alternatives when the vehicle they want isn&apos;t available
             </p>
             <p className="text-[#414141] lg:text-2xl text-base mb-mb-6 mb-8">
               - Books test drives in real time, without waiting or transfers
@@ -765,7 +765,7 @@ export default function Home() {
           </h2>
 
           <p className="text-center text-[#ECECEC] mb-16">
-            Got questions? Check out our most frequently asked ones — we've got
+            Got questions? Check out our most frequently asked ones — we&apos;ve got
             you covered.
           </p>
 

@@ -2,7 +2,7 @@ import { JWT } from "next-auth/jwt";
 import { jwtDecode } from "jwt-decode";
 
 import { beautifyErrors } from "@/lib/utils";
-import NextAuth, { AuthOptions, Session } from "next-auth";
+import NextAuth, { AuthOptions } from "next-auth";
 
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
