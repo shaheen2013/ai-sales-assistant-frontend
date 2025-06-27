@@ -20,8 +20,7 @@ export default function AnonymousChat() {
     {
       id: "5151",
       isMe: false,
-      message:
-        "Hello, I am Clara, from Teez AI. How can I assist you with your vehicle parts inventory today?",
+      message: `Hey! I'm Clara from TEEZ AI — here to get your dealership up and running fast. I can help with onboarding, CRM setup, voice calls, live analytics, and branding. Ready to dive in?`,
       timestamp: "2025-05-07T12:00:00Z",
     },
   ]);
