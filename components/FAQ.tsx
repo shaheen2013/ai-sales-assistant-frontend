@@ -83,7 +83,7 @@ const FAQ = () => {
               AI-powered efficiency!
             </p>
             <button className="mt-2 sm:mt-4 px-2 sm:px-5 sm:py-2 border-2 border-green-600 text-green-600 rounded-lg flex items-center hover:bg-green-100 transition max-w-[140] sm:max-w-[164px]">
-              Start Chart{" "}
+              Start Chat{" "}
               <span className="ml-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

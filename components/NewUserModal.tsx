@@ -22,6 +22,7 @@ import { countryCodes } from "@/static/CountryCodes";
 import { Button } from "@/components/shadcn/button";
 import { Input, InputPhoneNumber } from "@/components/shadcn/input";
 import {
+  useCreateSubscriptionMutation,
   useGetCurrentSubscriptionPlanQuery,
   useGetDealerPricingPlansQuery,
   useUpdateDealerBusinessProfileMutation,
@@ -33,16 +34,25 @@ import { beautifyErrors } from "@/lib/utils";
 export default function NewUserModal() {
   const toast = useToast();
   const router = useRouter();
+
+  const [selectedPlan, setSelectedPlan] = useState<string>("");
   const [number, setNumber] = useState<string>("");
 
   const [modals, setModals] = useState({
     basicProfile: false,
   });
 
-  const [step, setStep] = useState<number>(1);
+  const [step, setStep] = useState<number>(3);
 
   const { data: pricingPlans, isLoading: isLoadingPlans } =
     useGetDealerPricingPlansQuery();
+
+  useEffect(() => {
+    if (pricingPlans && pricingPlans.length > 0) {
+      // Set the first plan as selected by default
+      setSelectedPlan(pricingPlans[0]?.id || "");
+    }
+  }, [pricingPlans]);
 
   console.log("pricingPlans => ", pricingPlans);
 
@@ -53,6 +63,9 @@ export default function NewUserModal() {
 
   const [updateDealerProfile, { isLoading: isLoadingUpdateDealerProfile }] =
     useUpdateDealerBusinessProfileMutation();
+
+  const [createSubscription, { isLoading: isLoadingCreateSubscription }] =
+    useCreateSubscriptionMutation();
 
   useEffect(() => {
     if (window.localStorage.getItem("onboarding") == "true") {
@@ -168,6 +181,44 @@ export default function NewUserModal() {
     } catch (error) {
       console.log(error);
       toast("error", "Failed to update dealer profile");
+    }
+  };
+
+  const handlePlanPurchase = async () => {
+    const selectedPlanData = pricingPlans?.find(
+      (plan: any) => plan.id === selectedPlan
+    );
+
+    // console.log("selectedPlanData => ", selectedPlanData?.prices?.[0]?.id);
+
+    try {
+      const { data, error } = await createSubscription({
+        price_id: selectedPlanData?.prices?.[0]?.id,
+        success_url: `${window.location.origin}/dashboard/overview`,
+        cancel_url: `${window.location.origin}/dashboard/overview`,
+      });
+
+      if (error) {
+        console.log("error => ", error);
+        toast(
+          "error",
+          beautifyErrors(error) || "Failed to create subscription"
+        );
+        return;
+      }
+
+      if (data) {
+        console.log("data => ", data);
+        toast("success", data?.detail || "Subscription created successfully");
+
+        // Redirect to the checkout URL
+        if (data.checkout_url) {
+          window.location.href = data.checkout_url;
+        }
+      }
+    } catch (error) {
+      console.log("Error creating subscription: ", error);
+      toast("error", "Failed to create subscription");
     }
   };
 
@@ -708,7 +759,7 @@ export default function NewUserModal() {
 
                 {/* right */}
                 <div className="flex flex-col gap-3">
-                  {plans.map((plan, index) => {
+                  {pricingPlans?.map((plan: any, index: any) => {
                     return (
                       <label
                         key={index}
@@ -716,7 +767,12 @@ export default function NewUserModal() {
                       >
                         <div className="flex gap-3">
                           <input
-                            defaultChecked={index === 0} // Default to the first plan being selected
+                            // defaultChecked={index === 0} // Default to the first plan being selected
+                            onChange={() => {
+                              setSelectedPlan(plan.id);
+                            }}
+                            checked={selectedPlan === plan.id}
+                            value={plan.id}
                             name="plan"
                             type="radio"
                             className="box-content h-2 w-2 appearance-none rounded-full border-[5px] border-white bg-white bg-clip-padding outline-none ring-1 ring-gray-950/10 checked:border-primary-500 checked:ring-primary-500 mt-1"
@@ -738,7 +794,7 @@ export default function NewUserModal() {
                                 $
                               </span>
                               <span className="group-has-[:checked]:text-primary-400 text-gray-400 font-bold text-3xl">
-                                {plan.price}
+                                {plan.prices?.[0]?.convert_amount}
                               </span>
                               /month
                             </div>
@@ -747,7 +803,7 @@ export default function NewUserModal() {
 
                         {/* benefits  */}
                         <div className="pl-[25px]">
-                          {plan?.benefits?.map((benefit, index) => {
+                          {/* {plan?.benefits?.map((benefit, index) => {
                             return (
                               <div
                                 key={index}
@@ -777,7 +833,7 @@ export default function NewUserModal() {
                                 {benefit}
                               </div>
                             );
-                          })}
+                          })} */}
                         </div>
                       </label>
                     );
@@ -804,8 +860,10 @@ export default function NewUserModal() {
 
               <Button
                 variant="primary"
+                loading={isLoadingCreateSubscription}
                 onClick={() => {
                   // handleSubmit(onSubmit)();
+                  handlePlanPurchase();
                 }}
               >
                 Continue
