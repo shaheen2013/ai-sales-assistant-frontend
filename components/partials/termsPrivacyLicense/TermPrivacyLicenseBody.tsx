@@ -33,7 +33,7 @@ const TermPrivacyLicenseBody: FC<TermPrivacyLicenseBodyPropsType> = ({
           {effectiveDate && (
             <>
               Effective Date:{" "}
-              <span className="text-[#2b3545] font-semibold">
+              <span className="text-[#2b3545] lg:font-semibold font-medium ">
                 {effectiveDate}
               </span>
               {lastUpdated && ", "}
@@ -42,7 +42,7 @@ const TermPrivacyLicenseBody: FC<TermPrivacyLicenseBodyPropsType> = ({
           {lastUpdated && (
             <>
               Last Updated:{" "}
-              <span className="text-[#2b3545] font-semibold">
+              <span className="text-[#2b3545] lg:font-semibold font-medium ">
                 {lastUpdated}
               </span>
             </>
