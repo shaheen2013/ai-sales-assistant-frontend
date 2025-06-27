@@ -367,6 +367,12 @@ export default function PricingPlanSection() {
               </div>
             );
           })}
+
+          {pricingPlans?.length === 0 && (
+            <p className="text-center text-gray-500 mt-6">
+              No pricing plans available at the moment.
+            </p>
+          )}
         </div>
       )}
 

@@ -22,6 +22,8 @@ import { countryCodes } from "@/static/CountryCodes";
 import { Button } from "@/components/shadcn/button";
 import { Input, InputPhoneNumber } from "@/components/shadcn/input";
 import {
+  useGetCurrentSubscriptionPlanQuery,
+  useGetDealerPricingPlansQuery,
   useUpdateDealerBusinessProfileMutation,
   useUpdateDealerProfileMutation,
 } from "@/features/dealer/dealerProfileSlice";
@@ -38,6 +40,13 @@ export default function NewUserModal() {
   });
 
   const [step, setStep] = useState<number>(3);
+
+  const { data: pricingPlans, isLoading: isLoadingPlans } =
+    useGetDealerPricingPlansQuery();
+
+  console.log("pricingPlans => ", pricingPlans);
+
+  // const { data: dataCurrentPlan } = useGetCurrentSubscriptionPlanQuery();
 
   const [updateProfile, { isLoading: isLoadingUpdateProfile }] =
     useUpdateDealerProfileMutation();

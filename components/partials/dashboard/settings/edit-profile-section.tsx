@@ -229,7 +229,7 @@ export default function EditProfileSection() {
           </div>
 
           {/* Profile Cover */}
-          <div className="gap-4">
+          <div className="gap-4 hidden">
             <h2 className="text-[#555d6a] flex items-center text-sm sm:text-base mb-2">
               Profile Cover Image
             </h2>

@@ -49,7 +49,7 @@ const ProfileHeader = () => {
   }, [data]);
 
   const [modals, setModals] = useState({
-    editProfile: true,
+    editProfile: false,
   });
 
   const dealerProfileData = data?.data;
