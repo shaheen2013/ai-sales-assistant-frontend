@@ -72,9 +72,10 @@ export default function Home() {
           </h2>
 
           <p className="text-[#787878] text-center max-w-[1000px] mx-auto lg:text-xl mb-8 text-base">
-            Teez is your dealership&apos;s AI frontliner ,built to engage, guide, and
-            convert. It answers calls, books appointments, suggests vehicles,
-            and captures leads 24/7 so your team can focus on closing sales.
+            Teez is your dealership&apos;s AI frontliner ,built to engage,
+            guide, and convert. It answers calls, books appointments, suggests
+            vehicles, and captures leads 24/7 so your team can focus on closing
+            sales.
           </p>
         </div>
 
@@ -107,13 +108,15 @@ export default function Home() {
           </h3>
 
           {/* brand logos */}
-          <div className="flex justify-center items-center lg:gap-16 gap-8 lg:mb-32 mb-16 flex-wrap">
+<div className="grid md:flex md:flex-row items-center justify-center gap-4 mb-16">
+
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="124"
               height="40"
               viewBox="0 0 124 40"
               fill="none"
+              className="lg:h-6 h-4 "
             >
               <path
                 d="M30.9535 14.1254H16.6961V18.3498H26.7951C26.3001 24.2904 21.3496 26.7987 16.6961 26.7987C10.7225 26.7987 5.54099 22.1122 5.54099 15.5446C5.54099 9.14191 10.4915 4.22442 16.6961 4.22442C21.4816 4.22442 24.3199 7.29373 24.3199 7.29373L27.2902 4.22442C27.2902 4.22442 23.4948 0 16.5641 0C7.75221 0 0.920532 7.45875 0.920532 15.4785C0.920532 23.3663 7.35617 31.0561 16.7951 31.0561C25.1119 31.0561 31.1846 25.3465 31.1846 16.9307C31.1846 15.1485 30.9535 14.1254 30.9535 14.1254Z"
@@ -153,6 +156,7 @@ export default function Home() {
               height="26"
               viewBox="0 0 112 26"
               fill="none"
+              className="lg:h-6 h-4 "
             >
               <path
                 fillRule="evenodd"
@@ -189,6 +193,7 @@ export default function Home() {
               height="40"
               viewBox="0 0 124 40"
               fill="none"
+              className="lg:h-6 h-4 "
             >
               <path
                 d="M30.9535 14.1254H16.6961V18.3498H26.7951C26.3001 24.2904 21.3496 26.7987 16.6961 26.7987C10.7225 26.7987 5.54099 22.1122 5.54099 15.5446C5.54099 9.14191 10.4915 4.22442 16.6961 4.22442C21.4816 4.22442 24.3199 7.29373 24.3199 7.29373L27.2902 4.22442C27.2902 4.22442 23.4948 0 16.5641 0C7.75221 0 0.920532 7.45875 0.920532 15.4785C0.920532 23.3663 7.35617 31.0561 16.7951 31.0561C25.1119 31.0561 31.1846 25.3465 31.1846 16.9307C31.1846 15.1485 30.9535 14.1254 30.9535 14.1254Z"
@@ -228,6 +233,7 @@ export default function Home() {
               height="26"
               viewBox="0 0 112 26"
               fill="none"
+              className="lg:h-6 h-4 "
             >
               <path
                 fillRule="evenodd"
@@ -264,6 +270,7 @@ export default function Home() {
               height="40"
               viewBox="0 0 124 40"
               fill="none"
+              className="lg:h-6 h-4 "
             >
               <path
                 d="M30.9535 14.1254H16.6961V18.3498H26.7951C26.3001 24.2904 21.3496 26.7987 16.6961 26.7987C10.7225 26.7987 5.54099 22.1122 5.54099 15.5446C5.54099 9.14191 10.4915 4.22442 16.6961 4.22442C21.4816 4.22442 24.3199 7.29373 24.3199 7.29373L27.2902 4.22442C27.2902 4.22442 23.4948 0 16.5641 0C7.75221 0 0.920532 7.45875 0.920532 15.4785C0.920532 23.3663 7.35617 31.0561 16.7951 31.0561C25.1119 31.0561 31.1846 25.3465 31.1846 16.9307C31.1846 15.1485 30.9535 14.1254 30.9535 14.1254Z"
@@ -303,6 +310,7 @@ export default function Home() {
               height="26"
               viewBox="0 0 112 26"
               fill="none"
+              className="lg:h-6 h-4 "
             >
               <path
                 fillRule="evenodd"
@@ -339,6 +347,7 @@ export default function Home() {
               height="40"
               viewBox="0 0 124 40"
               fill="none"
+              className="lg:h-6 h-4 "
             >
               <path
                 d="M30.9535 14.1254H16.6961V18.3498H26.7951C26.3001 24.2904 21.3496 26.7987 16.6961 26.7987C10.7225 26.7987 5.54099 22.1122 5.54099 15.5446C5.54099 9.14191 10.4915 4.22442 16.6961 4.22442C21.4816 4.22442 24.3199 7.29373 24.3199 7.29373L27.2902 4.22442C27.2902 4.22442 23.4948 0 16.5641 0C7.75221 0 0.920532 7.45875 0.920532 15.4785C0.920532 23.3663 7.35617 31.0561 16.7951 31.0561C25.1119 31.0561 31.1846 25.3465 31.1846 16.9307C31.1846 15.1485 30.9535 14.1254 30.9535 14.1254Z"
@@ -386,8 +395,8 @@ export default function Home() {
           </h2>
 
           <p className="lg:mb-20 mb-12 text-white text-center">
-            It&apos;s not just AI , It&apos;s your smartest hire, working 24/7 to turn
-            every call into a customer.
+            It&apos;s not just AI , It&apos;s your smartest hire, working 24/7
+            to turn every call into a customer.
           </p>
 
           {/* cards */}
@@ -566,9 +575,9 @@ export default function Home() {
             </h1>
 
             <p className="text-[#6F6F6F] lg:text-2xl text-base mb-6">
-              TEEZ isn&apos;t just software — it&apos;s your AI frontliner ready from day
-              one. Once connected to your dealership&apos;s phone and digital
-              channels, she starts:
+              TEEZ isn&apos;t just software — it&apos;s your AI frontliner ready
+              from day one. Once connected to your dealership&apos;s phone and
+              digital channels, she starts:
               <ul className="my-9 list-disc pl-6 ">
                 <li className="mb-1">
                   Answering inbound calls ,with smart conversations
@@ -708,7 +717,8 @@ export default function Home() {
               - Provides instant answers about vehicles, hours, and services
             </p>
             <p className="text-[#414141] lg:text-2xl text-base mb-mb-6 mb-2">
-              - Suggests alternatives when the vehicle they want isn&apos;t available
+              - Suggests alternatives when the vehicle they want isn&apos;t
+              available
             </p>
             <p className="text-[#414141] lg:text-2xl text-base mb-mb-6 mb-8">
               - Books test drives in real time, without waiting or transfers
@@ -765,8 +775,8 @@ export default function Home() {
           </h2>
 
           <p className="text-center text-[#ECECEC] mb-16">
-            Got questions? Check out our most frequently asked ones — we&apos;ve got
-            you covered.
+            Got questions? Check out our most frequently asked ones — we&apos;ve
+            got you covered.
           </p>
 
           <div className="lg:max-w-[1100px] mx-auto">

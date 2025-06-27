@@ -1,7 +1,7 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
 
 import {
@@ -13,6 +13,13 @@ import {
 import Steps from "@/components/Steps";
 
 import {
+  useCreateSubscriptionMutation,
+  useGetDealerPricingPlansQuery,
+  useUpdateDealerBusinessProfileMutation,
+  useUpdateDealerProfileMutation,
+} from "@/features/dealer/dealerProfileSlice";
+
+import {
   AlertDialog,
   AlertDialogTitle,
   AlertDialogHeader,
@@ -21,19 +28,12 @@ import {
 import { countryCodes } from "@/static/CountryCodes";
 import { Button } from "@/components/shadcn/button";
 import { Input, InputPhoneNumber } from "@/components/shadcn/input";
-import {
-  useCreateSubscriptionMutation,
-  useGetCurrentSubscriptionPlanQuery,
-  useGetDealerPricingPlansQuery,
-  useUpdateDealerBusinessProfileMutation,
-  useUpdateDealerProfileMutation,
-} from "@/features/dealer/dealerProfileSlice";
+
 import { useToast } from "@/hooks/useToast";
 import { beautifyErrors } from "@/lib/utils";
 
 export default function NewUserModal() {
   const toast = useToast();
-  const router = useRouter();
 
   const [selectedPlan, setSelectedPlan] = useState<string>("");
   const [number, setNumber] = useState<string>("");
@@ -42,7 +42,7 @@ export default function NewUserModal() {
     basicProfile: false,
   });
 
-  const [step, setStep] = useState<number>(3);
+  const [step, setStep] = useState<number>(1); // 1 for first step
 
   const { data: pricingPlans, isLoading: isLoadingPlans } =
     useGetDealerPricingPlansQuery();
@@ -53,10 +53,6 @@ export default function NewUserModal() {
       setSelectedPlan(pricingPlans[0]?.id || "");
     }
   }, [pricingPlans]);
-
-  console.log("pricingPlans => ", pricingPlans);
-
-  // const { data: dataCurrentPlan } = useGetCurrentSubscriptionPlanQuery();
 
   const [updateProfile, { isLoading: isLoadingUpdateProfile }] =
     useUpdateDealerProfileMutation();
@@ -803,7 +799,11 @@ export default function NewUserModal() {
 
                         {/* benefits  */}
                         <div className="pl-[25px]">
-                          {/* {plan?.benefits?.map((benefit, index) => {
+                          {[
+                            "Manage up to 20 car listings",
+                            "AI-powered customer inquiries via text",
+                            "Basic lead generation assistance",
+                          ]?.map((benefit, index) => {
                             return (
                               <div
                                 key={index}
@@ -833,15 +833,18 @@ export default function NewUserModal() {
                                 {benefit}
                               </div>
                             );
-                          })} */}
+                          })}
                         </div>
                       </label>
                     );
                   })}
 
-                  <span className="underline text-xs font-medium text-primary-400 flex items-end justify-end cursor-pointer">
+                  <Link
+                    href="/#plan"
+                    className="underline text-xs font-medium text-primary-400 flex items-end justify-end cursor-pointer"
+                  >
                     Show all plan Detail View
-                  </span>
+                  </Link>
                 </div>
               </div>
             </div>
