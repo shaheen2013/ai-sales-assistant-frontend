@@ -21,18 +21,29 @@ import {
 import { countryCodes } from "@/static/CountryCodes";
 import { Button } from "@/components/shadcn/button";
 import { Input, InputPhoneNumber } from "@/components/shadcn/input";
+import {
+  useUpdateDealerBusinessProfileMutation,
+  useUpdateDealerProfileMutation,
+} from "@/features/dealer/dealerProfileSlice";
+import { useToast } from "@/hooks/useToast";
+import { beautifyErrors } from "@/lib/utils";
 
 export default function NewUserModal() {
+  const toast = useToast();
   const router = useRouter();
-
-  // const searchParams = useSearchParams();
-  // const newuser = searchParams.get("onboarding");
+  const [number, setNumber] = useState<string>("");
 
   const [modals, setModals] = useState({
     basicProfile: true,
   });
 
-  const [step] = useState<number>(1);
+  const [step, setStep] = useState<number>(2);
+
+  const [updateProfile, { isLoading: isLoadingUpdateProfile }] =
+    useUpdateDealerProfileMutation();
+
+  const [updateDealerProfile, { isLoading: isLoadingUpdateDealerProfile }] =
+    useUpdateDealerBusinessProfileMutation();
 
   useEffect(() => {
     if (window.localStorage.getItem("onboarding") == "true") {
@@ -74,30 +85,80 @@ export default function NewUserModal() {
     },
   });
 
-  const handleBasicPersonalInfo = () => {
-    handleSubmit(onSubmit)();
-  };
+  const { handleSubmit: handleSubmitDealer, control: controlDealer } = useForm({
+    defaultValues: {
+      business_name: "",
+      business_email: "",
+    },
+  });
 
-  const onSubmit = async () => {
+  // const handleBasicPersonalInfo = () => {
+  //   handleSubmit(onSubmit)();
+  // };
+
+  const handleBasicProfile = async (params: any) => {
+    const userPhone = countryCodes.find((e: any) => e.code === number);
+
     try {
-      // const payload = {
-      //   email: formData.email,
-      //   password: formData.password,
-      //   user_type: "dealer",
-      //   redirect: false,
-      // };
+      const payload: any = {
+        name: params.name,
+        email: params.email,
+        phone: `${userPhone?.dial_code}${params.phone}`,
+        street: params.street,
+        city: params.city,
+        state: params.state,
+        country: params.country,
+        zip: params.zip,
+      };
 
-      // const loginResponse: any = await signIn("credentials", payload);
+      const { error, data } = await updateProfile(payload);
 
-      // if (!loginResponse.ok) {
-      //   toast("error", loginResponse.error || "Login failed");
-      //   return;
-      // }
+      if (error) {
+        console.log("error => ", error);
+        toast("error", beautifyErrors(toast) || "Profile update failed");
+        return;
+      }
 
-      // toast("success", "Login successful");
-      router.push("/dashboard/overview");
+      if (data) {
+        console.log("data => ", data);
+        toast("success", data?.detail || "Profile updated successfully");
+      }
+
+      setStep(2);
+
+      // router.push("/dashboard/overview");
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const handleDealerProfile = async (params: any) => {
+    try {
+      const payload: any = {
+        business_name: params.business_name,
+        business_email: params.business_email,
+      };
+
+      const { data, error } = await updateDealerProfile(payload);
+
+      if (error) {
+        console.log("error => ", error);
+        toast(
+          "error",
+          beautifyErrors(toast) || "Failed to update dealer profile"
+        );
+        return;
+      }
+
+      if (data) {
+        console.log("data => ", data);
+        toast("success", data?.detail || "Dealer profile updated successfully");
+
+        setStep(3);
+      }
+    } catch (error) {
+      console.log(error);
+      toast("error", "Failed to update dealer profile");
     }
   };
 
@@ -162,7 +223,7 @@ export default function NewUserModal() {
               </div>
 
               <form
-                onSubmit={handleSubmit(onSubmit)}
+                onSubmit={handleSubmit(handleBasicProfile)}
                 className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4"
               >
                 {/* name */}
@@ -234,6 +295,9 @@ export default function NewUserModal() {
                         placeholder="Your Phone Number Here"
                         error={errors?.phone?.message}
                         countries={countryCodes}
+                        onCountryChange={(countryCode) => {
+                          setNumber(countryCode);
+                        }}
                         {...field}
                       />
 
@@ -381,7 +445,13 @@ export default function NewUserModal() {
                 Skip for Now
               </Button>
 
-              <Button variant="primary" onClick={handleBasicPersonalInfo}>
+              <Button
+                variant="primary"
+                loading={isLoadingUpdateProfile}
+                onClick={() => {
+                  handleSubmit(handleBasicProfile)();
+                }}
+              >
                 Continue
                 <svg
                   width="20"
@@ -435,7 +505,7 @@ export default function NewUserModal() {
               </div>
 
               <form
-                onSubmit={handleSubmit(onSubmit)}
+                onSubmit={handleSubmitDealer(handleDealerProfile)}
                 className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4"
               >
                 {/* name */}
@@ -447,16 +517,16 @@ export default function NewUserModal() {
                     Name <span className="text-primary-500">*</span>
                   </label>
                   <Controller
-                    name="name"
-                    control={control}
-                    rules={{ required: "Name is required" }}
+                    name="business_name"
+                    control={controlDealer}
+                    rules={{ required: "Business Name is required" }}
                     render={({ field, formState: { errors } }) => (
                       <Input
                         type="name"
                         id="name"
                         className="h-10"
-                        placeholder="Name here"
-                        error={errors?.name?.message}
+                        placeholder="Business Name here"
+                        error={errors?.business_name?.message}
                         {...field}
                       />
                     )}
@@ -472,16 +542,22 @@ export default function NewUserModal() {
                     Email <span className="text-primary-500">*</span>
                   </label>
                   <Controller
-                    name="email"
-                    control={control}
-                    rules={{ required: "Email is required" }}
+                    name="business_email"
+                    control={controlDealer}
+                    rules={{
+                      required: "Email is required",
+                      pattern: {
+                        value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                        message: "Please enter a valid email address",
+                      },
+                    }}
                     render={({ field, formState: { errors } }) => (
                       <Input
                         type="email"
                         id="email"
                         className="h-10"
-                        placeholder="Email Here"
-                        error={errors?.email?.message}
+                        placeholder="Business Email Here"
+                        error={errors?.business_email?.message}
                         {...field}
                       />
                     )}
@@ -502,7 +578,13 @@ export default function NewUserModal() {
                 Skip for Now
               </Button>
 
-              <Button variant="primary" onClick={handleBasicPersonalInfo}>
+              <Button
+                variant="primary"
+                loading={isLoadingUpdateDealerProfile}
+                onClick={() => {
+                  handleSubmitDealer(handleDealerProfile)();
+                }}
+              >
                 Continue
                 <svg
                   width="20"
@@ -711,7 +793,12 @@ export default function NewUserModal() {
                 Skip for Now
               </Button>
 
-              <Button variant="primary" onClick={handleBasicPersonalInfo}>
+              <Button
+                variant="primary"
+                onClick={() => {
+                  // handleSubmit(onSubmit)();
+                }}
+              >
                 Continue
                 <svg
                   width="20"

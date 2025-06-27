@@ -164,10 +164,23 @@ InputPassword.displayName = "InputPassword";
 
 const InputPhoneNumber = React.forwardRef<
   HTMLInputElement,
-  InputProps & { countries?: any[] }
+  InputProps & {
+    countries?: any[];
+
+    onCountryChange?: (countryCode: string) => void;
+  }
 >(
   (
-    { className, type, error, preIcon, postIcon, countries = [], ...props },
+    {
+      className,
+      type,
+      error,
+      preIcon,
+      postIcon,
+      countries = [],
+      onCountryChange,
+      ...props
+    },
     ref
   ) => {
     return (
@@ -182,6 +195,11 @@ const InputPhoneNumber = React.forwardRef<
           <select
             className="w-[70px] bg-white absolute left-2 text-sm outline-none"
             defaultValue="US"
+            onChange={(e) => {
+              if (onCountryChange) {
+                onCountryChange(e.target.value);
+              }
+            }}
           >
             {countries.map((country: any, index: number) => {
               return (
