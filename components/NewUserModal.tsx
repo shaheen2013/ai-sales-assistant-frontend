@@ -37,7 +37,7 @@ export default function NewUserModal() {
     basicProfile: true,
   });
 
-  const [step, setStep] = useState<number>(2);
+  const [step, setStep] = useState<number>(3);
 
   const [updateProfile, { isLoading: isLoadingUpdateProfile }] =
     useUpdateDealerProfileMutation();
@@ -56,7 +56,7 @@ export default function NewUserModal() {
   const stepData = [
     { title: "1", description: "Personal Information" },
     { title: "2", description: "Business Information" },
-    { title: "2", description: "Team Member Setup" },
+    { title: "2", description: "Your Plan Setup" },
   ];
 
   type BasicFormValues = {
