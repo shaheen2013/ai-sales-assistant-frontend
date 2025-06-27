@@ -27,7 +27,7 @@ export const termsOfUsConstData = [
   {
     title: "Subscription & Payments",
     description: [
-      "Teez offers multiple subscription plans (Pro, Business, Enterprise) with included and overage call minutes.",
+      "Teez offers multiple subscription plans (Business or Enterprise) with included and overage call minutes.",
       "All payments are billed monthly unless otherwise stated.",
       "Overages beyond included minutes will be charged at the applicable rate.",
       "API setup fees are one-time and non-refundable.",

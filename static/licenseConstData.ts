@@ -9,7 +9,7 @@ export const licenseConstData = [
     },
     {
         title: "User License",
-        description: "Teez grants registered users and dealerships a limited, non-exclusive, non-transferable, revocable license to access and use the Teez platform and services in accordance with their selected subscription plan (Pro, Business, or Enterprise). This license is solely for business purposes related to car sales, customer support, and communication with potential buyers.",
+        description: "Teez grants registered users and dealerships a limited, non-exclusive, non-transferable, revocable license to access and use the Teez platform and services in accordance with their selected subscription plan (Business or Enterprise). This license is solely for business purposes related to car sales, customer support, and communication with potential buyers.",
     },
     {
         title: "Usage Restrictions",
