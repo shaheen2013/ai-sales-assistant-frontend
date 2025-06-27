@@ -22,7 +22,7 @@ export default function Footer() {
       </div>
 
       <div className="flex flex-col xl:flex-row items-center gap-6 my-9 xl:mt-12 xl:mb-16 justify-center">
-        <div className="text-[#555d6a] text-xl xl:text-2xl font-medium">
+        <div className="text-[#555d6a] text-xl xl:text-2xl lg:font-medium font-semibold">
           Social Media
         </div>
         <div className="flex gap-3">

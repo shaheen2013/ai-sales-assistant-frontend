@@ -819,11 +819,11 @@ export default function Home() {
               </p>
 
               <Button
-                href="/login"
+                href="/chat"
                 variant="outline-primary"
                 className="!font-normal text-primary-500"
               >
-                <span>Start Chart</span>
+                <span>Start Chat</span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="22"
