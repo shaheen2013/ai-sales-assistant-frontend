@@ -36,10 +36,10 @@ export default function NewUserModal() {
   const [number, setNumber] = useState<string>("");
 
   const [modals, setModals] = useState({
-    basicProfile: true,
+    basicProfile: false,
   });
 
-  const [step, setStep] = useState<number>(3);
+  const [step, setStep] = useState<number>(1);
 
   const { data: pricingPlans, isLoading: isLoadingPlans } =
     useGetDealerPricingPlansQuery();

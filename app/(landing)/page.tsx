@@ -19,33 +19,33 @@ import { timelineData } from "@/static/homepage";
 export default function Home() {
   const faqs: { name: string; content: string }[] = [
     {
-      name: "Can AI Agent handle multiple customer inquiries at once?",
+      name: "Can Teez AI chat with multiple customers at once?",
       content:
-        "Yes! Our AI can handle multiple conversations simultaneously, ensuring quick and efficient responses for every customer.",
+        "Absolutely. Our AI handles dozens of conversations at the same time—no waiting, no delays. Every customer gets fast, friendly support instantly.",
     },
 
     {
-      name: "Can I integrate AI Agent with my existing CRM?",
+      name: "Can I connect Teez AI with my current CRM?",
       content:
-        "Absolutely! Our AI is designed to seamlessly integrate with your existing CRM, ensuring a smooth transition and enhanced functionality.",
+        "You bet. Teez AI plugs right into your existing CRM setup, making integration smooth and boosting your workflow without any headaches.",
     },
 
     {
-      name: "How does AI find potential buyers?",
+      name: "How does AI track down your best leads?",
       content:
-        "Our AI uses advanced algorithms to analyze customer data and identify potential buyers based on their preferences and behavior.",
+        "Teez AI digs into customer data and browsing habits to spot who's most likely ready to buy, helping you focus on the best leads.",
     },
 
     {
-      name: "How does the Team Plan work for executive assistants?",
+      name: "What does the Team Plan offer executive assistants?",
       content:
-        "The Team Plan allows executive assistants to manage multiple clients and tasks simultaneously, ensuring maximum productivity and efficiency.",
+        "The Team Plan empowers executive assistants to juggle multiple clients and projects effortlessly, maximizing efficiency and keeping their workflow on point.",
     },
 
     {
-      name: "Is there a free trial available?",
+      name: "Do we offer a free trial?",
       content:
-        "Yes! We offer a 14-day free trial for all our plans, so you can experience the benefits of our AI before committing.",
+        "Absolutely! Try Teez free for 14 days — no strings attached — so you can see how our AI works for your dealership before you decide.",
     },
   ];
 
@@ -62,15 +62,19 @@ export default function Home() {
 
         {/* title/subtitle */}
         <div className="container">
-          <h2 className="lg:text-7xl text-4xl font-semibold text-center text-gray-2 mb-6">
+          {/* <h2 className="lg:text-7xl text-4xl font-semibold text-center text-gray-2 mb-6">
             AI agent for <span className="text-primary-500">car</span>{" "}
             dealerships
+          </h2> */}
+          <h2 className="lg:text-7xl text-4xl font-semibold text-center text-gray-2 mb-6">
+            Meet <span className="text-primary-500">TEEZ</span> — The AI
+            Concierge Powering Modern Dealerships
           </h2>
 
           <p className="text-[#787878] text-center max-w-[1000px] mx-auto lg:text-xl mb-8 text-base">
-            Teez is the ultimate AI assistant designed specifically for car
-            dealerships. It helps dealers find potential buyers, manage vehicle
-            listings, and provide real-time customer support
+            Teez is your dealership's AI frontliner ,built to engage, guide, and
+            convert. It answers calls, books appointments, suggests vehicles,
+            and captures leads 24/7 so your team can focus on closing sales.
           </p>
         </div>
 
@@ -378,11 +382,12 @@ export default function Home() {
 
           {/* title/subtitle */}
           <h2 className="lg:text-5xl text-3xl font-semibold text-white text-center mb-4">
-            So Many Reasons To Choose!
+            Why Top Dealerships Run with TEEZ
           </h2>
 
           <p className="lg:mb-20 mb-12 text-white text-center">
-            Start, switch, or advance your sells with more than 5x.
+            It's not just AI , It's your smartest hire, working 24/7 to turn
+            every call into a customer.
           </p>
 
           {/* cards */}
@@ -396,10 +401,10 @@ export default function Home() {
                 className="mb-2"
               />
               <p className="lg:text-3xl text-2xl font-semibold mb-2 text-center">
-                Save Time
+                Always On, Always Answering
               </p>
               <p className="lg:text-xl text-sm text-center text-gray-300">
-                Automate repetitive tasks so you can focus on selling.
+                Never miss a call, lead, or opportunity — even after hours.
               </p>
             </div>
 
@@ -412,10 +417,11 @@ export default function Home() {
                 className="mb-2"
               />
               <p className="lg:text-3xl text-2xl font-semibold mb-2 text-center">
-                Boost Sales
+                Talk Smart, Sell Faster
               </p>
               <p className="lg:text-xl text-sm text-center text-gray-300">
-                Never miss a lead with 24/7 AI assistance.
+                Engage buyers with AI that knows your inventory and guides the
+                conversation.
               </p>
             </div>
 
@@ -428,10 +434,11 @@ export default function Home() {
                 className="mb-2"
               />
               <p className="lg:text-3xl text-2xl font-semibold mb-2 text-center">
-                Smart AI Conversations
+                Book. Confirm. Repeat.
               </p>
               <p className="lg:text-xl text-sm text-center text-gray-300">
-                Human-like interactions that build trust.
+                From test drives to service, TEEZ locks in the appointment and
+                captures the lead.
               </p>
             </div>
           </div>
@@ -440,17 +447,17 @@ export default function Home() {
           <div className="bg-white rounded-3xl p-9 lg:flex divide-x divide-gray-100 gap-4 hidden">
             <div className="text-center flex flex-col items-center justify-center flex-1">
               <h2 className="text-4xl font-bold mb-1">20%</h2>
-              <p className="text-gray-400 text-xl">Sells Improvement</p>
+              <p className="text-gray-400 text-xl">Revenue Boost</p>
             </div>
 
             <div className="text-center flex flex-col items-center justify-center flex-1">
               <h2 className="text-4xl font-bold mb-1">$1 M+</h2>
-              <p className="text-gray-400 text-xl">Saved by Our Users</p>
+              <p className="text-gray-400 text-xl">Productivity Gains</p>
             </div>
 
             <div className="text-center flex flex-col items-center justify-center flex-1">
               <h2 className="text-4xl font-bold mb-1">4.8 Star</h2>
-              <p className="text-gray-400 text-xl">Average Rating</p>
+              <p className="text-gray-400 text-xl">What Users Are Saying</p>
             </div>
 
             <div className="flex items-center flex-2 justify-between gap-4 pl-4">
@@ -459,28 +466,28 @@ export default function Home() {
                   width={50}
                   height={50}
                   className="inline-block h-14 w-14 rounded-full ring-2 ring-white"
-                  src="https://dummyimage.com/50x50"
+                  src={`https://picsum.photos/50/50`}
                   alt=""
                 />
                 <Image
                   width={50}
                   height={50}
                   className="inline-block h-14 w-14 rounded-full ring-2 ring-white"
-                  src="https://dummyimage.com/50x50"
+                  src={`https://picsum.photos/50/51`}
                   alt=""
                 />
                 <Image
                   width={50}
                   height={50}
                   className="inline-block h-14 w-14 rounded-full ring-2 ring-white"
-                  src="https://dummyimage.com/50x50"
+                  src={`https://picsum.photos/50/52`}
                   alt=""
                 />
               </div>
 
               <div className="max-w-[150px]">
                 <h2 className="text-gray-500 font-semibold text-4xl">300k+</h2>
-                <p>Active Users Worldwide</p>
+                <p>Teez Users Worldwide</p>
               </div>
             </div>
           </div>
@@ -555,18 +562,40 @@ export default function Home() {
             </div>
 
             <h1 className="lg:text-5xl text-3xl lg:mb-6 mb-4 font-semibold text-gray-900">
-              How To Begin a Professional Service
+              How TEEZ Fits Into Your Dealership — Instantly
             </h1>
 
             <p className="text-[#6F6F6F] lg:text-2xl text-base mb-6">
-              AI Agentis designed to streamline dealership operations by
-              automating key tasks—managing inventory, finding potential buyers,
-              and providing real-time customer support through advanced
-              AI-powered text and voice communication.
+              TEEZ isn't just software — it's your AI frontliner ready from day
+              one. Once connected to your dealership's phone and digital
+              channels, she starts:
+              <ul className="my-9 list-disc pl-6 ">
+                <li className="mb-1">
+                  Answering inbound calls ,with smart conversations
+                </li>
+                <li className="mb-1">
+                  Handling buyer questions about availability and vehicle
+                  comparisons
+                </li>
+                <li className="mb-1">
+                  Booking test drives and service appointments with email
+                  confirmations
+                </li>
+
+                <li className="mb-1">
+                  Transferring calls to departments like Sales or Service
+                </li>
+
+                <li className="mb-1">
+                  Capturing and syncing lead info with your CRM or email
+                </li>
+              </ul>
+              No complex setup. No scripts to write. Just plug in TEEZ and let
+              Clara go to work 24/7.
             </p>
 
             <div className="">
-              <Button className="!py-3 !px-5" variant="primary">
+              <Button className="!py-3 !px-5" variant="primary" href="/chat">
                 <span className="font-normal"> Ask Anything</span>
                 <svg
                   width="20"
@@ -609,15 +638,9 @@ export default function Home() {
               You Won&apos;t Have To Do It Alone
             </h1>
 
-            <p className="text-[#414141] lg:text-2xl text-base mb-mb-6 mb-2">
-              -Effortless inventory management and updates
-            </p>
-            <p className="text-[#414141] lg:text-2xl text-base mb-mb-6 mb-2">
-              -AI-driven lead generation to attract potential buyers
-            </p>
-            <p className="text-[#414141] lg:text-2xl text-base mb-mb-6 mb-8">
-              -Automated customer support for faster responses and better
-              engagement
+            <p className="text-[#414141] lg:text-2xl text-base mb-mb-6 mb-6">
+              No more missed calls. No more dropped leads. Just seamless
+              AI-powered engagement, day and night
             </p>
 
             <div className="">
@@ -678,17 +701,17 @@ export default function Home() {
             </span>
 
             <h1 className="lg:text-4xl text-3xl mb-6 font-semibold text-gray-900">
-              You Won&apos;t Have To Do It Alone
+              How TEEZ Elevates the Buyer's Experience
             </h1>
 
             <p className="text-[#414141] lg:text-2xl text-base mb-mb-6 mb-2">
-              -Instant access to the latest car listings
+              - Provides instant answers about vehicles, hours, and services
             </p>
             <p className="text-[#414141] lg:text-2xl text-base mb-mb-6 mb-2">
-              -Personalized recommendations based on preferences
+              - Suggests alternatives when the vehicle they want isn't available
             </p>
             <p className="text-[#414141] lg:text-2xl text-base mb-mb-6 mb-8">
-              -Quick answers through AI-powered text & voice support
+              - Books test drives in real time, without waiting or transfers
             </p>
 
             <div className="">
@@ -742,8 +765,8 @@ export default function Home() {
           </h2>
 
           <p className="text-center text-[#ECECEC] mb-16">
-            Need something cleared up? Here are our most frequently asked
-            questions.
+            Got questions? Check out our most frequently asked ones — we've got
+            you covered.
           </p>
 
           <div className="lg:max-w-[1100px] mx-auto">

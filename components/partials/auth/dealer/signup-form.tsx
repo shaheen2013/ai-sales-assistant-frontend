@@ -128,7 +128,7 @@ export default function SignupForm() {
       </h2>
 
       <p className="text-[#555D6A] text-center mb-6">
-        Welcome to Teez. Car Community
+        Welcome to TEEZ - The AI Platform Built for Dealerships
       </p>
 
       <Button

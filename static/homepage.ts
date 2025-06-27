@@ -1,26 +1,26 @@
 export const timelineData = [
   {
-    title: "Smart Inventory Management",
+    title: "Answers Every Call — So You Never Miss a Lead",
     description:
-      "Effortlessly store, update, and manage your available cars and their details in one place. AI Agenthelps dealers keep track of inventory, ensuring customers always see the most up-to-date listings.",
+      "TEEZ greets every caller, answers key questions about vehicles, hours, and services, and keeps the buyer engaged — even after-hours.",
   },
 
   {
-    title: "AI-Powered Lead Generation",
+    title: "Qualifies Buyers and Captures Lead Info",
     description:
-      "No more waiting for customers—AI Agent actively finds potential buyers based on their preferences and browsing behavior. It engages them with personalized conversations, bringing high-quality leads directly to your dealership.",
+      "It gathers the caller's name, contact info, preferences, and vehicle interests — and delivers it straight to your team or CRM.",
   },
 
   {
-    title: "Instant AI-Driven Customer Support",
+    title: "Books Test Drives & Service Appointments Instantly",
     description:
-      "AI Agent answers customer inquiries in real time, providing details about available cars, financing options, and dealership services. Whether via text or voice, it ensures quick and accurate responses—even outside business hours!",
+      "Clara handles scheduling through voice or chat, confirms by email or SMS, and frees your team from manual coordination.",
   },
 
   {
-    title: "AI as Your 24/7 Customer Care Representative",
+    title: "Transfers Calls to the Right Department",
     description:
-      "Instead of hiring additional staff, let AI Agent handle customer interactions, schedule test drives, follow up on inquiries, and provide support just like a human agent would. It works around the clock, ensuring no lead is ever lost.",
+      "Whether they need Sales, Finance, or Service, TEEZ gets them there — without putting anyone on hold.",
   },
 ];
 
