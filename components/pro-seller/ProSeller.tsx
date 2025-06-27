@@ -31,7 +31,7 @@ const ProSeller = () => {
                         </p>
 
                         <Button
-                            href="/login"
+                            href="/chat"
                             variant="outline-primary"
                             className="!font-normal text-primary-500"
                         >
