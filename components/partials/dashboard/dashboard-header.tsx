@@ -69,7 +69,9 @@ export default function DashboardHeader() {
             Hello, {session?.user?.name || "Anonymous"}!
           </h2>
           <p className="text-gray-300 lg:text-base text-sm">
-            Welcome back, let&apos;s explore now!
+            {session?.user?.user_type == "admin"
+              ? "Let's get started."
+              : "Welcome back, let&apos;s explore now!"}
           </p>
         </div>
       </div>

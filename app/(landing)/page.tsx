@@ -45,7 +45,7 @@ export default function Home() {
     {
       name: "Do we offer a free trial?",
       content:
-        "Absolutely! Try Teez free for 14 days — no strings attached — so you can see how our AI works for your dealership before you decide.",
+        "We don't offer free trial but we help client to setup and get business ready free of charge",
     },
   ];
 
