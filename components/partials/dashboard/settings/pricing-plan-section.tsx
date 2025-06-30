@@ -189,19 +189,9 @@ export default function PricingPlanSection() {
           {pricingPlans?.map((plan: PricingPlan) => {
             const isCurrentPlan = plan.id === currentPlan?.id;
 
-            // const isUpgradable =
-
-            console.log(
-              "currentPlan => ",
-              currentPlan?.prices?.[0]?.convert_amount
-            );
-            console.log("plan => ", plan?.prices?.[0]?.convert_amount);
             const isUpgradable =
               currentPlan?.prices?.[0]?.convert_amount >
               plan?.prices?.[0]?.convert_amount;
-
-            console.log("isUpgradable => ", isUpgradable);
-            console.log("\n");
 
             return (
               <div

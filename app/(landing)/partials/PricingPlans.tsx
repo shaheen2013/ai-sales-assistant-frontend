@@ -9,6 +9,7 @@ import { beautifyErrors } from "@/lib/utils";
 import { useToast } from "@/hooks/useToast";
 import { Button } from "@/components/shadcn/button";
 import { Tabs, TabsContent } from "@/components/shadcn/tabs";
+import TickIcon from "@/components/icons/TickIcon";
 
 interface PricingPlan {
   name?: string;
@@ -54,6 +55,29 @@ export default function PricingPlans() {
     }
   };
 
+  const plansDetails = [
+    {
+      name: "Business Plan",
+      for: "Mid-size independent dealerships (3-5 reps)",
+      api_setup_fee: "$250 one-time (CRM, booking, parts)",
+    },
+    {
+      name: "Enterprise Plan",
+      for: "Franchise dealerships with multiple departments/locations",
+      api_setup_fee:
+        "$250 one-time (includes full CRM, service calendar, parts inventory, and SIP routing support)",
+      extras:
+        "Multi-location call routing, custom AI voice persona, CRM/DMS integration, priority onboarding",
+    },
+  ];
+
+  const planCommonFeatures = [
+    "AI Voice Assistant powered by GPT-4o",
+    "Unlimited website chatbot (text)",
+    "Call routing via mobile or extension",
+    "Dealer branding (custom greetings)",
+  ];
+
   if (isError) {
     return "Something went wrong while fetching the data. Please try again later.";
   }
@@ -64,7 +88,7 @@ export default function PricingPlans() {
         <div className="flex flex-col justify-center text-center">
           {/* badge */}
           <div className="">
-            <span className="border border-primary-600 py-2 px-6 rounded-lg text-primary-600 mb-9 inline-flex ">
+            <span className="border border-primary-600 py-2 px-6 rounded-lg text-primary-600 mb-9 inline-flex font-medium">
               The Plans
             </span>
           </div>
@@ -98,10 +122,14 @@ export default function PricingPlans() {
                         isLoadingCreateSubscription &&
                         price?.id === originalArgs?.price_id;
 
+                      const currentPlanDetails = plansDetails.find(
+                        (e) => e?.name === plan?.name
+                      );
+
                       return (
                         <div
                           key={index}
-                          className="border-2 border-primary-100 rounded-xl p-6 flex flex-col bg-white"
+                          className="border-2 border-primary-100 rounded-xl p-6 flex flex-col bg-white max-w-xl w-full"
                         >
                           {/* badge */}
                           <div className="flex justify-center mb-4">
@@ -122,20 +150,50 @@ export default function PricingPlans() {
                           </div>
 
                           {/* subtitle */}
-                          <p className="text-center text-[#2B3545] mb-9">
+                          <p className="text-center text-[#2B3545] mb-9 capitalize">
                             {plan?.description || "Perfect for sell used cars"}
                           </p>
 
                           <hr className="mb-9" />
 
                           {/* features */}
+                          <div className="space-y-3 mb-8">
+                            {Object.entries(currentPlanDetails || {}).map(
+                              ([key, value]) =>
+                                key !== "name" && (
+                                  <div
+                                    key={key}
+                                    className="flex items-start gap-2"
+                                  >
+                                    <div>
+                                      <TickIcon />
+                                    </div>
+                                    <p className="text-[#555D6A] text-base leading-relaxed">
+                                      <span className="text-[#242424] font-semibold capitalize">
+                                        {key.replace(/_/g, " ")}:
+                                      </span>{" "}
+                                      {value}
+                                    </p>
+
+                                    {/* {key === "extras" && (
+                                      <span className="text-[#555D6A] text-sm italic">
+                                        (Includes all common features)
+                                      </span>
+                                    )} */}
+                                  </div>
+                                )
+                            )}
+                          </div>
+
+                          <h3 className="text-[#242424] text-sm font-semibold uppercase tracking-wider mb-3">
+                            Included Features
+                          </h3>
                           <div className="mb-6">
                             {[
-                              "Manage up to 20 car listings",
-                              "AI-powered customer inquiries via text",
-                              "Basic lead generation assistance",
-                              "24/7 automated customer responses",
-                              "Essential inventory management",
+                              "AI Voice Assistant powered by GPT-4o",
+                              "Unlimited website chatbot (text)",
+                              "Call routing via mobile or extension",
+                              "Dealer branding (custom greetings)",
                             ].map((feature, index) => {
                               return (
                                 <div

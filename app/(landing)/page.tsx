@@ -496,9 +496,7 @@ export default function Home() {
               </div>
 
               <div className="max-w-[150px]">
-                <h2 className="text-gray-500 font-semibold text-4xl">
-                  300k+
-                </h2>
+                <h2 className="text-gray-500 font-semibold text-4xl">300k+</h2>
                 <p>Teez Users Worldwide</p>
               </div>
             </div>
@@ -577,7 +575,7 @@ export default function Home() {
               How TEEZ Fits Into Your Dealership — Instantly
             </h1>
 
-            <p className="text-[#6F6F6F] lg:text-2xl text-base mb-6 leading-8">
+            <div className="text-[#6F6F6F] lg:text-2xl text-base mb-6 leading-8">
               TEEZ isn&apos;t just software — it&apos;s your AI frontliner ready
               from day one. Once connected to your dealership&apos;s phone and
               digital channels, she starts:
@@ -604,7 +602,7 @@ export default function Home() {
               </ul>
               No complex setup. No scripts to write. Just plug in TEEZ and let
               Clara go to work 24/7.
-            </p>
+            </div>
 
             <div className="">
               <Button className="!py-3 !px-5" variant="primary" href="/chat">
