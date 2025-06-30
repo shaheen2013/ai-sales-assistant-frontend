@@ -29,7 +29,7 @@ export default function Example() {
     <header className="bg-white sticky top-0 z-50">
       <nav className="mx-auto flex container items-center justify-between p-6 lg:px-8">
         {/* brand */}
-        <div className="flex lg:flex-1">
+        <div className="flex ">
           <Link href="/" className="">
             <span className="sr-only">Your Company</span>
             <svg
@@ -135,7 +135,7 @@ export default function Example() {
         </div>
 
         {/* right */}
-        <div className="hidden lg:flex lg:flex-1 lg:justify-end gap-3">
+        <div className="hidden lg:flex  lg:justify-end gap-3">
           {status === "loading" ? (
             <Skeleton className="h-12 w-[180px]" />
           ) : (
