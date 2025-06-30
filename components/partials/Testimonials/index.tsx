@@ -151,7 +151,7 @@ export default function Testimonials() {
                 key={index}
                 className="lg:basis-[30%] basis-[80%] select-none"
               >
-                <div className="p-6 border rounded-xl">
+                <div className="p-6 border rounded-xl h-full">
                   {/* header */}
                   <div className="flex justify-between mb-3">
                     <Image

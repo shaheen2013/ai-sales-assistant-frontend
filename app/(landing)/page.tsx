@@ -496,7 +496,7 @@ export default function Home() {
               </div>
 
               <div className="max-w-[150px]">
-                <h2 className="text-gray-500 font-semibold text-4xl text-gray-700">
+                <h2 className="text-gray-500 font-semibold text-4xl">
                   300k+
                 </h2>
                 <p>Teez Users Worldwide</p>
