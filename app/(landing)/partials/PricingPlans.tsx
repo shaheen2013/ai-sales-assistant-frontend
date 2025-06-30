@@ -9,7 +9,9 @@ import {
 
 import {
   useCreateSubscriptionMutation,
+  useGetCurrentSubscriptionPlanQuery,
   useGetDealerPricingPlansQuery,
+  useUpgradeSubscriptionMutation,
 } from "@/features/dealer/dealerProfileSlice";
 
 import {
@@ -31,6 +33,9 @@ export default function PricingPlans() {
   const toast = useToast();
   const { data: session } = useSession();
 
+  const { data: dataGetCurrentSubscription } =
+    useGetCurrentSubscriptionPlanQuery();
+
   const {
     isError,
     isFetching,
@@ -47,6 +52,7 @@ export default function PricingPlans() {
   });
 
   const handleCreateSubscription = async (priceId: string) => {
+    // check if user is authenticated otherwise show modal
     if (!session?.user) {
       setModals((prev) => ({
         ...prev,
@@ -55,11 +61,18 @@ export default function PricingPlans() {
       return;
     }
 
+    // if user already has a subscription, redirect to settings page
+    if (dataGetCurrentSubscription?.subscription) {
+      // redirect
+      window.location.href = `${window.location.origin}/dashboard/settings?tab=Your+Plan`;
+      return;
+    }
+
     try {
       const data = await createSubscription({
         price_id: priceId,
-        success_url: `${window.location.origin}/dashboard/overview`,
-        cancel_url: `${window.location.origin}`,
+        success_url: `${window.location.origin}/dashboard/settings?tab=Your+Plan`,
+        cancel_url: `${window.location.origin}/dashboard/settings?tab=Your+Plan`,
       }).unwrap();
 
       window.location.href = data?.checkout_url;
