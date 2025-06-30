@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 
 import Header from "@/components/header";
 import Footer from "@/components/footer";
+import ScrollToTopButton from "@/components/ScrollToTopButton";
 
 export const metadata: Metadata = {
   title: "AI Sales Assistant",
@@ -21,6 +22,8 @@ export default function RootLayout({
       <Header />
 
       {children}
+
+      <ScrollToTopButton />
       <Footer />
     </>
   );
