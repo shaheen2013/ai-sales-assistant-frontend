@@ -109,10 +109,6 @@ export default function EditProfileSection() {
     }
   };
 
-  const handleCoverUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    
-  }
-
   const onSubmit = async (data: any) => {
     try {
       const formData = new FormData();
@@ -138,6 +134,8 @@ export default function EditProfileSection() {
       if (response) {
         toast("success", response.detail || "Profile updated successfully");
       }
+
+      setProfileImage(null); // Reset the image after successful upload
     } catch (error: any) {
       toast("error", error.data.detail || "Failed to update profile");
     }
@@ -216,26 +214,43 @@ export default function EditProfileSection() {
                 className="hidden"
                 onChange={handleImageUpload}
               />
-              <label
-                htmlFor="profile_picture"
-                className="cursor-pointer flex flex-col items-center"
-              >
-                <Upload className="h-5 w-5 text-[#019935] mb-2" />
-                <p className="text-center text-sm sm:text-base">
-                  <span className="text-[#019935] font-medium">
-                    Click to upload
-                  </span>
-                  <span className="text-[#555d6a]"> or drag and drop</span>
-                </p>
-                <p className="text-[#717882] text-xs sm:text-sm mt-1 text-center">
-                  PNG, JPG or GIF (max. 800×400px)
-                </p>
-              </label>
+
+              {profileImage ? (
+                <div className="flex flex-col items-center">
+                  <img
+                    src={URL.createObjectURL(profileImage)}
+                    alt="Profile"
+                    className="w-full h-auto max-h-[120px] object-cover rounded-lg mb-2"
+                  />
+                  <label
+                    htmlFor="profile_picture"
+                    className="cursor-pointer text-[#019935] text-sm sm:text-base"
+                  >
+                    Change Image
+                  </label>
+                </div>
+              ) : (
+                <label
+                  htmlFor="profile_picture"
+                  className="cursor-pointer flex flex-col items-center"
+                >
+                  <Upload className="h-5 w-5 text-[#019935] mb-2" />
+                  <p className="text-center text-sm sm:text-base">
+                    <span className="text-[#019935] font-medium">
+                      Click to upload
+                    </span>
+                    <span className="text-[#555d6a]"> or drag and drop</span>
+                  </p>
+                  <p className="text-[#717882] text-xs sm:text-sm mt-1 text-center">
+                    PNG, JPG or GIF (max. 800x400px)
+                  </p>
+                </label>
+              )}
             </div>
           </div>
 
           {/* Profile Cover */}
-          <div className="gap-4">
+          <div className="gap-4 hidden">
             <h2 className="text-[#555d6a] flex items-center text-sm sm:text-base mb-2">
               Profile Cover Image
             </h2>
