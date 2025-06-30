@@ -24,6 +24,7 @@ import TickIcon from "@/components/icons/TickIcon";
 import BillingHistoryTable from "./billing-history-table";
 import PricingPlanSkeleton from "@/components/skeleton/PricingPlanSkeleton";
 import classNames from "classnames";
+import { plansCommonBenefits } from "@/static/homepage";
 
 interface Price {
   id: string;
@@ -56,13 +57,6 @@ const plansDetails = [
     extras:
       "Multi-location call routing, custom AI voice persona, CRM/DMS integration, priority onboarding",
   },
-];
-
-const planCommonFeatures = [
-  "AI Voice Assistant powered by GPT-4o",
-  "Unlimited website chatbot (text)",
-  "Call routing via mobile or extension",
-  "Dealer branding (custom greetings)",
 ];
 
 export default function PricingPlanSection() {
@@ -103,9 +97,6 @@ export default function PricingPlanSection() {
   const currentPlanDetails = plansDetails.find(
     (plan) => plan?.name === selectedLearnMorePlan?.name
   );
-
-  // console.log("pricingPlans => ", pricingPlans);
-  // console.log("isCurrentPlan => ", currentPlan);
 
   const handleUpgradePlan = async (id: string) => {
     try {
@@ -425,7 +416,7 @@ export default function PricingPlanSection() {
                 Included Features
               </h3>
               <div className="space-y-3">
-                {planCommonFeatures.map((feature, index) => (
+                {plansCommonBenefits.map((feature, index) => (
                   <div key={index} className="flex items-start gap-3">
                     <TickIcon />
                     <span className="text-[#555D6A] text-sm leading-relaxed">

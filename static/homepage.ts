@@ -62,3 +62,33 @@ export const navigationData: NavigationData[] = [
     url: "/#faqs",
   },
 ];
+
+interface PricingPlan {
+  name: string;
+  for: string;
+  api_setup_fee: string;
+  extras?: string;
+}
+
+export const pricingPlans: PricingPlan[] = [
+  {
+    name: "Business Plan",
+    for: "Mid-size independent dealerships (3-5 reps)",
+    api_setup_fee: "$250 one-time (CRM, booking, parts)",
+  },
+  {
+    name: "Enterprise Plan",
+    for: "Franchise dealerships with multiple departments/locations",
+    api_setup_fee:
+      "$250 one-time (includes full CRM, service calendar, parts inventory, and SIP routing support)",
+    extras:
+      "Multi-location call routing, custom AI voice persona, CRM/DMS integration, priority onboarding",
+  },
+];
+
+export const plansCommonBenefits = [
+  "AI Voice Assistant powered by GPT-4o",
+  "Unlimited website chatbot (text)",
+  "Call routing via mobile or extension",
+  "Dealer branding (custom greetings)",
+];
