@@ -130,8 +130,15 @@ export default function DashboardDealerInventory() {
   } = useGetCurrentSubscriptionPlanQuery(undefined, {
     refetchOnMountOrArgChange: true,
   });
+
+  console.log(
+    "currentSubscriptionData => ",
+    currentSubscriptionData?.subscription
+  );
+
   const { isFetching: isFetchingPricingPlans, data: pricingPlans } =
     useGetDealerPricingPlansQuery();
+
   const [createSubscription, { isLoading: isLoadingCreateSubscription }] =
     useCreateSubscriptionMutation();
 
@@ -326,7 +333,14 @@ export default function DashboardDealerInventory() {
         <Button
           variant="primary"
           className="w-full !py-3 h-11"
-          onClick={() => setModals({ ...modals, addInventory: true })}
+          onClick={() => {
+            if (!currentSubscriptionData?.subscription) {
+              setModals({ ...modals, selectPlan: true });
+              return;
+            }
+
+            setModals({ ...modals, addInventory: true });
+          }}
         >
           <svg
             width="20"
@@ -346,7 +360,14 @@ export default function DashboardDealerInventory() {
         <Button
           className="w-full h-11"
           variant="outline"
-          onClick={() => setModals({ ...modals, addPdf: true })}
+          onClick={() => {
+            if (!currentSubscriptionData?.subscription) {
+              setModals({ ...modals, selectPlan: true });
+              return;
+            }
+
+            setModals({ ...modals, addPdf: true });
+          }}
         >
           <svg
             width="20"
