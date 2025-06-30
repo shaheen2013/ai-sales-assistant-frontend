@@ -98,7 +98,7 @@ export default function DashboardDealerInventory() {
   const [modals, setModals] = useState({
     addInventory: false,
     addPdf: false,
-    selectPlan: false,
+    selectPlan: true,
     uploadSummeryDetails: false,
   });
 
@@ -943,9 +943,7 @@ export default function DashboardDealerInventory() {
           <div className="grid grid-cols-2 gap-9">
             {/* left */}
             <div className="">
-              <h4 className="text-xs text-primary-400">
-                Welcome to Teez, Kawsar!
-              </h4>
+              <h4 className="text-xs text-primary-400">Welcome to Teez!</h4>
 
               <h2 className="text-gray-400 font-bold text-2xl mt-2 mb-2">
                 Select your Magic plan to Add Inventory!
