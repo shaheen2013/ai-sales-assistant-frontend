@@ -803,21 +803,21 @@ export default function Home() {
                     width={24}
                     height={24}
                     className="inline-block h-6 w-6 rounded-full ring-2 ring-white"
-                    src="https://dummyimage.com/24x24"
+                    src={`https://picsum.photos/24/24`}
                     alt=""
                   />
                   <Image
                     width={24}
                     height={24}
                     className="inline-block h-6 w-6 rounded-full ring-2 ring-white"
-                    src="https://dummyimage.com/24x24"
+                    src={`https://picsum.photos/24/25`}
                     alt=""
                   />
                   <Image
                     width={24}
                     height={24}
                     className="inline-block h-6 w-6 rounded-full ring-2 ring-white"
-                    src="https://dummyimage.com/24x24"
+                    src={`https://picsum.photos/24/26`}
                     alt=""
                   />
                 </div>
@@ -838,8 +838,8 @@ export default function Home() {
           {/* left */}
           <div className="flex flex-col md:items-start col-span-1">
             {/* badge */}
-            <div>
-              <span className="border border-primary-500 py-1 px-3 rounded-lg lg:text-base text-xs text-primary-500 inline-block lg:mb-9 mb-4 font-medium">
+            <div className="">
+              <span className="border border-primary-600 py-2 lg:px-6 px-4 rounded-lg text-primary-600 mb-9 inline-flex w-max font-medium lg:text-base text-xs">
                 How It Helps Dealers
               </span>
             </div>
@@ -913,7 +913,7 @@ export default function Home() {
           {/* left */}
           <div className="lg:flex-grow w-full flex flex-col mb-16 md:mb-0">
             {/* badge */}
-            <span className="border border-primary-600 py-2 px-6 rounded-lg text-primary-600 mb-9 inline-flex w-max font-medium">
+            <span className="border border-primary-600 py-2 lg:px-6 px-4 rounded-lg text-primary-600 mb-9 inline-flex w-max font-medium lg:text-base text-xs">
               Best For Dealers
             </span>
 
@@ -983,7 +983,7 @@ export default function Home() {
           {/* right */}
           <div className="lg:flex-grow w-full flex flex-col mb-16 md:mb-0">
             {/* badge */}
-            <span className="border border-primary-600 py-2 px-6 rounded-lg text-primary-600 mb-9 inline-flex w-max font-medium">
+            <span className="border border-primary-600 py-2 lg:px-6 px-4 rounded-lg text-primary-600 mb-9 inline-flex w-max font-medium lg:text-base text-xs">
               Best For Buyers
             </span>
 
@@ -1073,8 +1073,12 @@ export default function Home() {
               {faqs.map((faq, index) => {
                 return (
                   <AccordionItem key={index} value={`item-${index}`}>
-                    <AccordionTrigger>{faq.name}</AccordionTrigger>
-                    <AccordionContent>{faq.content}</AccordionContent>
+                    <AccordionTrigger className="pr-1 lg:text-xl text-base">
+                      {faq.name}
+                    </AccordionTrigger>
+                    <AccordionContent className="lg:text-lg text-base">
+                      {faq.content}
+                    </AccordionContent>
                   </AccordionItem>
                 );
               })}

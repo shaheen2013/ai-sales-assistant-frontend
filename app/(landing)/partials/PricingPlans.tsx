@@ -91,12 +91,12 @@ export default function PricingPlans() {
         <div className="flex flex-col justify-center text-center">
           {/* badge */}
           <div className="">
-            <span className="border border-primary-600 py-2 px-6 rounded-lg text-primary-600 mb-9 inline-flex font-medium">
+            <span className="border border-primary-600 py-2 lg:px-6 px-4 rounded-lg text-primary-600 lg:mb-9 mb-4 inline-flex w-max font-medium lg:text-base text-xs">
               The Plans
             </span>
           </div>
 
-          <h2 className="text-center text-[#3B3B3B] font-semibold text-5xl mb-4">
+          <h2 className="text-center text-[#3B3B3B] font-semibold lg:text-5xl text-3xl mb-4">
             Pricing Plans
           </h2>
 

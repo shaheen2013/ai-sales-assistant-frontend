@@ -38,10 +38,12 @@ export default function Timeline({ steps }: TimelineProps) {
           </div>
 
           <div className="pb-9">
-            <h2 className="mb-4 text-[#080305] text-2xl font-semibold">
+            <h2 className="mb-4 text-[#080305] lg:text-2xl text-lg md:mt-0 mt-2  font-semibold">
               {step.title}
             </h2>
-            <h4 className="text-[#6F6F6F]">{step.description}</h4>
+            <h4 className="text-[#6F6F6F] lg:text-base text-sm">
+              {step.description}
+            </h4>
           </div>
         </div>
       ))}
