@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useSession } from "next-auth/react";
 
 import {
@@ -11,11 +12,20 @@ import {
   useGetDealerPricingPlansQuery,
 } from "@/features/dealer/dealerProfileSlice";
 
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogHeader,
+} from "@/components/shadcn/dialog";
+
 import { beautifyErrors } from "@/lib/utils";
 import { useToast } from "@/hooks/useToast";
 import TickIcon from "@/components/icons/TickIcon";
 import { Button } from "@/components/shadcn/button";
 import { Tabs, TabsContent } from "@/components/shadcn/tabs";
+import SomethingWentWrong from "@/components/SomethingWentWrong";
+import Link from "next/link";
 
 export default function PricingPlans() {
   const toast = useToast();
@@ -32,9 +42,16 @@ export default function PricingPlans() {
     { isLoading: isLoadingCreateSubscription, originalArgs },
   ] = useCreateSubscriptionMutation();
 
+  const [modals, setModals] = useState({
+    notAuthenticated: false,
+  });
+
   const handleCreateSubscription = async (priceId: string) => {
     if (!session?.user) {
-      alert("Please login to upgrade your subscription.");
+      setModals((prev) => ({
+        ...prev,
+        notAuthenticated: true,
+      }));
       return;
     }
 
@@ -52,7 +69,7 @@ export default function PricingPlans() {
   };
 
   if (isError) {
-    return "Something went wrong while fetching the data. Please try again later.";
+    return <SomethingWentWrong />;
   }
 
   return (
@@ -174,6 +191,48 @@ export default function PricingPlans() {
           </Tabs>
         </div>
       </div>
+
+      {/* modals */}
+      <Dialog
+        open={modals.notAuthenticated}
+        onOpenChange={() => {
+          setModals((prev) => ({
+            ...prev,
+            notAuthenticated: !prev.notAuthenticated,
+          }));
+        }}
+      >
+        <DialogContent className="sm:max-w-[700px] max-h-full overflow-auto">
+          <DialogHeader>
+            <DialogTitle className="text-xl font-semibold text-center">
+              Authentication Required
+            </DialogTitle>
+          </DialogHeader>
+
+          {/* body */}
+          <div>
+            <hr className="pb-8" />
+
+            <div className="flex flex-col items-center justify-center py-6">
+              <span className="text-gray-700 text-lg mb-2 text-center">
+                You must be logged in to continue.
+              </span>
+              <span className="text-gray-500 text-sm text-center mb-4">
+                Please{" "}
+                <Link href="/login" className="text-primary-400">
+                  log in{" "}
+                </Link>
+                or{" "}
+                <Link href="/signup" className="text-primary-400">
+                  create an account
+                </Link>{" "}
+                to access the pricing plans.
+              </span>
+              {/* You can add a login button here if needed */}
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </section>
   );
 }
