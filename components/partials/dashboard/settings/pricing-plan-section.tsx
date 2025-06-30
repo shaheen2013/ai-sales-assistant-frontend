@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import classNames from "classnames";
 
 import {
   Dialog,
@@ -23,8 +24,10 @@ import { Button } from "@/components/shadcn/button";
 import TickIcon from "@/components/icons/TickIcon";
 import BillingHistoryTable from "./billing-history-table";
 import PricingPlanSkeleton from "@/components/skeleton/PricingPlanSkeleton";
-import classNames from "classnames";
-import { plansCommonBenefits } from "@/static/homepage";
+import {
+  plansCommonBenefits,
+  pricingPlans as plansDetails,
+} from "@/static/homepage";
 
 interface Price {
   id: string;
@@ -41,23 +44,6 @@ interface PricingPlan {
   description?: string;
   prices: Price[];
 }
-
-const plansDetails = [
-  {
-    name: "Business Plan",
-    for: "Mid-size independent dealerships (3-5 reps)",
-    api_setup_fee: "$250 one-time (CRM, booking, parts)",
-  },
-  {
-    name: "Enterprise Plan",
-
-    for: "Franchise dealerships with multiple departments/locations",
-    api_setup_fee:
-      "$250 one-time (includes full CRM, service calendar, parts inventory, and SIP routing support)",
-    extras:
-      "Multi-location call routing, custom AI voice persona, CRM/DMS integration, priority onboarding",
-  },
-];
 
 export default function PricingPlanSection() {
   const toast = useToast();
