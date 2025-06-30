@@ -30,32 +30,33 @@ import {
 } from "@/features/dealer/dealerProfileSlice";
 
 // Form validation schema
-const formSchema = z.object({
-  name: z.string().min(1, "Name is required"),
-  email: z.string().email("Invalid email address").min(1, "Email is required"),
-  phone_number: z
-    .string()
-    .min(1, "Phone number is required")
-    .max(20, "Phone number must be less than 20 characters")
-    .refine((value) => isValidPhoneNumber(value), {
-      message: "Invalid phone number for the selected country",
-    }),
-  profile_picture: z.instanceof(File).optional(),
-  street_address: z.string().optional(),
-  city: z.string().optional(),
-  state: z.string().optional(),
-  country: z.string().optional(),
-  zip_code: z.string().optional(),
-  about: z.string().optional(),
-  website: z.string().optional(),
-});
+// const formSchema = z.object({
+//   name: z.string().min(1, "Name is required"),
+//   email: z.string().email("Invalid email address").min(1, "Email is required"),
+//   phone_number: z
+//     .string()
+//     .min(1, "Phone number is required")
+//     .max(20, "Phone number must be less than 20 characters")
+//     .refine((value) => isValidPhoneNumber(value), {
+//       message: "Invalid phone number for the selected country",
+//     }),
+//   profile_picture: z.instanceof(File).optional(),
+//   street_address: z.string().optional(),
+//   city: z.string().optional(),
+//   state: z.string().optional(),
+//   country: z.string().optional(),
+//   zip_code: z.string().optional(),
+//   about: z.string().optional(),
+//   website: z.string().optional(),
+// });
 
-export type TUpdateDealerProfileValues = z.infer<typeof formSchema>;
+// export type TUpdateDealerProfileValues = z.infer<typeof formSchema>;
 
 export default function EditProfileSection() {
   const toast = useToast();
 
   const [profileImage, setProfileImage] = useState<File | null>(null);
+  const [profileCover, setProfileCover] = useState<File | null>(null);
 
   const { data, isLoading } = useGetDealerProfileQuery(undefined, {
     refetchOnMountOrArgChange: true,
@@ -66,8 +67,8 @@ export default function EditProfileSection() {
   const [updateDealerProfile, { isLoading: isUpdating }] =
     useUpdateDealerProfileMutation();
 
-  const form = useForm<TUpdateDealerProfileValues>({
-    resolver: zodResolver(formSchema),
+  const form = useForm({
+    // resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
       email: "",
@@ -79,6 +80,7 @@ export default function EditProfileSection() {
       zip_code: "",
       about: "",
       website: "",
+      profile_picture: null, // Initialize with null for file input
     },
   });
 
@@ -100,14 +102,18 @@ export default function EditProfileSection() {
   }, [dealerProfileData, form]);
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
+    const file: any = event.target.files?.[0];
     if (file) {
       setProfileImage(file);
       form.setValue("profile_picture", file);
     }
   };
 
-  const onSubmit = async (data: TUpdateDealerProfileValues) => {
+  const handleCoverUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    
+  }
+
+  const onSubmit = async (data: any) => {
     try {
       const formData = new FormData();
       // Append all non-file fields
@@ -196,7 +202,7 @@ export default function EditProfileSection() {
                   "border-2",
                   "scale-[1.02]"
                 );
-                const file = e.dataTransfer.files[0];
+                const file: any = e.dataTransfer.files[0];
                 if (file && file.type.startsWith("image/")) {
                   setProfileImage(file);
                   form.setValue("profile_picture", file);
@@ -229,7 +235,7 @@ export default function EditProfileSection() {
           </div>
 
           {/* Profile Cover */}
-          <div className="gap-4 hidden">
+          <div className="gap-4">
             <h2 className="text-[#555d6a] flex items-center text-sm sm:text-base mb-2">
               Profile Cover Image
             </h2>
@@ -275,7 +281,7 @@ export default function EditProfileSection() {
                   "border-2",
                   "scale-[1.02]"
                 );
-                const file = e.dataTransfer.files[0];
+                const file: any = e.dataTransfer.files[0];
                 if (file && file.type.startsWith("image/")) {
                   setProfileImage(file);
                   form.setValue("profile_picture", file);
@@ -567,7 +573,7 @@ export default function EditProfileSection() {
                       <Textarea
                         {...field}
                         placeholder="Enter your self"
-                        className="focus:border-[#019935] min-h-[100px] sm:min-h-[120px]"
+                        className="focus:border-[#019935] min-h-[100px] sm:min-h-[120px] placeholder:text-gray-100"
                       />
                     </FormControl>
                     <FormMessage />

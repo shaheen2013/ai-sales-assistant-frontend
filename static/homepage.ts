@@ -78,7 +78,7 @@ interface PricingPlanForSettings {
 
 export const pricingPlanForHomepage: PricingPlanForHome[] = [
   {
-    name: "Business Plan",
+    name: "Business",
     description: "Mid-size independent dealerships (3-5 reps)",
     benefits: [
       "Included Minutes: 1,200 voice minutes",
@@ -93,7 +93,7 @@ export const pricingPlanForHomepage: PricingPlanForHome[] = [
     ],
   },
   {
-    name: "Enterprise Plan",
+    name: "Enterprise",
     description: "Franchise dealerships with multiple departments/locations",
     benefits: [
       "Included Minutes: 5,000 voice minutes",
