@@ -63,14 +63,54 @@ export const navigationData: NavigationData[] = [
   },
 ];
 
-interface PricingPlan {
+interface PricingPlanForHome {
+  name: string;
+  description?: string;
+  benefits?: string[];
+}
+
+interface PricingPlanForSettings {
   name: string;
   for: string;
   api_setup_fee: string;
   extras?: string;
 }
 
-export const pricingPlans: PricingPlan[] = [
+export const pricingPlanForHomepage: PricingPlanForHome[] = [
+  {
+    name: "Business Plan",
+    description: "Mid-size independent dealerships (3-5 reps)",
+    benefits: [
+      "Included Minutes: 1,200 voice minutes",
+      "Overage: $0.15 per minute",
+      "API Setup Fee: $250 one-time (CRM, booking, parts)",
+      "AI Voice Assistant powered by GPT-4o",
+      "Unlimited website chatbot (text)",
+      "Call summary, logs, voicemail-to-text",
+      "Call routing via mobile or extension",
+      "Whisper messages to reps before connecting",
+      "Dealer branding (custom greetin gs)",
+    ],
+  },
+  {
+    name: "Enterprise Plan",
+    description: "Franchise dealerships with multiple departments/locations",
+    benefits: [
+      "Included Minutes: 5,000 voice minutes",
+      "Overage: $0.12 per minute",
+      "API Setup Fee: $250 one-time (includes full CRM, service calendar, parts inventory, and SIP routing support)",
+      "Extras: Multi-location call routing, custom AI voice persona, CRM/DMS integration, priority onboarding",
+      "AI Voice Assistant powered by GPT-4o",
+      "Unlimited website chatbot (text)",
+      "Call summary, logs, voicemail-to-text",
+      "Call routing via mobile or extension",
+      "Whisper messages to reps before connecting",
+      "Dealer branding (custom greetings)",
+    ],
+  },
+];
+
+export const pricingPlansForSettingPlan: PricingPlanForSettings[] = [
   {
     name: "Business Plan",
     for: "Mid-size independent dealerships (3-5 reps)",

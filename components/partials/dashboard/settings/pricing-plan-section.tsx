@@ -26,7 +26,7 @@ import BillingHistoryTable from "./billing-history-table";
 import PricingPlanSkeleton from "@/components/skeleton/PricingPlanSkeleton";
 import {
   plansCommonBenefits,
-  pricingPlans as plansDetails,
+  pricingPlansForSettingPlan,
 } from "@/static/homepage";
 
 interface Price {
@@ -80,7 +80,7 @@ export default function PricingPlanSection() {
     (plan: any) => plan.id === dataCurrentPlan?.subscription?.product?.id
   );
 
-  const currentPlanDetails = plansDetails.find(
+  const currentPlanDetails = pricingPlansForSettingPlan.find(
     (plan) => plan?.name === selectedLearnMorePlan?.name
   );
 
