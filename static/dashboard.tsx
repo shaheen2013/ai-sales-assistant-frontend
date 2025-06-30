@@ -65,11 +65,11 @@ export const dashboardUserMenu: SidebarSection[] = [
           </svg>
         ),
       },
-      {
-        label: "Dealer Chat (Demo)",
-        href: "/dashboard/dealer-chat",
-        icon: <MessageCircleMore />,
-      },
+      // {
+      //   label: "Dealer Chat (Demo)",
+      //   href: "/dashboard/dealer-chat",
+      //   icon: <MessageCircleMore />,
+      // },
     ],
   },
 
