@@ -842,11 +842,11 @@ export default function Home() {
               <Button
                 href="/chat"
                 variant="outline-primary"
-                className="!font-normal text-primary-500"
+                className="!font-normal text-primary-500 !w-fit"
               >
                 <span>Start Chat</span>
                 <svg
-                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns="http://www.w3.org/2000/svg" 
                   width="22"
                   height="22"
                   viewBox="0 0 22 22"
