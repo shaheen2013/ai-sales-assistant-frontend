@@ -108,8 +108,7 @@ export default function Home() {
           </h3>
 
           {/* brand logos */}
-<div className="grid md:flex md:flex-row items-center justify-center gap-4 mb-16">
-
+          <div className="grid md:flex md:flex-row items-center justify-center gap-4 mb-16">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="124"
@@ -455,17 +454,19 @@ export default function Home() {
           {/* installation */}
           <div className="bg-white rounded-3xl p-9 lg:flex divide-x divide-gray-100 gap-4 hidden">
             <div className="text-center flex flex-col items-center justify-center flex-1">
-              <h2 className="text-4xl font-bold mb-1">20%</h2>
+              <h2 className="text-4xl font-bold mb-1 text-gray-700">20%</h2>
               <p className="text-gray-400 text-xl">Revenue Boost</p>
             </div>
 
             <div className="text-center flex flex-col items-center justify-center flex-1">
-              <h2 className="text-4xl font-bold mb-1">$1 M+</h2>
+              <h2 className="text-4xl font-bold mb-1 text-gray-700">$1 M+</h2>
               <p className="text-gray-400 text-xl">Productivity Gains</p>
             </div>
 
             <div className="text-center flex flex-col items-center justify-center flex-1">
-              <h2 className="text-4xl font-bold mb-1">4.8 Star</h2>
+              <h2 className="text-4xl font-bold mb-1 text-gray-700">
+                4.8 Star
+              </h2>
               <p className="text-gray-400 text-xl">What Users Are Saying</p>
             </div>
 
@@ -495,7 +496,9 @@ export default function Home() {
               </div>
 
               <div className="max-w-[150px]">
-                <h2 className="text-gray-500 font-semibold text-4xl">300k+</h2>
+                <h2 className="text-gray-500 font-semibold text-4xl text-gray-700">
+                  300k+
+                </h2>
                 <p>Teez Users Worldwide</p>
               </div>
             </div>
@@ -565,16 +568,16 @@ export default function Home() {
           <div className="flex flex-col md:items-start col-span-1">
             {/* badge */}
             <div>
-              <span className="border border-primary-500 py-1 px-3 rounded-lg lg:text-base text-xs text-primary-500 inline-block lg:mb-9 mb-4">
+              <span className="border border-primary-500 py-1 px-3 rounded-lg lg:text-base text-xs text-primary-500 inline-block lg:mb-9 mb-4 font-medium">
                 How It Helps Dealers
               </span>
             </div>
 
-            <h1 className="lg:text-5xl text-3xl lg:mb-6 mb-4 font-semibold text-gray-900">
+            <h1 className="lg:text-5xl text-3xl lg:mb-6 mb-6 font-semibold text-[#3B3B3B]">
               How TEEZ Fits Into Your Dealership — Instantly
             </h1>
 
-            <p className="text-[#6F6F6F] lg:text-2xl text-base mb-6">
+            <p className="text-[#6F6F6F] lg:text-2xl text-base mb-6 leading-8">
               TEEZ isn&apos;t just software — it&apos;s your AI frontliner ready
               from day one. Once connected to your dealership&apos;s phone and
               digital channels, she starts:
@@ -639,11 +642,11 @@ export default function Home() {
           {/* left */}
           <div className="lg:flex-grow w-full flex flex-col mb-16 md:mb-0">
             {/* badge */}
-            <span className="border border-primary-600 py-2 px-6 rounded-lg text-primary-600 mb-9 inline-flex w-max">
+            <span className="border border-primary-600 py-2 px-6 rounded-lg text-primary-600 mb-9 inline-flex w-max font-medium">
               Best For Dealers
             </span>
 
-            <h1 className="lg:text-4xl text-3xl mb-6 font-semibold text-gray-900">
+            <h1 className="lg:text-4xl text-3xl mb-6 font-semibold text-[#101010]">
               You Won&apos;t Have To Do It Alone
             </h1>
 
@@ -653,7 +656,11 @@ export default function Home() {
             </p>
 
             <div className="">
-              <Button className="!py-3 !px-5" variant="primary">
+              <Button
+                className="!py-3 !px-5 inline-flex"
+                variant="primary"
+                href="/chat"
+              >
                 <span className="font-normal"> Learn More</span>
                 <svg
                   width="20"
@@ -705,27 +712,33 @@ export default function Home() {
           {/* right */}
           <div className="lg:flex-grow w-full flex flex-col mb-16 md:mb-0">
             {/* badge */}
-            <span className="border border-primary-600 py-2 px-6 rounded-lg text-primary-600 mb-9 inline-flex w-max">
+            <span className="border border-primary-600 py-2 px-6 rounded-lg text-primary-600 mb-9 inline-flex w-max font-medium">
               Best For Buyers
             </span>
 
-            <h1 className="lg:text-4xl text-3xl mb-6 font-semibold text-gray-900">
+            <h1 className="lg:text-4xl text-3xl mb-6 font-semibold text-[#101010]">
               How TEEZ Elevates the Buyer&apos;s Experience
             </h1>
 
-            <p className="text-[#414141] lg:text-2xl text-base mb-mb-6 mb-2">
+            <p className="text-[#414141] lg:text-2xl text-base mb-mb-6 mb-6">
               - Provides instant answers about vehicles, hours, and services
             </p>
-            <p className="text-[#414141] lg:text-2xl text-base mb-mb-6 mb-2">
+
+            <p className="text-[#414141] lg:text-2xl text-base mb-mb-6 mb-6">
               - Suggests alternatives when the vehicle they want isn&apos;t
               available
             </p>
-            <p className="text-[#414141] lg:text-2xl text-base mb-mb-6 mb-8">
+
+            <p className="text-[#414141] lg:text-2xl text-base mb-mb-6 mb-6">
               - Books test drives in real time, without waiting or transfers
             </p>
 
             <div className="">
-              <Button className="!py-3 !px-5" variant="primary">
+              <Button
+                className="!py-3 !px-5 !inline-flex items-center"
+                variant="primary"
+                href="/chat"
+              >
                 <span className="font-normal"> Learn More</span>
                 <svg
                   width="20"
