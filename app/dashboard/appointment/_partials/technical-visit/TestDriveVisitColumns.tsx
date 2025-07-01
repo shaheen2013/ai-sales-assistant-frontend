@@ -1,19 +1,28 @@
-import Badge from '@/components/badge/Badge';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/shadcn/dropdown-menu';
-import { cn } from '@/lib/utils';
-import { TestDriveResponseType } from '@/types/appointmentBookingSliceType';
-import { ColumnDef } from '@tanstack/react-table';
-import { MoreVertical, Phone } from 'lucide-react';
-import moment from 'moment';
+import Badge from "@/components/badge/Badge";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/shadcn/dropdown-menu";
+import { cn } from "@/lib/utils";
+import { TestDriveResponseType } from "@/types/appointmentBookingSliceType";
+import { ColumnDef } from "@tanstack/react-table";
+import { MoreVertical } from "lucide-react";
+import moment from "moment";
 
 export type TechnicalVisitColumnsDataType = {
   id: number;
   name: string;
   schedule_date: string;
   priority: string;
-}
+};
 
-export const testDriveVisitsColumns = ({ handleChangeBookingStatus }: { handleChangeBookingStatus: (status: string, id: number) => void }): ColumnDef<TestDriveResponseType>[] => {
+export const testDriveVisitsColumns = ({
+  handleChangeBookingStatus,
+}: {
+  handleChangeBookingStatus: (status: string, id: number) => void;
+}): ColumnDef<TestDriveResponseType>[] => {
   return [
     {
       accessorKey: "name",
@@ -23,7 +32,10 @@ export const testDriveVisitsColumns = ({ handleChangeBookingStatus }: { handleCh
     {
       accessorKey: "schedule_date",
       header: "Scheduled Date & Time",
-      cell: ({ row }) => `${moment.utc(row.original?.start_at).format("MMM DD, YYYY")} | ${moment.utc(row.original?.start_at).format("hh:mm a")}`,
+      cell: ({ row }) =>
+        `${moment.utc(row.original?.start_at).format("MMM DD, YYYY")} | ${moment
+          .utc(row.original?.start_at)
+          .format("hh:mm a")}`,
     },
     {
       accessorKey: "Booking Status",
@@ -40,17 +52,14 @@ export const testDriveVisitsColumns = ({ handleChangeBookingStatus }: { handleCh
           }
 
           return "blue";
-        }
+        };
 
         return (
-          <div className='flex items-center justify-center'>
-            <Badge
-              text={status}
-              variant={getCategoryVariant(status)}
-            />
+          <div className="flex items-center justify-center">
+            <Badge text={status} variant={getCategoryVariant(status)} />
           </div>
         );
-      }
+      },
     },
     {
       accessorKey: "action",
@@ -59,29 +68,31 @@ export const testDriveVisitsColumns = ({ handleChangeBookingStatus }: { handleCh
         return (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <div className='flex items-center justify-center cursor-pointer'>
-                <MoreVertical className='w-4 h-4' />
+              <div className="flex items-center justify-center cursor-pointer">
+                <MoreVertical className="w-4 h-4" />
               </div>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
-              <div className='flex flex-col gap-2'>
-                {
-                  ["approved", "failed", "completed"].map((item, index) => (
-                    <DropdownMenuItem key={index} onClick={() => handleChangeBookingStatus(item, row.original.id)} className={
-                      cn(
-                        item === row.original.booking_status && "bg-primary-50",
-                        "capitalize"
-                      )
-                    }>
-                      {item}
-                    </DropdownMenuItem>
-                  ))
-                }
+              <div className="flex flex-col gap-2">
+                {["approved", "failed", "completed"].map((item, index) => (
+                  <DropdownMenuItem
+                    key={index}
+                    onClick={() =>
+                      handleChangeBookingStatus(item, row.original.id)
+                    }
+                    className={cn(
+                      item === row.original.booking_status && "bg-primary-50",
+                      "capitalize"
+                    )}
+                  >
+                    {item}
+                  </DropdownMenuItem>
+                ))}
               </div>
             </DropdownMenuContent>
           </DropdownMenu>
         );
-      }
-    }
-  ]
-}
+      },
+    },
+  ];
+};

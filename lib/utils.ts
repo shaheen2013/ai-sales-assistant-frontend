@@ -160,7 +160,7 @@ export function createQueryParams(
 ): string {
   const { excludeFaulty = true } = config;
 
-  const entries = Object.entries(params).filter(([_, value]) => {
+  const entries = Object.entries(params).filter(([, value]) => {
     if (!excludeFaulty) return true;
 
     // Faulty values: null, undefined, '', false, 0, NaN
@@ -242,7 +242,7 @@ export function linkifyHTML(htmlString: string) {
           let lastIndex = 0;
 
           matches.forEach((match, i) => {
-            const { index, lastIndex: endIndex, raw } = match;
+            const { index, lastIndex: endIndex } = match;
             if (index > lastIndex) {
               result.push(data.slice(lastIndex, index));
             }

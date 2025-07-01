@@ -115,7 +115,7 @@ const Notification = () => {
         console.error("WebSocket error:", error);
       };
 
-      socket.onclose = (event) => {
+      socket.onclose = () => {
         // console.log('WebSocket closed:', event);
       };
     }

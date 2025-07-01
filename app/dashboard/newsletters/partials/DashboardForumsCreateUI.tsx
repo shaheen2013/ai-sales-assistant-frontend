@@ -8,7 +8,7 @@ import { useSendNewsletterMutation } from "@/features/admin/adminDashboardSlice"
 import { useToast } from "@/hooks/useToast";
 import { cn } from "@/lib/utils";
 import { Paperclip, XCircle } from "lucide-react";
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import { Controller, useForm } from "react-hook-form";
 
 type FormValues = {
@@ -36,7 +36,8 @@ export default function DashboardForumsUI() {
   const [files, setFiles] = React.useState<File[]>([]);
   const [fileError, setFileError] = React.useState<string>("");
 
-  const [sendNewsletter, { isLoading: isCreateNewletterLoading }] = useSendNewsletterMutation();
+  const [sendNewsletter, { isLoading: isCreateNewletterLoading }] =
+    useSendNewsletterMutation();
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = event.target.files;

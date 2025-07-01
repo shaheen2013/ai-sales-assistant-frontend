@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { useSession, signIn } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { useForm, Controller } from "react-hook-form";
 
 // components

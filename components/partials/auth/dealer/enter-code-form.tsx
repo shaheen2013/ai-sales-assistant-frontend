@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useForm, Controller } from "react-hook-form";
 
 // components
@@ -14,10 +14,10 @@ export default function EnterCodeForm() {
   const toast = useToast();
   const router = useRouter();
 
-  const searchParams = useSearchParams();
+  // const searchParams = useSearchParams();
 
-  const uid = searchParams.get("search");
-  const token = searchParams.get("token");
+  // const uid = searchParams.get("search");
+  // const token = searchParams.get("token");
 
   // const [emailConfirmation, { isLoading }] = useEmailConfirmedMutation({});
 
@@ -31,7 +31,7 @@ export default function EnterCodeForm() {
     },
   });
 
-  const onSubmit = async (formData: FormValues) => {
+  const onSubmit = async () => {
     try {
       // const payload = {
       //   uid: uid,

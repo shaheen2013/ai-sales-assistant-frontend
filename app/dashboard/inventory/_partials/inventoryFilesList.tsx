@@ -62,8 +62,7 @@ export default function InventoryFilesList({
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = useState({});
 
-  const [deleteInventoryFile, { isLoading: isLoadingDeleteVehicleInventory }] =
-    useDeleteVehicleInventoryFileMutation();
+  const [deleteInventoryFile] = useDeleteVehicleInventoryFileMutation();
 
   type Inventory = {
     id: number;

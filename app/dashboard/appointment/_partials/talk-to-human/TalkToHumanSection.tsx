@@ -1,17 +1,14 @@
 "use client";
 
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from "@/components/shadcn/dropdown-menu";
-import { ArrowDownUp, ChevronDown } from "lucide-react";
-import React, { useState } from "react";
+// import {
+//   DropdownMenu,
+//   DropdownMenuContent,
+//   DropdownMenuTrigger,
+// } from "@/components/shadcn/dropdown-menu";
+// import { ArrowDownUp, ChevronDown } from "lucide-react";
+import { useState } from "react";
 import TalkToHumanDataTable from "./TalkToHumanDataTable";
-import {
-  TalkToHumanColumnDataType,
-  talkToHumanColumns,
-} from "./TalkToHumanColumns";
+import { talkToHumanColumns } from "./TalkToHumanColumns";
 import {
   useGetTalkToHumanCallLogsQuery,
   useUpdateTalkToHumanStatusMutation,
@@ -20,56 +17,56 @@ import Pagination from "@/components/pagination/Pagination";
 import SimpleSelect from "@/components/select/SimpleSelect";
 import { useSession } from "next-auth/react";
 
-const talkToHumanDummyData: TalkToHumanColumnDataType[] = [
-  {
-    id: 1,
-    name: "John Doe",
-    category: [
-      {
-        label: "Car Buying",
-        value: "car_buying",
-      },
-      {
-        label: "Car Information",
-        value: "car_information",
-      },
-    ],
-    schedule_date: "Dec 1, 2025 | 4.30pm",
-    priority: "High",
-  },
-  {
-    id: 2,
-    name: "Jane Smith",
-    category: [
-      {
-        label: "Suggestions",
-        value: "suggestions",
-      },
-      {
-        label: "Suggestions",
-        value: "suggestions",
-      },
-    ],
-    schedule_date: "Dec 1, 2025 | 4.30pm",
-    priority: "Medium",
-  },
-  {
-    id: 3,
-    name: "Mike Brown",
-    category: [
-      {
-        label: "Car Buying",
-        value: "car_buying",
-      },
-      {
-        label: "Car Information",
-        value: "car_information",
-      },
-    ],
-    schedule_date: "Dec 1, 2025 | 4.30pm",
-    priority: "Low",
-  },
-];
+// const talkToHumanDummyData: TalkToHumanColumnDataType[] = [
+//   {
+//     id: 1,
+//     name: "John Doe",
+//     category: [
+//       {
+//         label: "Car Buying",
+//         value: "car_buying",
+//       },
+//       {
+//         label: "Car Information",
+//         value: "car_information",
+//       },
+//     ],
+//     schedule_date: "Dec 1, 2025 | 4.30pm",
+//     priority: "High",
+//   },
+//   {
+//     id: 2,
+//     name: "Jane Smith",
+//     category: [
+//       {
+//         label: "Suggestions",
+//         value: "suggestions",
+//       },
+//       {
+//         label: "Suggestions",
+//         value: "suggestions",
+//       },
+//     ],
+//     schedule_date: "Dec 1, 2025 | 4.30pm",
+//     priority: "Medium",
+//   },
+//   {
+//     id: 3,
+//     name: "Mike Brown",
+//     category: [
+//       {
+//         label: "Car Buying",
+//         value: "car_buying",
+//       },
+//       {
+//         label: "Car Information",
+//         value: "car_information",
+//       },
+//     ],
+//     schedule_date: "Dec 1, 2025 | 4.30pm",
+//     priority: "Low",
+//   },
+// ];
 
 const TalkToHumanSection = () => {
   const { data: session } = useSession();
@@ -144,20 +141,24 @@ const TalkToHumanSection = () => {
           />
         </div>
 
-                <TalkToHumanDataTable columns={talkToHumanColumns({ handleChangeTalkStatus })} data={talkToHumanCallLogsData?.results || []} loading={talkToHumanCallLogsIsFetching} />
+        <TalkToHumanDataTable
+          columns={talkToHumanColumns({ handleChangeTalkStatus })}
+          data={talkToHumanCallLogsData?.results || []}
+          loading={talkToHumanCallLogsIsFetching}
+        />
 
-                {
-                    typeof talkToHumanCallLogsData?.count === 'number' && talkToHumanCallLogsData?.count > 10 &&
-                    <Pagination
-                        page={page}
-                        onPageChange={setPage}
-                        totalPage={Math.ceil(talkToHumanCallLogsData?.count / 10)}
-                        className='mt-4 justify-end'
-                    />
-                }
-            </div>
-        </div>
-    )
-}
+        {typeof talkToHumanCallLogsData?.count === "number" &&
+          talkToHumanCallLogsData?.count > 10 && (
+            <Pagination
+              page={page}
+              onPageChange={setPage}
+              totalPage={Math.ceil(talkToHumanCallLogsData?.count / 10)}
+              className="mt-4 justify-end"
+            />
+          )}
+      </div>
+    </div>
+  );
+};
 
 export default TalkToHumanSection;

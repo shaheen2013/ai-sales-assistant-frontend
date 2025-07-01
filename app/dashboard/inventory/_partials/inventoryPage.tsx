@@ -220,7 +220,7 @@ export default function DashboardDealerInventory() {
       options: formData.options,
     };
 
-    const { data, error } = await createVehicleInventory(payload);
+    const { error } = await createVehicleInventory(payload);
 
     if (error) {
       console.log(error);
@@ -288,11 +288,6 @@ export default function DashboardDealerInventory() {
   };
 
   useEffect(() => {
-    console.log(
-      " isLoadingCurrentSubscription => ",
-      isLoadingCurrentSubscription
-    );
-    console.log(" currentSubscriptionData => ", currentSubscriptionData);
     if (
       !isLoadingCurrentSubscription &&
       !currentSubscriptionData?.subscription
@@ -311,20 +306,20 @@ export default function DashboardDealerInventory() {
     return <SomethingWentWrong />;
   }
 
-  const plans = [
-    {
-      name: "Pro Plan",
-      price: "150",
-      // benefits: [
-      //   "500 voice minutes",
-      //   "$0.15 per minute",
-      //   "Small to mid-size independent dealerships",
-      //   "Optional $250 one-time if integrations are needed",
-      // ],
-    },
-    { name: "Business Plan", price: "300" },
-    { name: "Enterprise Plan", price: "999" },
-  ];
+  // const plans = [
+  //   {
+  //     name: "Pro Plan",
+  //     price: "150",
+  //     // benefits: [
+  //     //   "500 voice minutes",
+  //     //   "$0.15 per minute",
+  //     //   "Small to mid-size independent dealerships",
+  //     //   "Optional $250 one-time if integrations are needed",
+  //     // ],
+  //   },
+  //   { name: "Business Plan", price: "300" },
+  //   { name: "Enterprise Plan", price: "999" },
+  // ];
 
   return (
     <>
@@ -480,7 +475,7 @@ export default function DashboardDealerInventory() {
       {/* add inventory modal */}
       <Dialog
         open={modals.addInventory}
-        onOpenChange={(e) => {
+        onOpenChange={() => {
           reset();
           setModals((prev) => ({
             ...prev,

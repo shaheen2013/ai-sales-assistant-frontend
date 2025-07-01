@@ -1,5 +1,4 @@
 import Badge from '@/components/badge/Badge';
-import { badgeVariants } from '@/components/shadcn/badge';
 import { Dialog, DialogContent, DialogTitle } from '@/components/shadcn/dialog'
 import { shortenFileName } from '@/lib/utils';
 import { NewsLetterResponseType } from '@/types/newsletterType'

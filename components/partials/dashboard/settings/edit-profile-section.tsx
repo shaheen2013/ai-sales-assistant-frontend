@@ -25,6 +25,7 @@ import {
   useGetDealerProfileQuery,
   useUpdateDealerProfileMutation,
 } from "@/features/dealer/dealerProfileSlice";
+import Image from "next/image";
 
 export default function EditProfileSection() {
   const toast = useToast();
@@ -207,10 +208,12 @@ export default function EditProfileSection() {
 
               {profileImage ? (
                 <div className="flex flex-col items-center">
-                  <img
+                  <Image
                     src={URL.createObjectURL(profileImage)}
                     alt="Profile"
                     className="w-full h-auto max-h-[120px] object-cover rounded-lg mb-2"
+                    width={120}
+                    height={120}
                   />
                   <label
                     htmlFor="profile_picture"
@@ -303,10 +306,12 @@ export default function EditProfileSection() {
 
               {profileCover ? (
                 <div className="flex flex-col items-center">
-                  <img
+                  <Image
                     src={URL.createObjectURL(profileCover)}
                     alt="Profile"
                     className="w-full h-auto max-h-[120px] object-cover rounded-lg mb-2"
+                    width={800}
+                    height={400}
                   />
                   <label
                     htmlFor="cover_photo"

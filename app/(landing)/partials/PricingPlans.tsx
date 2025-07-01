@@ -2,16 +2,16 @@ import { useState } from "react";
 import { useSession } from "next-auth/react";
 
 import {
-  plansCommonBenefits,
+  // plansCommonBenefits,
   pricingPlanForHomepage,
-  pricingPlansForSettingPlan,
+  // pricingPlansForSettingPlan,
 } from "@/static/homepage";
 
 import {
   useCreateSubscriptionMutation,
   useGetCurrentSubscriptionPlanQuery,
   useGetDealerPricingPlansQuery,
-  useUpgradeSubscriptionMutation,
+  // useUpgradeSubscriptionMutation,
 } from "@/features/dealer/dealerProfileSlice";
 
 import {
@@ -23,7 +23,7 @@ import {
 
 import { beautifyErrors } from "@/lib/utils";
 import { useToast } from "@/hooks/useToast";
-import TickIcon from "@/components/icons/TickIcon";
+// import TickIcon from "@/components/icons/TickIcon";
 import { Button } from "@/components/shadcn/button";
 import { Tabs, TabsContent } from "@/components/shadcn/tabs";
 import SomethingWentWrong from "@/components/SomethingWentWrong";

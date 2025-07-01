@@ -46,7 +46,7 @@ const ProfileHeader = () => {
       setValue("business_name", dealer_details?.business_name || "");
       setValue("business_email", dealer_details?.business_email || "");
     }
-  }, [data]);
+  }, [data, setValue]);
 
   const [modals, setModals] = useState({
     editProfile: false,
@@ -146,7 +146,7 @@ const ProfileHeader = () => {
       {/* modals */}
       <Dialog
         open={modals.editProfile}
-        onOpenChange={(e) => {
+        onOpenChange={() => {
           setModals((prev) => ({ ...prev, editProfile: !prev.editProfile }));
         }}
       >

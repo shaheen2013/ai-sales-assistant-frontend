@@ -34,18 +34,18 @@ import { countryCodes } from "@/static/CountryCodes";
 import { InputPhoneNumber } from "@/components/shadcn/input";
 import { useGetAdminDashboardOverviewQuery } from "@/features/admin/adminDashboardSlice";
 
-const plans = [
-  {
-    name: "Pro Plan",
-    price: "150",
-    benefits: [
-      "500 voice minutes",
-      "$0.15 per minute",
-      "Small to mid-size independent dealerships",
-      "Optional $250 one-time if integrations are needed",
-    ],
-  },
-];
+// const plans = [
+//   {
+//     name: "Pro Plan",
+//     price: "150",
+//     benefits: [
+//       "500 voice minutes",
+//       "$0.15 per minute",
+//       "Small to mid-size independent dealerships",
+//       "Optional $250 one-time if integrations are needed",
+//     ],
+//   },
+// ];
 
 const AdminDashboardOverview = () => {
   const [wavesurfer, setWavesurfer] = useState<any>(null);
@@ -70,7 +70,7 @@ const AdminDashboardOverview = () => {
   };
 
   const {
-    data: adminDashboardOverviewData,
+    // data: adminDashboardOverviewData,
     isFetching: adminDashboardFetching,
   } = useGetAdminDashboardOverviewQuery({
     // ...(isDifferentDate

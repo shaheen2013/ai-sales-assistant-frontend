@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
   ColumnDef,
@@ -11,28 +11,25 @@ import {
   SortingState,
   useReactTable,
   VisibilityState,
-} from '@tanstack/react-table';
+} from "@tanstack/react-table";
 
-import { Tabs, TabsList, TabsTrigger } from '@/components/DashboardTabs';
-import { Button } from '@/components/shadcn/button';
+import { Tabs, TabsList, TabsTrigger } from "@/components/DashboardTabs";
+import { Button } from "@/components/shadcn/button";
 
 export default function DashboardSupport() {
   /*--React State--*/
-  const [status, setStatus] = useState<string>('');
-  const [sortBy, setSortBy] = useState<string>('');
+  const [status, setStatus] = useState<string>("");
+  const [sortBy, setSortBy] = useState<string>("");
   const [page, setPage] = useState(1);
 
   /*--RTK Query--*/
-  const {
-    data: supportTicketsData,
-    isFetching: supportTicketsIsFetching,
-    isLoading: supportTicketsIsLoading,
-  } = useGetAdminAllSupportTicketsQuery({
-    status,
-    ...(sortBy && { sort_by: sortBy }),
-    page,
-    page_size: 10,
-  });
+  const { data: supportTicketsData, isFetching: supportTicketsIsFetching } =
+    useGetAdminAllSupportTicketsQuery({
+      status,
+      ...(sortBy && { sort_by: sortBy }),
+      page,
+      page_size: 10,
+    });
 
   return (
     <div>
@@ -60,10 +57,12 @@ export default function DashboardSupport() {
             <span className="font-medium">All</span>
 
             <div className="bg-white text-primary-400 text-xs rounded-xl px-1.5 py-0.5 font-medium ml-auto">
-              {Object.values(supportTicketsData?.status_counter || {}).reduce(
-                (acc, cur) => (acc as number) + (cur as number),
-                0
-              ) as React.ReactNode}
+              {
+                Object.values(supportTicketsData?.status_counter || {}).reduce(
+                  (acc, cur) => (acc as number) + (cur as number),
+                  0
+                ) as React.ReactNode
+              }
             </div>
           </TabsTrigger>
 
@@ -77,20 +76,20 @@ export default function DashboardSupport() {
             >
               <path
                 d="M1.7964 2.09808C1.57549 1.93239 1.26208 1.97716 1.0964 2.19808C0.930714 2.41899 0.975485 2.73239 1.1964 2.89808L3.1984 4.39958C3.41932 4.56527 3.73272 4.5205 3.8984 4.29958C4.06409 4.07867 4.01932 3.76527 3.7984 3.59958L1.7964 2.09808ZM1 6.9996C0.723858 6.9996 0.5 7.22346 0.5 7.4996C0.5 7.77574 0.723858 7.9996 1 7.9996H2.5C2.77614 7.9996 3 7.77574 3 7.4996C3 7.22346 2.77614 6.9996 2.5 6.9996H1ZM9.99766 1.99957C13.1466 1.99957 15.7416 4.33445 15.9821 7.35498L15.9955 7.57719L16 7.80171L15.999 11.3976L16.9244 13.6197C16.947 13.6739 16.9647 13.7298 16.9774 13.7867L16.9926 13.8729L17.0013 14.0041C17.0013 14.4522 16.7048 14.8383 16.2521 14.9673L16.1358 14.9941L16.0013 15.0041L12.4996 15.0036L12.4946 15.1649C12.4095 16.4685 11.3252 17.4996 10 17.4996C8.67453 17.4996 7.58998 16.468 7.50533 15.1639L7.49962 15.0036L3.99891 15.0041C3.91096 15.0041 3.82358 14.9925 3.73902 14.9698L3.61456 14.9273C3.20378 14.7563 2.96181 14.3388 3.01221 13.8752L3.0333 13.7478L3.07572 13.6198L3.99902 11.4006L4.0001 7.79238L4.0044 7.56781C4.12702 4.45072 6.77104 1.99957 9.99766 1.99957ZM11.4996 15.0036H8.49962L8.50697 15.145C8.57552 15.8576 9.14275 16.4246 9.85556 16.4927L10 16.4996C10.7797 16.4996 11.4205 15.9047 11.4931 15.144L11.4996 15.0036ZM9.99766 2.99957C7.37511 2.99957 5.22717 4.92329 5.01715 7.38455L5.00393 7.5968L5.00002 7.80171V11.4996L4.96161 11.6917L3.9989 14.0041L15.9566 14.0061L16.0019 14.0041L15.0384 11.6918L15 11.4996L15.0001 7.81199L14.996 7.60788C14.8909 5.03448 12.6947 2.99957 9.99766 2.99957ZM18.9036 2.19808C18.7379 1.97716 18.4245 1.93239 18.2036 2.09808L16.2016 3.59958C15.9807 3.76527 15.9359 4.07867 16.1016 4.29958C16.2673 4.5205 16.5807 4.56527 16.8016 4.39958L18.8036 2.89808C19.0245 2.73239 19.0693 2.41899 18.9036 2.19808ZM19.5 7.4996C19.5 7.22346 19.2761 6.9996 19 6.9996H17.5C17.2239 6.9996 17 7.22346 17 7.4996C17 7.77574 17.2239 7.9996 17.5 7.9996H19C19.2761 7.9996 19.5 7.77574 19.5 7.4996Z"
-                fill={status === 'open' ? 'white' : '#019935'}
+                fill={status === "open" ? "white" : "#019935"}
               />
             </svg>
             <span
               className={cn(
-                'text-primary-400',
-                status === 'open' && 'text-white'
+                "text-primary-400",
+                status === "open" && "text-white"
               )}
             >
               Open
             </span>
             <div
               className={cn(
-                'bg-green-50 text-primary-400 border border-primary-400 text-xs rounded-xl px-2.5 py-0.5 font-medium ml-auto'
+                "bg-green-50 text-primary-400 border border-primary-400 text-xs rounded-xl px-2.5 py-0.5 font-medium ml-auto"
               )}
             >
               {supportTicketsData?.status_counter?.open_count || 0}
@@ -107,20 +106,20 @@ export default function DashboardSupport() {
             >
               <path
                 d="M1.7964 2.09808C1.57549 1.93239 1.26208 1.97716 1.0964 2.19808C0.930714 2.41899 0.975485 2.73239 1.1964 2.89808L3.1984 4.39958C3.41932 4.56527 3.73272 4.5205 3.8984 4.29958C4.06409 4.07867 4.01932 3.76527 3.7984 3.59958L1.7964 2.09808ZM1 6.9996C0.723858 6.9996 0.5 7.22346 0.5 7.4996C0.5 7.77574 0.723858 7.9996 1 7.9996H2.5C2.77614 7.9996 3 7.77574 3 7.4996C3 7.22346 2.77614 6.9996 2.5 6.9996H1ZM9.99766 1.99957C13.1466 1.99957 15.7416 4.33445 15.9821 7.35498L15.9955 7.57719L16 7.80171L15.999 11.3976L16.9244 13.6197C16.947 13.6739 16.9647 13.7298 16.9774 13.7867L16.9926 13.8729L17.0013 14.0041C17.0013 14.4522 16.7048 14.8383 16.2521 14.9673L16.1358 14.9941L16.0013 15.0041L12.4996 15.0036L12.4946 15.1649C12.4095 16.4685 11.3252 17.4996 10 17.4996C8.67453 17.4996 7.58998 16.468 7.50533 15.1639L7.49962 15.0036L3.99891 15.0041C3.91096 15.0041 3.82358 14.9925 3.73902 14.9698L3.61456 14.9273C3.20378 14.7563 2.96181 14.3388 3.01221 13.8752L3.0333 13.7478L3.07572 13.6198L3.99902 11.4006L4.0001 7.79238L4.0044 7.56781C4.12702 4.45072 6.77104 1.99957 9.99766 1.99957ZM11.4996 15.0036H8.49962L8.50697 15.145C8.57552 15.8576 9.14275 16.4246 9.85556 16.4927L10 16.4996C10.7797 16.4996 11.4205 15.9047 11.4931 15.144L11.4996 15.0036ZM9.99766 2.99957C7.37511 2.99957 5.22717 4.92329 5.01715 7.38455L5.00393 7.5968L5.00002 7.80171V11.4996L4.96161 11.6917L3.9989 14.0041L15.9566 14.0061L16.0019 14.0041L15.0384 11.6918L15 11.4996L15.0001 7.81199L14.996 7.60788C14.8909 5.03448 12.6947 2.99957 9.99766 2.99957ZM18.9036 2.19808C18.7379 1.97716 18.4245 1.93239 18.2036 2.09808L16.2016 3.59958C15.9807 3.76527 15.9359 4.07867 16.1016 4.29958C16.2673 4.5205 16.5807 4.56527 16.8016 4.39958L18.8036 2.89808C19.0245 2.73239 19.0693 2.41899 18.9036 2.19808ZM19.5 7.4996C19.5 7.22346 19.2761 6.9996 19 6.9996H17.5C17.2239 6.9996 17 7.22346 17 7.4996C17 7.77574 17.2239 7.9996 17.5 7.9996H19C19.2761 7.9996 19.5 7.77574 19.5 7.4996Z"
-                fill={status === 'in_progress' ? 'white' : '#2196f3'}
+                fill={status === "in_progress" ? "white" : "#2196f3"}
               />
             </svg>
             <span
               className={cn(
-                'text-[#2196f3]',
-                status === 'in_progress' && 'text-white'
+                "text-[#2196f3]",
+                status === "in_progress" && "text-white"
               )}
             >
               In Progress
             </span>
             <div
               className={cn(
-                'bg-blue-50 text-blue-400 border border-blue-400 text-xs rounded-xl px-2.5 py-0.5 font-medium ml-auto'
+                "bg-blue-50 text-blue-400 border border-blue-400 text-xs rounded-xl px-2.5 py-0.5 font-medium ml-auto"
               )}
             >
               {supportTicketsData?.status_counter?.in_progress_count || 0}
@@ -137,20 +136,20 @@ export default function DashboardSupport() {
             >
               <path
                 d="M1.7964 2.09808C1.57549 1.93239 1.26208 1.97716 1.0964 2.19808C0.930714 2.41899 0.975485 2.73239 1.1964 2.89808L3.1984 4.39958C3.41932 4.56527 3.73272 4.5205 3.8984 4.29958C4.06409 4.07867 4.01932 3.76527 3.7984 3.59958L1.7964 2.09808ZM1 6.9996C0.723858 6.9996 0.5 7.22346 0.5 7.4996C0.5 7.77574 0.723858 7.9996 1 7.9996H2.5C2.77614 7.9996 3 7.77574 3 7.4996C3 7.22346 2.77614 6.9996 2.5 6.9996H1ZM9.99766 1.99957C13.1466 1.99957 15.7416 4.33445 15.9821 7.35498L15.9955 7.57719L16 7.80171L15.999 11.3976L16.9244 13.6197C16.947 13.6739 16.9647 13.7298 16.9774 13.7867L16.9926 13.8729L17.0013 14.0041C17.0013 14.4522 16.7048 14.8383 16.2521 14.9673L16.1358 14.9941L16.0013 15.0041L12.4996 15.0036L12.4946 15.1649C12.4095 16.4685 11.3252 17.4996 10 17.4996C8.67453 17.4996 7.58998 16.468 7.50533 15.1639L7.49962 15.0036L3.99891 15.0041C3.91096 15.0041 3.82358 14.9925 3.73902 14.9698L3.61456 14.9273C3.20378 14.7563 2.96181 14.3388 3.01221 13.8752L3.0333 13.7478L3.07572 13.6198L3.99902 11.4006L4.0001 7.79238L4.0044 7.56781C4.12702 4.45072 6.77104 1.99957 9.99766 1.99957ZM11.4996 15.0036H8.49962L8.50697 15.145C8.57552 15.8576 9.14275 16.4246 9.85556 16.4927L10 16.4996C10.7797 16.4996 11.4205 15.9047 11.4931 15.144L11.4996 15.0036ZM9.99766 2.99957C7.37511 2.99957 5.22717 4.92329 5.01715 7.38455L5.00393 7.5968L5.00002 7.80171V11.4996L4.96161 11.6917L3.9989 14.0041L15.9566 14.0061L16.0019 14.0041L15.0384 11.6918L15 11.4996L15.0001 7.81199L14.996 7.60788C14.8909 5.03448 12.6947 2.99957 9.99766 2.99957ZM18.9036 2.19808C18.7379 1.97716 18.4245 1.93239 18.2036 2.09808L16.2016 3.59958C15.9807 3.76527 15.9359 4.07867 16.1016 4.29958C16.2673 4.5205 16.5807 4.56527 16.8016 4.39958L18.8036 2.89808C19.0245 2.73239 19.0693 2.41899 18.9036 2.19808ZM19.5 7.4996C19.5 7.22346 19.2761 6.9996 19 6.9996H17.5C17.2239 6.9996 17 7.22346 17 7.4996C17 7.77574 17.2239 7.9996 17.5 7.9996H19C19.2761 7.9996 19.5 7.77574 19.5 7.4996Z"
-                fill={status === 'resolved' ? 'white' : '#654ce6'}
+                fill={status === "resolved" ? "white" : "#654ce6"}
               />
             </svg>
             <span
               className={cn(
-                'text-[#654ce6]',
-                status === 'resolved' && 'text-white'
+                "text-[#654ce6]",
+                status === "resolved" && "text-white"
               )}
             >
               Resolved
             </span>
             <div
               className={cn(
-                'bg-purple-50 text-purple-400 border border-purple-400 text-xs rounded-xl px-2.5 py-0.5 font-medium ml-auto'
+                "bg-purple-50 text-purple-400 border border-purple-400 text-xs rounded-xl px-2.5 py-0.5 font-medium ml-auto"
               )}
             >
               {supportTicketsData?.status_counter?.resolved_count || 0}
@@ -173,8 +172,8 @@ export default function DashboardSupport() {
 
             <span
               className={cn(
-                'text-red-400',
-                status === 'closed' && 'text-white'
+                "text-red-400",
+                status === "closed" && "text-white"
               )}
             >
               Closed
@@ -192,7 +191,7 @@ export default function DashboardSupport() {
             sortBy={sortBy}
             setSortBy={setSortBy}
           />
-          {typeof supportTicketsData?.count === 'number' &&
+          {typeof supportTicketsData?.count === "number" &&
             supportTicketsData?.count > 10 && (
               <Pagination
                 page={page}
@@ -214,30 +213,30 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/shadcn/table';
-import Image from 'next/image';
-import { useState } from 'react';
+} from "@/components/shadcn/table";
+import Image from "next/image";
+import { useState } from "react";
 
-import Badge from '@/components/badge/Badge';
-import Pagination from '@/components/pagination/Pagination';
-import SimpleSelect from '@/components/select/SimpleSelect';
+import Badge from "@/components/badge/Badge";
+import Pagination from "@/components/pagination/Pagination";
+import SimpleSelect from "@/components/select/SimpleSelect";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@/components/shadcn/dropdown-menu';
-import TableSkeleton from '@/components/skeleton/TableSkeleton';
+} from "@/components/shadcn/dropdown-menu";
+import TableSkeleton from "@/components/skeleton/TableSkeleton";
 import {
   useDeleteAdminSupportTicketMutation,
   useGetAdminAllSupportTicketsQuery,
-} from '@/features/admin/adminSupportSlice';
-import { useToast } from '@/hooks/useToast';
-import { beautifyErrors, cn } from '@/lib/utils';
-import { SupportTicketType } from '@/types/supportTicketType';
-import { MoreHorizontal } from 'lucide-react';
-import AdminSupportDialog from './_partials/AdminSupportDialog';
-import Spinner from '@/components/spinner/Spinner';
+} from "@/features/admin/adminSupportSlice";
+import { useToast } from "@/hooks/useToast";
+import { beautifyErrors, cn } from "@/lib/utils";
+import { SupportTicketType } from "@/types/supportTicketType";
+import { MoreHorizontal } from "lucide-react";
+import AdminSupportDialog from "./_partials/AdminSupportDialog";
+import Spinner from "@/components/spinner/Spinner";
 
 function SupportTable({
   data,
@@ -273,25 +272,24 @@ function SupportTable({
   const handleDeleteTicket = async (id: string) => {
     try {
       await deleteSupportTicket(id);
-      toast('success', 'Ticket deleted successfully!');
+      toast("success", "Ticket deleted successfully!");
     } catch (err) {
-      toast('error', beautifyErrors(err));
+      toast("error", beautifyErrors(err));
     }
   };
 
-
   const columns: ColumnDef<SupportTicketType>[] = [
     {
-      accessorKey: 'id',
-      header: 'ID',
+      accessorKey: "id",
+      header: "ID",
       cell: ({ row }) => (
-        <div className="font-medium text-gray-400">{row.getValue('id')}</div>
+        <div className="font-medium text-gray-400">{row.getValue("id")}</div>
       ),
     },
 
     {
-      accessorKey: 'dealer_name',
-      header: 'Dealer Name',
+      accessorKey: "dealer_name",
+      header: "Dealer Name",
       cell: ({ row }) => (
         <div className="flex items-center gap-2">
           <Image
@@ -307,13 +305,13 @@ function SupportTable({
     },
 
     {
-      accessorKey: 'email',
+      accessorKey: "email",
       accessorFn: (row) => row.dealer?.email,
       header: ({ column }) => {
         return (
           <h2
             className="flex items-center gap-2 cursor-pointer"
-            onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
             Email & Phone
             <svg
@@ -343,12 +341,12 @@ function SupportTable({
     },
 
     {
-      accessorKey: 'subject',
+      accessorKey: "subject",
       header: ({ column }) => {
         return (
           <h2
             className="flex items-center gap-2 cursor-pointer"
-            onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
             Topic
             <svg
@@ -507,12 +505,12 @@ function SupportTable({
     // },
 
     {
-      accessorKey: 'created_at',
+      accessorKey: "created_at",
       header: ({ column }) => {
         return (
           <h2
             className="flex items-center text-center gap-2 cursor-pointer"
-            onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
             Created Date
             <svg
@@ -535,20 +533,20 @@ function SupportTable({
       },
       cell: ({ row }) => {
         const date = new Date(row.original?.created_at).toLocaleDateString(
-          'en-US',
+          "en-US",
           {
-            day: '2-digit',
-            month: 'short', // Outputs "Feb"
-            year: 'numeric',
+            day: "2-digit",
+            month: "short", // Outputs "Feb"
+            year: "numeric",
           }
         );
 
         const time = new Date(row.original?.created_at).toLocaleTimeString(
-          'en-US',
+          "en-US",
           {
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit', // Add seconds
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit", // Add seconds
             hour12: true, // Ensures AM/PM format
           }
         );
@@ -563,12 +561,12 @@ function SupportTable({
     },
 
     {
-      accessorKey: 'status',
+      accessorKey: "status",
       header: ({ column }) => {
         return (
           <h2
             className="flex items-center text-center gap-2 cursor-pointer"
-            onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
             Status
             <svg
@@ -591,27 +589,27 @@ function SupportTable({
       },
       cell: ({ row }) => {
         function getStatusColor(status: string) {
-          if (status.toLowerCase() === 'open') {
-            return 'green';
-          } else if (status.toLowerCase() === 'closed') {
-            return 'red';
-          } else if (status.toLowerCase() === 'in_progress') {
-            return 'blue';
-          } else if (status.toLowerCase() === 'resolved') {
-            return 'purple';
+          if (status.toLowerCase() === "open") {
+            return "green";
+          } else if (status.toLowerCase() === "closed") {
+            return "red";
+          } else if (status.toLowerCase() === "in_progress") {
+            return "blue";
+          } else if (status.toLowerCase() === "resolved") {
+            return "purple";
           }
 
-          return 'blue';
+          return "blue";
         }
-        const status = row.original?.status?.split('_').join(' ');
+        const status = row.original?.status?.split("_").join(" ");
 
         return <Badge text={status} variant={getStatusColor(status)} />;
       },
     },
 
     {
-      id: 'actions',
-      header: ({ }) => {
+      id: "actions",
+      header: ({}) => {
         return (
           <h2 className="flex items-center text-center gap-2 cursor-pointer">
             Action
@@ -666,7 +664,7 @@ function SupportTable({
                 }}
                 className={cn(
                   deleteTicketLoading &&
-                  'cursor-not-allowed opacity-70 pointer-events-none'
+                    "cursor-not-allowed opacity-70 pointer-events-none"
                 )}
               >
                 <svg
@@ -682,12 +680,9 @@ function SupportTable({
                   />
                 </svg>
                 <span className="font-medium text-red-500">Delete</span>
-                {
-                  deleteTicketLoading &&
-                  <Spinner
-                    className='size-3 text-red-500'
-                  />
-                }
+                {deleteTicketLoading && (
+                  <Spinner className="size-3 text-red-500" />
+                )}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -725,8 +720,8 @@ function SupportTable({
           <SimpleSelect
             options={[
               {
-                label: 'Time',
-                value: 'created_at',
+                label: "Time",
+                value: "created_at",
               },
             ]}
             placeholder="Sort By"
@@ -751,9 +746,9 @@ function SupportTable({
                           {header.isPlaceholder
                             ? null
                             : flexRender(
-                              header.column.columnDef.header,
-                              header.getContext()
-                            )}
+                                header.column.columnDef.header,
+                                header.getContext()
+                              )}
                         </TableHead>
                       );
                     })}
@@ -773,7 +768,7 @@ function SupportTable({
                       table.getRowModel().rows.map((row) => (
                         <TableRow
                           key={row.id}
-                          data-state={row.getIsSelected() && 'selected'}
+                          data-state={row.getIsSelected() && "selected"}
                         >
                           {row.getVisibleCells().map((cell) => (
                             <TableCell key={cell.id}>

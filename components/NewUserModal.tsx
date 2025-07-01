@@ -44,8 +44,7 @@ export default function NewUserModal() {
 
   const [step, setStep] = useState<number>(1); // 1 for first step
 
-  const { data: pricingPlans, isLoading: isLoadingPlans } =
-    useGetDealerPricingPlansQuery();
+  const { data: pricingPlans } = useGetDealerPricingPlansQuery();
 
   useEffect(() => {
     if (pricingPlans && pricingPlans.length > 0) {
@@ -69,7 +68,7 @@ export default function NewUserModal() {
 
       window.localStorage.removeItem("onboarding");
     }
-  }, []);
+  }, [modals]);
 
   const stepData = [
     { title: "1", description: "Personal Information" },
@@ -218,20 +217,20 @@ export default function NewUserModal() {
     }
   };
 
-  const plans = [
-    {
-      name: "Pro Plan",
-      price: "150",
-      benefits: [
-        "500 voice minutes",
-        "$0.15 per minute",
-        "Small to mid-size independent dealerships",
-        "Optional $250 one-time if integrations are needed",
-      ],
-    },
-    { name: "Business Plan", price: "300" },
-    { name: "Enterprise Plan", price: "999" },
-  ];
+  // const plans = [
+  //   {
+  //     name: "Pro Plan",
+  //     price: "150",
+  //     benefits: [
+  //       "500 voice minutes",
+  //       "$0.15 per minute",
+  //       "Small to mid-size independent dealerships",
+  //       "Optional $250 one-time if integrations are needed",
+  //     ],
+  //   },
+  //   { name: "Business Plan", price: "300" },
+  //   { name: "Enterprise Plan", price: "999" },
+  // ];
 
   return (
     <AlertDialog

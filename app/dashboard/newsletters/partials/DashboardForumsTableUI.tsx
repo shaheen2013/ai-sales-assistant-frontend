@@ -37,9 +37,9 @@ import { Input, InputCopy } from "@/components/shadcn/input";
 // import DragAndDropUploader from "./DragAndDropUploader";
 
 import {
-  useGetInventoryFilesQuery,
+  // useGetInventoryFilesQuery,
   useGetVehicleInventoryQuery,
-  useDeleteVehicleInventoryMutation,
+  // useDeleteVehicleInventoryMutation,
   useCreateVehicleInventoryMutation,
   useVehicleInventoryUploadMutation,
 } from "@/features/inventory/inventorySlice";
@@ -86,9 +86,9 @@ export default function DashboardForumsTableUI() {
 
   // rtk query
   const {
-    data: getVehicleList,
+    // data: getVehicleList,
     error: errorGetVehicle,
-    isFetching: isFetchingGetVehicle,
+    // isFetching: isFetchingGetVehicle,
     refetch: refetchGetVehicle,
   } = useGetVehicleInventoryQuery({
     search: debouncedSearchValue,
@@ -97,10 +97,10 @@ export default function DashboardForumsTableUI() {
   });
 
   const {
-    data: getGetNewsLetter,
-    error: errorNewsLetter,
-    isFetching: isFetchingGetNewsLetter,
-    refetch: refetchGetNewsLetter,
+    // data: getGetNewsLetter,
+    // error: errorNewsLetter,
+    // isFetching: isFetchingGetNewsLetter,
+    // refetch: refetchGetNewsLetter,
   } = useGetNewsLetterQuery({});
 
   // console.log("debugging => ", getGetNewsLetter);
@@ -109,36 +109,36 @@ export default function DashboardForumsTableUI() {
   const [createVehicleInventory, { isLoading: isLoadingCreateVehicle }] =
     useCreateVehicleInventoryMutation();
 
-  const [deleteVehicleInventory, { isLoading: isLoadingDeleteVehicle }] =
-    useDeleteVehicleInventoryMutation();
+  // const [deleteVehicleInventory, { isLoading: isLoadingDeleteVehicle }] =
+  //   useDeleteVehicleInventoryMutation();
 
   const [inventoryUpload, { isLoading: isLoadingVehicleInventoryUplaod }] =
     useVehicleInventoryUploadMutation();
 
-  const handleInventoryEdit = async (formData: any, id: any) => {
-    console.log("edit id => ", id);
-    console.log("edit formData => ", formData);
-  };
+  // const handleInventoryEdit = async (formData: any, id: any) => {
+  //   console.log("edit id => ", id);
+  //   console.log("edit formData => ", formData);
+  // };
 
-  const handleInventoryDelete = async (id: string) => {
-    const confirm = window.confirm(
-      "Are you sure you want to delete this vehicle inventory? This action cannot be undone."
-    );
+  // const handleInventoryDelete = async (id: string) => {
+  //   const confirm = window.confirm(
+  //     "Are you sure you want to delete this vehicle inventory? This action cannot be undone."
+  //   );
 
-    if (!confirm) {
-      return;
-    }
+  //   if (!confirm) {
+  //     return;
+  //   }
 
-    const { data, error } = await deleteVehicleInventory({ id: id });
+  //   const { error } = await deleteVehicleInventory({ id: id });
 
-    if (error) {
-      console.log(error);
-      toast("error", beautifyErrors(error));
-      return;
-    }
+  //   if (error) {
+  //     console.log(error);
+  //     toast("error", beautifyErrors(error));
+  //     return;
+  //   }
 
-    await refetchGetVehicle();
-  };
+  //   await refetchGetVehicle();
+  // };
 
   const handleAddInventory = async (formData: any) => {
     const payload = {
@@ -850,7 +850,7 @@ export default function DashboardForumsTableUI() {
       {/* add pdf modal */}
       <Dialog
         open={modals.addPdf}
-        onOpenChange={(e) => {
+        onOpenChange={() => {
           setModals((prev) => ({ ...prev, addPdf: !prev.addPdf }));
         }}
       >

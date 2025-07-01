@@ -9,7 +9,7 @@ export default function AnonymousChat() {
   const messageRef = useRef<HTMLInputElement | null>(null);
   const messagesRef = useRef<HTMLDivElement | null>(null);
   const [email] = useState("");
-  const [selectedDealer] = useState("");
+  // const [selectedDealer] = useState("");
 
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([
@@ -82,7 +82,7 @@ export default function AnonymousChat() {
           messagesRef={messagesRef}
           onEmojiClick={handleEmojiClick}
           onMessageSend={handleMessageSend}
-          selectedDealer={selectedDealer}
+          // selectedDealer={selectedDealer}
         />
       </div>
     </div>

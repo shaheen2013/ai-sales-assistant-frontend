@@ -1,11 +1,11 @@
-import { Button } from '@/components/shadcn/button';
+import { Button } from "@/components/shadcn/button";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from '@/components/shadcn/dialog';
+} from "@/components/shadcn/dialog";
 import {
   Form,
   FormControl,
@@ -13,23 +13,23 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/shadcn/form';
-import { Input } from '@/components/shadcn/input';
-import { useAddDepartmentMutation } from '@/features/dealer/dealerManagementSlice';
-import { useToast } from '@/hooks/useToast';
-import { handleApiError } from '@/lib/utils';
-import { DepartmentDataType } from '@/types/dealerManagementSliceType';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import * as z from 'zod';
+} from "@/components/shadcn/form";
+import { Input } from "@/components/shadcn/input";
+import { useAddDepartmentMutation } from "@/features/dealer/dealerManagementSlice";
+import { useToast } from "@/hooks/useToast";
+import { handleApiError } from "@/lib/utils";
+import { DepartmentDataType } from "@/types/dealerManagementSliceType";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
 
 // Define form schema with validation
 const formSchema = z.object({
-  department_name: z.string().min(1, 'Department name is required'),
+  department_name: z.string().min(1, "Department name is required"),
   department_email: z.union([
-    z.literal(''),
-    z.string().email('Invalid email address'),
+    z.literal(""),
+    z.string().email("Invalid email address"),
   ]),
 });
 
@@ -47,22 +47,19 @@ const AddNewDepartmentModal = ({
 }) => {
   const toast = useToast();
 
-  const [customDepartment, setCustomDepartment] = useState('');
-  const [departments, setDepartments] = useState<string[]>([]);
+  // const [customDepartment, setCustomDepartment] = useState('');
+  // const [departments, setDepartments] = useState<string[]>([]);
 
   // Update departments list when allDepartments changes
   useEffect(() => {
-    const dynamicDepartmentNames =
-      allDepartments?.map((dept: DepartmentDataType) => dept.department_name) ||
-      [];
+    // const dynamicDepartmentNames =
+    //   allDepartments?.map((dept: DepartmentDataType) => dept.department_name) ||
+    //   [];
 
     // Combine all department names, removing duplicates
-    const allNames = [
-      ...new Set([...dynamicDepartmentNames]),
-    ];
+    // const allNames = [...new Set([...dynamicDepartmentNames])];
 
-    setDepartments(allNames);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // setDepartments(allNames);
   }, [allDepartments]);
 
   const [addDepartment, { isLoading }] = useAddDepartmentMutation();
@@ -70,8 +67,8 @@ const AddNewDepartmentModal = ({
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      department_name: '',
-      department_email: '',
+      department_name: "",
+      department_email: "",
     },
   });
 
@@ -83,9 +80,9 @@ const AddNewDepartmentModal = ({
     } as DepartmentDataType;
     try {
       await addDepartment(payload).unwrap();
-      toast('success', 'Department added successfully');
+      toast("success", "Department added successfully");
     } catch (error: any) {
-      toast('error', handleApiError(error));
+      toast("error", handleApiError(error));
     }
     form.reset();
     onOpenChange(false);
@@ -94,7 +91,7 @@ const AddNewDepartmentModal = ({
   // Reset custom input when modal closes
   useEffect(() => {
     if (!open) {
-      setCustomDepartment('');
+      // setCustomDepartment('');
       form.reset();
     }
   }, [open, form]);
@@ -103,9 +100,7 @@ const AddNewDepartmentModal = ({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-2xl p-4">
         <DialogHeader>
-          <DialogTitle className="text-gray-300">
-            Add Department
-          </DialogTitle>
+          <DialogTitle className="text-gray-300">Add Department</DialogTitle>
         </DialogHeader>
         <DialogDescription className="hidden"></DialogDescription>
         <Form {...form}>
@@ -169,7 +164,7 @@ const AddNewDepartmentModal = ({
                 disabled={isLoading}
                 className="bg-[#019935] hover:bg-[#018a30] text-white"
               >
-                {isLoading ? 'Adding...' : 'Add Department'}
+                {isLoading ? "Adding..." : "Add Department"}
               </Button>
             </div>
           </form>

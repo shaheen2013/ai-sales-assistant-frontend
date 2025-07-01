@@ -18,7 +18,7 @@ export default function PublicDealerChat() {
     const messageRef = useRef<HTMLInputElement | null>(null);
     const messagesRef = useRef<HTMLDivElement | null>(null);
     const [email, setEmail] = useState('');
-    const [selectedDealer, setSelectedDealer] = useState('');
+    // const [selectedDealer, setSelectedDealer] = useState('');
     const [initiateChat, setInitiateChat] = useState(false);
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState([
@@ -51,7 +51,7 @@ export default function PublicDealerChat() {
 
     const handleDealerChange = (value: string) => {
         console.log('value in dealer change', value);
-        setSelectedDealer(value);
+        // setSelectedDealer(value);
     };
 
     const handleEmojiClick = (e: any) => {
@@ -143,7 +143,7 @@ export default function PublicDealerChat() {
                             messagesRef={messagesRef}
                             onEmojiClick={handleEmojiClick}
                             onMessageSend={handleMessageSend}
-                            selectedDealer={dealerId as string}
+                            // selectedDealer={dealerId as string}
                         />
                     )
                     )}

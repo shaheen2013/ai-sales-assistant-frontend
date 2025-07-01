@@ -1,21 +1,22 @@
-'use client';
-import { useGetDealerProfileQuery } from '@/features/dealer/dealerProfileSlice';
-import { useGetDealerPublicProfileQuery } from '@/features/dealer/dealerSlice';
-import { Mail, MapPin } from 'lucide-react';
-import Image from 'next/image';
-import { useParams } from 'next/navigation';
+"use client";
+import { useGetDealerPublicProfileQuery } from "@/features/dealer/dealerSlice";
+import { Mail, MapPin } from "lucide-react";
+import Image from "next/image";
+import { useParams } from "next/navigation";
 
 const PublciProfileHeader = () => {
   /*--Next Hooks--*/
   const { dealerId } = useParams();
 
   /*--RTK Query--*/
-  const { data: dealerProfile, isLoading } = useGetDealerPublicProfileQuery(Number(dealerId));
+  const { data: dealerProfile } = useGetDealerPublicProfileQuery(
+    Number(dealerId)
+  );
   return (
     <div className="relative border rounded-2xl min-h-[252px] md:h-[252px]">
       <div className="w-full bg-[#2b3545] overflow-hidden rounded-t-2xl h-[100px]">
         <Image
-          src={'/images/dashboard/profile/cover-img.png'}
+          src={"/images/dashboard/profile/cover-img.png"}
           alt="BMW Car House Cover"
           width={1000}
           height={300}
@@ -28,7 +29,7 @@ const PublciProfileHeader = () => {
             <Image
               src={
                 dealerProfile?.profile_picture ||
-                'https://dummyimage.com/160x160/000/fff'
+                "https://dummyimage.com/160x160/000/fff"
               }
               alt="BMW Logo"
               width={160}
@@ -39,19 +40,19 @@ const PublciProfileHeader = () => {
 
           <div className="text-center md:text-left">
             <h1 className="text-xl md:text-2xl font-semibold text-[#2b3545]">
-              {dealerProfile?.name || 'Your Business Name'}
+              {dealerProfile?.name || "Your Business Name"}
             </h1>
             <div className="mt-2 space-y-1">
               <div className="flex items-center text-[#555d6a] justify-center md:justify-start">
                 <Mail className="w-4 h-4 text-[#018b30] mr-2" />
                 <span className="text-sm md:text-base">
-                  {dealerProfile?.email || 'Your Business Email'}
+                  {dealerProfile?.email || "Your Business Email"}
                 </span>
               </div>
               <div className="flex items-center text-[#555d6a] justify-center md:justify-start">
                 <MapPin className="w-4 h-4 text-[#018b30] mr-2" />
                 <span className="text-sm md:text-base">
-                  {dealerProfile?.city || 'Your Business City'}
+                  {dealerProfile?.city || "Your Business City"}
                 </span>
               </div>
             </div>

@@ -4,17 +4,15 @@ import { useStartChatMutation } from "@/features/chat/chatSlice";
 import { useEffect, useRef, useState } from "react";
 
 import Header from "@/components/header";
-import AISalesInitializer from "@/components/partials/chat/ai-sales-initializer";
+// import AISalesInitializer from "@/components/partials/chat/ai-sales-initializer";
 import ChatApp from "@/components/partials/chat/chat-interface";
-import { useToast } from "@/hooks/useToast";
 
 export default function AnonymousChat() {
-  const toast = useToast();
   const messageRef = useRef<HTMLInputElement | null>(null);
   const messagesRef = useRef<HTMLDivElement | null>(null);
-  const [email, setEmail] = useState("");
-  const [selectedDealer, setSelectedDealer] = useState("");
-  const [initiateChat, setInitiateChat] = useState(false);
+  // const [email, setEmail] = useState("");
+  // const [selectedDealer, setSelectedDealer] = useState("");
+  // const [initiateChat, setInitiateChat] = useState(false);
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([
     {
@@ -34,39 +32,39 @@ export default function AnonymousChat() {
     }
   }, [messages]);
 
-  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
-  };
+  // const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setEmail(e.target.value);
+  // };
 
-  const handleDealerChange = (value: string) => {
-    console.log("value in dealer change", value);
-    setSelectedDealer(value);
-  };
+  // const handleDealerChange = (value: string) => {
+  //   console.log("value in dealer change", value);
+  //   setSelectedDealer(value);
+  // };
 
   const handleEmojiClick = (e: any) => {
     setMessage((prevMessage) => prevMessage + e.native);
   };
 
-  const handleEmailSubmit = async () => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  // const handleEmailSubmit = async () => {
+  //   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    if (!email || !emailRegex.test(email)) {
-      toast("error", "Email is invalid");
-      return;
-    }
+  //   if (!email || !emailRegex.test(email)) {
+  //     toast("error", "Email is invalid");
+  //     return;
+  //   }
 
-    if (!selectedDealer) {
-      toast("error", "Please select a dealer");
+  //   if (!selectedDealer) {
+  //     toast("error", "Please select a dealer");
 
-      return;
-    }
+  //     return;
+  //   }
 
-    try {
-      setInitiateChat(true);
-    } catch (error) {
-      console.error("Error initiating chat", error);
-    }
-  };
+  //   try {
+  //     // setInitiateChat(true);
+  //   } catch (error) {
+  //     console.error("Error initiating chat", error);
+  //   }
+  // };
 
   const handleMessageSend = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -117,7 +115,7 @@ export default function AnonymousChat() {
           messagesRef={messagesRef}
           onEmojiClick={handleEmojiClick}
           onMessageSend={handleMessageSend}
-          selectedDealer={selectedDealer}
+          // selectedDealer={selectedDealer}
         />
       </div>
     </div>

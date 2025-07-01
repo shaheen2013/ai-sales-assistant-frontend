@@ -60,7 +60,7 @@ import { useEditVehicleInventoryMutation } from "@/features/inventory/inventoryS
 import Pagination from "@/components/pagination/Pagination";
 
 export default function InventoryCarList({
-  refetchGetVehicle,
+  // refetchGetVehicle,
   isLoading = false,
   getVehicleList,
   handleInventoryDelete,
@@ -141,7 +141,7 @@ export default function InventoryCarList({
         options: formData.options,
       };
 
-      const { data, error } = await editVehicle(payload);
+      const { error } = await editVehicle(payload);
 
       if (error) {
         console.log(error);

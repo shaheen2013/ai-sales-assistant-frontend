@@ -15,7 +15,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import React from "react";
-import { TechnicalVisitColumnsDataType } from "./TestDriveVisitColumns";
+// import { TechnicalVisitColumnsDataType } from "./TestDriveVisitColumns";
 import { TestDriveResponseType } from "@/types/appointmentBookingSliceType";
 import TableSkeleton from "@/components/skeleton/TableSkeleton";
 

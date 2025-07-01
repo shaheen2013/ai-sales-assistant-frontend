@@ -12,7 +12,7 @@ import Button from "@/components/button";
 
 import { beautifyErrors } from "@/lib/utils";
 import { useToast } from "@/hooks/useToast";
-import { Input, InputPassword } from "@/components/shadcn/input";
+import { InputPassword } from "@/components/shadcn/input";
 import { useResetPasswordMutation } from "@/features/auth/authSlice";
 
 export default function ResetPasswordForm() {

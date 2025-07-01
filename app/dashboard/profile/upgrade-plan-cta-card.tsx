@@ -12,7 +12,6 @@ const UpgradePlanCtaCard = () => {
   const {
     data: dataGetCurrentSubscription,
     error: errorGetCurrentSubscription,
-    isLoading: isLoadingGetCurrentSubscription,
     isFetching: isFetchingGetCurrentSubscription,
   } = useGetCurrentSubscriptionPlanQuery();
 

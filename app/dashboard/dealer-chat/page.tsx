@@ -145,7 +145,7 @@ export default function DealerChat() {
                             messagesRef={messagesRef}
                             onEmojiClick={handleEmojiClick}
                             onMessageSend={handleMessageSend}
-                            selectedDealer={selectedDealer}
+                            // selectedDealer={selectedDealer}
                         />
                     )
                 }

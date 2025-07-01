@@ -1,8 +1,8 @@
-import Badge from '@/components/badge/Badge';
+// import Badge from '@/components/badge/Badge';
 import { Checkbox } from '@/components/shadcn/checkbox';
 import { StoreVisitResponseType } from '@/types/appointmentBookingSliceType';
 import { ColumnDef } from '@tanstack/react-table';
-import { Phone } from 'lucide-react';
+// import { Phone } from 'lucide-react';
 import moment from 'moment';
 
 export const storeVisitColumns = ({ handleChangeVisitStatus }: { handleChangeVisitStatus: (checked: boolean, id: number) => void }): ColumnDef<StoreVisitResponseType>[] => {

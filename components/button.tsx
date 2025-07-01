@@ -14,8 +14,7 @@ interface ButtonInterface {
   className?: string;
   disabled?: boolean;
 
-  /* eslint-disable  @typescript-eslint/no-explicit-any */
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 export default function Button({
