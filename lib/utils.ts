@@ -302,3 +302,8 @@ export function formateDate(
 ) {
   return moment(date).format(format);
 }
+
+export function isNegativeNumber(value: any): boolean {
+  if (typeof value !== "number") return false;
+  return value < 0;
+}
