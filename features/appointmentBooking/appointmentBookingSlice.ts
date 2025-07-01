@@ -59,6 +59,29 @@ export const appointmentBookingSlice = apiSlice.injectEndpoints({
                 }
             }
         }),
+        updateTradeInVisitStatus: builder.mutation<StoreVisitResponseType, Record<string, any>>({
+            query: ({ id, data }) => ({
+                method: "PATCH",
+                url: `/trade-in-requests/${id}/update/`,
+                body: data,
+            }),
+            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+                const patchResults = dispatch(
+                    appointmentBookingSlice.util.updateQueryData("getTradeIn", arg?.queryParams, (draft) => {
+                        const item = draft.results?.find((visit) => visit.id === arg.id);
+                        if (item) {
+                            Object.assign(item, { ...item, ...arg.data });
+                        }
+                    })
+                )
+
+                try {
+                    await queryFulfilled;
+                } catch (err) {
+                    patchResults.undo();
+                }
+            }
+        }),
         updateTalkToHumanStatus: builder.mutation<StoreVisitResponseType, Record<string, any>>({
             query: ({ id, data }) => ({
                 method: "PATCH",
@@ -116,4 +139,4 @@ export const appointmentBookingSlice = apiSlice.injectEndpoints({
     }),
 });
 
-export const { useGetTalkToHumanCallLogsQuery, useGetTestDriveQuery, useGetStoreVisitQuery, useUpdateStoreVisitStatusMutation, useGetAppoinmentsQuery, useUpdateTalkToHumanStatusMutation, useUpdateTestDriveBookingStatusMutation, useGetTradeInQuery } = appointmentBookingSlice;
+export const { useGetTalkToHumanCallLogsQuery, useGetTestDriveQuery, useGetStoreVisitQuery, useUpdateStoreVisitStatusMutation, useGetAppoinmentsQuery, useUpdateTalkToHumanStatusMutation, useUpdateTestDriveBookingStatusMutation, useGetTradeInQuery, useUpdateTradeInVisitStatusMutation } = appointmentBookingSlice;
