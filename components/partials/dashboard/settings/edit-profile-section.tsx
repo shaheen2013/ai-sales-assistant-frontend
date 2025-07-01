@@ -1,6 +1,5 @@
 "use client";
 
-import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { CircleHelp, Upload } from "lucide-react";
@@ -19,38 +18,13 @@ import { Textarea } from "@/components/shadcn/textarea";
 
 import { useToast } from "@/hooks/useToast";
 import { CountryDropdown } from "./country-list-dropdown";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { PhoneInput } from "./phone-input-with-country-list";
-import { isValidPhoneNumber } from "react-phone-number-input";
 import EditProfileSectionSkeleton from "../skeleton/edit-profile-section-skeleton";
 
 import {
   useGetDealerProfileQuery,
   useUpdateDealerProfileMutation,
 } from "@/features/dealer/dealerProfileSlice";
-
-// Form validation schema
-// const formSchema = z.object({
-//   name: z.string().min(1, "Name is required"),
-//   email: z.string().email("Invalid email address").min(1, "Email is required"),
-//   phone_number: z
-//     .string()
-//     .min(1, "Phone number is required")
-//     .max(20, "Phone number must be less than 20 characters")
-//     .refine((value) => isValidPhoneNumber(value), {
-//       message: "Invalid phone number for the selected country",
-//     }),
-//   profile_picture: z.instanceof(File).optional(),
-//   street_address: z.string().optional(),
-//   city: z.string().optional(),
-//   state: z.string().optional(),
-//   country: z.string().optional(),
-//   zip_code: z.string().optional(),
-//   about: z.string().optional(),
-//   website: z.string().optional(),
-// });
-
-// export type TUpdateDealerProfileValues = z.infer<typeof formSchema>;
 
 export default function EditProfileSection() {
   const toast = useToast();

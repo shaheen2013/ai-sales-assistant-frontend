@@ -1,24 +1,27 @@
-import React, { useEffect, useRef, useState } from "react";
+import Link from "next/link";
+import { useSession } from "next-auth/react";
+import { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
 import {
   DropdownMenu,
-  DropdownMenuContent,
   DropdownMenuPortal,
   DropdownMenuTrigger,
+  DropdownMenuContent,
 } from "../../dashboard-dropdown";
-import { Button } from "@/components/shadcn/button";
-import { NotificationDataType } from "@/types/notificationSliceType";
+
 import {
   useGetNotificationsQuery,
   useGetNotificationunreadCountQuery,
   useMarkAllReadNotificationMutation,
 } from "@/features/notification/notificationSlice";
+
+import { RootState } from "@/store/store";
+import { useToast } from "@/hooks/useToast";
+import { Button } from "@/components/shadcn/button";
 import NotificationSkeleton from "./NotificationSkeleton";
 import { beautifyErrors, formatShortTimeAgo } from "@/lib/utils";
-import Link from "next/link";
-import { useSession } from "next-auth/react";
-import { useToast } from "@/hooks/useToast";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/store/store";
+import { NotificationDataType } from "@/types/notificationSliceType";
 import { setTotalUnreadNotification } from "@/features/notification/notificationStateSlice";
 
 const Notification = () => {
