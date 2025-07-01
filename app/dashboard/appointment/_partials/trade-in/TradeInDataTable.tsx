@@ -60,7 +60,7 @@ const TradeInDataTable = ({
         <TableBody>
           {loading ? (
             <TableRow>
-              <TableCell colSpan={7} className="space-y-2">
+              <TableCell colSpan={8} className="space-y-2">
                 <TableSkeleton />
               </TableCell>
             </TableRow>

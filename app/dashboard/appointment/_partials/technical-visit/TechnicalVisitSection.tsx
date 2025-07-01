@@ -3,7 +3,7 @@
 import React, { useState } from 'react'
 import TestDriveDataTable from './TestDriveDataTable';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@radix-ui/react-tabs';
-import { useGetStoreVisitQuery, useGetTestDriveQuery, useGetTradeInQuery, useUpdateStoreVisitStatusMutation, useUpdateTestDriveBookingStatusMutation } from '@/features/appointmentBooking/appointmentBookingSlice';
+import { useGetStoreVisitQuery, useGetTestDriveQuery, useGetTradeInQuery, useUpdateStoreVisitStatusMutation, useUpdateTestDriveBookingStatusMutation, useUpdateTradeInVisitStatusMutation } from '@/features/appointmentBooking/appointmentBookingSlice';
 import Pagination from '@/components/pagination/Pagination';
 import SimpleSelect from '@/components/select/SimpleSelect';
 import StoreVisitDataTable from '../store-visit/StoreVisitDataTable';
@@ -41,6 +41,7 @@ const TechnicalVisitSection = () => {
     }, { skip: tab !== "trade_in" });
     const [updateStoreVisitStatus] = useUpdateStoreVisitStatusMutation();
     const [updateTestDriveBookingStatus] = useUpdateTestDriveBookingStatusMutation();
+    const [updateTradeInVisitStatus] = useUpdateTradeInVisitStatusMutation();
 
     /*--Functions--*/
     const handleChangeVisitStatus = (checked: boolean, id: number) => {
@@ -65,6 +66,20 @@ const TechnicalVisitSection = () => {
             id,
             data,
             queryParams: {
+                limit: 10,
+                offset: (page - 1) * 10,
+                ...(sortBy && { sort_by: sortBy }),
+                ...(filterBy && { medium: filterBy })
+            }
+        });
+    }
+
+    const handleChangeTradeInVisitStatus = (checked: boolean, id: number) => {
+        const data = {
+            is_visited: checked
+        }
+        updateTradeInVisitStatus({
+            id, data, queryParams: {
                 limit: 10,
                 offset: (page - 1) * 10,
                 ...(sortBy && { sort_by: sortBy }),
@@ -153,7 +168,7 @@ const TechnicalVisitSection = () => {
                         <TestDriveDataTable columns={testDriveVisitsColumns({ handleChangeBookingStatus })} data={testDriveData?.results || []} loading={testDriveIsFetching} />
                     </TabsContent>
                     <TabsContent value='trade_in'>
-                        <TradeInDataTable columns={tradeInColumns()} data={tradeInData?.results || []} loading={tradeInIsFetching} />
+                        <TradeInDataTable columns={tradeInColumns({ handleChangeVisitStatus: handleChangeTradeInVisitStatus })} data={tradeInData?.results || []} loading={tradeInIsFetching} />
                     </TabsContent>
                 </Tabs>
 
@@ -176,7 +191,7 @@ const TechnicalVisitSection = () => {
                         className='mt-4 justify-end'
                     />
                 }
-                
+
                 {
                     tab === "trade_in" && typeof tradeInData?.count === 'number' && tradeInData?.count > 10 &&
                     <Pagination
