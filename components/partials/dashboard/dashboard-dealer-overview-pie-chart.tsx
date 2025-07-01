@@ -35,7 +35,6 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 export default function DashboardDealerOverviewPieChart({ data }: { data: { name: string, visitors: number, fill: string }[] }) {
-  console.log("data---->", data);
   return (
     <div className="flex">
       {/* chart */}

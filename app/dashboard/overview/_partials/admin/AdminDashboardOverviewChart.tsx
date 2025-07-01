@@ -19,11 +19,11 @@ interface ChartData {
 
 type AdminDashboardOverviewChartPropsType = {
   data: ChartData[];
-}
+};
 
-const AdminDashboardOverviewChart: FC<AdminDashboardOverviewChartPropsType> = ({ data }) => {
-
-
+const AdminDashboardOverviewChart: FC<AdminDashboardOverviewChartPropsType> = ({
+  data,
+}) => {
   // const data: Data[] = [
   //   {
   //     name: "Jan",
@@ -120,8 +120,8 @@ const AdminDashboardOverviewChart: FC<AdminDashboardOverviewChartPropsType> = ({
 
   return (
     <div className="h-[450px] border overflow-x-auto p-6 rounded-lg bg-white shadow-sm">
-      <div className="flex lg:flex-row flex-col justify-between mb-2">
-        <h3 className="text-[#2A2F3D] text-xl font-semibold mb-4">
+      <div className="flex lg:flex-row flex-col justify-between items-center mb-6">
+        <h3 className="text-[#2A2F3D] text-xl font-semibold ">
           Profile Overview
         </h3>
 
@@ -223,6 +223,6 @@ const AdminDashboardOverviewChart: FC<AdminDashboardOverviewChartPropsType> = ({
       </ResponsiveContainer>
     </div>
   );
-}
+};
 
 export default AdminDashboardOverviewChart;

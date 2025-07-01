@@ -40,6 +40,7 @@ const NotificationList = () => {
       { limit: 10, offset: (page - 1) * 10 },
       { refetchOnReconnect: true }
     );
+
   const [markAllReadNotification] = useMarkAllReadNotificationMutation();
 
   /*--Function--*/
@@ -111,8 +112,6 @@ const NotificationList = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session?.access]);
 
-  console.log("notifications", notifications);
-
   return (
     <div className="">
       {/* top */}
@@ -130,7 +129,7 @@ const NotificationList = () => {
       </div>
 
       {/* notifications */}
-      <div className="border border-gray-50 rounded-lg p-4">
+      <div className="border border-gray-50 rounded-lg p-4 lg:h-[calc(100vh-300px)] overflow-y-auto">
         {notificationsFetching ? (
           <div className="flex flex-col h-full gap-8">
             {[...Array(12)].map((_, index) => (

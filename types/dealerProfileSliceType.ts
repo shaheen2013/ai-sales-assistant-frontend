@@ -9,6 +9,7 @@ export type DealerProfileType = {
     name: string; // required, maxLength: 255, minLength: 1
     phone_number?: string | null; // maxLength: 20
     profile_picture?: string | null; // readOnly, URI
+    cover_photo?: string | null; // readOnly, URI
     about?: string | null;
     is_verified?: boolean;
     street_address?: string;

@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { Skeleton } from '@/components/shadcn/skeleton';
+import { Skeleton } from "@/components/shadcn/skeleton";
 
 export default function EditProfileSectionSkeleton() {
   return (
@@ -11,7 +11,6 @@ export default function EditProfileSectionSkeleton() {
       <div className="flex flex-col space-y-6">
         {/* Profile Image Upload */}
         <div className="flex items-center space-x-4">
-          <Skeleton className="size-[130px] rounded-full" />
           <Skeleton className="flex-1 h-[120px] rounded-lg" />
         </div>
 
