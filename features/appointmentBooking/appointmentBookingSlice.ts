@@ -1,6 +1,6 @@
 import { PaginatedResponse } from "@/types/paginatedType";
 import { apiSlice } from "../api/apiSlice";
-import { AppointmentResponseType, StoreVisitResponseType, TalkToHumanResponseType, TestDriveResponseType } from "@/types/appointmentBookingSliceType";
+import { AppointmentResponseType, StoreVisitResponseType, TalkToHumanResponseType, TestDriveResponseType, TradeInResponseType } from "@/types/appointmentBookingSliceType";
 
 export const appointmentBookingSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
@@ -27,6 +27,14 @@ export const appointmentBookingSlice = apiSlice.injectEndpoints({
                 params: queryParams,
             }),
             providesTags: ["getStoreVisit"],
+        }),
+        getTradeIn: builder.query<PaginatedResponse<TradeInResponseType>, Record<string, any>>({
+            query: (queryParams) => ({
+                method: "GET",
+                url: `/trade-in-requests/`,
+                params: queryParams,
+            }),
+            providesTags: ["getTradeIn"],
         }),
         updateStoreVisitStatus: builder.mutation<StoreVisitResponseType, Record<string, any>>({
             query: ({ id, data }) => ({
@@ -108,4 +116,4 @@ export const appointmentBookingSlice = apiSlice.injectEndpoints({
     }),
 });
 
-export const { useGetTalkToHumanCallLogsQuery, useGetTestDriveQuery, useGetStoreVisitQuery, useUpdateStoreVisitStatusMutation, useGetAppoinmentsQuery, useUpdateTalkToHumanStatusMutation, useUpdateTestDriveBookingStatusMutation } = appointmentBookingSlice;
+export const { useGetTalkToHumanCallLogsQuery, useGetTestDriveQuery, useGetStoreVisitQuery, useUpdateStoreVisitStatusMutation, useGetAppoinmentsQuery, useUpdateTalkToHumanStatusMutation, useUpdateTestDriveBookingStatusMutation, useGetTradeInQuery } = appointmentBookingSlice;
