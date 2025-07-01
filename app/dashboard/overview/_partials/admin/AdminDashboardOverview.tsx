@@ -73,8 +73,6 @@ const AdminDashboardOverview = () => {
       : {}),
   });
 
-  console.log("adminDashboardOverviewCardData => ", adminDashboardOverviewData);
-
   return (
     <div className="py-2">
       {/* Choose Year */}
