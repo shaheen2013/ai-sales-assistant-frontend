@@ -37,6 +37,9 @@ const AdminDashboardOverviewCard: FC<AdminDashboardOverviewCardProps> = ({
           <h3 className="text-[#2A2F3D] font-semibold text-3xl">
             {preSign}
             {lastMonthTotal}
+
+            {/* only for talk */}
+            {title === "Talk" ? <span className="text-md"> M</span> : null}
           </h3>
         </div>
 
