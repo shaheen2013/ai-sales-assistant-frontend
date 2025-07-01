@@ -3,12 +3,14 @@
 import React, { useState } from 'react'
 import TestDriveDataTable from './TestDriveDataTable';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@radix-ui/react-tabs';
-import { useGetStoreVisitQuery, useGetTestDriveQuery, useUpdateStoreVisitStatusMutation, useUpdateTestDriveBookingStatusMutation } from '@/features/appointmentBooking/appointmentBookingSlice';
+import { useGetStoreVisitQuery, useGetTestDriveQuery, useGetTradeInQuery, useUpdateStoreVisitStatusMutation, useUpdateTestDriveBookingStatusMutation } from '@/features/appointmentBooking/appointmentBookingSlice';
 import Pagination from '@/components/pagination/Pagination';
 import SimpleSelect from '@/components/select/SimpleSelect';
 import StoreVisitDataTable from '../store-visit/StoreVisitDataTable';
 import { storeVisitColumns } from '../store-visit/StoreVisitColumns';
 import { testDriveVisitsColumns } from './TestDriveVisitColumns';
+import TradeInDataTable from '../trade-in/TradeInDataTable';
+import { tradeInColumns } from '../trade-in/TradeInColumn';
 
 
 const TechnicalVisitSection = () => {
@@ -31,6 +33,12 @@ const TechnicalVisitSection = () => {
         ...(sortBy && { sort_by: sortBy }),
         ...(filterBy && { medium: filterBy })
     }, { skip: tab !== "store_visit" });
+    const { data: tradeInData, isFetching: tradeInIsFetching } = useGetTradeInQuery({
+        limit: 10,
+        offset: (page - 1) * 10,
+        ...(sortBy && { sort_by: sortBy }),
+        ...(filterBy && { medium: filterBy })
+    }, { skip: tab !== "trade_in" });
     const [updateStoreVisitStatus] = useUpdateStoreVisitStatusMutation();
     const [updateTestDriveBookingStatus] = useUpdateTestDriveBookingStatusMutation();
 
@@ -91,6 +99,13 @@ const TechnicalVisitSection = () => {
                                     </p>
                                 </div>
                             </TabsTrigger>
+                            <TabsTrigger value="trade_in" className='border-b-2 border-b-transparent data-[state=active]:border-b-2 data-[state=active]:border-b-primary-500 pb-3 transition-all group/technicalVisitTabs'>
+                                <div className="flex flex-col items-center gap-3">
+                                    <p className="px-2 inline-flex justify-start items-center gap-1 text-gray-300 font-normal group-[&[data-state=active]]/technicalVisitTabs:text-gray-400 text-base group-[&[data-state=active]]/technicalVisitTabs:font-medium">
+                                        Trade In
+                                    </p>
+                                </div>
+                            </TabsTrigger>
                         </div>
                         <div className='flex items-end gap-4'>
                             <SimpleSelect
@@ -137,6 +152,9 @@ const TechnicalVisitSection = () => {
                     <TabsContent value='test_drive'>
                         <TestDriveDataTable columns={testDriveVisitsColumns({ handleChangeBookingStatus })} data={testDriveData?.results || []} loading={testDriveIsFetching} />
                     </TabsContent>
+                    <TabsContent value='trade_in'>
+                        <TradeInDataTable columns={tradeInColumns()} data={tradeInData?.results || []} loading={tradeInIsFetching} />
+                    </TabsContent>
                 </Tabs>
 
                 {
@@ -155,6 +173,16 @@ const TechnicalVisitSection = () => {
                         page={page}
                         onPageChange={setPage}
                         totalPage={Math.ceil(storeVisitData?.count / 10)}
+                        className='mt-4 justify-end'
+                    />
+                }
+                
+                {
+                    tab === "trade_in" && typeof tradeInData?.count === 'number' && tradeInData?.count > 10 &&
+                    <Pagination
+                        page={page}
+                        onPageChange={setPage}
+                        totalPage={Math.ceil(tradeInData?.count / 10)}
                         className='mt-4 justify-end'
                     />
                 }
