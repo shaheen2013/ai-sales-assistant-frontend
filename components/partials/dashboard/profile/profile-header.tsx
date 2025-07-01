@@ -85,7 +85,10 @@ const ProfileHeader = () => {
     <div className="relative border rounded-2xl min-h-[252px] md:h-[252px]">
       <div className="w-full bg-[#2b3545] overflow-hidden rounded-t-2xl h-[100px]">
         <Image
-          src={"/images/dashboard/profile/cover-img.png"}
+          src={
+            dealerProfileData?.cover_photo ||
+            "/images/dashboard/profile/cover-img.png"
+          }
           alt="BMW Car House Cover"
           width={1000}
           height={300}

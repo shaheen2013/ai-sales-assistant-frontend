@@ -81,6 +81,7 @@ export default function EditProfileSection() {
       about: "",
       website: "",
       profile_picture: null, // Initialize with null for file input
+      cover_photo: null, // Initialize with null for file input
     },
   });
 
@@ -109,12 +110,22 @@ export default function EditProfileSection() {
     }
   };
 
+  const handleCoverImageUpload = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const file: any = event.target.files?.[0];
+    if (file) {
+      setProfileCover(file);
+      form.setValue("cover_photo", file);
+    }
+  };
+
   const onSubmit = async (data: any) => {
     try {
       const formData = new FormData();
       // Append all non-file fields
       formData.append("name", data.name);
-      formData.append("email", data.email);
+      // formData.append("email", data.email);
       formData.append("phone_number", data.phone_number);
       formData.append("street_address", data.street_address || "");
       formData.append("city", data.city || "");
@@ -129,6 +140,10 @@ export default function EditProfileSection() {
         formData.append("profile_picture", profileImage);
       }
 
+      if (profileCover instanceof File) {
+        formData.append("cover_photo", profileCover);
+      }
+
       // Call the mutation with FormData
       const response = await updateDealerProfile(formData).unwrap();
       if (response) {
@@ -136,6 +151,7 @@ export default function EditProfileSection() {
       }
 
       setProfileImage(null); // Reset the image after successful upload
+      setProfileCover(null); // Reset the cover image after successful upload
     } catch (error: any) {
       toast("error", error.data.detail || "Failed to update profile");
     }
@@ -250,7 +266,7 @@ export default function EditProfileSection() {
           </div>
 
           {/* Profile Cover */}
-          <div className="gap-4 hidden">
+          <div className="gap-4">
             <h2 className="text-[#555d6a] flex items-center text-sm sm:text-base mb-2">
               Profile Cover Image
             </h2>
@@ -298,33 +314,50 @@ export default function EditProfileSection() {
                 );
                 const file: any = e.dataTransfer.files[0];
                 if (file && file.type.startsWith("image/")) {
-                  setProfileImage(file);
-                  form.setValue("profile_picture", file);
+                  setProfileCover(file); // Changed to setProfileCover
+                  form.setValue("cover_photo", file); // Changed to "cover_photo"
                 }
               }}
             >
               <input
                 type="file"
-                id="profile_picture"
+                id="cover_photo"
                 accept="image/*"
                 className="hidden"
-                onChange={handleImageUpload}
+                onChange={handleCoverImageUpload}
               />
-              <label
-                htmlFor="profile_picture"
-                className="cursor-pointer flex flex-col items-center"
-              >
-                <Upload className="h-5 w-5 text-[#019935] mb-2" />
-                <p className="text-center text-sm sm:text-base">
-                  <span className="text-[#019935] font-medium">
-                    Click to upload
-                  </span>
-                  <span className="text-[#555d6a]"> or drag and drop</span>
-                </p>
-                <p className="text-[#717882] text-xs sm:text-sm mt-1 text-center">
-                  PNG, JPG or GIF (max. 800x400px)
-                </p>
-              </label>
+
+              {profileCover ? (
+                <div className="flex flex-col items-center">
+                  <img
+                    src={URL.createObjectURL(profileCover)}
+                    alt="Profile"
+                    className="w-full h-auto max-h-[120px] object-cover rounded-lg mb-2"
+                  />
+                  <label
+                    htmlFor="cover_photo"
+                    className="cursor-pointer text-[#019935] text-sm sm:text-base"
+                  >
+                    Change Image
+                  </label>
+                </div>
+              ) : (
+                <label
+                  htmlFor="cover_photo"
+                  className="cursor-pointer flex flex-col items-center"
+                >
+                  <Upload className="h-5 w-5 text-[#019935] mb-2" />
+                  <p className="text-center text-sm sm:text-base">
+                    <span className="text-[#019935] font-medium">
+                      Click to upload
+                    </span>
+                    <span className="text-[#555d6a]"> or drag and drop</span>
+                  </p>
+                  <p className="text-[#717882] text-xs sm:text-sm mt-1 text-center">
+                    PNG, JPG or GIF (max. 800x400px)
+                  </p>
+                </label>
+              )}
             </div>
           </div>
 

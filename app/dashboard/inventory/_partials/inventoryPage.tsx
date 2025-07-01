@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useDebounceValue } from "usehooks-ts";
 import { Controller, useForm } from "react-hook-form";
@@ -55,7 +56,6 @@ import {
   useGetDealerPricingPlansQuery,
 } from "@/features/dealer/dealerProfileSlice";
 import InventoryPricingPlanSkeleton from "@/components/skeleton/InventoryPricingPlanSkeleton";
-import Link from "next/link";
 
 interface PricingPlan {
   name?: string;
