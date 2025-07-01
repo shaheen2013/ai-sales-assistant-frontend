@@ -3,6 +3,7 @@ import LinkifyIt from "linkify-it";
 import parse from "html-react-parser";
 import { twMerge } from "tailwind-merge";
 import { clsx, type ClassValue } from "clsx";
+import { countryGpsLocation } from "@/static/CountryCodes";
 
 const linkify = new LinkifyIt();
 
@@ -306,4 +307,19 @@ export function formateDate(
 export function isNegativeNumber(value: any): boolean {
   if (typeof value !== "number") return false;
   return value < 0;
+}
+
+export function getCountryLocation(countryName: string) {
+  const country = countryGpsLocation.find(
+    (c) => c.name.toLowerCase() === countryName.toLowerCase()
+  );
+
+  if (!country) {
+    return { latitude: "", longitude: "" };
+  }
+
+  return {
+    latitude: country.latitude,
+    longitude: country.longitude,
+  };
 }
