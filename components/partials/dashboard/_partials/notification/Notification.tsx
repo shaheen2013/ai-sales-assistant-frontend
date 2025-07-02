@@ -201,7 +201,7 @@ const Notification = () => {
                   return (
                     <div
                       key={index}
-                      className="flex justify-between gap-2 mb-6"
+                      className="flex justify-between lg:gap-2 gap-3 mb-6"
                     >
                       {/* left */}
                       <div className="flex gap-3">
