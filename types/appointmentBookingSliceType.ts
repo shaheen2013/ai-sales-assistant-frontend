@@ -60,6 +60,7 @@ export type TradeInResponseType = {
   defects: string;
   purchase_price: string;
   medium: string;
+  is_visited: boolean;
   ai_suggested_trade_in_price: string;
   created_at: string;
 };
