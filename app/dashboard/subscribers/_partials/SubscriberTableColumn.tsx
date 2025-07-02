@@ -1,7 +1,7 @@
 import Badge from "@/components/badge/Badge";
 import { Dealer } from "@/types/dealerType";
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown } from "lucide-react";
+// import { ArrowUpDown } from "lucide-react";
 import moment from "moment";
 import Image from "next/image";
 

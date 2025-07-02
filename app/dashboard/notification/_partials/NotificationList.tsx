@@ -47,7 +47,7 @@ const NotificationList = () => {
   const {
     data: notificationsData,
     isFetching: notificationsFetching,
-    isLoading: notificationsLoading,
+    // isLoading: notificationsLoading,
     refetch: refetchNotifications,
     isError: isErrorNotification,
   } = useGetNotificationsQuery(
@@ -56,7 +56,7 @@ const NotificationList = () => {
   );
 
   const {
-    data: notificationUnreadCountData,
+    // data: notificationUnreadCountData,
     refetch: refetchNotificationCount,
   } = useGetNotificationunreadCountQuery();
 

@@ -22,7 +22,7 @@ import { Button } from "@/components/shadcn/button";
 import NotificationSkeleton from "./NotificationSkeleton";
 import { beautifyErrors, formatShortTimeAgo } from "@/lib/utils";
 import { NotificationDataType } from "@/types/notificationSliceType";
-import { setTotalUnreadNotification } from "@/features/notification/notificationStateSlice";
+// import { setTotalUnreadNotification } from "@/features/notification/notificationStateSlice";
 
 const Notification = () => {
   /*--Session--*/
