@@ -23,7 +23,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/shadcn/table";
-import { MoreHorizontal } from "lucide-react";
+import { MoreHorizontal, MoreVertical, MoreVerticalIcon } from "lucide-react";
 
 import Badge from "@/components/badge/Badge";
 import { Button } from "@/components/shadcn/button";
@@ -394,136 +394,6 @@ function SupportTable({
       ),
     },
 
-    // {
-    //   accessorKey: "type",
-    //   header: ({ column }) => {
-    //     return (
-    //       <h2
-    //         className="flex items-center gap-2 cursor-pointer"
-    //         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-    //       >
-    //         Type
-    //         <svg
-    //           width="16"
-    //           height="16"
-    //           viewBox="0 0 16 16"
-    //           fill="none"
-    //           xmlns="http://www.w3.org/2000/svg"
-    //         >
-    //           <path
-    //             d="M4.6665 9.99935L7.99984 13.3327L11.3332 9.99935M4.6665 5.99935L7.99984 2.66602L11.3332 5.99935"
-    //             stroke="#111928"
-    //             strokeWidth="1.4"
-    //             strokeLinecap="round"
-    //             strokeLinejoin="round"
-    //           />
-    //         </svg>
-    //       </h2>
-    //     );
-    //   },
-    //   cell: ({ row }) => {
-    //     const typeColors = {
-    //       Call: "inline-block bg-[#F0EDFC] text-[#654CE6] px-3 py-1 text-sm rounded-xl",
-    //       Email:
-    //         "inline-block bg-[#ECF6FE] text-[#2196F3] px-3 py-1 text-sm rounded-xl",
-    //       Chat: "inline-block bg-[#ECF6FE] text-[#2196F3] px-3 py-1 text-sm rounded-xl",
-    //     };
-
-    //     const typeClass =
-    //       typeColors[row.original?.type] || "bg-gray-50 text-gray-500";
-
-    //     return (
-    //       <div className="text-gray-400">
-    //         <div className={typeClass}>{row.original?.type}</div>
-    //       </div>
-    //     );
-    //   },
-    // },
-
-    // {
-    //   accessorKey: "assign",
-    //   header: ({ column }) => {
-    //     return (
-    //       <h2
-    //         className="flex items-center gap-2 cursor-pointer"
-    //         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-    //       >
-    //         Assign
-    //         <svg
-    //           width="16"
-    //           height="16"
-    //           viewBox="0 0 16 16"
-    //           fill="none"
-    //           xmlns="http://www.w3.org/2000/svg"
-    //         >
-    //           <path
-    //             d="M4.6665 9.99935L7.99984 13.3327L11.3332 9.99935M4.6665 5.99935L7.99984 2.66602L11.3332 5.99935"
-    //             stroke="#111928"
-    //             strokeWidth="1.4"
-    //             strokeLinecap="round"
-    //             strokeLinejoin="round"
-    //           />
-    //         </svg>
-    //       </h2>
-    //     );
-    //   },
-    //   cell: ({}) => (
-    //     <div className="flex">
-    //       <div className="flex -space-x-2 overflow-hidden">
-    //         <Image
-    //           className="inline-block h-6 w-6 rounded-full ring-2 ring-white"
-    //           src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-    //           alt=""
-    //           height={30}
-    //           width={30}
-    //         />
-    //         <Image
-    //           className="inline-block h-6 w-6 rounded-full ring-2 ring-white"
-    //           src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-    //           alt=""
-    //           height={30}
-    //           width={30}
-    //         />
-    //         <Image
-    //           className="inline-block h-6 w-6 rounded-full ring-2 ring-white"
-    //           src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80"
-    //           alt=""
-    //           height={30}
-    //           width={30}
-    //         />
-    //         <svg
-    //           width="26"
-    //           height="26"
-    //           viewBox="0 0 24 24"
-    //           fill="none"
-    //           xmlns="http://www.w3.org/2000/svg"
-    //         >
-    //           <rect
-    //             x="0.5"
-    //             y="0.5"
-    //             width="23"
-    //             height="23"
-    //             rx="11.5"
-    //             fill="#555D6A"
-    //           />
-    //           <rect
-    //             x="0.5"
-    //             y="0.5"
-    //             width="23"
-    //             height="23"
-    //             rx="11.5"
-    //             stroke="white"
-    //           />
-    //           <path
-    //             d="M10.6587 17.9688V6.17329H13.3349V17.9688H10.6587ZM6.09908 13.4091V10.733H17.8945V13.4091H6.09908Z"
-    //             fill="white"
-    //           />
-    //         </svg>
-    //       </div>
-    //     </div>
-    //   ),
-    // },
-
     {
       accessorKey: "created_at",
       header: ({ column }) => {
@@ -651,7 +521,7 @@ function SupportTable({
                 onClick={() => setOpenActionDropdown(row.original.id)}
               >
                 <span className="sr-only">Open menu</span>
-                <MoreHorizontal />
+                <MoreVerticalIcon className="w-10  h-10 " />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
