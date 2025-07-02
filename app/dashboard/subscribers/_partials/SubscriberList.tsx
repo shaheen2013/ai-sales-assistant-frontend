@@ -49,8 +49,6 @@ const SubscriberList = () => {
     }),
   });
 
-  console.log("Dealers Data:", dealersData);
-
   const onPageChange = (page: number) => {
     const params = new URLSearchParams(searchParams);
     params.set("page", page.toString());
@@ -70,7 +68,7 @@ const SubscriberList = () => {
 
   return (
     <div className="p-4 rounded-2xl outline outline-1 outline-offset-[-1px] outline-[#eaebec]">
-      <div className="flex items-center justify-between">
+      <div className="flex md:flex-row flex-col items-center justify-between">
         <h4 className="text-gray-500 text-2xl font-semibold">Subscribers</h4>
         <Select
           defaultValue="all_subscribers"
@@ -111,8 +109,8 @@ const SubscriberList = () => {
         </div>
       ) : (
         <div className="p-4 bg-white rounded-xl outline outline-1 outline-offset-[-1px] outline-[#eaebec] mt-4">
-          <div className="flex items-center justify-between pb-4 border-b border-b-[#EAEBEC] mb-4">
-            <p className="text-lg font-medium text-gray-600">
+          <div className="flex md:flex-row flex-col items-center justify-between pb-4 border-b border-b-[#EAEBEC] mb-4">
+            <p className="text-lg font-medium text-[#535862]">
               {calculatedTitle()}
             </p>
             <Input

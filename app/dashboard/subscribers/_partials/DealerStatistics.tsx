@@ -1,9 +1,10 @@
 "use client";
 
-import { useGetDealerStatisticsQuery } from "@/features/dealer/dealerSlice";
-import { isNegativeNumber } from "@/lib/utils";
-import classNames from "classnames";
 import React from "react";
+import classNames from "classnames";
+
+import { isNegativeNumber } from "@/lib/utils";
+import { useGetDealerStatisticsQuery } from "@/features/dealer/dealerSlice";
 
 const DealerStatistics = () => {
   /*--RTK Query--*/

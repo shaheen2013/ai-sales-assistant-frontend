@@ -20,7 +20,21 @@ export const subscriberTableColumns: ColumnDef<Dealer>[] = [
           className="flex items-center gap-1 select-none cursor-pointer"
         >
           <p className="text-[#2b3545] text-sm font-medium">Dealer Name</p>
-          <ArrowUpDown className="size-4" />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
+            fill="none"
+          >
+            <path
+              d="M4.66663 9.99935L7.99996 13.3327L11.3333 9.99935M4.66663 5.99935L7.99996 2.66602L11.3333 5.99935"
+              stroke="#111928"
+              strokeWidth="1.4"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
         </div>
       );
     },
@@ -102,7 +116,21 @@ export const subscriberTableColumns: ColumnDef<Dealer>[] = [
           className="flex items-center gap-1 select-none cursor-pointer justify-center"
         >
           <p className="text-[#2b3545] text-sm font-medium">Status</p>
-          <ArrowUpDown className="size-4" />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
+            fill="none"
+          >
+            <path
+              d="M4.66663 9.99935L7.99996 13.3327L11.3333 9.99935M4.66663 5.99935L7.99996 2.66602L11.3333 5.99935"
+              stroke="#111928"
+              strokeWidth="1.4"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
         </div>
       );
     },
