@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { debounce } from "lodash";
 import { ChevronDown, Search } from "lucide-react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 import { Input } from "@/components/shadcn/input";
 import {
@@ -18,13 +19,21 @@ import { Skeleton } from "@/components/shadcn/skeleton";
 import Pagination from "@/components/pagination/Pagination";
 import { subscriberTableColumns } from "./SubscriberTableColumn";
 import { useGetDealersQuery } from "@/features/dealer/dealerSlice";
+import { useDebounceValue } from "usehooks-ts";
 
 const SubscriberList = () => {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
+  const page = searchParams.get("page");
+  const search = searchParams.get("search") || "";
+
   /*--React State--*/
-  const [page, setPage] = useState<number>(1);
-  const [search, setSearch] = useState<string>("");
+  // const [search, setSearch] = useState<string>("");
   const [subscriberType, setSubscriberType] =
     useState<string>("all_subscribers");
+
+  const [debouncedSearchValue, setSearch] = useDebounceValue("", 500);
 
   /*--RTK Query--*/
   const {
@@ -32,18 +41,19 @@ const SubscriberList = () => {
     isLoading: dealersLoading,
     isFetching: dealersFetching,
   } = useGetDealersQuery({
-    offset: (page - 1) * 10,
+    offset: (Number(page) - 1) * 10,
     limit: 10,
-    search,
+    search: debouncedSearchValue || "",
     ...(subscriberType !== "all_subscribers" && {
       subscription_name: subscriberType,
     }),
   });
 
-  /*--Funcions--*/
-  const handleDebounceSearch = debounce((value: string) => {
-    setSearch(value);
-  }, 400);
+  const onPageChange = (page: number) => {
+    const params = new URLSearchParams(searchParams);
+    params.set("page", page.toString());
+    router.push(`?${params.toString()}`);
+  };
 
   return (
     <div className="p-4 rounded-2xl outline outline-1 outline-offset-[-1px] outline-[#eaebec]">
@@ -52,7 +62,16 @@ const SubscriberList = () => {
         <Select
           defaultValue="all_subscribers"
           value={subscriberType}
-          onValueChange={setSubscriberType}
+          onValueChange={(e) => {
+            setSubscriberType(e);
+            const params = new URLSearchParams(searchParams);
+            params.set("page", "1");
+            params.set("subscription_name", e);
+            params.delete("search");
+
+            setSearch("");
+            router.push(`?${params.toString()}`);
+          }}
         >
           <SelectTrigger className="max-w-fit [&>svg]:hidden [&>span]:pointer-events-auto [&>span]:text-primary-500 [&>span]:text-sm [&>span]:font-medium gap-1.5">
             <SelectValue placeholder="All Subscribers" />
@@ -87,7 +106,13 @@ const SubscriberList = () => {
               preIcon={<Search className="size-5 text-[#a2a1a7]" />}
               placeholder="Search"
               className="xl:min-w-[320px] rounded-lg"
-              onChange={(e) => handleDebounceSearch(e.target.value)}
+              onChange={(e) => {
+                setSearch(e.target.value);
+                const params = new URLSearchParams(searchParams);
+                params.set("search", e.target.value);
+                params.set("page", "1");
+                router.push(`?${params.toString()}`);
+              }}
             />
             <div className="flex items-center gap-0.5">
               <p className="text-gray-600 text-lg font-medium ">Total -</p>
@@ -104,15 +129,14 @@ const SubscriberList = () => {
               loading={dealersFetching}
             />
 
-            {typeof dealersData?.count === "number" &&
-              dealersData?.count > 10 && (
-                <Pagination
-                  page={page}
-                  onPageChange={setPage}
-                  className="justify-end mt-4"
-                  totalPage={Math.ceil((dealersData?.count || 0) / 10)}
-                />
-              )}
+            <div className="flex items-center justify-center mt-4">
+              <Pagination
+                isEnd={dealersData?.next === null}
+                page={Number(page)}
+                onPageChange={onPageChange}
+                totalPage={Math.ceil((dealersData?.count || 0) / 10)}
+              />
+            </div>
           </div>
         </div>
       )}

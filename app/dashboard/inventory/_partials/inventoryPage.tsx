@@ -36,10 +36,16 @@ import DragAndDropUploader from "./DragAndDropUploader";
 
 import {
   Accordion,
-  AccordionContent,
   AccordionItem,
   AccordionTrigger,
+  AccordionContent,
 } from "@/components/shadcn/accordion";
+
+import {
+  useCreateSubscriptionMutation,
+  useGetDealerPricingPlansQuery,
+  useGetCurrentSubscriptionPlanQuery,
+} from "@/features/dealer/dealerProfileSlice";
 
 import {
   useGetInventoryFilesQuery,
@@ -50,11 +56,6 @@ import {
 } from "@/features/inventory/inventorySlice";
 
 import SomethingWentWrong from "@/components/SomethingWentWrong";
-import {
-  useCreateSubscriptionMutation,
-  useGetCurrentSubscriptionPlanQuery,
-  useGetDealerPricingPlansQuery,
-} from "@/features/dealer/dealerProfileSlice";
 import InventoryPricingPlanSkeleton from "@/components/skeleton/InventoryPricingPlanSkeleton";
 
 interface PricingPlan {
@@ -131,11 +132,6 @@ export default function DashboardDealerInventory() {
     refetchOnMountOrArgChange: true,
   });
 
-  console.log(
-    "currentSubscriptionData => ",
-    currentSubscriptionData?.subscription
-  );
-
   const { isFetching: isFetchingPricingPlans, data: pricingPlans } =
     useGetDealerPricingPlansQuery();
 
@@ -178,10 +174,10 @@ export default function DashboardDealerInventory() {
     router.push(`?${searchParams.toString()}`);
   };
 
-  const handleInventoryEdit = async (formData: any, id: any) => {
-    console.log("edit id => ", id);
-    console.log("edit formData => ", formData);
-  };
+  // const handleInventoryEdit = async (formData: any, id: any) => {
+  //   console.log("edit id => ", id);
+  //   console.log("edit formData => ", formData);
+  // };
 
   const handleInventoryDelete = async (id: string) => {
     const confirm = window.confirm(
@@ -305,21 +301,6 @@ export default function DashboardDealerInventory() {
   if (errorGetVehicle || errorGetInventoryFiles) {
     return <SomethingWentWrong />;
   }
-
-  // const plans = [
-  //   {
-  //     name: "Pro Plan",
-  //     price: "150",
-  //     // benefits: [
-  //     //   "500 voice minutes",
-  //     //   "$0.15 per minute",
-  //     //   "Small to mid-size independent dealerships",
-  //     //   "Optional $250 one-time if integrations are needed",
-  //     // ],
-  //   },
-  //   { name: "Business Plan", price: "300" },
-  //   { name: "Enterprise Plan", price: "999" },
-  // ];
 
   return (
     <>
@@ -456,7 +437,7 @@ export default function DashboardDealerInventory() {
               isLoading={isFetchingGetVehicle}
               refetchGetVehicle={refetchGetVehicle}
               getVehicleList={getVehicleList}
-              handleInventoryEdit={handleInventoryEdit}
+              // handleInventoryEdit={handleInventoryEdit}
               handleInventoryDelete={handleInventoryDelete}
             />
           ) : (
