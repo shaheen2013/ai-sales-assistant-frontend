@@ -240,6 +240,15 @@ export default function DashboardSupport() {
   );
 }
 
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/shadcn/select";
+
 function SupportTable({
   data,
   loading,
@@ -607,7 +616,7 @@ function SupportTable({
         <h2 className="font-semibold text-lg text-gray-300">Support Tickets</h2>
 
         <div className="flex gap-2">
-          <SimpleSelect
+          {/* <SimpleSelect
             options={[
               {
                 label: "Time",
@@ -618,7 +627,21 @@ function SupportTable({
             triggerClassName="[&>span]:text-primary-500 [&>div>svg]:text-primary-500"
             value={sortBy}
             onChange={setSortBy}
-          />
+          /> */}
+
+          <Select value={sortBy} onValueChange={setSortBy}>
+            <SelectTrigger className="w-[100px]">
+              <SelectValue
+                placeholder="Sort By"
+                className="!data-[placeholder]:text-primary-100"
+              />
+            </SelectTrigger>
+            <SelectContent align="end">
+              <SelectGroup>
+                <SelectItem value="created_at">Time</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
         </div>
       </div>
 
@@ -627,12 +650,12 @@ function SupportTable({
         <div className="w-full">
           <div>
             <Table>
-              <TableHeader>
+              <TableHeader className="">
                 {table.getHeaderGroups().map((headerGroup) => (
                   <TableRow key={headerGroup.id}>
                     {headerGroup.headers.map((header) => {
                       return (
-                        <TableHead key={header.id}>
+                        <TableHead key={header.id} className="text-[#2B3545]">
                           {header.isPlaceholder
                             ? null
                             : flexRender(
