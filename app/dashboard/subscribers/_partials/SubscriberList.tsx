@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { debounce } from "lodash";
+import { useDebounceValue } from "usehooks-ts";
 import { ChevronDown, Search } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 
@@ -14,19 +14,19 @@ import {
   SelectTrigger,
   SelectContent,
 } from "@/components/shadcn/select";
+
 import SubscriberTable from "./SubscriberTable";
 import { Skeleton } from "@/components/shadcn/skeleton";
 import Pagination from "@/components/pagination/Pagination";
 import { subscriberTableColumns } from "./SubscriberTableColumn";
 import { useGetDealersQuery } from "@/features/dealer/dealerSlice";
-import { useDebounceValue } from "usehooks-ts";
 
 const SubscriberList = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  const page = searchParams.get("page");
-  const search = searchParams.get("search") || "";
+  const page = searchParams.get("page") || 1;
+  // const search = searchParams.get("search") || "";
 
   /*--React State--*/
   // const [search, setSearch] = useState<string>("");
@@ -49,10 +49,23 @@ const SubscriberList = () => {
     }),
   });
 
+  console.log("Dealers Data:", dealersData);
+
   const onPageChange = (page: number) => {
     const params = new URLSearchParams(searchParams);
     params.set("page", page.toString());
     router.push(`?${params.toString()}`);
+  };
+
+  const calculatedTitle = () => {
+    if (subscriberType === "all_subscribers") {
+      return "All Premium Subscribers";
+    } else if (subscriberType === "business") {
+      return "Business Subscribers";
+    } else if (subscriberType === "enterprise") {
+      return "Enterprise Subscribers";
+    }
+    return "";
   };
 
   return (
@@ -100,7 +113,7 @@ const SubscriberList = () => {
         <div className="p-4 bg-white rounded-xl outline outline-1 outline-offset-[-1px] outline-[#eaebec] mt-4">
           <div className="flex items-center justify-between pb-4 border-b border-b-[#EAEBEC] mb-4">
             <p className="text-lg font-medium text-gray-600">
-              All Premium Subscribers
+              {calculatedTitle()}
             </p>
             <Input
               preIcon={<Search className="size-5 text-[#a2a1a7]" />}

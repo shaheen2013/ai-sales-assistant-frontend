@@ -1,6 +1,16 @@
 "use client";
 
 import {
+  ColumnDef,
+  flexRender,
+  SortingState,
+  useReactTable,
+  getCoreRowModel,
+  getSortedRowModel,
+} from "@tanstack/react-table";
+import React from "react";
+
+import {
   Table,
   TableBody,
   TableCell,
@@ -8,15 +18,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/shadcn/table";
-import {
-  ColumnDef,
-  flexRender,
-  getCoreRowModel,
-  getSortedRowModel,
-  SortingState,
-  useReactTable,
-} from "@tanstack/react-table";
-import React from "react";
 import { Dealer } from "@/types/dealerType";
 import { Skeleton } from "@/components/shadcn/skeleton";
 
