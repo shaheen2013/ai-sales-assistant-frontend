@@ -53,15 +53,15 @@ const AdminSupportDialog: FC<AdminSupportDialogPropsType> = ({
     useDeleteAdminSupportTicketMutation();
 
   /*--Functions--*/
-  const handleDeleteTicket = async (id: string) => {
-    try {
-      await deleteSupportTicket(id);
-      toast("success", "Ticket deleted successfully!");
-      onOpenChange(false);
-    } catch (err) {
-      toast("error", beautifyErrors(err));
-    }
-  };
+  // const handleDeleteTicket = async (id: string) => {
+  //   try {
+  //     await deleteSupportTicket(id);
+  //     toast("success", "Ticket deleted successfully!");
+  //     onOpenChange(false);
+  //   } catch (err) {
+  //     toast("error", beautifyErrors(err));
+  //   }
+  // };
 
   const onSubmit = async (formData: FormDataType) => {
     try {
@@ -101,7 +101,7 @@ const AdminSupportDialog: FC<AdminSupportDialogPropsType> = ({
                 <InputCopy
                   type="problemId"
                   id="problemId"
-                  label="Problem ID"
+                  label="Support Ticket Id"
                   value={data?.ticket_id}
                   disabled
                   wrapperClassName="col-span-12 xl:col-span-6"
@@ -127,12 +127,13 @@ const AdminSupportDialog: FC<AdminSupportDialogPropsType> = ({
               />
 
               <Input
-                className="rounded-lg h-11"
-                placeholder="+001 654 265"
+                className="rounded-lg h-11 disabled:!text-[#A4A7AE]"
+                // placeholder="+001 654 265"
                 label="Phone"
                 disabled
-                value={data?.dealer?.phone}
+                value={data?.dealer?.phone || "N/A"}
               />
+
               <Input
                 className="rounded-lg h-11"
                 placeholder="Today 22 Otc, 2025"
@@ -140,6 +141,7 @@ const AdminSupportDialog: FC<AdminSupportDialogPropsType> = ({
                 disabled
                 value={moment(data?.created_at)?.format("DD MMM, YYYY")}
               />
+
               <Input
                 className="rounded-lg h-11"
                 placeholder="06 : 00 AM"
@@ -147,12 +149,15 @@ const AdminSupportDialog: FC<AdminSupportDialogPropsType> = ({
                 disabled
                 value={moment(data?.created_at)?.format("hh:mm A")}
               />
+
               <Textarea
                 label="Problem Summary"
                 placeholder="Problem description"
                 className="min-h-[98px]"
-                wrapperClassName="xl:col-span-2 pb-4 border-b border-[#eff4fa]"
+                wrapperClassName="xl:col-span-2"
                 value={data?.description}
+                helperText="This is the problem description provided by the dealer."
+                disabled
               />
 
               <Controller

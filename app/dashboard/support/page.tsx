@@ -23,11 +23,10 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/shadcn/table";
-import { MoreHorizontal, MoreVertical, MoreVerticalIcon } from "lucide-react";
+import { MoreVerticalIcon } from "lucide-react";
 
 import Badge from "@/components/badge/Badge";
 import { Button } from "@/components/shadcn/button";
-import SimpleSelect from "@/components/select/SimpleSelect";
 import Pagination from "@/components/pagination/Pagination";
 import TableSkeleton from "@/components/skeleton/TableSkeleton";
 import { Tabs, TabsList, TabsTrigger } from "@/components/DashboardTabs";
@@ -64,6 +63,8 @@ export default function DashboardSupport() {
       page,
       page_size: 10,
     });
+
+  console.log("supportTicketsData => ", supportTicketsData);
 
   return (
     <div>
@@ -630,15 +631,30 @@ function SupportTable({
           /> */}
 
           <Select value={sortBy} onValueChange={setSortBy}>
-            <SelectTrigger className="w-[100px]">
-              <SelectValue
-                placeholder="Sort By"
-                className="!data-[placeholder]:text-primary-100"
-              />
+            <SelectTrigger
+              className="w-[100px] data-[placeholder]:!text-primary-500 text-primary-500 font-medium"
+              postIcon={
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                >
+                  <path
+                    d="M2.21967 6.46967C2.51256 6.17678 2.98744 6.17678 3.28033 6.46967L10 13.1893L16.7197 6.46967C17.0126 6.17678 17.4874 6.17678 17.7803 6.46967C18.0732 6.76256 18.0732 7.23744 17.7803 7.53033L10.5303 14.7803C10.2374 15.0732 9.76256 15.0732 9.46967 14.7803L2.21967 7.53033C1.92678 7.23744 1.92678 6.76256 2.21967 6.46967Z"
+                    fill="#019935"
+                  />
+                </svg>
+              }
+            >
+              <SelectValue placeholder="Sort By" className="" />
             </SelectTrigger>
             <SelectContent align="end">
               <SelectGroup>
-                <SelectItem value="created_at">Time</SelectItem>
+                <SelectItem value="created_at" className="!text-primary-500">
+                  Time
+                </SelectItem>
               </SelectGroup>
             </SelectContent>
           </Select>
