@@ -1,8 +1,8 @@
 "use client";
 
 import { useSession } from "next-auth/react";
-import AdminDashboardOverview from "./_partials/admin/AdminDashboardOverview";
 import DealerDashboardOverview from "../profile/DealerDashboardOverview";
+import AdminDashboardOverview from "./_partials/admin/AdminDashboardOverview";
 
 function DashboardOverview() {
   const { data: session } = useSession();

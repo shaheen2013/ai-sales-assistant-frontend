@@ -12,8 +12,8 @@ import { useGetAdminDashboardOverviewQuery } from "@/features/admin/adminDashboa
 
 import {
   DropdownMenu,
-  DropdownMenuContent,
   DropdownMenuTrigger,
+  DropdownMenuContent,
 } from "@/components/shadcn/dropdown-menu";
 import { Skeleton } from "@/components/shadcn/skeleton";
 
@@ -83,8 +83,9 @@ const AdminDashboardOverview = () => {
             <ChevronDown className="size-5 text-inherit" />
           </div>
         </DropdownMenuTrigger>
+
         <DropdownMenuContent align="end">
-          <div>
+          <div className="w-full max-w-md mx-auto sm:max-w-full">
             <DateRange
               date={selection}
               onChange={(date) => {
