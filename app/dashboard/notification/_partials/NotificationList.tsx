@@ -46,8 +46,8 @@ const NotificationList = () => {
   /*--RTK Query--*/
   const {
     data: notificationsData,
-    isFetching: notificationsFetching,
-    // isLoading: notificationsLoading,
+    // isFetching: notificationsFetching,
+    isLoading: notificationsLoading,
     refetch: refetchNotifications,
     isError: isErrorNotification,
   } = useGetNotificationsQuery(
@@ -173,7 +173,7 @@ const NotificationList = () => {
 
       {/* notifications */}
       <div className="border border-gray-50 rounded-lg p-4 lg:h-[calc(100vh-300px)] overflow-y-auto">
-        {notificationsFetching ? (
+        {notificationsLoading ? (
           <div className="flex flex-col h-full gap-8">
             {[...Array(12)].map((_, index) => (
               <NotificationSkeleton key={index} />
