@@ -110,6 +110,14 @@ export const dealerProfileSlice = apiSlice.injectEndpoints({
       invalidatesTags: ["pricingPlans"],
     }),
 
+    cancelSubscription: builder.mutation<any, void>({
+      query: () => ({
+        url: "/stripe/subscriptions/cancel_subscription/",
+        method: "POST",
+      }),
+      invalidatesTags: ["pricingPlans"],
+    }),
+
     getBillingHistory: builder.query<any, void>({
       query: () => ({
         url: "/dealer-dashboard/invoices/",
@@ -133,4 +141,5 @@ export const {
   useUpgradeSubscriptionMutation,
   useGetBillingHistoryQuery,
   useCreateMinuteSubscriptionMutation,
+  useCancelSubscriptionMutation,
 } = dealerProfileSlice;

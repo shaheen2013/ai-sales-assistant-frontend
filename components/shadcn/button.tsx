@@ -18,6 +18,8 @@ const buttonVariants = cva(
 
         destructive:
           "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
+        destructive_outlined:
+          'bg-white border border-destructive text-destructive hover:bg-destructive/10 disabled:opacity-50',
         outline:
           "border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground",
         secondary:
@@ -42,15 +44,16 @@ const buttonVariants = cva(
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {
+  VariantProps<typeof buttonVariants> {
   asChild?: boolean;
   href?: string;
   loading?: boolean;
+  loaderClassName?: string;
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
-    { className, variant, size, asChild = false, href, loading, ...props },
+    { className, variant, size, asChild = false, href, loaderClassName, loading, ...props },
     ref
   ) => {
     const Comp = asChild ? Slot : "button";
@@ -75,7 +78,12 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         {loading ? (
           <>
             <div className="flex items-center justify-center">
-              <div className="w-6 h-6 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+              <div className={
+                cn(
+                  `w-6 h-6 border-4 border-white border-t-transparent rounded-full animate-spin`,
+                  loaderClassName
+                )
+              }></div>
             </div>
           </>
         ) : (
