@@ -1,12 +1,13 @@
 "use client";
 
-import { useDispatch } from "react-redux";
+// import { useDispatch } from "react-redux";
 import { useSession } from "next-auth/react";
 import { useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
 import {
   useGetNotificationsQuery,
+  useGetNotificationunreadCountQuery,
   useMarkAllReadNotificationMutation,
 } from "@/features/notification/notificationSlice";
 
@@ -14,9 +15,10 @@ import { useToast } from "@/hooks/useToast";
 import Pagination from "@/components/pagination/Pagination";
 import { beautifyErrors, formatShortTimeAgo } from "@/lib/utils";
 import { NotificationDataType } from "@/types/notificationSliceType";
-import { setTotalUnreadNotification } from "@/features/notification/notificationStateSlice";
+// import { setTotalUnreadNotification } from "@/features/notification/notificationStateSlice";
 import NotificationSkeleton from "@/components/partials/dashboard/_partials/notification/NotificationSkeleton";
 import { getNotificationSvgIcon } from "@/components/partials/dashboard/_partials/notification/Notification";
+import SomethingWentWrong from "@/components/SomethingWentWrong";
 
 const NotificationList = () => {
   const searchParams = useSearchParams();
@@ -39,21 +41,31 @@ const NotificationList = () => {
   const socketRef = useRef<WebSocket | null>(null);
 
   /*--Redux--*/
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   /*--RTK Query--*/
-  const { data: notificationsData, isFetching: notificationsFetching } =
-    useGetNotificationsQuery(
-      { limit: 10, offset: (page - 1) * 10 },
-      { refetchOnReconnect: true }
-    );
+  const {
+    data: notificationsData,
+    isFetching: notificationsFetching,
+    isLoading: notificationsLoading,
+    refetch: refetchNotifications,
+    isError: isErrorNotification,
+  } = useGetNotificationsQuery(
+    { limit: 10, offset: (page - 1) * 10 },
+    { refetchOnReconnect: true }
+  );
+
+  const {
+    data: notificationUnreadCountData,
+    refetch: refetchNotificationCount,
+  } = useGetNotificationunreadCountQuery();
 
   const [markAllReadNotification] = useMarkAllReadNotificationMutation();
 
   /*--Function--*/
   const handleClickMarkAllReadNotification = async () => {
     try {
-      dispatch(setTotalUnreadNotification(0));
+      // dispatch(setTotalUnreadNotification(0));
       setNotifications((prevNotifications) =>
         prevNotifications.map((notification) => ({
           ...notification,
@@ -90,13 +102,16 @@ const NotificationList = () => {
         // console.log('WebSocket connected');
       };
 
-      socket.onmessage = (event) => {
+      socket.onmessage = async (event) => {
         const data = JSON.parse(event.data);
         if (!data?.error) {
-          setNotifications((prevNotifications) => [
-            data,
-            ...prevNotifications?.slice(0, 9),
-          ]);
+          // setNotifications((prevNotifications) => [
+          //   data,
+          //   ...prevNotifications?.slice(0, 9),
+          // ]);
+
+          await refetchNotifications();
+          await refetchNotificationCount();
         } else {
           toast("error", data?.error);
         }
@@ -135,6 +150,10 @@ const NotificationList = () => {
       router.push("/dashboard/notification?page=1");
     }
   }, [pageParam]);
+
+  if (isErrorNotification) {
+    return <SomethingWentWrong />;
+  }
 
   return (
     <div className="">

@@ -33,6 +33,8 @@ export const apiSlice = createApi({
     "getNewsLetter",
     "getVehicleInventory",
     "getTradeIn",
+    "getNotificationList",
+    "getNotificationCount",
   ],
   endpoints: () => ({}),
 });

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+// import { useDispatch } from "react-redux";
 
 import {
   DropdownMenu,
@@ -16,7 +16,7 @@ import {
   useMarkAllReadNotificationMutation,
 } from "@/features/notification/notificationSlice";
 
-import { RootState } from "@/store/store";
+// import { RootState } from "@/store/store";
 import { useToast } from "@/hooks/useToast";
 import { Button } from "@/components/shadcn/button";
 import NotificationSkeleton from "./NotificationSkeleton";
@@ -40,11 +40,11 @@ const Notification = () => {
   const socketRef = useRef<WebSocket | null>(null);
 
   /*--Redux--*/
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  const totalUnread = useSelector(
-    (state: RootState) => state.notificationState
-  ).totalUnread;
+  // const totalUnread = useSelector(
+  //   (state: RootState) => state.notificationState
+  // ).totalUnread;
 
   /*--RTK Query--*/
   const { data: notificationsData, isLoading: notificationsLoading } =
@@ -52,6 +52,7 @@ const Notification = () => {
 
   const { data: notificationUnreadCountData } =
     useGetNotificationunreadCountQuery();
+
   const [markAllReadNotification] = useMarkAllReadNotificationMutation();
 
   /*--UseEffect--*/
@@ -61,13 +62,13 @@ const Notification = () => {
     }
   }, [notificationsData?.results]);
 
-  useEffect(() => {
-    if (notificationUnreadCountData) {
-      dispatch(
-        setTotalUnreadNotification(notificationUnreadCountData?.total_count)
-      );
-    }
-  }, [notificationUnreadCountData, dispatch]);
+  // useEffect(() => {
+  //   if (notificationUnreadCountData) {
+  //     dispatch(
+  //       setTotalUnreadNotification(notificationUnreadCountData?.total_count)
+  //     );
+  //   }
+  // }, [notificationUnreadCountData, dispatch]);
 
   useEffect(() => {
     if (session?.access && !socketRef.current) {
@@ -84,7 +85,7 @@ const Notification = () => {
         const data = JSON.parse(event.data);
         if (!data?.error) {
           toast("success", data?.message);
-          dispatch(setTotalUnreadNotification(data?.unread_count));
+          // dispatch(setTotalUnreadNotification(data?.unread_count));
           setNotifications((prevNotifications) => [
             data,
             ...prevNotifications?.slice(0, 4),
@@ -126,7 +127,7 @@ const Notification = () => {
           is_read: true,
         }))
       );
-      dispatch(setTotalUnreadNotification(0));
+      // dispatch(setTotalUnreadNotification(0));
       await markAllReadNotification().unwrap();
     } catch (err) {
       toast("error", beautifyErrors(err));
@@ -152,9 +153,9 @@ const Notification = () => {
             </svg>
 
             {/* dot */}
-            {totalUnread > 0 && (
+            {(notificationUnreadCountData?.total_count ?? 0) > 0 && (
               <div className="absolute top-0 right-0 w-5 h-5 bg-red-500 rounded-full border border-white text-[10px] text-white flex items-center justify-center">
-                {totalUnread}
+                {notificationUnreadCountData?.total_count ?? 0}
               </div>
             )}
           </div>
@@ -262,8 +263,6 @@ const Notification = () => {
 };
 
 export function getNotificationSvgIcon(notificationType: string) {
-  console.log("notificationType => ", notificationType);
-
   switch (notificationType) {
     case "New Dealer Registration":
       return (
