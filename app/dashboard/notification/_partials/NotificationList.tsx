@@ -16,6 +16,7 @@ import { beautifyErrors, formatShortTimeAgo } from "@/lib/utils";
 import { NotificationDataType } from "@/types/notificationSliceType";
 import { setTotalUnreadNotification } from "@/features/notification/notificationStateSlice";
 import NotificationSkeleton from "@/components/partials/dashboard/_partials/notification/NotificationSkeleton";
+import { getNotificationSvgIcon } from "@/components/partials/dashboard/_partials/notification/Notification";
 
 const NotificationList = () => {
   const searchParams = useSearchParams();
@@ -144,7 +145,7 @@ const NotificationList = () => {
         </h3>
 
         <div
-          className="justify-start text-gray-200 text-sm font-medium select-none cursor-pointer"
+          className="justify-start text-gray-300 text-sm font-medium select-none cursor-pointer"
           onClick={handleClickMarkAllReadNotification}
         >
           Mark all as read
@@ -165,26 +166,7 @@ const NotificationList = () => {
               <div key={notification?.id} className="mb-6 flex justify-between">
                 {/* left */}
                 <div className="flex gap-2 items-center">
-                  <svg
-                    width="48"
-                    height="48"
-                    viewBox="0 0 48 48"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <rect
-                      x="4"
-                      y="4"
-                      width="40"
-                      height="40"
-                      rx="8"
-                      fill="#ECF6FE"
-                    />
-                    <path
-                      d="M24.0001 13.9961C28.05 13.9961 31.3568 17.1908 31.4959 21.2451L31.5001 21.4961V25.5931L32.8801 28.7491C32.9492 28.907 32.9848 29.0775 32.9848 29.2499C32.9848 29.9402 32.4252 30.4999 31.7348 30.4999L27.0001 30.5014C27.0001 32.1582 25.657 33.5014 24.0001 33.5014C22.4024 33.5014 21.0965 32.2524 21.0052 30.6776L20.9997 30.4991L16.275 30.4999C16.1036 30.4999 15.9341 30.4646 15.777 30.3964C15.1438 30.1213 14.8534 29.3851 15.1285 28.7519L16.5001 25.594V21.496C16.5007 17.3412 19.8522 13.9961 24.0001 13.9961ZM25.4997 30.4991L22.5001 30.5014C22.5001 31.3298 23.1717 32.0014 24.0001 32.0014C24.7798 32.0014 25.4206 31.4065 25.4932 30.6458L25.4997 30.4991ZM24.0001 15.4961C20.6799 15.4961 18.0006 18.1703 18.0001 21.4961V25.9057L16.6561 28.9999H31.3526L30.0001 25.9067L30.0002 21.5089L29.9965 21.2837C29.8854 18.0503 27.2417 15.4961 24.0001 15.4961Z"
-                      fill="#2196F3"
-                    />
-                  </svg>
+                  {getNotificationSvgIcon(notification?.notification_type)}
 
                   <div>
                     <h3 className="text-gray-300 text-sm font-semibold flex gap-1 items-center">
