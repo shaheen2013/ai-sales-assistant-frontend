@@ -2,7 +2,8 @@
 
 import { useDispatch } from "react-redux";
 import { useSession } from "next-auth/react";
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 import {
   useGetNotificationsQuery,
@@ -17,6 +18,11 @@ import { setTotalUnreadNotification } from "@/features/notification/notification
 import NotificationSkeleton from "@/components/partials/dashboard/_partials/notification/NotificationSkeleton";
 
 const NotificationList = () => {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
+  const pageParam = searchParams.get("page");
+
   /*--Session--*/
   const { data: session } = useSession();
 
@@ -57,6 +63,11 @@ const NotificationList = () => {
     } catch (err) {
       toast("error", beautifyErrors(err));
     }
+  };
+
+  const onPageChange = (newPage: number) => {
+    setPage(newPage);
+    router.push(`/dashboard/notification?page=${newPage}`);
   };
 
   /*--UseEffect--*/
@@ -111,6 +122,18 @@ const NotificationList = () => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session?.access]);
+
+  useEffect(() => {
+    if (pageParam) {
+      const pageNumber = parseInt(pageParam, 10);
+      if (!isNaN(pageNumber)) {
+        setPage(pageNumber);
+      }
+    } else {
+      setPage(1);
+      router.push("/dashboard/notification?page=1");
+    }
+  }, [pageParam]);
 
   return (
     <div className="">
@@ -187,7 +210,7 @@ const NotificationList = () => {
             ))}
 
             {notifications?.length === 0 && (
-              <div className="text-gray-400 text-center py-16">
+              <div className="text-gray-400 text-center h-full flex items-center justify-center">
                 No notifications found.
               </div>
             )}
@@ -201,7 +224,7 @@ const NotificationList = () => {
             page={page}
             isEnd={notificationsData?.next === null}
             totalPage={(notificationsData?.count || 0) / 10}
-            onPageChange={(page) => setPage(page)}
+            onPageChange={onPageChange}
             className="justify-center mt-12 mb-6"
           />
         )}
