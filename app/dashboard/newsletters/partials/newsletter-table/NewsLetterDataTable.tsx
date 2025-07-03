@@ -1,20 +1,23 @@
 "use client";
 
+import React from "react";
+
+import {
+  flexRender,
+  ColumnDef,
+  useReactTable,
+  getCoreRowModel,
+} from "@tanstack/react-table";
+
 import {
   Table,
-  TableBody,
   TableCell,
+  TableRow,
+  TableBody,
   TableHead,
   TableHeader,
-  TableRow,
 } from "@/components/shadcn/table";
-import {
-  ColumnDef,
-  flexRender,
-  getCoreRowModel,
-  useReactTable,
-} from "@tanstack/react-table";
-import React from "react";
+
 import TableSkeleton from "@/components/skeleton/TableSkeleton";
 import { NewsLetterResponseType } from "@/types/newsletterType";
 

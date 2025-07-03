@@ -1,29 +1,36 @@
-import Badge from '@/components/badge/Badge';
-import { DropdownMenu } from '@/components/partials/dashboard/dashboard-dropdown';
-import { Button } from '@/components/shadcn/button';
-import { DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/shadcn/dropdown-menu';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/shadcn/tooltip';
-import { shortenFileName } from '@/lib/utils';
-import { NewsLetterResponseType } from '@/types/newsletterType';
-import { ColumnDef } from '@tanstack/react-table';
-import { Eye, MoreHorizontal } from 'lucide-react';
-import moment from 'moment';
-import Link from 'next/link';
+import Badge from "@/components/badge/Badge";
+import { DropdownMenu } from "@/components/partials/dashboard/dashboard-dropdown";
+import { Button } from "@/components/shadcn/button";
+import {
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/shadcn/dropdown-menu";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/shadcn/tooltip";
+import { shortenFileName } from "@/lib/utils";
+import { NewsLetterResponseType } from "@/types/newsletterType";
+import { ColumnDef } from "@tanstack/react-table";
+import { Eye, MoreHorizontal } from "lucide-react";
+import moment from "moment";
+import Link from "next/link";
 
-type NewsLetterColumnPropsType = { 
+type NewsLetterColumnPropsType = {
   handleDelete: (id: number) => void;
   setSelectedNewsLetter: (data: NewsLetterResponseType | null) => void;
   setOpenViewModal: (open: boolean) => void;
-}
+};
 
-export const newsLetterColumns = ({ handleDelete, setSelectedNewsLetter, setOpenViewModal }: NewsLetterColumnPropsType): ColumnDef<NewsLetterResponseType>[] => {
+export const newsLetterColumns = ({
+  handleDelete,
+  setSelectedNewsLetter,
+  setOpenViewModal,
+}: NewsLetterColumnPropsType): ColumnDef<NewsLetterResponseType>[] => {
   return [
-    // {
-    //   accessorKey: "name",
-    //   header: "Name",
-    //   cell: ({ row }) => row.original?.name || "N/A",
-    //   size: 70,
-    // },
     {
       accessorKey: "subject",
       header: "Subject",
@@ -35,20 +42,25 @@ export const newsLetterColumns = ({ handleDelete, setSelectedNewsLetter, setOpen
       header: "Summary",
       cell: ({ row }) => (
         <>
-          {
-            row.original?.summary?.length > 150 ? <TooltipProvider>
+          {row.original?.summary?.length > 150 ? (
+            <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <div className='line-clamp-2 max-w-fit'>{row.original?.summary || "N/A"}</div>
+                  <div className="line-clamp-2 max-w-fit">
+                    {row.original?.summary || "N/A"}
+                  </div>
                 </TooltipTrigger>
-                <TooltipContent className='max-w-sm' align='center' side='top'>
-                  <p className='text-gray-50 font-normal text-sm'>{row.original?.summary || "N/A"}</p>
+                <TooltipContent className="max-w-sm" align="center" side="top">
+                  <p className="text-gray-50 font-normal text-sm">
+                    {row.original?.summary || "N/A"}
+                  </p>
                 </TooltipContent>
               </Tooltip>
-            </TooltipProvider> : <div>{row.original?.summary || "N/A"}</div>
-          }
+            </TooltipProvider>
+          ) : (
+            <div>{row.original?.summary || "N/A"}</div>
+          )}
         </>
-
       ),
       size: 300,
     },
@@ -56,34 +68,39 @@ export const newsLetterColumns = ({ handleDelete, setSelectedNewsLetter, setOpen
       accessorKey: "files",
       header: "Files",
       cell: ({ row }) => {
-        const variants = ['green', 'purple', 'orange', 'red', 'blue']
+        const variants = ["green", "purple", "orange", "red", "blue"];
         return (
-          <div className='flex gap-2 flex-wrap'>
-            {
-              row?.original?.files?.map((item, index) => (
-                <Link href={item} key={index} target='_blank'>
-                  <Badge
-                    variant={variants[index] as any}
-                    text={shortenFileName(item?.split("/")[item?.split("/").length - 1])}
-                    isDot={false}
-                  />
-                </Link>
-              ))
-            }
+          <div className="flex gap-2 flex-wrap">
+            {row?.original?.files?.map((item, index) => (
+              <Link href={item} key={index} target="_blank">
+                <Badge
+                  variant={variants[index] as any}
+                  text={shortenFileName(
+                    item?.split("/")[item?.split("/").length - 1]
+                  )}
+                  isDot={false}
+                />
+              </Link>
+            ))}
           </div>
-        )
+        );
       },
       size: 200,
     },
     {
       accessorKey: "created_at",
       header: "Date",
-      cell: ({ row }) => `${moment.utc(row.original?.created_at).format("MMM DD, YYYY | hh:mm A") || "N/A"}`,
+      cell: ({ row }) =>
+        `${
+          moment
+            .utc(row.original?.created_at)
+            .format("MMM DD, YYYY | hh:mm A") || "N/A"
+        }`,
       size: 120,
     },
     {
-      id: 'actions',
-      header: ({ }) => {
+      id: "actions",
+      header: ({}) => {
         return (
           <h2 className="flex items-center text-center gap-2 cursor-pointer">
             Action
@@ -94,10 +111,7 @@ export const newsLetterColumns = ({ handleDelete, setSelectedNewsLetter, setOpen
         return (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button
-                variant="ghost"
-                className="h-8 w-8 p-0"
-              >
+              <Button variant="ghost" className="h-8 w-8 p-0">
                 <span className="sr-only">Open menu</span>
                 <MoreHorizontal />
               </Button>
@@ -112,9 +126,7 @@ export const newsLetterColumns = ({ handleDelete, setSelectedNewsLetter, setOpen
                 <Eye className="h-5 w-5" />
                 <span className="text-gray-500">View</span>
               </DropdownMenuItem>
-              <DropdownMenuItem
-                onClick={() => handleDelete(row.original.id)}
-              >
+              <DropdownMenuItem onClick={() => handleDelete(row.original.id)}>
                 <svg
                   width="20"
                   height="20"
@@ -135,5 +147,5 @@ export const newsLetterColumns = ({ handleDelete, setSelectedNewsLetter, setOpen
       },
       size: 60,
     },
-  ]
-}
+  ];
+};

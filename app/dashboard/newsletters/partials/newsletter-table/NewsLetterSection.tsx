@@ -6,14 +6,13 @@ import { debounce } from "lodash";
 import { Send } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 
-import Button from "@/components/button";
-
 import {
   useGetNewsLetterQuery,
   useDeleteNewsLetterMutation,
 } from "@/features/newsLetter/newsLetterSlice";
 
 import { beautifyErrors } from "@/lib/utils";
+import Button from "@/components/button";
 import { useToast } from "@/hooks/useToast";
 import NewsLetterView from "./NewsLetterView";
 import { Input } from "@/components/shadcn/input";
