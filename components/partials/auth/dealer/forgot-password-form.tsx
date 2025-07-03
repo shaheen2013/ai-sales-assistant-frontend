@@ -12,9 +12,11 @@ import { beautifyErrors } from "@/lib/utils";
 import { useToast } from "@/hooks/useToast";
 import { Input } from "@/components/shadcn/input";
 import { useForgotPasswordMutation } from "@/features/auth/authSlice";
+import { useRouter } from "next/navigation";
 
 export default function ForgotPasswordForm() {
   const toast = useToast();
+  const router = useRouter();
   const { status } = useSession();
 
   const [forgotPassword, { isLoading }] = useForgotPasswordMutation();
@@ -28,7 +30,7 @@ export default function ForgotPasswordForm() {
     terms: boolean;
   };
 
-  const { handleSubmit, control } = useForm<FormValues>({
+  const { handleSubmit, control, reset } = useForm<FormValues>({
     defaultValues: {
       name: "",
       email: "",
@@ -64,7 +66,10 @@ export default function ForgotPasswordForm() {
 
       if (data) {
         toast("success", "Password reset link sent to your email");
-        console.log("data", data);
+        if (data?.detail == "Password reset link sent to your email address") {
+          reset();
+          router.push(`/account-created?email=${formData.email}`);
+        }
       }
     } catch (error) {
       console.log(error);
