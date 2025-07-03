@@ -24,10 +24,10 @@ const NewsLetterView: FC<NewsLetterViewProps> = ({
       <DialogContent className="max-w-xl">
         <DialogTitle>Newsletter</DialogTitle>
         <div className="flex flex-col gap-5">
-          <div className="flex flex-col gap-1">
-            <h4 className="text-base font-medium text-gray-700">Name</h4>
-            <p className="text-sm text-gray-600 font-normal">{data?.name}</p>
-          </div>
+          {/* <div className="flex flex-col gap-1"> */}
+          {/* <h4 className="text-base font-medium text-gray-700">Name</h4> */}
+          {/* <p className="text-sm text-gray-600 font-normal">{data?.name}</p> */}
+          {/* </div> */}
           <div className="flex flex-col gap-1">
             <h4 className="text-base font-medium text-gray-700">Subject</h4>
             <p className="text-sm text-gray-600 font-normal">{data?.subject}</p>
@@ -52,7 +52,7 @@ const NewsLetterView: FC<NewsLetterViewProps> = ({
               ))}
             </div>
           </div>
-          <div className="flex flex-col gap-1">
+          {/* <div className="flex flex-col gap-1">
             <h4 className="text-base font-medium text-gray-700">Dealer</h4>
             <div className="flex gap-2 flex-wrap">
               {data?.dealer?.map((item, index) => (
@@ -64,9 +64,9 @@ const NewsLetterView: FC<NewsLetterViewProps> = ({
                 />
               ))}
             </div>
-          </div>
+          </div> */}
           <div className="flex flex-col gap-1">
-            <h4 className="text-base font-semibold text-gray-700">Summary</h4>
+            <h4 className="text-base font-semibold text-gray-700">Date</h4>
             <p className="text-sm text-gray-600 font-normal">
               {moment.utc(data?.created_at).format("MMM DD, YYYY | hh:mm A")}
             </p>
