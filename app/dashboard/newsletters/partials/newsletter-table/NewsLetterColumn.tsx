@@ -6,19 +6,19 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/shadcn/dropdown-menu";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/shadcn/tooltip";
+// import {
+//   Tooltip,
+//   TooltipContent,
+//   TooltipProvider,
+//   TooltipTrigger,
+// } from "@/components/shadcn/tooltip";
 import { shortenFileName } from "@/lib/utils";
 import { NewsLetterResponseType } from "@/types/newsletterType";
 import { ColumnDef } from "@tanstack/react-table";
 import { Eye, MoreHorizontal } from "lucide-react";
 import moment from "moment";
 import Link from "next/link";
-import { useState } from "react";
+// import { useState } from "react";
 
 type NewsLetterColumnPropsType = {
   handleDelete: (id: number) => void;
@@ -31,7 +31,7 @@ export const newsLetterColumns = ({
   setSelectedNewsLetter,
   setOpenViewModal,
 }: NewsLetterColumnPropsType): ColumnDef<NewsLetterResponseType>[] => {
-  const [showMore, setShowMore] = useState(false);
+  // const [showMore, setShowMore] = useState(false);
   return [
     {
       accessorKey: "subject",
