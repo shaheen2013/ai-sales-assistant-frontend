@@ -72,7 +72,12 @@ export const newsLetterColumns = ({
         return (
           <div className="flex gap-2 flex-wrap">
             {row?.original?.files?.map((item, index) => (
-              <Link href={item} key={index} target="_blank">
+              <Link
+                href={item}
+                key={index}
+                target="_blank"
+                className="flex-wrap flex break-words overflow-hidden"
+              >
                 <Badge
                   variant={variants[index] as any}
                   text={shortenFileName(

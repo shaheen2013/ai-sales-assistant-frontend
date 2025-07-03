@@ -39,7 +39,7 @@ const Badge: FC<BadgePropsType> = ({ variant, text, isDot = true }) => {
   return (
     <div
       className={cn(
-        "px-2 py-0.5 rounded-2xl flex items-center gap-1 max-w-fit shadow-sm",
+        "px-2 py-0.5 rounded-2xl flex items-center gap-1 max-w-fit shadow-sm break-words overflow-hidden",
         colors[variant]?.bgColor
       )}
     >
@@ -48,14 +48,14 @@ const Badge: FC<BadgePropsType> = ({ variant, text, isDot = true }) => {
           className={cn("w-1.5 h-1.5 rounded-full", colors[variant]?.dotColor)}
         />
       )}
-      <div
+      <p
         className={cn(
-          "text-xs font-medium capitalize",
+          "text-xs font-medium capitalize break-words overflow-hidden",
           colors[variant]?.textColor
         )}
       >
         {text}
-      </div>
+      </p>
     </div>
   );
 };

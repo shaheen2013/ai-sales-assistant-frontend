@@ -89,7 +89,7 @@ const NewsLetterSection = () => {
 
   return (
     <div>
-      <div className="flex justify-between items-center gap-3 mb-6">
+      <div className="flex lg:flex-row flex-col justify-between items-center gap-3 mb-6 ">
         <h2 className="text-gray-400 font-semibold text-2xl">Newsletters</h2>
 
         <Button variant="primary" className="!py-3 h-11">
@@ -104,7 +104,7 @@ const NewsLetterSection = () => {
       </div>
 
       <div className="p-4 rounded-2xl outline outline-1 outline-offset-[-1px] outline-gray-50 mt-4">
-        <div className="flex items-center justify-between">
+        <div className="flex lg:flex-row flex-col items-center justify-between lg:gap-0 gap-3">
           <div className="flex flex-col items-center gap-3">
             <Input
               placeholder="Search..."
@@ -149,11 +149,13 @@ const NewsLetterSection = () => {
 
         {typeof newsLetterData?.count === "number" &&
           newsLetterData?.count > 10 && (
-            <Pagination
-              page={page}
-              onPageChange={setPage}
-              totalPage={Math.ceil(newsLetterData?.count / 10)}
-            />
+            <div className="flex justify-center mt-4">
+              <Pagination
+                page={page}
+                onPageChange={setPage}
+                totalPage={Math.ceil(newsLetterData?.count / 10)}
+              />
+            </div>
           )}
 
         {/* Newsletter view */}
