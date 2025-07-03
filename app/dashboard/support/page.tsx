@@ -64,8 +64,6 @@ export default function DashboardSupport() {
       page_size: 10,
     });
 
-  console.log("supportTicketsData => ", supportTicketsData);
-
   return (
     <div>
       <Tabs
@@ -311,7 +309,7 @@ function SupportTable({
                 alt=""
                 height="30"
                 width="30"
-                className="rounded-full"
+                className="rounded-full h-7 w-7 object-cover"
               />
             ) : (
               <svg
