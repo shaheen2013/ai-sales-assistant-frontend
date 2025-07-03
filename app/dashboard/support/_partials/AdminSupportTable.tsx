@@ -13,9 +13,7 @@ import {
   getPaginationRowModel,
 } from "@tanstack/react-table";
 import Image from "next/image";
-
-import { useToast } from "@/hooks/useToast";
-import { SupportTicketType } from "@/types/supportTicketType";
+import { MoreVerticalIcon } from "lucide-react";
 
 import {
   Select,
@@ -41,9 +39,9 @@ import {
   TableHead,
   TableHeader,
 } from "@/components/shadcn/table";
-import { MoreVerticalIcon } from "lucide-react";
-
+import { useToast } from "@/hooks/useToast";
 import { Button } from "@/components/shadcn/button";
+import { SupportTicketType } from "@/types/supportTicketType";
 import TableSkeleton from "@/components/skeleton/TableSkeleton";
 
 import {
@@ -59,10 +57,9 @@ import {
   DropdownMenuContent,
 } from "@/components/shadcn/dropdown-menu";
 
-import { beautifyErrors, cn } from "@/lib/utils";
+import { beautifyErrors } from "@/lib/utils";
 
 import Badge from "@/components/badge/Badge";
-// import AdminSupportDialog from "./AdminSupportDialog";
 import { Controller, useForm } from "react-hook-form";
 import { Input, InputCopy } from "@/components/shadcn/input";
 import moment from "moment";
@@ -108,8 +105,6 @@ export default function SupportTable({
   const [rowSelection, setRowSelection] = useState({});
   const [openEditModal, setOpenEditModal] = useState(false);
 
-  const [currentTicket, setCurrentTicket] = useState<any>(null);
-
   /*--RTK Query--*/
   const [deleteSupportTicket, { isLoading: deleteTicketLoading }] =
     useDeleteAdminSupportTicketMutation();
@@ -128,7 +123,6 @@ export default function SupportTable({
   };
 
   const handleEditClick = (id: string | number) => {
-    setCurrentTicket(id);
     setOpenEditModal(true);
 
     const selectedTicket: any = data.find((ticket) => ticket.id === id);
@@ -166,6 +160,32 @@ export default function SupportTable({
       setOpenEditModal(false);
     } catch (err) {
       toast("error", beautifyErrors(err));
+    }
+  };
+
+  const handleInventoryDelete = async (id: string | number) => {
+    const confirm = window.confirm(
+      "Are you sure you want to delete? This action cannot be undone."
+    );
+
+    if (!confirm) {
+      return;
+    }
+
+    try {
+      const { data, error } = await deleteSupportTicket(String(id));
+
+      if (error) {
+        console.log("Error deleting ticket:", error);
+        toast("error", beautifyErrors(error));
+        return;
+      }
+
+      console.log("Ticket deleted successfully:", data);
+      toast("success", "Ticket deleted successfully!");
+    } catch (error) {
+      console.error("Error deleting ticket:", error);
+      toast("error", "Something went wrong while deleting the ticket.");
     }
   };
 
@@ -428,19 +448,10 @@ export default function SupportTable({
                 </DropdownMenuItem>
 
                 <DropdownMenuItem
-                  //   onSelect={(e) => {
-                  //     e.preventDefault();
-                  //     e.stopPropagation();
-                  //     handleDeleteTicket(row.original.ticket_id);
-                  //   }}
-
                   onClick={() => {
                     // confirmation dialog
+                    handleInventoryDelete(row?.original?.ticket_id);
                   }}
-                  //   className={cn(
-                  //     deleteTicketLoading &&
-                  //       "cursor-not-allowed opacity-70 pointer-events-none"
-                  //   )}
                 >
                   <svg
                     width="20"
@@ -588,13 +599,6 @@ export default function SupportTable({
       </div>
 
       {/* Support Dialog */}
-      {/* <AdminSupportDialog
-        open={openEditModal}
-        onOpenChange={setOpenEditModal}
-        data={currentTicket}
-        setData={setCurrentTicket}
-      /> */}
-
       <Dialog open={openEditModal} onOpenChange={setOpenEditModal}>
         <DialogContent className="max-w-[700px] max-h-[90vh] overflow-hidden flex flex-col p-4">
           <DialogHeader className="text-[#717882] text-xl font-semibold flex items-center flex-row justify-between border-b border-[#eff4fa] pb-4 mb-4">
@@ -781,7 +785,7 @@ export default function SupportTable({
               </div>
 
               {/* Button Row */}
-              <div className="flex flex-col sm:flex-row items-center justify-end gap-4 mt-8">
+              <div className="flex flex-col sm:flex-row items-center justify-end gap-4 mt-8 mb-3">
                 <Button
                   //   variant="red"
                   className="text-sm !font-medium min-w-[85px] w-full sm:w-auto bg-red-500"
