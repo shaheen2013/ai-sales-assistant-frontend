@@ -12,9 +12,12 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "@/components/partials/dashboard/dashboard-dropdown";
+import { Skeleton } from "@/components/shadcn/skeleton";
 
 export default function DashboardHeader() {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
+
+  const isLoading = status === "loading";
 
   const { toggleSidebar } = useSidebar();
 
@@ -65,16 +68,29 @@ export default function DashboardHeader() {
           </svg>
         </div>
         <div>
-          <h2 className="text-gray-500 font-semibold lg:text-2xl text-xl mb-1">
-            Hello, {session?.user?.name || "Anonymous"}!
-          </h2>
-          <p className="text-gray-300 lg:text-base text-sm">
-            {session?.user?.user_type == "admin" ? (
-              "Let's get started."
-            ) : (
-              <span>Welcome back, let&apos;s explore now!</span>
-            )}
-          </p>
+          {isLoading ? (
+            <>
+              <Skeleton className="w-[260px] h-[26px] mb-2" />
+              <Skeleton className="w-[180px] h-[25px]" />
+            </>
+          ) : (
+            <>
+              <h2 className="text-gray-500 font-semibold lg:text-2xl text-xl mb-1">
+                Hello,{" "}
+                <span className="capitalize">
+                  {session?.user?.name || "Anonymous"}!
+                </span>
+              </h2>
+
+              <p className="text-gray-300 lg:text-base text-sm">
+                {session?.user?.user_type == "admin" ? (
+                  "Let's get started."
+                ) : (
+                  <span>Welcome back, let&apos;s explore now!</span>
+                )}
+              </p>
+            </>
+          )}
         </div>
       </div>
 
@@ -84,10 +100,10 @@ export default function DashboardHeader() {
         <Notification />
 
         {/* language  */}
-        <div className="lg:block hidden">
+        <div className="block">
           <DropdownMenu onOpenChange={handleOpenChange}>
             <DropdownMenuTrigger asChild>
-              <div className="cursor-pointer px-3 py-2 rounded-lg border relative flex gap-3 justify-center items-center h-[42px]">
+              <div className="cursor-pointer px-3 py-2 rounded-lg border relative flex lg:gap-3 justify-center items-center h-[42px]">
                 {/* image  */}
                 <div className="rounded-full h-5 w-5 overflow-hidden">
                   <Image
@@ -99,7 +115,9 @@ export default function DashboardHeader() {
                   />
                 </div>
 
-                <span className="text-gray-300 text-lg">Eng (US)</span>
+                <span className="text-gray-300 text-lg hidden lg:block">
+                  Eng (US)
+                </span>
 
                 {/* arrow  */}
                 <svg
