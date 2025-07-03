@@ -52,6 +52,13 @@ const NewsLetterSection = () => {
 
   /*--Functions--*/
   const handleDeleteNewsLetter = async (id: number) => {
+    // window confirmation dialog
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this newsletter?"
+    );
+
+    if (!confirmDelete) return;
+
     try {
       await deleteNewsLetter({
         id,
@@ -63,7 +70,7 @@ const NewsLetterSection = () => {
         },
       }).unwrap();
 
-      toast("success", "NewsLetter deleted successfully");
+      toast("success", "Newsletter deleted successfully");
     } catch (err) {
       toast("error", beautifyErrors(err));
     }

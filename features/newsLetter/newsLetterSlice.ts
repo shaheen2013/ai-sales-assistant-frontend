@@ -4,7 +4,10 @@ import { PaginatedResponse } from "@/types/paginatedType";
 
 export const newsLetter = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getNewsLetter: builder.query<PaginatedResponse<NewsLetterResponseType>, Record<string, any>>({
+    getNewsLetter: builder.query<
+      PaginatedResponse<NewsLetterResponseType>,
+      Record<string, any>
+    >({
       query: (queryParams) => ({
         method: "GET",
         url: `/admin-dashboard/news-letter/`,
@@ -17,23 +20,25 @@ export const newsLetter = apiSlice.injectEndpoints({
         method: "DELETE",
         url: `/admin-dashboard/news-letter/${id}/`,
       }),
-      onQueryStarted: async (arg, { dispatch, queryFulfilled }) => {
-        const patchResults = dispatch(
-          newsLetter.util.updateQueryData("getNewsLetter", arg?.queryParams, (draft) => {
-            if (draft?.results) {
-              draft.results = draft.results.filter((item) => item.id !== arg.id)
-            }
-          })
-        )
+      // onQueryStarted: async (arg, { dispatch, queryFulfilled }) => {
+      //   const patchResults = dispatch(
+      //     newsLetter.util.updateQueryData("getNewsLetter", arg?.queryParams, (draft) => {
+      //       if (draft?.results) {
+      //         draft.results = draft.results.filter((item) => item.id !== arg.id)
+      //       }
+      //     })
+      //   )
 
-        try {
-          await queryFulfilled;
-        } catch (err) {
-          patchResults.undo();
-        }
-      }
-    })
+      //   try {
+      //     await queryFulfilled;
+      //   } catch (err) {
+      //     patchResults.undo();
+      //   }
+      // }
+      invalidatesTags: ["getNewsLetter"],
+    }),
   }),
 });
 
-export const { useGetNewsLetterQuery, useDeleteNewsLetterMutation } = newsLetter;
+export const { useGetNewsLetterQuery, useDeleteNewsLetterMutation } =
+  newsLetter;
