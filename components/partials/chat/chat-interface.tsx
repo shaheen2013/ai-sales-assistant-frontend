@@ -64,7 +64,7 @@ ChatAppProps) {
           <header className="flex justify-between lg:items-center border-b pb-4">
             <div>
               <h2 className="text-gray-[#2B3545] font-semibold lg:mb-0 mb-3">
-                N/A
+                {/* N/A */}
               </h2>
             </div>
 
