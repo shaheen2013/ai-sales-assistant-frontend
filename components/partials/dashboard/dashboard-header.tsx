@@ -49,7 +49,7 @@ export default function DashboardHeader() {
     <div className="top-0 sticky bg-white flex justify-between px-6 py-5 shadow z-10">
       {/* left */}
       <div className="flex gap-4 items-center">
-        <div className="lg:hidden">
+        <div className="md:hidden">
           <svg
             width="24"
             height="24"
@@ -67,6 +67,7 @@ export default function DashboardHeader() {
             ></path>
           </svg>
         </div>
+
         <div>
           {isLoading ? (
             <>
