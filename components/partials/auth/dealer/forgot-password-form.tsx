@@ -90,7 +90,7 @@ export default function ForgotPasswordForm() {
             htmlFor="email"
             className="text-sm mb-1 text-[#414651] font-medium"
           >
-            Email/Phone <span className="text-primary-500">*</span>
+            Email Address <span className="text-primary-500">*</span>
           </label>
           <Controller
             name="email"
@@ -130,7 +130,7 @@ export default function ForgotPasswordForm() {
           loading={loading || isLoading}
           disabled={loading || isLoading}
         >
-          Forgot Password
+          Send Recovery Email
         </Button>
       </form>
 
