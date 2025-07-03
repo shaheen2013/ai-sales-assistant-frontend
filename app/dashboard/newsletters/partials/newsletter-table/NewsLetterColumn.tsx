@@ -18,12 +18,12 @@ type NewsLetterColumnPropsType = {
 
 export const newsLetterColumns = ({ handleDelete, setSelectedNewsLetter, setOpenViewModal }: NewsLetterColumnPropsType): ColumnDef<NewsLetterResponseType>[] => {
   return [
-    {
-      accessorKey: "name",
-      header: "Name",
-      cell: ({ row }) => row.original?.name || "N/A",
-      size: 70,
-    },
+    // {
+    //   accessorKey: "name",
+    //   header: "Name",
+    //   cell: ({ row }) => row.original?.name || "N/A",
+    //   size: 70,
+    // },
     {
       accessorKey: "subject",
       header: "Subject",
