@@ -73,6 +73,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@hookform/devtools": "^4.4.0",
     "@tailwindcss/postcss": "^4",
     "@types/linkify-it": "^5",
     "@types/lodash": "^4",

@@ -1,43 +1,42 @@
 "use client";
 
-import Button from "@/components/button";
-import SimpleSelect from "@/components/select/SimpleSelect";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/shadcn/dialog";
-import { Input, InputCopy } from "@/components/shadcn/input";
-import { Textarea } from "@/components/shadcn/textarea";
-import {
-  useDeleteAdminSupportTicketMutation,
-  useUpdateAdminSupportTicketMutation,
-} from "@/features/admin/adminSupportSlice";
-import { useToast } from "@/hooks/useToast";
-import { beautifyErrors } from "@/lib/utils";
-import { SupportTicketType } from "@/types/supportTicketType";
 import moment from "moment";
 import React, { FC } from "react";
 import { Controller, useForm } from "react-hook-form";
 
-type AdminSupportDialogPropsType = {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  data: SupportTicketType | null;
-};
+import {
+  Dialog,
+  DialogTitle,
+  DialogHeader,
+  DialogContent,
+} from "@/components/shadcn/dialog";
 
-type FormDataType = {
-  status: string;
-};
+import {
+  useDeleteAdminSupportTicketMutation,
+  useUpdateAdminSupportTicketMutation,
+} from "@/features/admin/adminSupportSlice";
 
-const AdminSupportDialog: FC<AdminSupportDialogPropsType> = ({
-  data,
-  onOpenChange,
-  open,
-}) => {
+import Button from "@/components/button";
+import { beautifyErrors } from "@/lib/utils";
+import { useToast } from "@/hooks/useToast";
+import { Textarea } from "@/components/shadcn/textarea";
+import SimpleSelect from "@/components/select/SimpleSelect";
+import { Input, InputCopy } from "@/components/shadcn/input";
+import { SupportTicketType } from "@/types/supportTicketType";
+
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/shadcn/select";
+
+const AdminSupportDialog = ({ data, onOpenChange, open, setData }: any) => {
   /*--Hook Forms--*/
-  const { control, handleSubmit } = useForm<FormDataType>({
+  const { control, handleSubmit } = useForm({
     defaultValues: {
       status: data?.status,
     },
@@ -49,6 +48,7 @@ const AdminSupportDialog: FC<AdminSupportDialogPropsType> = ({
   /*--RTK Query--*/
   const [updateSupportTicket, { isLoading: updateSupportTicketLoading }] =
     useUpdateAdminSupportTicketMutation();
+
   const [deleteSupportTicket, { isLoading: deleteTicketLoading }] =
     useDeleteAdminSupportTicketMutation();
 
@@ -63,7 +63,7 @@ const AdminSupportDialog: FC<AdminSupportDialogPropsType> = ({
   //   }
   // };
 
-  const onSubmit = async (formData: FormDataType) => {
+  const onSubmit = async (formData: any) => {
     try {
       const response = await updateSupportTicket({
         ticketId: data?.ticket_id,
@@ -87,8 +87,9 @@ const AdminSupportDialog: FC<AdminSupportDialogPropsType> = ({
 
         <div className="overflow-auto h-full ">
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
-              <div className="xl:col-span-2 grid grid-cols-12 gap-4 border-b border-[#eff4fa] pb-4">
+            <div className="grid grid-cols-12 gap-4">
+              {/* Top Info: Dealer ID and Ticket ID */}
+              <div className="col-span-12 grid grid-cols-12 gap-4 border-b border-[#eff4fa] pb-4">
                 <InputCopy
                   type="input"
                   id="dealerId"
@@ -96,7 +97,7 @@ const AdminSupportDialog: FC<AdminSupportDialogPropsType> = ({
                   value={data?.dealer?.id}
                   copyText={String(data?.dealer?.id)}
                   disabled
-                  wrapperClassName="col-span-12 xl:col-span-6"
+                  wrapperClassName="col-span-12 md:col-span-6"
                 />
                 <InputCopy
                   type="problemId"
@@ -104,112 +105,149 @@ const AdminSupportDialog: FC<AdminSupportDialogPropsType> = ({
                   label="Support Ticket Id"
                   value={data?.ticket_id}
                   disabled
-                  wrapperClassName="col-span-12 xl:col-span-6"
+                  wrapperClassName="col-span-12 md:col-span-6"
                   copyText={data?.ticket_id}
                 />
               </div>
 
+              {/* Dealer Name */}
               <Input
-                placeholder={"e.g. John Doe"}
+                placeholder="e.g. John Doe"
                 label="Dealer Name"
                 className="rounded-lg h-11"
-                wrapperClassName="xl:col-span-2"
+                wrapperClassName="col-span-12"
                 disabled
                 value={data?.dealer?.name}
               />
 
+              {/* Email */}
               <Input
                 className="rounded-lg h-11"
                 placeholder="dealer@teez.com"
                 label="Email"
+                wrapperClassName="col-span-12 md:col-span-6"
                 disabled
                 value={data?.dealer?.email}
               />
 
+              {/* Phone */}
               <Input
                 className="rounded-lg h-11 disabled:!text-[#A4A7AE]"
-                // placeholder="+001 654 265"
                 label="Phone"
+                wrapperClassName="col-span-12 md:col-span-6"
                 disabled
                 value={data?.dealer?.phone || "N/A"}
               />
 
+              {/* Created Date */}
               <Input
                 className="rounded-lg h-11"
-                placeholder="Today 22 Otc, 2025"
+                placeholder="Today 22 Oct, 2025"
                 label="Created Date"
+                wrapperClassName="col-span-12 sm:col-span-6"
                 disabled
-                value={moment(data?.created_at)?.format("DD MMM, YYYY")}
+                value={moment(data?.created_at).format("DD MMM, YYYY")}
               />
 
+              {/* Created Time */}
               <Input
                 className="rounded-lg h-11"
-                placeholder="06 : 00 AM"
+                placeholder="06:00 AM"
                 label="Created Time"
+                wrapperClassName="col-span-12 sm:col-span-6"
                 disabled
-                value={moment(data?.created_at)?.format("hh:mm A")}
+                value={moment(data?.created_at).format("hh:mm A")}
               />
 
+              {/* Problem Summary */}
               <Textarea
                 label="Problem Summary"
                 placeholder="Problem description"
                 className="min-h-[98px]"
-                wrapperClassName="xl:col-span-2"
+                wrapperClassName="col-span-12"
                 value={data?.description}
                 helperText="This is the problem description provided by the dealer."
                 disabled
               />
 
-              <Controller
-                name="status"
-                control={control}
-                defaultValue={data?.status}
-                render={({ field }) => (
-                  <SimpleSelect
-                    {...field}
-                    options={[
-                      {
-                        label: "Open",
-                        value: "open",
-                      },
-                      {
-                        label: "Close",
-                        value: "closed",
-                      },
-                      {
-                        label: "In Progress",
-                        value: "in_progress",
-                      },
-                      {
-                        label: "Resolved",
-                        value: "resolved",
-                      },
-                    ]}
-                    label="Status"
-                    wrapperClassName="xl:col-span-2"
-                    triggerClassName="max-w-full"
-                    placeholder="Select Status"
-                  />
-                )}
-              />
+              {/* Status Select */}
+              <div className="col-span-12">
+                <Controller
+                  name="status"
+                  control={control}
+                  // defaultValue={data?.status}
+                  render={({ field }) => (
+                    // <SimpleSelect
+                    //             {...field}
+                    //             options={[
+                    //               {
+                    //                 label: "Open",
+                    //                 value: "open",
+                    //               },
+                    //               {
+                    //                 label: "Close",
+                    //                 value: "closed",
+                    //               },
+                    //               {
+                    //                 label: "In Progress",
+                    //                 value: "in_progress",
+                    //               },
+                    //               {
+                    //                 label: "Resolved",
+                    //                 value: "resolved",
+                    //               },
+                    //             ]}
+                    //             label="Status"
+                    //             wrapperClassName="xl:col-span-2"
+                    //             triggerClassName="max-w-full"
+                    //             placeholder="Select Status"
+                    //           />
+                    //         )}
+                    //       />
+
+                    <Select
+                      onValueChange={field.onChange}
+                      value={field.value}
+                      // defaultValue={data?.status}
+                      disabled={updateSupportTicketLoading}
+                    >
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Select status" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectGroup>
+                          <SelectItem value="open">Open</SelectItem>
+                          <SelectItem value="closed">Closed</SelectItem>
+                          <SelectItem value="in_progress">
+                            In Progress
+                          </SelectItem>
+                          <SelectItem value="resolved">Resolved</SelectItem>
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                  )}
+                />
+              </div>
             </div>
 
-            <div className="flex items-center justify-end gap-4 mt-[50px] ">
+            {/* Button Row */}
+            <div className="flex flex-col sm:flex-row items-center justify-end gap-4 mt-8">
               <Button
                 variant="red"
-                className="text-sm !font-medium max-w-fit [&>svg]:m-0 min-w-[85px]"
+                className="text-sm !font-medium min-w-[85px] w-full sm:w-auto"
                 loading={deleteTicketLoading}
                 disabled={deleteTicketLoading}
                 type="button"
                 onClick={() => {
                   onOpenChange(false);
+                  setData(null);
                 }}
               >
                 Cancel
               </Button>
               <Button
                 variant="primary"
-                className="text-sm !font-medium max-w-fit [&>svg]:m-0 min-w-[187px]"
+                className="text-sm !font-medium min-w-[187px] w-full sm:w-auto"
                 loading={updateSupportTicketLoading}
                 disabled={updateSupportTicketLoading}
               >
