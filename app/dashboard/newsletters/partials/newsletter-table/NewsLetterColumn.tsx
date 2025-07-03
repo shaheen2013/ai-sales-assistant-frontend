@@ -18,6 +18,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Eye, MoreHorizontal } from "lucide-react";
 import moment from "moment";
 import Link from "next/link";
+import { useState } from "react";
 
 type NewsLetterColumnPropsType = {
   handleDelete: (id: number) => void;
@@ -30,6 +31,7 @@ export const newsLetterColumns = ({
   setSelectedNewsLetter,
   setOpenViewModal,
 }: NewsLetterColumnPropsType): ColumnDef<NewsLetterResponseType>[] => {
+  const [showMore, setShowMore] = useState(false);
   return [
     {
       accessorKey: "subject",
@@ -42,24 +44,7 @@ export const newsLetterColumns = ({
       header: "Summary",
       cell: ({ row }) => (
         <>
-          {row.original?.summary?.length > 150 ? (
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <div className="line-clamp-2 max-w-fit">
-                    {row.original?.summary || "N/A"}
-                  </div>
-                </TooltipTrigger>
-                <TooltipContent className="max-w-sm" align="center" side="top">
-                  <p className="text-gray-50 font-normal text-sm">
-                    {row.original?.summary || "N/A"}
-                  </p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-          ) : (
-            <div>{row.original?.summary || "N/A"}</div>
-          )}
+          <div>{row.original?.summary || "N/A"}</div>
         </>
       ),
       size: 300,
