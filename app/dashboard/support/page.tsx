@@ -29,7 +29,10 @@ export default function DashboardSupport() {
         defaultValue=""
         className=""
         value={status}
-        onValueChange={setStatus}
+        onValueChange={(e) => {
+          setPage(1); // Reset page to 1 when status changes
+          setStatus(e);
+        }}
       >
         <TabsList>
           <TabsTrigger value="">
