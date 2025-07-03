@@ -1,10 +1,11 @@
-import Badge from "@/components/badge/Badge";
-import { Dialog, DialogContent, DialogTitle } from "@/components/shadcn/dialog";
-import { shortenFileName } from "@/lib/utils";
-import { NewsLetterResponseType } from "@/types/newsletterType";
-import moment from "moment";
 import Link from "next/link";
+import moment from "moment";
 import React, { FC } from "react";
+
+import { shortenFileName } from "@/lib/utils";
+import Badge from "@/components/badge/Badge";
+import { NewsLetterResponseType } from "@/types/newsletterType";
+import { Dialog, DialogContent, DialogTitle } from "@/components/shadcn/dialog";
 
 type NewsLetterViewProps = {
   data: NewsLetterResponseType | null;
@@ -32,10 +33,12 @@ const NewsLetterView: FC<NewsLetterViewProps> = ({
             <h4 className="text-base font-medium text-gray-700">Subject</h4>
             <p className="text-sm text-gray-600 font-normal">{data?.subject}</p>
           </div>
+
           <div className="flex flex-col gap-1">
             <h4 className="text-base font-medium text-gray-700">Summary</h4>
             <p className="text-sm text-gray-600 font-normal">{data?.summary}</p>
           </div>
+
           <div className="flex flex-col gap-1">
             <h4 className="text-base font-medium text-gray-700">Files</h4>
             <div className="flex gap-2 flex-wrap">
@@ -52,8 +55,10 @@ const NewsLetterView: FC<NewsLetterViewProps> = ({
               ))}
             </div>
           </div>
-          {/* <div className="flex flex-col gap-1">
+
+          <div className="flex flex-col gap-1">
             <h4 className="text-base font-medium text-gray-700">Dealer</h4>
+
             <div className="flex gap-2 flex-wrap">
               {data?.dealer?.map((item, index) => (
                 <Badge
@@ -63,8 +68,12 @@ const NewsLetterView: FC<NewsLetterViewProps> = ({
                   key={index}
                 />
               ))}
+
+              {data?.dealer?.length === 0 && (
+                <p className="text-sm text-gray-600 font-normal">N/A</p>
+              )}
             </div>
-          </div> */}
+          </div>
           <div className="flex flex-col gap-1">
             <h4 className="text-base font-semibold text-gray-700">Date</h4>
             <p className="text-sm text-gray-600 font-normal">
