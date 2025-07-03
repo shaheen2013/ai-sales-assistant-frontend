@@ -79,7 +79,7 @@ export default function PricingPlanSection() {
   const [selectedLearnMorePlan, setSelectedLearnMorePlan] = useState<any>("");
 
   const currentPlan = pricingPlans?.find(
-    (plan: any) => plan.id === dataCurrentPlan?.subscription?.product?.id
+    (plan: any) => plan.id === dataCurrentPlan?.subscription?.product?.id && !dataCurrentPlan?.subscription?.canceled_at
   );
 
   const currentPlanDetails = pricingPlansForSettingPlan.find(
