@@ -1,10 +1,22 @@
 "use client";
 
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/shadcn/table';
-import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
-import React from 'react';
-import TableSkeleton from '@/components/skeleton/TableSkeleton';
-import { NewsLetterResponseType } from '@/types/newsletterType';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/shadcn/table";
+import {
+  ColumnDef,
+  flexRender,
+  getCoreRowModel,
+  useReactTable,
+} from "@tanstack/react-table";
+import React from "react";
+import TableSkeleton from "@/components/skeleton/TableSkeleton";
+import { NewsLetterResponseType } from "@/types/newsletterType";
 
 interface NewsLetterDataTableProps {
   columns: ColumnDef<NewsLetterResponseType, unknown>[];
@@ -24,49 +36,62 @@ const NewsLetterDataTable = ({
   });
 
   return (
-    <div className="rounded-2xl mt-4">
-      <Table className='rounded-2xl'>
+    <div className=" mt-4">
+      <Table className="">
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
-                <TableHead key={header.id} className='rounded-tl-2xl rounded-tr-2xl border-b border-[#E9EAEB]' style={{
-                  minWidth: header.column.columnDef.size,
-                  maxWidth: header.column.columnDef.size,
-                }}>
-                  {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
+                <TableHead
+                  key={header.id}
+                  className="border-b border-[#E9EAEB]"
+                  style={{
+                    minWidth: header.column.columnDef.size,
+                    maxWidth: header.column.columnDef.size,
+                  }}
+                >
+                  {header.isPlaceholder
+                    ? null
+                    : flexRender(
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
                 </TableHead>
               ))}
             </TableRow>
           ))}
         </TableHeader>
         <TableBody>
-          {
-            loading ? <TableRow>
+          {loading ? (
+            <TableRow>
               <TableCell colSpan={6} className="space-y-2">
                 <TableSkeleton />
               </TableCell>
-            </TableRow> : table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow key={row.id}>
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id} className='bg-white border-b border-[#E9EAEB]' style={{
+            </TableRow>
+          ) : table.getRowModel().rows?.length ? (
+            table.getRowModel().rows.map((row) => (
+              <TableRow key={row.id}>
+                {row.getVisibleCells().map((cell) => (
+                  <TableCell
+                    key={cell.id}
+                    className="bg-white border-b border-[#E9EAEB]"
+                    style={{
                       minWidth: cell.column.columnDef.size,
                       maxWidth: cell.column.columnDef.size,
-                    }}>
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell colSpan={columns.length} className="h-24 text-center">
-                  No results.
-                </TableCell>
+                    }}
+                  >
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </TableCell>
+                ))}
               </TableRow>
-            )
-          }
+            ))
+          ) : (
+            <TableRow>
+              <TableCell colSpan={columns.length} className="h-24 text-center">
+                No results.
+              </TableCell>
+            </TableRow>
+          )}
         </TableBody>
       </Table>
 

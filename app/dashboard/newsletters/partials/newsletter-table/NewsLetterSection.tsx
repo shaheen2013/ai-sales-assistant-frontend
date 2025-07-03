@@ -1,24 +1,26 @@
 "use client";
 
-import { Send } from "lucide-react";
-import React, { useState } from "react";
-import NewsLetterDataTable from "./NewsLetterDataTable";
-
-import Pagination from "@/components/pagination/Pagination";
-import SimpleSelect from "@/components/select/SimpleSelect";
-import Button from "@/components/button";
 import Link from "next/link";
-import { newsLetterColumns } from "./NewsLetterColumn";
-import {
-  useDeleteNewsLetterMutation,
-  useGetNewsLetterQuery,
-} from "@/features/newsLetter/newsLetterSlice";
-import NewsLetterView from "./NewsLetterView";
-import { NewsLetterResponseType } from "@/types/newsletterType";
-import { Input } from "@/components/shadcn/input";
+import { useState } from "react";
 import { debounce } from "lodash";
-import { useToast } from "@/hooks/useToast";
+import { Send } from "lucide-react";
+
+import Button from "@/components/button";
+
+import {
+  useGetNewsLetterQuery,
+  useDeleteNewsLetterMutation,
+} from "@/features/newsLetter/newsLetterSlice";
+
 import { beautifyErrors } from "@/lib/utils";
+import { useToast } from "@/hooks/useToast";
+import NewsLetterView from "./NewsLetterView";
+import { Input } from "@/components/shadcn/input";
+import { newsLetterColumns } from "./NewsLetterColumn";
+import NewsLetterDataTable from "./NewsLetterDataTable";
+import SimpleSelect from "@/components/select/SimpleSelect";
+import Pagination from "@/components/pagination/Pagination";
+import { NewsLetterResponseType } from "@/types/newsletterType";
 
 const NewsLetterSection = () => {
   /*--Custom Hooks--*/
@@ -40,6 +42,7 @@ const NewsLetterSection = () => {
       search,
       ...(subscription && { subscription_name: subscription }),
     });
+
   const [deleteNewsLetter] = useDeleteNewsLetterMutation();
 
   /*--Functions--*/
@@ -64,7 +67,7 @@ const NewsLetterSection = () => {
   return (
     <div>
       <div className="flex justify-between items-center gap-3 mb-6">
-        <h2 className="text-gray-400 font-semibold text-2xl">Newsletter</h2>
+        <h2 className="text-gray-400 font-semibold text-2xl">Newsletters</h2>
 
         <Button variant="primary" className="!py-3 h-11">
           <Link
@@ -89,8 +92,8 @@ const NewsLetterSection = () => {
           <SimpleSelect
             options={[
               {
-                label: "Basic",
-                value: "basic",
+                label: "Business",
+                value: "business",
               },
               {
                 label: "Enterprise",
