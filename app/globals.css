@@ -82,14 +82,14 @@ html {
   }
 
   .message-scrollbar::-webkit-scrollbar {
-    width: 10px;
+    width: 8px;
     height: 20px;
   }
 
   /* responsive scrollbar */
   @media (max-width: 768px) {
     .message-scrollbar::-webkit-scrollbar {
-      width: 8px;
+      width: 6px;
       height: 16px;
     }
   }
