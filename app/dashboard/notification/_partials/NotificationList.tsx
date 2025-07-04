@@ -113,7 +113,7 @@ const NotificationList = () => {
           await refetchNotifications();
           await refetchNotificationCount();
         } else {
-          toast("error", data?.error);
+          // toast("error", data?.error);
         }
       };
 
