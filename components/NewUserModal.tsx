@@ -55,7 +55,7 @@ export default function NewUserModal() {
     basicProfile: true, // false by default, true for onboarding
   });
 
-  const [step, setStep] = useState<number>(2); // 1 for first step
+  const [step, setStep] = useState<number>(3); // 1 for first step
 
   const { data: pricingPlans } = useGetDealerPricingPlansQuery();
 
@@ -568,7 +568,7 @@ export default function NewUserModal() {
                 </div>
 
                 {/* about */}
-                <div className="flex flex-col col-span-12 lg:col-span-6">
+                <div className="flex flex-col col-span-12">
                   <Controller
                     control={control}
                     name="about"
@@ -579,7 +579,7 @@ export default function NewUserModal() {
                         helperText="This is a brief description about yourself."
                         label="About Yourself"
                         placeholder="Enter a description..."
-                        className="min-h-[98px] col-span-2 placeholder:text-gray-100"
+                        className="min-h-[98px] placeholder:text-gray-100"
                       />
                     )}
                   />
@@ -588,7 +588,7 @@ export default function NewUserModal() {
             </div>
 
             {/* footer */}
-            <div className="flex justify-end gap-3 mt-6">
+            <div className="flex lg:flex-row flex-col justify-end gap-3 mt-6">
               <Button
                 variant="outline"
                 className="text-primary-500 border-primary-200"
@@ -662,10 +662,10 @@ export default function NewUserModal() {
 
               <form
                 onSubmit={handleSubmitDealer(handleDealerProfile)}
-                className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4"
+                className="grid grid-cols-12 gap-4 mt-4"
               >
                 {/* business name */}
-                <div className="flex flex-col">
+                <div className="flex flex-col col-span-12 lg:col-span-6">
                   <label
                     htmlFor="name"
                     className="text-sm mb-1 text-[#414651] font-medium"
@@ -690,7 +690,7 @@ export default function NewUserModal() {
                 </div>
 
                 {/* business email */}
-                <div className="flex flex-col">
+                <div className="flex flex-col col-span-12 lg:col-span-6">
                   <label
                     htmlFor="email"
                     className="text-sm mb-1 text-[#414651] font-medium"
@@ -720,7 +720,7 @@ export default function NewUserModal() {
                   />
                 </div>
 
-                <div className="flex flex-col col-span-2">
+                <div className="flex flex-col col-span-12">
                   <Controller
                     control={controlDealer}
                     name="business_summary"
@@ -744,12 +744,12 @@ export default function NewUserModal() {
             </div>
 
             {/* footer */}
-            <div className="flex justify-between items-center gap-3 mt-6">
+            <div className="flex lg:flex-row flex-col lg:justify-between lg:items-center gap-3 mt-6">
               {/* back button */}
-              <div>
+              <div className="">
                 <Button
                   variant="outline"
-                  className="gap-1 px-3 pl-2"
+                  className="gap-1 px-3 pl-2 lg:w-auto w-full"
                   onClick={() => {
                     setStep(1);
                   }}
@@ -770,7 +770,7 @@ export default function NewUserModal() {
                 </Button>
               </div>
 
-              <div className="flex gap-3">
+              <div className="flex lg:flex-row flex-col gap-3">
                 <Button
                   variant="outline"
                   className="text-primary-500 border-primary-200"
