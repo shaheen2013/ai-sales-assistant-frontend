@@ -4,9 +4,23 @@ import { useGetCurrentSubscriptionPlanQuery } from "@/features/dealer/dealerProf
 import AppointBookingSection from "./appointment-booking/AppointBookingSection";
 import TalkToHumanSection from "./talk-to-human/TalkToHumanSection";
 import TechnicalVisitSection from "./technical-visit/TechnicalVisitSection";
+import Spinner from "@/components/spinner/Spinner";
+import SomethingWentWrong from "@/components/SomethingWentWrong";
 
 export default function DealerAppoinmentContent() {
-  const { data } = useGetCurrentSubscriptionPlanQuery();
+  const { data, isLoading, isError } = useGetCurrentSubscriptionPlanQuery();
+
+  if (isLoading) {
+    return (
+      <div className="h-full flex justify-center items-center">
+        <Spinner className="size-12" />
+      </div>
+    );
+  }
+
+  if (isError) {
+    return <SomethingWentWrong />;
+  }
 
   return (
     <div className="grid grid-cols-12 gap-5 relative rounded-lg">
