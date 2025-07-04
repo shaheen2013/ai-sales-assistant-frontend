@@ -53,10 +53,10 @@ export default function NewUserModal() {
   const [number, setNumber] = useState<string>("");
 
   const [modals, setModals] = useState({
-    basicProfile: true, // false by default, true for onboarding
+    basicProfile: false, // false by default, true for onboarding
   });
 
-  const [step, setStep] = useState<number>(3); // 1 for first step
+  const [step, setStep] = useState<number>(1); // 1 for first step
 
   const { data: pricingPlans } = useGetDealerPricingPlansQuery();
 
@@ -850,14 +850,20 @@ export default function NewUserModal() {
                       className="p-0 pb-2 rounded-none mb-3"
                     >
                       <AccordionTrigger className="text-sm font-semibold text-gray-400">
-                        What&&apos;s included in the monthly voice minutes?
+                        What happens if I exceed my plan's included voice
+                        minutes?
                       </AccordionTrigger>
 
                       <AccordionContent className="text-sm font-normal text-gray-300 pr-6">
-                        Your plan&apos;s included minutes apply to all voice
-                        conversations handled by the AI assistant on behalf of
-                        your dealership. This includes inbound buyer inquiries,
-                        appointment bookings, trade-in discussions, and more.
+                        <p className="mb-3">
+                          If you go over your monthly included voice minutes,
+                          you'll be charged an overage fee per additional
+                          minute.
+                        </p>
+
+                        <p>
+                          Business Plan: $0.15/min & Enterprise Plan: $0.12/min
+                        </p>
                       </AccordionContent>
                     </AccordionItem>
 
@@ -866,13 +872,12 @@ export default function NewUserModal() {
                       className="p-0 pb-2 rounded-none mb-3"
                     >
                       <AccordionTrigger className="text-sm font-semibold text-gray-400">
-                        What happens if we exceed our included voice minutes?
+                        Can I upgrade or downgrade my plan later?
                       </AccordionTrigger>
                       <AccordionContent className="text-sm font-normal text-gray-300 pr-6">
-                        If you exceed your included voice minutes, you will be
-                        charged for additional minutes at the rate specified in
-                        your plan. You can monitor your usage through the
-                        dashboard to avoid unexpected charges.
+                        Yes! You can change your plan at any time based on your
+                        dealership's needs. Any changes will reflect in your
+                        next billing cycle.
                       </AccordionContent>
                     </AccordionItem>
 
@@ -881,13 +886,12 @@ export default function NewUserModal() {
                       className="p-0 pb-2 rounded-none mb-3"
                     >
                       <AccordionTrigger className="text-sm font-semibold text-gray-400">
-                        Is there a contract or can I cancel anytime?
+                        Do all plans include the AI voice assistant and chatbot?
                       </AccordionTrigger>
                       <AccordionContent className="text-sm font-normal text-gray-300 pr-6">
-                        There is no long-term contract required. You can cancel
-                        your subscription at any time through your account
-                        settings. Your plan will remain active until the end of
-                        the current billing cycle.
+                        Absolutely. Every plan includes access to our GPT-4o
+                        powered AI voice assistant and unlimited website chatbot
+                        for text-based support.
                       </AccordionContent>
                     </AccordionItem>
 
@@ -896,14 +900,14 @@ export default function NewUserModal() {
                       className="p-0 pb-2 rounded-none border-none mb-3"
                     >
                       <AccordionTrigger className="text-sm font-semibold text-gray-400">
-                        Can Teez transfer callers to a real person?
+                        What's the difference between Business and Enterprise
+                        plans?
                       </AccordionTrigger>
                       <AccordionContent className="text-sm font-normal text-gray-300 pr-6">
-                        Yes, Teez can transfer callers to a real person at any
-                        time during the conversation. If the AI assistant is
-                        unable to handle a specific request or if the caller
-                        requests to speak with a human, the call can be
-                        seamlessly transferred to a designated team member.
+                        The Enterprise Plan includes more voice minutes, a lower
+                        overage rate, and advanced features like multi-location
+                        routing, custom AI voice personas, SIP support, and
+                        CRM/DMS integrations.
                       </AccordionContent>
                     </AccordionItem>
                   </Accordion>
@@ -988,6 +992,12 @@ export default function NewUserModal() {
                       </label>
                     );
                   })}
+
+                  {pricingPlans?.length === 0 && (
+                    <div className="text-center text-gray-400">
+                      No plans available at the moment. Please check back later.
+                    </div>
+                  )}
 
                   <Link
                     target="_blank"
