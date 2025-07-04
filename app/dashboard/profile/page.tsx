@@ -19,7 +19,9 @@ export default function DealerProfile() {
 
   const dealerProfileData = data?.data;
 
-  if (isLoading) return <DealerProfileOverviewSkeleton />;
+  if (isLoading) {
+    return <DealerProfileOverviewSkeleton />;
+  }
 
   if (isError) {
     return <SomethingWentWrong />;
