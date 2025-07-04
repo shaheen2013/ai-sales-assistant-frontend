@@ -55,7 +55,7 @@ export default function NewUserModal() {
     basicProfile: true, // false by default, true for onboarding
   });
 
-  const [step, setStep] = useState<number>(3); // 1 for first step
+  const [step, setStep] = useState<number>(1); // 1 for first step
 
   const { data: pricingPlans } = useGetDealerPricingPlansQuery();
 
@@ -303,7 +303,7 @@ export default function NewUserModal() {
                   />
                 </svg>
 
-                <h2 className="lg:text-2xl text-lg text-[#1F2A37] font-medium">
+                <h2 className="lg:text-2xl text-xl text-[#1F2A37] font-medium">
                   Basic Personal Information
                 </h2>
               </div>
@@ -655,7 +655,7 @@ export default function NewUserModal() {
                   />
                 </svg>
 
-                <h2 className="text-2xl text-[#1F2A37] font-medium">
+                <h2 className="lg:text-2xl text-xl text-[#1F2A37] font-medium">
                   Your Business Information
                 </h2>
               </div>
@@ -807,7 +807,7 @@ export default function NewUserModal() {
           </div>
         </ContentSwitcher>
 
-        <ContentSwitcher value="3 " currentStep={step}>
+        <ContentSwitcher value="3" currentStep={step}>
           <div className="">
             <h2 className="text-center text-2xl font-bold">
               Basic Profile Setup
@@ -839,15 +839,15 @@ export default function NewUserModal() {
                   />
                 </svg>
 
-                <h2 className="text-2xl text-[#1F2A37] font-medium">
+                <h2 className="lg:text-2xl text-xl text-[#1F2A37] font-medium">
                   Select your Magic plan!
                 </h2>
               </div>
 
-              <div className="grid grid-cols-2 gap-9">
+              <div className="grid lg:grid-cols-2 grid-cols-1 gap-9">
                 {/* left */}
                 <div className="">
-                  <h2 className="text-gray-400 font-bold text-2xl mt-2 mb-2">
+                  <h2 className="text-gray-400 font-bold text-2xl mt-2 mb-6">
                     FAQ&apos;s
                   </h2>
 
@@ -1019,11 +1019,11 @@ export default function NewUserModal() {
             </div>
 
             {/* footer */}
-            <div className="flex justify-between items-center gap-3 mt-6">
-              <div>
+            <div className="flex lg:flex-row flex-col lg:justify-between lg:items-center gap-3 mt-6">
+              <div className="">
                 <Button
                   variant="outline"
-                  className="gap-1 px-3 pl-2"
+                  className="gap-1 px-3 pl-2 lg:w-auto w-full"
                   onClick={() => {
                     setStep(2);
                   }}
@@ -1044,7 +1044,7 @@ export default function NewUserModal() {
                 </Button>
               </div>
 
-              <div className="flex gap-3 ">
+              <div className="flex gap-3 lg:flex-row flex-col">
                 <Button
                   variant="outline"
                   className="text-primary-500 border-primary-200"
