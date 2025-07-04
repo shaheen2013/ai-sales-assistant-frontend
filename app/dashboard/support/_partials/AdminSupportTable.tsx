@@ -59,11 +59,10 @@ import {
 } from "@/components/shadcn/dropdown-menu";
 
 import { beautifyErrors } from "@/lib/utils";
-
 import Badge from "@/components/badge/Badge";
 import { Controller, useForm } from "react-hook-form";
-import { Input, InputCopy } from "@/components/shadcn/input";
 import { Textarea } from "@/components/shadcn/textarea";
+import { Input, InputCopy } from "@/components/shadcn/input";
 
 export default function SupportTable({
   data,
@@ -113,14 +112,14 @@ export default function SupportTable({
     useUpdateAdminSupportTicketMutation();
 
   /*--Functions--*/
-  const handleDeleteTicket = async (id: string) => {
-    try {
-      await deleteSupportTicket(id);
-      toast("success", "Ticket deleted successfully!");
-    } catch (err) {
-      toast("error", beautifyErrors(err));
-    }
-  };
+  // const handleDeleteTicket = async (id: string) => {
+  //   try {
+  //     await deleteSupportTicket(id);
+  //     toast("success", "Ticket deleted successfully!");
+  //   } catch (err) {
+  //     toast("error", beautifyErrors(err));
+  //   }
+  // };
 
   const handleEditClick = (id: string | number) => {
     setOpenEditModal(true);
@@ -619,7 +618,7 @@ export default function SupportTable({
                         type="input"
                         id="dealerId"
                         label="Dealer ID"
-                        error={errors.dealer?.id?.message}
+                        error={errors?.dealer?.id?.message}
                         value={field.value}
                         copyText={field.value}
                         disabled
@@ -638,7 +637,7 @@ export default function SupportTable({
                         type="input"
                         id="supportTicketId"
                         label="Support Ticket Id"
-                        error={errors.id?.message}
+                        error={errors?.id?.message}
                         value={field.value}
                         copyText={field.value}
                         disabled
@@ -653,7 +652,7 @@ export default function SupportTable({
                 <Controller
                   name="dealer.name"
                   control={control}
-                  render={({ field, formState: { errors } }) => (
+                  render={({ field }) => (
                     <Input
                       placeholder="e.g. John Doe"
                       label="Dealer Name"
@@ -670,7 +669,7 @@ export default function SupportTable({
                 <Controller
                   name="dealer.email"
                   control={control}
-                  render={({ field, formState: { errors } }) => (
+                  render={({ field }) => (
                     <Input
                       className="rounded-lg h-11"
                       placeholder="dealer@teez.com"
@@ -688,7 +687,7 @@ export default function SupportTable({
                   name="dealer.phone"
                   control={control}
                   rules={{ required: "VIN Number is required" }}
-                  render={({ field, formState: { errors } }) => (
+                  render={({ field }) => (
                     <Input
                       className="rounded-lg h-11 disabled:!text-[#A4A7AE]"
                       label="Phone"
@@ -705,7 +704,7 @@ export default function SupportTable({
                   name="created_at"
                   control={control}
                   rules={{ required: "VIN Number is required" }}
-                  render={({ field, formState: { errors } }) => (
+                  render={({ field }) => (
                     <Input
                       className="rounded-lg h-11"
                       placeholder="Today 22 Oct, 2025"
@@ -723,7 +722,7 @@ export default function SupportTable({
                   name="created_at"
                   control={control}
                   rules={{ required: "VIN Number is required" }}
-                  render={({ field, formState: { errors } }) => (
+                  render={({ field }) => (
                     <Input
                       className="rounded-lg h-11"
                       placeholder="06:00 AM"
@@ -741,7 +740,7 @@ export default function SupportTable({
                   name="description"
                   control={control}
                   rules={{ required: "VIN Number is required" }}
-                  render={({ field, formState: { errors } }) => (
+                  render={({ field }) => (
                     <Textarea
                       label="Problem Summary"
                       placeholder="Problem description"
