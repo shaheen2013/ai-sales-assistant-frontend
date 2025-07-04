@@ -43,6 +43,7 @@ import { useToast } from "@/hooks/useToast";
 import { countryCodes } from "@/static/CountryCodes";
 import { Button } from "@/components/shadcn/button";
 import { Input, InputPhoneNumber } from "@/components/shadcn/input";
+import { pricingPlanForHomepage } from "@/static/homepage";
 
 export default function NewUserModal() {
   const toast = useToast();
@@ -55,7 +56,7 @@ export default function NewUserModal() {
     basicProfile: true, // false by default, true for onboarding
   });
 
-  const [step, setStep] = useState<number>(1); // 1 for first step
+  const [step, setStep] = useState<number>(3); // 1 for first step
 
   const { data: pricingPlans } = useGetDealerPricingPlansQuery();
 
@@ -204,8 +205,6 @@ export default function NewUserModal() {
     const selectedPlanData = pricingPlans?.find(
       (plan: any) => plan.id === selectedPlan
     );
-
-    // console.log("selectedPlanData => ", selectedPlanData?.prices?.[0]?.id);
 
     try {
       const { data, error } = await createSubscription({
@@ -487,7 +486,6 @@ export default function NewUserModal() {
                       <Select
                         onValueChange={(value) => {
                           field.onChange(value);
-                          console.log("Selected country: ", value);
                         }}
                         value={field.value}
                       >
@@ -880,7 +878,7 @@ export default function NewUserModal() {
 
                     <AccordionItem
                       value="item-3"
-                      className="p-0 pb-2 rounded-none border-none mb-3"
+                      className="p-0 pb-2 rounded-none mb-3"
                     >
                       <AccordionTrigger className="text-sm font-semibold text-gray-400">
                         Is there a contract or can I cancel anytime?
@@ -914,14 +912,17 @@ export default function NewUserModal() {
                 {/* right */}
                 <div className="flex flex-col gap-3">
                   {pricingPlans?.map((plan: any, index: any) => {
+                    const currentPlanDetails = pricingPlanForHomepage.find(
+                      (e) => e?.name === plan?.name
+                    );
+
                     return (
                       <label
                         key={index}
-                        className="has-[:checked]:border-primary-400 has-[:checked]:text-primary-900 has-[:checked]:ring-indigo-200 flex w-full border border-gray-50 rounded-xl pt-4 px-4 cursor-pointer transition-all gap-3 group flex-col"
+                        className="has-[:checked]:border-primary-400 has-[:checked]:text-primary-900 has-[:checked]:ring-indigo-200 flex w-full border border-gray-50 rounded-xl pt-4 px-4 cursor-pointer transition-all gap-3 pb-3 group flex-col"
                       >
                         <div className="flex gap-3">
                           <input
-                            // defaultChecked={index === 0} // Default to the first plan being selected
                             onChange={() => {
                               setSelectedPlan(plan.id);
                             }}
@@ -938,7 +939,7 @@ export default function NewUserModal() {
                                 {plan.name}
                               </h2>
                               <h4 className="text-xs text-gray-400">
-                                Perfect for sell used cars
+                                {currentPlanDetails?.description}
                               </h4>
                             </div>
 
@@ -956,42 +957,33 @@ export default function NewUserModal() {
                         </div>
 
                         {/* benefits  */}
-                        <div className="pl-[25px]">
-                          {[
-                            "Manage up to 20 car listings",
-                            "AI-powered customer inquiries via text",
-                            "Basic lead generation assistance",
-                          ]?.map((benefit, index) => {
-                            return (
-                              <div
-                                key={index}
-                                className="text-xs text-gray-300 mb-3 flex gap-2"
-                              >
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  width="16"
-                                  height="16"
-                                  viewBox="0 0 16 16"
-                                  fill="none"
+                        <div className="flex flex-col gap-3 pl-[25px] group-has-[input:not(:checked)]:hidden">
+                          {currentPlanDetails?.benefits?.map(
+                            (benefit, index) => {
+                              return (
+                                <div
+                                  key={index}
+                                  className="text-xs text-gray-300 flex gap-2"
                                 >
-                                  <rect
-                                    x="16"
-                                    y="16"
-                                    width="16"
-                                    height="16"
-                                    rx="8"
-                                    transform="rotate(-180 16 16)"
-                                    fill="#55BB78"
-                                  />
-                                  <path
-                                    d="M6.98228 10.6663C6.77947 10.6663 6.58738 10.589 6.4643 10.4557L4.79846 8.65701C4.74695 8.60146 4.70935 8.53817 4.68781 8.47074C4.66626 8.40331 4.66118 8.33307 4.67287 8.26404C4.68457 8.195 4.71279 8.12853 4.75594 8.06842C4.79909 8.00831 4.85631 7.95573 4.92434 7.9137C4.99234 7.8715 5.06987 7.84068 5.15248 7.823C5.23509 7.80533 5.32115 7.80115 5.40574 7.8107C5.49033 7.82026 5.57178 7.84336 5.64542 7.87869C5.71906 7.91402 5.78345 7.96087 5.83489 8.01657L6.93099 9.19916L9.68688 5.58282C9.77828 5.46342 9.92389 5.37851 10.0918 5.34673C10.2597 5.31495 10.4362 5.33888 10.5825 5.41328C10.887 5.56796 10.9807 5.89561 10.7904 6.14478L7.53429 10.4157C7.47871 10.4889 7.40209 10.5499 7.3111 10.5935C7.2201 10.637 7.11747 10.6618 7.01212 10.6656C7.00186 10.6663 6.99254 10.6663 6.98228 10.6663Z"
-                                    fill="white"
-                                  />
-                                </svg>
-                                {benefit}
-                              </div>
-                            );
-                          })}
+                                  <div>
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      width="16"
+                                      height="16"
+                                      viewBox="0 0 16 16"
+                                      fill="none"
+                                    >
+                                      <path
+                                        d="M11.335 2.06544L11.4114 2.21801L11.9879 3.75099C12.0332 3.87171 12.1284 3.96697 12.2492 4.01226L13.7292 4.56753C14.3787 4.81121 14.7278 5.50524 14.5547 6.1619L14.5131 6.29259L13.8245 7.81541C13.7712 7.9328 13.7712 8.06751 13.8245 8.1849L14.4784 9.62411C14.7654 10.2557 14.5214 10.9932 13.9347 11.3352L13.7822 11.4116L12.2492 11.9881C12.1284 12.0333 12.0332 12.1286 11.9879 12.2493L11.4326 13.7294C11.189 14.3789 10.4949 14.7279 9.83826 14.5549L9.70758 14.5132L8.18475 13.8246C8.06736 13.7713 7.93265 13.7713 7.81526 13.8246L6.37605 14.4786C5.74448 14.7655 5.00693 14.5216 4.66498 13.9349L4.58856 13.7823L4.01211 12.2493C3.96682 12.1286 3.87156 12.0333 3.75084 11.9881L2.27076 11.4328C1.62126 11.1891 1.27224 10.4951 1.44531 9.83842L1.48695 9.70773L2.17552 8.1849C2.22886 8.06751 2.22886 7.9328 2.17552 7.81541L1.52159 6.3762C1.23462 5.74463 1.47858 5.00708 2.06529 4.66513L2.21786 4.58871L3.75084 4.01226C3.87156 3.96697 3.96682 3.87171 4.01211 3.75099L4.56738 2.27092C4.81105 1.62141 5.50509 1.27239 6.16175 1.44546L6.29243 1.48711L7.81526 2.17567C7.93265 2.22901 8.06736 2.22901 8.18475 2.17567L9.62396 1.52174C10.2555 1.23477 10.9931 1.47874 11.335 2.06544ZM5.40367 2.58466L4.84839 4.06474C4.71252 4.4269 4.42675 4.71267 4.06458 4.84855L2.58451 5.40382L2.48653 5.45513C2.31249 5.57574 2.24409 5.8071 2.33479 6.00671L2.98872 7.44592C3.14873 7.79809 3.14873 8.20223 2.98872 8.55439L2.32878 10.0074L2.30178 10.0992C2.264 10.3075 2.37924 10.5195 2.58451 10.5965L4.06458 11.1518C4.42675 11.2876 4.71252 11.5734 4.84839 11.9356L5.40367 13.4157L5.45497 13.5136C5.57558 13.6877 5.80695 13.7561 6.00656 13.6654L7.44577 13.0114C7.79793 12.8514 8.20207 12.8514 8.55424 13.0114L10.0073 13.6714L10.099 13.6984C10.3074 13.7362 10.5193 13.6209 10.5963 13.4157L11.1516 11.9356C11.2875 11.5734 11.5733 11.2876 11.9354 11.1518L13.4155 10.5965L13.5135 10.5452C13.6875 10.4246 13.7559 10.1932 13.6652 9.9936L13.0113 8.55439C12.8513 8.20223 12.8513 7.79809 13.0113 7.44592L13.6712 5.99287L13.6982 5.90115C13.736 5.6928 13.6208 5.48083 13.4155 5.40382L11.9354 4.84855C11.5733 4.71267 11.2875 4.4269 11.1516 4.06474L10.5963 2.58466L10.545 2.48668C10.4244 2.31265 10.1931 2.24424 9.99345 2.33494L8.55424 2.98887C8.20207 3.14888 7.79793 3.14888 7.44577 2.98887L6.00656 2.33494L5.97869 2.32339C5.74775 2.23675 5.49031 2.35373 5.40367 2.58466ZM6.97825 9.34681L10.1639 5.70607C10.3263 5.52044 10.6085 5.50163 10.7941 5.66405C10.9565 5.80617 10.9912 6.03996 10.8885 6.22054L10.8361 6.29425L7.33611 10.2942C7.18725 10.4644 6.93965 10.4933 6.75769 10.3754L6.68421 10.316L5.18421 8.81595C5.0098 8.64154 5.0098 8.35877 5.18421 8.18436C5.33682 8.03175 5.57239 8.01268 5.74574 8.12713L5.8158 8.18436L6.97825 9.34681L10.1639 5.70607L6.97825 9.34681Z"
+                                        fill="#34AD5D"
+                                      />
+                                    </svg>
+                                  </div>
+                                  {benefit}
+                                </div>
+                              );
+                            }
+                          )}
                         </div>
                       </label>
                     );
