@@ -40,6 +40,7 @@ import {
   useGetCurrentSubscriptionPlanQuery,
 } from "@/features/dealer/dealerProfileSlice";
 import NewUserModal from "@/components/NewUserModal";
+import Link from "next/link";
 
 const defaultPlans: {
   [key: string]: { minutes: number; description: string };
@@ -74,9 +75,10 @@ const DealerDashboardOverview = () => {
   const [wavesurfer, setWavesurfer] = useState<any>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [modals, setModals] = useState({
-    addMoreMinute: false,
+    addMoreMinute: false, // false
     billingSummery: false,
   });
+
   const [voice, setVoice] = useState("alloy");
 
   const [minutePlans, setMinutePlans] = useState<PlanType[]>([]);
@@ -476,11 +478,11 @@ const DealerDashboardOverview = () => {
         <DialogContent className="sm:max-w-[1000px] max-h-full overflow-auto">
           <DialogHeader>
             <DialogTitle className="mb-9">
-              <p className="text-gray-900 text-2xl font-bold text-center">
+              <p className="text-gray-500 text-2xl font-bold text-center">
                 Add More Minute
               </p>
 
-              <p className="text-sm text-gray-400 text-center font-normal">
+              <p className="text-sm text-gray-300 text-center font-normal">
                 Purchase additional minutes for your system to enhance its
                 capabilities and ensure seamless operation.
               </p>
@@ -563,12 +565,15 @@ const DealerDashboardOverview = () => {
                     ) : (
                       <div className="text-sm text-gray-400">
                         Your Current Plan{" "}
-                        <span className="text-green-500 underline">
+                        <Link
+                          href="/dashboard/settings?tab=Your+Plan"
+                          className="text-green-500 underline"
+                        >
                           {
                             dealerCurrentSubscription?.subscription?.product
                               ?.name
                           }
-                        </span>
+                        </Link>
                       </div>
                     )}
                   </div>
@@ -591,9 +596,21 @@ const DealerDashboardOverview = () => {
               onClick={handleBuyMinutes}
               loading={createMinuteSubscriptionLoading}
               disabled={dealerMinutePlansLoading}
-              className="min-w-[117px]"
+              className="px-6"
             >
               Buy Minutes
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="21"
+                height="20"
+                viewBox="0 0 21 20"
+                fill="none"
+              >
+                <path
+                  d="M8.23271 4.20694C8.53263 3.92125 9.00737 3.93279 9.29306 4.23271L14.2944 9.48318C14.5703 9.77285 14.5703 10.2281 14.2944 10.5178L9.29306 15.7682C9.00737 16.0681 8.53263 16.0797 8.23271 15.794C7.93279 15.5083 7.92125 15.0336 8.20694 14.7336L12.7155 10.0005L8.20694 5.26729C7.92125 4.96737 7.93279 4.49264 8.23271 4.20694Z"
+                  fill="white"
+                />
+              </svg>
             </Button>
           </div>
         </DialogContent>
