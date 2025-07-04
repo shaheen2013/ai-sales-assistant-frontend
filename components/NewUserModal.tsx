@@ -55,7 +55,7 @@ export default function NewUserModal() {
     basicProfile: true, // false by default, true for onboarding
   });
 
-  const [step, setStep] = useState<number>(1); // 1 for first step
+  const [step, setStep] = useState<number>(2); // 1 for first step
 
   const { data: pricingPlans } = useGetDealerPricingPlansQuery();
 
@@ -303,17 +303,17 @@ export default function NewUserModal() {
                   />
                 </svg>
 
-                <h2 className="text-2xl text-[#1F2A37] font-medium">
+                <h2 className="lg:text-2xl text-lg text-[#1F2A37] font-medium">
                   Basic Personal Information
                 </h2>
               </div>
 
               <form
                 onSubmit={handleSubmit(handleBasicProfile)}
-                className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4"
+                className="grid grid-cols-12 gap-4 mt-4"
               >
                 {/* name */}
-                <div className="flex flex-col">
+                <div className="flex flex-col col-span-12 lg:col-span-6">
                   <label
                     htmlFor="name"
                     className="text-sm mb-1 text-[#414651] font-medium"
@@ -338,7 +338,7 @@ export default function NewUserModal() {
                 </div>
 
                 {/* email */}
-                <div className="flex flex-col">
+                <div className="flex flex-col col-span-12 lg:col-span-6">
                   <label
                     htmlFor="email"
                     className="text-sm mb-1 text-[#414651] font-medium"
@@ -371,7 +371,7 @@ export default function NewUserModal() {
                 </div>
 
                 {/* phone */}
-                <div className="flex flex-col">
+                <div className="flex flex-col col-span-12 lg:col-span-6">
                   <label
                     htmlFor="phone"
                     className="text-sm mb-1 text-[#414651] font-medium"
@@ -401,7 +401,7 @@ export default function NewUserModal() {
                 </div>
 
                 {/* street */}
-                <div className="flex flex-col">
+                <div className="flex flex-col col-span-12 lg:col-span-6">
                   <label
                     htmlFor="street"
                     className="text-sm mb-1 text-[#414651] font-medium"
@@ -425,7 +425,7 @@ export default function NewUserModal() {
                 </div>
 
                 {/* city */}
-                <div className="flex flex-col">
+                <div className="flex flex-col col-span-12 lg:col-span-6">
                   <label
                     htmlFor="city"
                     className="text-sm mb-1 text-[#414651] font-medium"
@@ -449,7 +449,7 @@ export default function NewUserModal() {
                 </div>
 
                 {/* state */}
-                <div className="flex flex-col">
+                <div className="flex flex-col col-span-12 lg:col-span-6">
                   <label
                     htmlFor="state"
                     className="text-sm mb-1 text-[#414651] font-medium"
@@ -473,7 +473,7 @@ export default function NewUserModal() {
                 </div>
 
                 {/* country */}
-                <div className="flex flex-col">
+                <div className="flex flex-col col-span-12 lg:col-span-6">
                   <label
                     htmlFor="country"
                     className="text-sm mb-1 text-[#414651] font-medium"
@@ -544,7 +544,7 @@ export default function NewUserModal() {
                 </div>
 
                 {/* zip code */}
-                <div className="flex flex-col">
+                <div className="flex flex-col col-span-12 lg:col-span-6">
                   <label
                     htmlFor="zip"
                     className="text-sm mb-1 text-[#414651] font-medium"
@@ -568,7 +568,7 @@ export default function NewUserModal() {
                 </div>
 
                 {/* about */}
-                <div className="flex flex-col col-span-2">
+                <div className="flex flex-col col-span-12 lg:col-span-6">
                   <Controller
                     control={control}
                     name="about"
