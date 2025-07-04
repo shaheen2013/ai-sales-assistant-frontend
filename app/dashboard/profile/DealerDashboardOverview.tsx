@@ -232,7 +232,7 @@ const DealerDashboardOverview = () => {
 
               <div className="flex items-center gap-3">
                 <div className="border-r-2 border-white pr-3">
-                  <h2 className="text-gray-400 text-xs text-right">Used</h2>
+                  <h2 className="text-gray-400 text-sm text-right">Used</h2>
                   <h2 className="text-lg font-semibold">
                     {dealerDashboardOverviewData?.talk_time?.used ?? "NA"}/
                     {dealerDashboardOverviewData?.talk_time?.total ?? "NA"}{" "}
@@ -290,11 +290,12 @@ const DealerDashboardOverview = () => {
             <div className="gap-4 grid lg:grid-cols-2 mb-4">
               {/* left */}
               <div className="order-2 lg:order-1 border rounded-xl p-4">
-                <h2 className="font-bold text-xl text-gray">
+                <h2 className="font-semibold text-xl text-gray-500">
                   Number for AI Call
                 </h2>
                 <p className="text-gray-300 mb-3">
-                  All transactions are secure and encrypted
+                  Phone number used by Teez AI to make and receive voice calls
+                  via Twilio.
                 </p>
 
                 <hr className="mb-6" />
@@ -333,7 +334,11 @@ const DealerDashboardOverview = () => {
                   Set Voice for AI Call
                 </h2>
                 <p className="mb-6 text-gray-500 text-sm">
-                  The AI voice call will be tailored to your preferences.
+                  Select the AI voice that will be used during customer calls.
+                </p>
+
+                <p className="font-semibold text-base text-[#414651]">
+                  Choose Voice for AI Call{" "}
                 </p>
 
                 <Select
@@ -342,7 +347,7 @@ const DealerDashboardOverview = () => {
                   onValueChange={handleChangeDealerAssistanceVoice}
                 >
                   <SelectTrigger
-                    className="w-full"
+                    className="w-full h-11 mb-3"
                     postIcon={
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -370,7 +375,7 @@ const DealerDashboardOverview = () => {
                 </Select>
 
                 {/* audio player */}
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-4 mb-3">
                   <div className="flex-1">
                     <WavesurferPlayer
                       url={`/sounds/${voice}.wav`}
