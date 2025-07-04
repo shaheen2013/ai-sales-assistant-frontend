@@ -32,13 +32,8 @@ export const tradeInColumns = ({ handleChangeVisitStatus }: { handleChangeVisitS
     },
     {
       accessorKey: "ai_suggested_trade_in_price",
-      header: "AI Suggested Trade In Price",
+      header: "AI Suggested Price",
       cell: ({ row }) => `$${row.original?.ai_suggested_trade_in_price}` || "N/A",
-    },
-    {
-      accessorKey: "created_at",
-      header: "Date",
-      cell: ({ row }) => `${moment.utc(row.original?.buying_date).format("MMM DD, YYYY") || "N/A"}`,
     },
     {
       accessorKey: "Visited",
