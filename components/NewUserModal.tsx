@@ -2,22 +2,26 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
 import { Controller, useForm } from "react-hook-form";
 
 import {
   Accordion,
   AccordionItem,
-  AccordionContent,
   AccordionTrigger,
+  AccordionContent,
 } from "./shadcn/accordion";
+
 import Steps from "@/components/Steps";
 
 import {
-  useCreateSubscriptionMutation,
-  useGetDealerPricingPlansQuery,
-  useUpdateDealerBusinessProfileMutation,
-  useUpdateDealerProfileMutation,
-} from "@/features/dealer/dealerProfileSlice";
+  Select,
+  SelectItem,
+  SelectValue,
+  SelectGroup,
+  SelectTrigger,
+  SelectContent,
+} from "@/components/shadcn/select";
 
 import {
   AlertDialog,
@@ -25,15 +29,24 @@ import {
   AlertDialogHeader,
   AlertDialogContent,
 } from "@/components/shadcn/alert-dialog";
+
+import {
+  useCreateSubscriptionMutation,
+  useGetDealerPricingPlansQuery,
+  useUpdateDealerProfileMutation,
+  useUpdateDealerBusinessProfileMutation,
+} from "@/features/dealer/dealerProfileSlice";
+
+import { beautifyErrors } from "@/lib/utils";
+import { useToast } from "@/hooks/useToast";
 import { countryCodes } from "@/static/CountryCodes";
 import { Button } from "@/components/shadcn/button";
 import { Input, InputPhoneNumber } from "@/components/shadcn/input";
-
-import { useToast } from "@/hooks/useToast";
-import { beautifyErrors } from "@/lib/utils";
+import { Textarea } from "./shadcn/textarea";
 
 export default function NewUserModal() {
   const toast = useToast();
+  const { data: session } = useSession();
 
   const [selectedPlan, setSelectedPlan] = useState<string>("");
   const [number, setNumber] = useState<string>("");
@@ -62,6 +75,7 @@ export default function NewUserModal() {
   const [createSubscription, { isLoading: isLoadingCreateSubscription }] =
     useCreateSubscriptionMutation();
 
+  // onboarding modal
   useEffect(() => {
     if (window.localStorage.getItem("onboarding") == "true") {
       setModals({ ...modals, basicProfile: true });
@@ -69,6 +83,14 @@ export default function NewUserModal() {
       window.localStorage.removeItem("onboarding");
     }
   }, [modals]);
+
+  // setting default values for form fields
+  useEffect(() => {
+    if (session) {
+      setValue("name", session?.user?.name || "");
+      setValue("email", session?.user?.email || "");
+    }
+  }, [session]);
 
   const stepData = [
     { title: "1", description: "Personal Information" },
@@ -88,7 +110,7 @@ export default function NewUserModal() {
     about: string;
   };
 
-  const { handleSubmit, control } = useForm<BasicFormValues>({
+  const { handleSubmit, control, setValue } = useForm<BasicFormValues>({
     defaultValues: {
       name: "",
       email: "",
@@ -109,10 +131,6 @@ export default function NewUserModal() {
     },
   });
 
-  // const handleBasicPersonalInfo = () => {
-  //   handleSubmit(onSubmit)();
-  // };
-
   const handleBasicProfile = async (params: any) => {
     const userPhone = countryCodes.find((e: any) => e.code === number);
 
@@ -126,6 +144,7 @@ export default function NewUserModal() {
         state: params.state,
         country: params.country,
         zip: params.zip,
+        about: params.about,
       };
 
       const { error, data } = await updateProfile(payload);
@@ -217,30 +236,37 @@ export default function NewUserModal() {
     }
   };
 
-  // const plans = [
-  //   {
-  //     name: "Pro Plan",
-  //     price: "150",
-  //     benefits: [
-  //       "500 voice minutes",
-  //       "$0.15 per minute",
-  //       "Small to mid-size independent dealerships",
-  //       "Optional $250 one-time if integrations are needed",
-  //     ],
-  //   },
-  //   { name: "Business Plan", price: "300" },
-  //   { name: "Enterprise Plan", price: "999" },
-  // ];
-
   return (
     <AlertDialog
       open={modals.basicProfile}
       onOpenChange={() => setModals({ ...modals, basicProfile: false })}
     >
       <AlertDialogTitle></AlertDialogTitle>
+
       <AlertDialogContent className="lg:max-w-[1000px] max-w-[400px] max-h-screen overflow-y-auto">
         {/* header */}
-        <AlertDialogHeader></AlertDialogHeader>
+        <AlertDialogHeader>
+          {/* cross icon */}
+          <div>
+            <button
+              className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
+              onClick={() => setModals({ ...modals, basicProfile: false })}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+              >
+                <path
+                  d="M4.2097 4.3871L4.29289 4.29289C4.65338 3.93241 5.22061 3.90468 5.6129 4.2097L5.70711 4.29289L12 10.585L18.2929 4.29289C18.6834 3.90237 19.3166 3.90237 19.7071 4.29289C20.0976 4.68342 20.0976 5.31658 19.7071 5.70711L13.415 12L19.7071 18.2929C20.0676 18.6534 20.0953 19.2206 19.7903 19.6129L19.7071 19.7071C19.3466 20.0676 18.7794 20.0953 18.3871 19.7903L18.2929 19.7071L12 13.415L5.70711 19.7071C5.31658 20.0976 4.68342 20.0976 4.29289 19.7071C3.90237 19.3166 3.90237 18.6834 4.29289 18.2929L10.585 12L4.29289 5.70711C3.93241 5.34662 3.90468 4.77939 4.2097 4.3871L4.29289 4.29289L4.2097 4.3871Z"
+                  fill="#4B5563"
+                />
+              </svg>
+            </button>
+          </div>
+        </AlertDialogHeader>
 
         {/* body */}
         <ContentSwitcher value="1" currentStep={step}>
@@ -274,7 +300,9 @@ export default function NewUserModal() {
                   />
                 </svg>
 
-                <h2 className="text-2xl">Basic Personal Information</h2>
+                <h2 className="text-2xl text-[#1F2A37] font-medium">
+                  Basic Personal Information
+                </h2>
               </div>
 
               <form
@@ -317,7 +345,15 @@ export default function NewUserModal() {
                   <Controller
                     name="email"
                     control={control}
-                    rules={{ required: "Email is required" }}
+                    rules={{
+                      required: "Email is required",
+
+                      validate: {
+                        email: (value) =>
+                          /^\S+@\S+\.\S+$/.test(value) ||
+                          "Invalid email format",
+                      },
+                    }}
                     render={({ field, formState: { errors } }) => (
                       <Input
                         type="email"
@@ -337,12 +373,12 @@ export default function NewUserModal() {
                     htmlFor="phone"
                     className="text-sm mb-1 text-[#414651] font-medium"
                   >
-                    Phone <span className="text-primary-500">*</span>
+                    Phone Number <span className="text-primary-500">*</span>
                   </label>
                   <Controller
                     name="phone"
                     control={control}
-                    rules={{ required: "Your phone required" }}
+                    rules={{ required: "Phone number required" }}
                     render={({ field, formState: { errors } }) => (
                       <InputPhoneNumber
                         id="phone"
@@ -367,12 +403,11 @@ export default function NewUserModal() {
                     htmlFor="street"
                     className="text-sm mb-1 text-[#414651] font-medium"
                   >
-                    Street <span className="text-primary-500">*</span>
+                    Street
                   </label>
                   <Controller
                     name="street"
                     control={control}
-                    rules={{ required: "Street is required" }}
                     render={({ field, formState: { errors } }) => (
                       <Input
                         type="street"
@@ -392,12 +427,11 @@ export default function NewUserModal() {
                     htmlFor="city"
                     className="text-sm mb-1 text-[#414651] font-medium"
                   >
-                    City <span className="text-primary-500">*</span>
+                    City
                   </label>
                   <Controller
                     name="city"
                     control={control}
-                    rules={{ required: "City is required" }}
                     render={({ field, formState: { errors } }) => (
                       <Input
                         type="city"
@@ -417,12 +451,11 @@ export default function NewUserModal() {
                     htmlFor="state"
                     className="text-sm mb-1 text-[#414651] font-medium"
                   >
-                    State <span className="text-primary-500">*</span>
+                    State
                   </label>
                   <Controller
                     name="state"
                     control={control}
-                    rules={{ required: "State is required" }}
                     render={({ field, formState: { errors } }) => (
                       <Input
                         type="state"
@@ -442,21 +475,67 @@ export default function NewUserModal() {
                     htmlFor="country"
                     className="text-sm mb-1 text-[#414651] font-medium"
                   >
-                    Country <span className="text-primary-500">*</span>
+                    Country
                   </label>
                   <Controller
                     name="country"
                     control={control}
-                    rules={{ required: "country is required" }}
                     render={({ field, formState: { errors } }) => (
-                      <Input
-                        type="country"
-                        id="country"
-                        className="h-10"
-                        placeholder="country Here"
-                        error={errors?.country?.message}
-                        {...field}
-                      />
+                      // <Input
+                      //   type="country"
+                      //   id="country"
+                      //   className="h-10"
+                      //   placeholder="country Here"
+                      //   error={errors?.country?.message}
+                      //   {...field}
+                      // />
+
+                      <Select
+                        onValueChange={(value) => {
+                          // setValue("country", value);
+                          field.onChange(value);
+                          console.log("Selected country: ", value);
+                        }}
+                        value={field.value}
+                      >
+                        <SelectTrigger
+                          className="w-full"
+                          postIcon={
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="20"
+                              height="20"
+                              viewBox="0 0 20 20"
+                              fill="none"
+                            >
+                              <path
+                                d="M15.8527 7.64582C16.0484 7.84073 16.0489 8.15731 15.854 8.35292L10.389 13.8374C10.1741 14.0531 9.82477 14.0531 9.60982 13.8374L4.14484 8.35292C3.94993 8.15731 3.95049 7.84073 4.1461 7.64582C4.34171 7.4509 4.65829 7.45147 4.85321 7.64708L9.99942 12.8117L15.1456 7.64708C15.3406 7.45147 15.6571 7.4509 15.8527 7.64582Z"
+                                fill="#5D6679"
+                              />
+                            </svg>
+                          }
+                        >
+                          <SelectValue placeholder="Choose Country" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            {countryCodes.map((country) => (
+                              <SelectItem
+                                key={country.code}
+                                value={country.name}
+                              >
+                                {country.name}
+                              </SelectItem>
+                            ))}
+
+                            {/* <SelectItem value="apple">Apple</SelectItem>
+                            <SelectItem value="banana">Banana</SelectItem>
+                            <SelectItem value="blueberry">Blueberry</SelectItem>
+                            <SelectItem value="grapes">Grapes</SelectItem>
+                            <SelectItem value="pineapple">Pineapple</SelectItem> */}
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
                     )}
                   />
                 </div>
@@ -467,20 +546,37 @@ export default function NewUserModal() {
                     htmlFor="zip"
                     className="text-sm mb-1 text-[#414651] font-medium"
                   >
-                    Zip <span className="text-primary-500">*</span>
+                    Zip
                   </label>
                   <Controller
                     name="zip"
                     control={control}
-                    rules={{ required: "zip is required" }}
                     render={({ field, formState: { errors } }) => (
                       <Input
                         type="zip"
                         id="zip"
                         className="h-10"
-                        placeholder="zip Here"
+                        placeholder="Zip Code"
                         error={errors?.zip?.message}
                         {...field}
+                      />
+                    )}
+                  />
+                </div>
+
+                {/* about */}
+                <div className="flex flex-col col-span-2">
+                  <Controller
+                    control={control}
+                    name="about"
+                    render={({ field, fieldState: { error } }) => (
+                      <Textarea
+                        {...field}
+                        error={error?.message}
+                        helperText="This is a brief description about yourself."
+                        label="About Yourself"
+                        placeholder="Enter a description..."
+                        className="min-h-[98px] col-span-2 placeholder:text-gray-100"
                       />
                     )}
                   />
@@ -507,7 +603,7 @@ export default function NewUserModal() {
                   handleSubmit(handleBasicProfile)();
                 }}
               >
-                Continue
+                Save & Continue
                 <svg
                   width="20"
                   height="20"
