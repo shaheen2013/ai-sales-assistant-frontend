@@ -11,14 +11,39 @@ import { storeVisitColumns } from '../store-visit/StoreVisitColumns';
 import { testDriveVisitsColumns } from './TestDriveVisitColumns';
 import TradeInDataTable from '../trade-in/TradeInDataTable';
 import { tradeInColumns } from '../trade-in/TradeInColumn';
+import { useRouter, useSearchParams } from 'next/navigation';
+
+
+const technicalVisitSortOptions = [
+    {
+        label: 'Time',
+        value: 'created_at',
+    },
+    {
+        label: 'Preferred Date Time',
+        value: 'preferred_date_time',
+    }
+]
+
+const tradeInSortOptions = [
+    {
+        label: 'Request Time',
+        value: 'created_at',
+    },
+]
 
 
 const TechnicalVisitSection = () => {
+    /*--Next Hooks--*/
+    const router = useRouter();
+    const searchParams = useSearchParams();
+    const currentTab = searchParams.get("tab");
+
     /*--React State--*/
     const [page, setPage] = useState(1);
     const [sortBy, setSortBy] = useState<string>('');
     const [filterBy, setFilterBy] = useState<string>('');
-    const [tab, setTab] = useState('test_drive');
+    const [tab, setTab] = useState(currentTab || 'test_drive');
 
     /*--RTK Query--*/
     const { data: testDriveData, isFetching: testDriveIsFetching } = useGetTestDriveQuery({
@@ -97,6 +122,7 @@ const TechnicalVisitSection = () => {
                 <Tabs value={tab} onValueChange={(value) => {
                     setTab(value);
                     setPage(1);
+                    router.push(`/dashboard/appointment?tab=${value}`);
                 }} defaultValue='test_drive'>
                     <TabsList className='flex items-center justify-between gap-4'>
                         <div>
@@ -141,16 +167,7 @@ const TechnicalVisitSection = () => {
                                 label={filterBy && "Filter By"}
                             />
                             <SimpleSelect
-                                options={[
-                                    {
-                                        label: 'Time',
-                                        value: 'created_at',
-                                    },
-                                    {
-                                        label: 'Preferred Date Time',
-                                        value: 'preferred_date_time',
-                                    }
-                                ]}
+                                options={tab === "trade_in" ? tradeInSortOptions : technicalVisitSortOptions}
                                 placeholder="Sort By"
                                 triggerClassName="[&>span]:text-primary-500 [&>div>svg]:text-primary-500"
                                 value={sortBy}
