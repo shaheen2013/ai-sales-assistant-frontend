@@ -71,7 +71,7 @@ import { useSession } from "next-auth/react";
 const TalkToHumanSection = () => {
   const { data: session } = useSession();
 
-  console.log("Session Data:", session);
+  // console.log("Session Data:", session);
 
   /*--React State--*/
   const [page, setPage] = useState(1);

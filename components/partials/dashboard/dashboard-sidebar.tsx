@@ -33,7 +33,7 @@ export function DashboardSidebar() {
   const dashboardMenu = isAdmin ? dashboardUserMenu : dashboardDealerMenu;
 
   return (
-    <Sidebar>
+    <Sidebar className="">
       <SidebarContent className="pb-[150px]">
         {/* brand */}
         <div className="flex items-center justify-center py-9 mb-6">
