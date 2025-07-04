@@ -283,9 +283,7 @@ export const dashboardDealerMenu: SidebarSection[] = [
       {
         label: "My Profile",
         href: "/dashboard/profile",
-        icon: (
-         <UserRound />
-        ),
+        icon: <UserRound />,
       },
       {
         label: "Settings",
@@ -321,11 +319,11 @@ export const dashboardDealerMenu: SidebarSection[] = [
 
 export const languages: languages[] = [
   { name: "Eng (US)", flag: "/flags/us.png" },
-  { name: "China", flag: "/flags/cn.png" },
-  { name: "Denmark", flag: "/flags/de.png" },
-  { name: "Espain", flag: "/flags/es.png" },
-  { name: "France", flag: "/flags/fr.png" },
-  { name: "Italy", flag: "/flags/it.png" },
-  { name: "Portugal", flag: "/flags/pt.png" },
-  { name: "Russia", flag: "/flags/ru.png" },
+  // { name: "China", flag: "/flags/cn.png" },
+  // { name: "Denmark", flag: "/flags/de.png" },
+  // { name: "Espain", flag: "/flags/es.png" },
+  // { name: "France", flag: "/flags/fr.png" },
+  // { name: "Italy", flag: "/flags/it.png" },
+  // { name: "Portugal", flag: "/flags/pt.png" },
+  // { name: "Russia", flag: "/flags/ru.png" },
 ];
