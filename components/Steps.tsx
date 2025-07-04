@@ -25,6 +25,11 @@ export default function Steps({ steps, currentStep }: StepsProps) {
               <div className="absolute left-0 top-1/2 w-full h-[6px] rounded-r bg-gray-50 -z-10 transform -translate-y-1/2 hidden lg:flex" />
             )}
 
+            {/* completed connector line */}
+            {!isLastStep && index < currentStep - 1 && (
+              <div className="absolute left-0 top-1/2 w-full h-[6px] rounded-r bg-[#019935] -z-10 transform -translate-y-1/2 hidden lg:flex" />
+            )}
+
             {/* circle */}
             <div
               className={cn(
@@ -39,7 +44,7 @@ export default function Steps({ steps, currentStep }: StepsProps) {
               {index + 1}
             </div>
 
-            <span className="text-sm font-medium px-3 bg-white">
+            <span className="text-sm font-medium px-3 bg-white text-[#1F2A37]">
               {step.description}
             </span>
           </div>

@@ -38,11 +38,11 @@ import {
 } from "@/features/dealer/dealerProfileSlice";
 
 import { beautifyErrors } from "@/lib/utils";
+import { Textarea } from "./shadcn/textarea";
 import { useToast } from "@/hooks/useToast";
 import { countryCodes } from "@/static/CountryCodes";
 import { Button } from "@/components/shadcn/button";
 import { Input, InputPhoneNumber } from "@/components/shadcn/input";
-import { Textarea } from "./shadcn/textarea";
 
 export default function NewUserModal() {
   const toast = useToast();
@@ -55,7 +55,7 @@ export default function NewUserModal() {
     basicProfile: true, // false by default, true for onboarding
   });
 
-  const [step, setStep] = useState<number>(1); // 1 for first step
+  const [step, setStep] = useState<number>(3); // 1 for first step
 
   const { data: pricingPlans } = useGetDealerPricingPlansQuery();
 
@@ -128,6 +128,7 @@ export default function NewUserModal() {
     defaultValues: {
       business_name: "",
       business_email: "",
+      business_summary: "",
     },
   });
 
@@ -173,6 +174,7 @@ export default function NewUserModal() {
       const payload: any = {
         business_name: params.business_name,
         business_email: params.business_email,
+        business_summary: params.business_summary,
       };
 
       const { data, error } = await updateDealerProfile(payload);
@@ -274,6 +276,7 @@ export default function NewUserModal() {
             <h2 className="text-center text-2xl font-bold">
               Basic Profile Setup
             </h2>
+
             <h3 className="text-center mb-6 text-gray-200 text-sm">
               Quickly set up your profile with essential details to get started
               and personalize your experience.
@@ -652,20 +655,22 @@ export default function NewUserModal() {
                   />
                 </svg>
 
-                <h2 className="text-2xl">Your Business Information</h2>
+                <h2 className="text-2xl text-[#1F2A37] font-medium">
+                  Your Business Information
+                </h2>
               </div>
 
               <form
                 onSubmit={handleSubmitDealer(handleDealerProfile)}
                 className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4"
               >
-                {/* name */}
+                {/* business name */}
                 <div className="flex flex-col">
                   <label
                     htmlFor="name"
                     className="text-sm mb-1 text-[#414651] font-medium"
                   >
-                    Name <span className="text-primary-500">*</span>
+                    Business Name <span className="text-primary-500">*</span>
                   </label>
                   <Controller
                     name="business_name"
@@ -684,13 +689,13 @@ export default function NewUserModal() {
                   />
                 </div>
 
-                {/* email */}
+                {/* business email */}
                 <div className="flex flex-col">
                   <label
                     htmlFor="email"
                     className="text-sm mb-1 text-[#414651] font-medium"
                   >
-                    Email <span className="text-primary-500">*</span>
+                    Business Email <span className="text-primary-500">*</span>
                   </label>
                   <Controller
                     name="business_email"
@@ -714,42 +719,90 @@ export default function NewUserModal() {
                     )}
                   />
                 </div>
+
+                <div className="flex flex-col col-span-2">
+                  <Controller
+                    control={controlDealer}
+                    name="business_summary"
+                    render={({ field, fieldState: { error } }) => (
+                      <Textarea
+                        {...field}
+                        error={error?.message}
+                        helperText="This is a brief description about your business."
+                        label="Business Summary & Objective"
+                        placeholder="Enter a business objective..."
+                        className="min-h-[98px] col-span-2 placeholder:text-gray-100"
+                      />
+                    )}
+                  />
+                </div>
               </form>
+
+              <p className="text-sm text-[#535862] mt-1">
+                Give a summary for your business.
+              </p>
             </div>
 
             {/* footer */}
-            <div className="flex justify-end gap-3 mt-6">
-              <Button
-                variant="outline"
-                className="text-primary-500 border-primary-200"
-                onClick={() => {
-                  setModals({ ...modals, basicProfile: false });
-                }}
-              >
-                Skip for Now
-              </Button>
-
-              <Button
-                variant="primary"
-                loading={isLoadingUpdateDealerProfile}
-                onClick={() => {
-                  handleSubmitDealer(handleDealerProfile)();
-                }}
-              >
-                Continue
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 20 20"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
+            <div className="flex justify-between items-center gap-3 mt-6">
+              {/* back button */}
+              <div>
+                <Button
+                  variant="outline"
+                  className="gap-1 px-3 pl-2"
+                  onClick={() => {
+                    setStep(1);
+                  }}
                 >
-                  <path
-                    d="M7.73271 4.20694C8.03263 3.92125 8.50737 3.93279 8.79306 4.23271L13.7944 9.48318C14.0703 9.77285 14.0703 10.2281 13.7944 10.5178L8.79306 15.7682C8.50737 16.0681 8.03263 16.0797 7.73271 15.794C7.43279 15.5083 7.42125 15.0336 7.70694 14.7336L12.2155 10.0005L7.70694 5.26729C7.42125 4.96737 7.43279 4.49264 7.73271 4.20694Z"
-                    fill="white"
-                  />
-                </svg>
-              </Button>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                  >
+                    <path
+                      d="M12.2676 15.794C11.9677 16.0797 11.493 16.0681 11.2073 15.7682L6.20597 10.5178C5.93004 10.2281 5.93004 9.77284 6.20597 9.48318L11.2073 4.23271C11.493 3.93279 11.9677 3.92125 12.2676 4.20694C12.5676 4.49264 12.5791 4.96737 12.2934 5.26729L7.78483 10.0005L12.2934 14.7336C12.5791 15.0336 12.5676 15.5083 12.2676 15.794Z"
+                      fill="#5D6679"
+                    />
+                  </svg>
+                  Back
+                </Button>
+              </div>
+
+              <div className="flex gap-3">
+                <Button
+                  variant="outline"
+                  className="text-primary-500 border-primary-200"
+                  onClick={() => {
+                    setModals({ ...modals, basicProfile: false });
+                  }}
+                >
+                  Skip for Now
+                </Button>
+
+                <Button
+                  variant="primary"
+                  loading={isLoadingUpdateDealerProfile}
+                  onClick={() => {
+                    handleSubmitDealer(handleDealerProfile)();
+                  }}
+                >
+                  Save & Continue
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M7.73271 4.20694C8.03263 3.92125 8.50737 3.93279 8.79306 4.23271L13.7944 9.48318C14.0703 9.77285 14.0703 10.2281 13.7944 10.5178L8.79306 15.7682C8.50737 16.0681 8.03263 16.0797 7.73271 15.794C7.43279 15.5083 7.42125 15.0336 7.70694 14.7336L12.2155 10.0005L7.70694 5.26729C7.42125 4.96737 7.43279 4.49264 7.73271 4.20694Z"
+                      fill="white"
+                    />
+                  </svg>
+                </Button>
+              </div>
             </div>
           </div>
         </ContentSwitcher>
@@ -759,6 +812,7 @@ export default function NewUserModal() {
             <h2 className="text-center text-2xl font-bold">
               Basic Profile Setup
             </h2>
+
             <h3 className="text-center mb-6 text-gray-200 text-sm">
               Quickly set up your profile with essential details to get started
               and personalize your experience.
@@ -945,39 +999,64 @@ export default function NewUserModal() {
             </div>
 
             {/* footer */}
-            <div className="flex justify-end gap-3 mt-6">
-              <Button
-                variant="outline"
-                className="text-primary-500 border-primary-200"
-                onClick={() => {
-                  setModals({ ...modals, basicProfile: false });
-                }}
-              >
-                Skip for Now
-              </Button>
-
-              <Button
-                variant="primary"
-                loading={isLoadingCreateSubscription}
-                onClick={() => {
-                  // handleSubmit(onSubmit)();
-                  handlePlanPurchase();
-                }}
-              >
-                Continue
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 20 20"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
+            <div className="flex justify-between items-center gap-3 mt-6">
+              <div>
+                <Button
+                  variant="outline"
+                  className="gap-1 px-3 pl-2"
+                  onClick={() => {
+                    setStep(2);
+                  }}
                 >
-                  <path
-                    d="M7.73271 4.20694C8.03263 3.92125 8.50737 3.93279 8.79306 4.23271L13.7944 9.48318C14.0703 9.77285 14.0703 10.2281 13.7944 10.5178L8.79306 15.7682C8.50737 16.0681 8.03263 16.0797 7.73271 15.794C7.43279 15.5083 7.42125 15.0336 7.70694 14.7336L12.2155 10.0005L7.70694 5.26729C7.42125 4.96737 7.43279 4.49264 7.73271 4.20694Z"
-                    fill="white"
-                  />
-                </svg>
-              </Button>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                  >
+                    <path
+                      d="M12.2676 15.794C11.9677 16.0797 11.493 16.0681 11.2073 15.7682L6.20597 10.5178C5.93004 10.2281 5.93004 9.77284 6.20597 9.48318L11.2073 4.23271C11.493 3.93279 11.9677 3.92125 12.2676 4.20694C12.5676 4.49264 12.5791 4.96737 12.2934 5.26729L7.78483 10.0005L12.2934 14.7336C12.5791 15.0336 12.5676 15.5083 12.2676 15.794Z"
+                      fill="#5D6679"
+                    />
+                  </svg>
+                  Back
+                </Button>
+              </div>
+
+              <div className="flex gap-3 ">
+                <Button
+                  variant="outline"
+                  className="text-primary-500 border-primary-200"
+                  onClick={() => {
+                    setModals({ ...modals, basicProfile: false });
+                  }}
+                >
+                  Skip for Now
+                </Button>
+
+                <Button
+                  variant="primary"
+                  loading={isLoadingCreateSubscription}
+                  onClick={() => {
+                    handlePlanPurchase();
+                  }}
+                >
+                  Continue
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M7.73271 4.20694C8.03263 3.92125 8.50737 3.93279 8.79306 4.23271L13.7944 9.48318C14.0703 9.77285 14.0703 10.2281 13.7944 10.5178L8.79306 15.7682C8.50737 16.0681 8.03263 16.0797 7.73271 15.794C7.43279 15.5083 7.42125 15.0336 7.70694 14.7336L12.2155 10.0005L7.70694 5.26729C7.42125 4.96737 7.43279 4.49264 7.73271 4.20694Z"
+                      fill="white"
+                    />
+                  </svg>
+                </Button>
+              </div>
             </div>
           </div>
         </ContentSwitcher>
