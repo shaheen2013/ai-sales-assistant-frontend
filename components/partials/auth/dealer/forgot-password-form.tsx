@@ -68,7 +68,7 @@ export default function ForgotPasswordForm() {
         toast("success", "Password reset link sent to your email");
         if (data?.detail == "Password reset link sent to your email address") {
           reset();
-          router.push(`/account-created?email=${formData.email}`);
+          // router.push(`/account-created?email=${formData.email}`);
         }
       }
     } catch (error) {

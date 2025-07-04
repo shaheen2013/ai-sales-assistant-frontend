@@ -61,6 +61,14 @@ export default function LoginForm() {
       const loginResponse: any = await signIn("credentials", payload);
 
       if (!loginResponse.ok) {
+        if (loginResponse.error == "Please verify your email address.") {
+          console.log("Please verify your email address.");
+
+          router.push(`/account-created?email=${formData.email}`);
+
+          return;
+        }
+
         toast("error", loginResponse.error || "Login failed");
         return;
       }
