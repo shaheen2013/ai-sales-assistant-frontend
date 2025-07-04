@@ -52,7 +52,7 @@ export default function NewUserModal() {
   const [number, setNumber] = useState<string>("");
 
   const [modals, setModals] = useState({
-    basicProfile: false,
+    basicProfile: true, // false by default, true for onboarding
   });
 
   const [step, setStep] = useState<number>(1); // 1 for first step
