@@ -482,7 +482,7 @@ export default function NewUserModal() {
                   <Controller
                     name="country"
                     control={control}
-                    render={({ field, formState: { errors } }) => (
+                    render={({ field }) => (
                       <Select
                         onValueChange={(value) => {
                           field.onChange(value);
@@ -850,14 +850,14 @@ export default function NewUserModal() {
                       className="p-0 pb-2 rounded-none mb-3"
                     >
                       <AccordionTrigger className="text-sm font-semibold text-gray-400">
-                        What happens if I exceed my plan's included voice
+                        What happens if I exceed my plan&apos;s included voice
                         minutes?
                       </AccordionTrigger>
 
                       <AccordionContent className="text-sm font-normal text-gray-300 pr-6">
                         <p className="mb-3">
                           If you go over your monthly included voice minutes,
-                          you'll be charged an overage fee per additional
+                          you&apos;ll be charged an overage fee per additional
                           minute.
                         </p>
 
@@ -876,8 +876,8 @@ export default function NewUserModal() {
                       </AccordionTrigger>
                       <AccordionContent className="text-sm font-normal text-gray-300 pr-6">
                         Yes! You can change your plan at any time based on your
-                        dealership's needs. Any changes will reflect in your
-                        next billing cycle.
+                        dealership&apos;s needs. Any changes will reflect in
+                        your next billing cycle.
                       </AccordionContent>
                     </AccordionItem>
 
@@ -900,8 +900,8 @@ export default function NewUserModal() {
                       className="p-0 pb-2 rounded-none border-none mb-3"
                     >
                       <AccordionTrigger className="text-sm font-semibold text-gray-400">
-                        What's the difference between Business and Enterprise
-                        plans?
+                        What&apos;s the difference between Business and
+                        Enterprise plans?
                       </AccordionTrigger>
                       <AccordionContent className="text-sm font-normal text-gray-300 pr-6">
                         The Enterprise Plan includes more voice minutes, a lower

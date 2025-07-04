@@ -282,7 +282,7 @@ const DealerDashboardOverview = () => {
                 height={48}
                 className="size-12"
               />
-              <div className="text-[#2b3545] text-xl font-semibold mt-1">
+              <div className="text-[#2b3545] lg:text-xl font-semibold mt-1 px-3 text-center">
                 Select your perfect plan to unlock exclusive access!
               </div>
             </div>
