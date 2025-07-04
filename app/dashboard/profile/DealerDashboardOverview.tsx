@@ -123,10 +123,10 @@ const DealerDashboardOverview = () => {
   const handleChangeDealerAssistanceVoice = async (voice: string) => {
     setVoice(voice);
     try {
-      const data = await updateDealerAssitantVoice({ voice }).unwrap();
-      if (data) {
-        toast("success", "Voice updated successfully!");
-      }
+      await updateDealerAssitantVoice({ voice }).unwrap();
+      // if (data) {
+      //   toast("success", "Voice updated successfully!");
+      // }
     } catch (error) {
       toast("error", beautifyErrors(error));
     }
@@ -335,11 +335,13 @@ const DealerDashboardOverview = () => {
                 <h2 className="font-bold text-xl text-gray">
                   Set Voice for AI Call
                 </h2>
-                <p className="mb-6 text-gray-500 text-sm">
+                <p className=" text-gray-500 text-sm">
                   Select the AI voice that will be used during customer calls.
                 </p>
 
-                <p className="font-semibold text-base text-[#414651]">
+                <hr className="my-4 " />
+
+                <p className="font-semibold text-base text-[#414651] mb-1">
                   Choose Voice for AI Call{" "}
                 </p>
 
