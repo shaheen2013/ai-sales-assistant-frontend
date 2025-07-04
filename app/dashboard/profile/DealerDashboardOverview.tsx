@@ -180,7 +180,7 @@ const DealerDashboardOverview = () => {
           {/* cards */}
           <div className="grid xl:grid-cols-2 lg:grid-cols-2 grid-cols-1 gap-3 mb-4">
             {/* left */}
-            <div className="p-4 rounded-xl bg-[#E5DCFA] flex justify-between lg:flex-row flex-col">
+            <div className="p-4 rounded-xl bg-[#E5DCFA] flex justify-between lg:flex-row flex-col gap-3 lg:gap-0">
               <div className="flex flex-col lg:items-start items-center ">
                 <h3 className="text-sm text-gray-400 mb-1">Remaining for</h3>
                 <h3 className="text-gray-500 text-2xl font-semibold">
@@ -220,8 +220,8 @@ const DealerDashboardOverview = () => {
             </div>
 
             {/* right */}
-            <div className="p-4 rounded-xl bg-[#DDF2F6] flex justify-between">
-              <div>
+            <div className="p-4 rounded-xl bg-[#DDF2F6] flex justify-between lg:flex-row flex-col gap-3 lg:gap-0">
+              <div className="flex flex-col lg:items-start items-center">
                 <h3 className="text-sm text-gray-400 mb-1">
                   AI Talk Remaining
                 </h3>
@@ -232,7 +232,7 @@ const DealerDashboardOverview = () => {
                 </h3>
               </div>
 
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-3 lg:justify-start justify-center">
                 <div className="border-r-2 border-white pr-3">
                   <h2 className="text-gray-400 text-sm text-right">Used</h2>
                   <h2 className="text-lg font-semibold">
