@@ -66,7 +66,7 @@ type PlanType = {
   description: string;
 };
 
-const AdminDashboardOverview = () => {
+const DealerDashboardOverview = () => {
   /*--Custom Hooks--*/
   const toast = useToast();
 
@@ -890,4 +890,4 @@ const AdminDashboardOverview = () => {
   );
 };
 
-export default AdminDashboardOverview;
+export default DealerDashboardOverview;

@@ -8,7 +8,6 @@ import { SidebarProvider } from "@/components/shadcn/sidebar";
 import { DashboardSidebar } from "@/components/partials/dashboard/dashboard-sidebar";
 
 import Spinner from "@/components/spinner/Spinner";
-// import NewUserModal from "@/components/NewUserModal";
 import DashboardHeader from "@/components/partials/dashboard/dashboard-header";
 
 interface DashboardLayoutProps {
