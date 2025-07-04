@@ -12,11 +12,9 @@ import { beautifyErrors } from "@/lib/utils";
 import { useToast } from "@/hooks/useToast";
 import { Input } from "@/components/shadcn/input";
 import { useForgotPasswordMutation } from "@/features/auth/authSlice";
-import { useRouter } from "next/navigation";
 
 export default function ForgotPasswordForm() {
   const toast = useToast();
-  const router = useRouter();
   const { status } = useSession();
 
   const [forgotPassword, { isLoading }] = useForgotPasswordMutation();
@@ -43,17 +41,7 @@ export default function ForgotPasswordForm() {
     try {
       const payload = {
         email: formData.email,
-        // password: formData.password,
-        // user_type: "dealer",
-        // redirect: false,
       };
-
-      // const loginResponse: any = await signIn("credentials", payload);
-
-      // if (!loginResponse.ok) {
-      //   toast("error", loginResponse.error || "Login failed");
-      //   return;
-      // }
 
       const { error, data } = await forgotPassword(payload);
 
@@ -68,7 +56,6 @@ export default function ForgotPasswordForm() {
         toast("success", "Password reset link sent to your email");
         if (data?.detail == "Password reset link sent to your email address") {
           reset();
-          // router.push(`/account-created?email=${formData.email}`);
         }
       }
     } catch (error) {
