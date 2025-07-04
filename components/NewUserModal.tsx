@@ -385,7 +385,7 @@ export default function NewUserModal() {
                     render={({ field, formState: { errors } }) => (
                       <InputPhoneNumber
                         id="phone"
-                        className="h-10"
+                        className="h-10 shadow-none"
                         placeholder="Your Phone Number Here"
                         error={errors?.phone?.message}
                         countries={countryCodes}
@@ -484,25 +484,15 @@ export default function NewUserModal() {
                     name="country"
                     control={control}
                     render={({ field, formState: { errors } }) => (
-                      // <Input
-                      //   type="country"
-                      //   id="country"
-                      //   className="h-10"
-                      //   placeholder="country Here"
-                      //   error={errors?.country?.message}
-                      //   {...field}
-                      // />
-
                       <Select
                         onValueChange={(value) => {
-                          // setValue("country", value);
                           field.onChange(value);
                           console.log("Selected country: ", value);
                         }}
                         value={field.value}
                       >
                         <SelectTrigger
-                          className="w-full"
+                          className="w-full h-10 shadow-none border-[#D5D7DA]"
                           postIcon={
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
