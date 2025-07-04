@@ -55,7 +55,7 @@ export default function NewUserModal() {
     basicProfile: true, // false by default, true for onboarding
   });
 
-  const [step, setStep] = useState<number>(3); // 1 for first step
+  const [step, setStep] = useState<number>(1); // 1 for first step
 
   const { data: pricingPlans } = useGetDealerPricingPlansQuery();
 
@@ -839,7 +839,9 @@ export default function NewUserModal() {
                   />
                 </svg>
 
-                <h2 className="text-2xl">Select your Magic plan!</h2>
+                <h2 className="text-2xl text-[#1F2A37] font-medium">
+                  Select your Magic plan!
+                </h2>
               </div>
 
               <div className="grid grid-cols-2 gap-9">
@@ -859,10 +861,11 @@ export default function NewUserModal() {
                       value="item-1"
                       className="p-0 pb-2 rounded-none mb-3"
                     >
-                      <AccordionTrigger className="text-xs font-semibold text-gray-400">
+                      <AccordionTrigger className="text-sm font-semibold text-gray-400">
                         What&&apos;s included in the monthly voice minutes?
                       </AccordionTrigger>
-                      <AccordionContent className="text-xs font-normal text-gray-300">
+
+                      <AccordionContent className="text-sm font-normal text-gray-300 pr-6">
                         Your plan&apos;s included minutes apply to all voice
                         conversations handled by the AI assistant on behalf of
                         your dealership. This includes inbound buyer inquiries,
@@ -874,10 +877,10 @@ export default function NewUserModal() {
                       value="item-2"
                       className="p-0 pb-2 rounded-none mb-3"
                     >
-                      <AccordionTrigger className="text-xs font-semibold text-gray-400">
+                      <AccordionTrigger className="text-sm font-semibold text-gray-400">
                         What happens if we exceed our included voice minutes?
                       </AccordionTrigger>
-                      <AccordionContent className="text-xs font-normal text-gray-300">
+                      <AccordionContent className="text-sm font-normal text-gray-300 pr-6">
                         If you exceed your included voice minutes, you will be
                         charged for additional minutes at the rate specified in
                         your plan. You can monitor your usage through the
@@ -889,14 +892,30 @@ export default function NewUserModal() {
                       value="item-3"
                       className="p-0 pb-2 rounded-none border-none mb-3"
                     >
-                      <AccordionTrigger className="text-xs font-semibold text-gray-400">
+                      <AccordionTrigger className="text-sm font-semibold text-gray-400">
                         Is there a contract or can I cancel anytime?
                       </AccordionTrigger>
-                      <AccordionContent className="text-xs font-normal text-gray-300">
+                      <AccordionContent className="text-sm font-normal text-gray-300 pr-6">
                         There is no long-term contract required. You can cancel
                         your subscription at any time through your account
                         settings. Your plan will remain active until the end of
                         the current billing cycle.
+                      </AccordionContent>
+                    </AccordionItem>
+
+                    <AccordionItem
+                      value="item-4"
+                      className="p-0 pb-2 rounded-none border-none mb-3"
+                    >
+                      <AccordionTrigger className="text-sm font-semibold text-gray-400">
+                        Can Teez transfer callers to a real person?
+                      </AccordionTrigger>
+                      <AccordionContent className="text-sm font-normal text-gray-300 pr-6">
+                        Yes, Teez can transfer callers to a real person at any
+                        time during the conversation. If the AI assistant is
+                        unable to handle a specific request or if the caller
+                        requests to speak with a human, the call can be
+                        seamlessly transferred to a designated team member.
                       </AccordionContent>
                     </AccordionItem>
                   </Accordion>
@@ -941,7 +960,7 @@ export default function NewUserModal() {
                               <span className="group-has-[:checked]:text-primary-400 text-gray-400 font-bold text-3xl">
                                 {plan.prices?.[0]?.convert_amount}
                               </span>
-                              /month
+                              <span className="text-gray-400">/month</span>
                             </div>
                           </div>
                         </div>
@@ -989,7 +1008,8 @@ export default function NewUserModal() {
                   })}
 
                   <Link
-                    href="/#plan"
+                    target="_blank"
+                    href="/#plans"
                     className="underline text-xs font-medium text-primary-400 flex items-end justify-end cursor-pointer"
                   >
                     Show all plan Detail View
@@ -1042,7 +1062,7 @@ export default function NewUserModal() {
                     handlePlanPurchase();
                   }}
                 >
-                  Continue
+                  Choose & Continue
                   <svg
                     width="20"
                     height="20"

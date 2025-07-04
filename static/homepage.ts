@@ -112,12 +112,12 @@ export const pricingPlanForHomepage: PricingPlanForHome[] = [
 
 export const pricingPlansForSettingPlan: PricingPlanForSettings[] = [
   {
-    name: "Business Plan",
+    name: "Business",
     for: "Mid-size independent dealerships (3-5 reps)",
     api_setup_fee: "$250 one-time (CRM, booking, parts)",
   },
   {
-    name: "Enterprise Plan",
+    name: "Enterprise",
     for: "Franchise dealerships with multiple departments/locations",
     api_setup_fee:
       "$250 one-time (includes full CRM, service calendar, parts inventory, and SIP routing support)",

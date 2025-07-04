@@ -69,7 +69,8 @@ export default function PricingPlanSection() {
       originalArgs: originalArgsCreateSubscription,
     },
   ] = useCreateSubscriptionMutation();
-  const [cancelSubscription, { isLoading: isLoadingCancelSubscription }] = useCancelSubscriptionMutation();
+  const [cancelSubscription, { isLoading: isLoadingCancelSubscription }] =
+    useCancelSubscriptionMutation();
 
   const [selectedPriceMap, setSelectedPriceMap] = useState<
     Record<string, string>
@@ -79,7 +80,9 @@ export default function PricingPlanSection() {
   const [selectedLearnMorePlan, setSelectedLearnMorePlan] = useState<any>("");
 
   const currentPlan = pricingPlans?.find(
-    (plan: any) => plan.id === dataCurrentPlan?.subscription?.product?.id && !dataCurrentPlan?.subscription?.canceled_at
+    (plan: any) =>
+      plan.id === dataCurrentPlan?.subscription?.product?.id &&
+      !dataCurrentPlan?.subscription?.canceled_at
   );
 
   const currentPlanDetails = pricingPlansForSettingPlan.find(
@@ -137,7 +140,7 @@ export default function PricingPlanSection() {
     } catch (error) {
       toast("error", beautifyErrors(error));
     }
-  }
+  };
 
   const handlePurchasePlan = async (priceId: string) => {
     console.log("currentPlan => ", currentPlan);
@@ -186,8 +189,9 @@ export default function PricingPlanSection() {
             return (
               <div
                 key={plan.id}
-                className={`border ${isCurrentPlan ? "border-primary-100" : "border"
-                  }  rounded-xl p-6 flex flex-col  md:items-center md:justify-between`}
+                className={`border ${
+                  isCurrentPlan ? "border-primary-100" : "border"
+                }  rounded-xl p-6 flex flex-col  md:items-center md:justify-between`}
               >
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between w-full">
                   <div className="flex-1">
@@ -221,10 +225,11 @@ export default function PricingPlanSection() {
                               return (
                                 <div className="mt-2">
                                   <span
-                                    className={`${isCurrentPlan
-                                      ? "text-[#019935]"
-                                      : "text-gray-500"
-                                      } text-5xl font-semibold`}
+                                    className={`${
+                                      isCurrentPlan
+                                        ? "text-[#019935]"
+                                        : "text-gray-500"
+                                    } text-5xl font-semibold`}
                                   >
                                     {selectedPrice?.convert_amount || "0"}
                                   </span>
@@ -274,14 +279,15 @@ export default function PricingPlanSection() {
                     </div>
                     {isCurrentPlan ? (
                       <div className="flex items-center gap-4 mt-2">
-                        <Button 
-                        variant={"destructive_outlined"} 
-                        onClick={handleCancelSubscription}                        
-                        className="min-w-[174px]"
-                        disabled={isLoadingCancelSubscription}
-                        loading={isLoadingCancelSubscription}
-                        loaderClassName="border-destructive border-t-transparent"
-                        >Cancel Subscription
+                        <Button
+                          variant={"destructive_outlined"}
+                          onClick={handleCancelSubscription}
+                          className="min-w-[174px]"
+                          disabled={isLoadingCancelSubscription}
+                          loading={isLoadingCancelSubscription}
+                          loaderClassName="border-destructive border-t-transparent"
+                        >
+                          Cancel Subscription
                         </Button>
                         <p className="text-[#019935]">
                           This is the current plan
@@ -304,7 +310,7 @@ export default function PricingPlanSection() {
                             )}
                           >
                             {isLoadingUpgradeSubscription &&
-                              originalArgsUpgradeSubscription?.new_price_id ===
+                            originalArgsUpgradeSubscription?.new_price_id ===
                               plan.prices[0].id
                               ? "Upgrading..."
                               : "Upgrade Plan"}
@@ -331,7 +337,7 @@ export default function PricingPlanSection() {
                             className="text-[#019935] text-base shadow-md px-4 py-2.5 font-medium border-primary-100"
                           >
                             {isLoadingCreateSubscription &&
-                              originalArgsCreateSubscription?.price_id ===
+                            originalArgsCreateSubscription?.price_id ===
                               plan.prices[0].id
                               ? "Purchasing..."
                               : "Purchase Plan"}
@@ -408,7 +414,7 @@ export default function PricingPlanSection() {
                         <TickIcon />
                         <p className="text-[#555D6A] text-sm leading-relaxed">
                           <span className="text-[#242424] font-semibold capitalize">
-                            {key.replace(/_/g, " ")}:
+                            {key.replace(/_/g, "")}:
                           </span>{" "}
                           {value}
                         </p>
