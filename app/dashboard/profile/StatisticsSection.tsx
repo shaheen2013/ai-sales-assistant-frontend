@@ -104,6 +104,7 @@ export default function StatisticsSection() {
                   </span>
                   <span className="text-lg font-normal">Minute</span>
                 </div>
+
                 <div className="text-base font-normal text-gray-500 mt-2">
                   <span className="text-green-500">
                     {dealerCallHistoryStatsData?.current_month?.growth_percentage?.toFixed(
@@ -113,7 +114,8 @@ export default function StatisticsSection() {
                   </span>{" "}
                   than last Month
                 </div>
-                <div className="flex gap-2 justify-start items-start mt-6">
+
+                <div className="flex gap-2 justify-start items-start mt-6 mb-3">
                   <Image
                     src={"/icons/homepage/ellipse.svg"}
                     alt="ellipse"
