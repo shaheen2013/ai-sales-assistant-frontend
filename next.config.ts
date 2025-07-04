@@ -25,6 +25,9 @@ const nextConfig: NextConfig = {
       {
         hostname: "staging-backend.teezai.com",
       },
+      {
+        hostname: "teezai-stage.s3.amazonaws.com",
+      },
     ],
   },
 };
