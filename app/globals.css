@@ -23,7 +23,6 @@ html {
   html {
     scroll-padding-top: 84px;
   }
-  
 }
 
 @layer base {
@@ -87,6 +86,14 @@ html {
     height: 20px;
   }
 
+  /* responsive scrollbar */
+  @media (max-width: 768px) {
+    .message-scrollbar::-webkit-scrollbar {
+      width: 8px;
+      height: 16px;
+    }
+  }
+
   .message-scrollbar::-webkit-scrollbar-track {
     border-radius: 100vh;
     background: #f7f4ed; /* Light background stays the same for contrast */
@@ -101,7 +108,3 @@ html {
     background: #388e3c; /* Darker green on hover */
   }
 }
-
-/* .bg-gradient-to-b {
-  background: linear-gradient(#0a0a23 50%, #fff 0%);
-} */

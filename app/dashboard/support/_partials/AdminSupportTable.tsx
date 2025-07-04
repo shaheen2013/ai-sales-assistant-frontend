@@ -12,6 +12,7 @@ import {
   getFilteredRowModel,
   getPaginationRowModel,
 } from "@tanstack/react-table";
+import moment from "moment";
 import Image from "next/image";
 import { MoreVerticalIcon } from "lucide-react";
 
@@ -45,7 +46,7 @@ import { SupportTicketType } from "@/types/supportTicketType";
 import TableSkeleton from "@/components/skeleton/TableSkeleton";
 
 import {
-  useGetAdminAllSupportTicketsQuery,
+  // useGetAdminAllSupportTicketsQuery,
   useDeleteAdminSupportTicketMutation,
   useUpdateAdminSupportTicketMutation,
 } from "@/features/admin/adminSupportSlice";
@@ -62,7 +63,6 @@ import { beautifyErrors } from "@/lib/utils";
 import Badge from "@/components/badge/Badge";
 import { Controller, useForm } from "react-hook-form";
 import { Input, InputCopy } from "@/components/shadcn/input";
-import moment from "moment";
 import { Textarea } from "@/components/shadcn/textarea";
 
 export default function SupportTable({
@@ -79,7 +79,7 @@ export default function SupportTable({
   /*--Custom Hooks--*/
   const toast = useToast();
 
-  const { control, handleSubmit, setValue, reset, watch } = useForm({
+  const { control, handleSubmit, setValue } = useForm({
     defaultValues: {
       id: "",
       status: "",
@@ -145,7 +145,7 @@ export default function SupportTable({
 
   const handleEditSupportTicket = async (formData: any) => {
     try {
-      const { data, error } = await updateSupportTicket({
+      const { error } = await updateSupportTicket({
         ticketId: formData?.ticket_id,
         data: formData,
       });
