@@ -449,7 +449,7 @@ export default function DashboardDealerInventory() {
             />
           )}
 
-          <hr />
+          {/* <hr /> */}
         </div>
       </div>
 
