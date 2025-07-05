@@ -949,6 +949,7 @@ export default function InventoryCarList({
             <hr className="pb-8" />
 
             {/* form */}
+
             <form onSubmit={handleSubmit(handleEditInventory)} className="">
               <div className="grid lg:grid-cols-2 gap-x-4 mb-6 ">
                 {/* vin number */}
@@ -969,6 +970,7 @@ export default function InventoryCarList({
                         id="vin"
                         error={errors.vin?.message}
                         copyText={field.value}
+                        tabIndex={-1}
                         {...field}
                       />
                     )}
