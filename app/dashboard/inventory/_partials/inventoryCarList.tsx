@@ -950,7 +950,7 @@ export default function InventoryCarList({
 
             {/* form */}
             <form onSubmit={handleSubmit(handleEditInventory)} className="">
-              <div className="grid grid-cols-2 gap-x-4 mb-6 ">
+              <div className="grid lg:grid-cols-2 gap-x-4 mb-6 ">
                 {/* vin number */}
                 <div className="flex flex-col mb-3">
                   <label
