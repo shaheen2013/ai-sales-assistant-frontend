@@ -828,7 +828,7 @@ export default function DashboardDealerInventory() {
       >
         <DialogContent className="sm:max-w-[700px]">
           <DialogHeader>
-            <DialogTitle>Media Upload</DialogTitle>
+            <DialogTitle className="!text-gray-500">Media Upload</DialogTitle>
             <DialogDescription>
               Add your documents here, and you can upload them
             </DialogDescription>
@@ -867,7 +867,7 @@ export default function DashboardDealerInventory() {
               loading={isLoadingVehicleInventoryUplaod}
               onClick={handleUploadInventoryFiles}
             >
-              Next
+              Upload
             </Button>
           </div>
         </DialogContent>

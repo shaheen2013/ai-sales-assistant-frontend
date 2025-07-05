@@ -182,7 +182,7 @@ export default function DragAndDropUploader({
               <div className="absolute top-1/2 left-0 w-full h-[1px] bg-[#E7E7E7] -z-10"></div>
             </div>
 
-            <Button variant="outline-gray" className="h-11 rounded-lg">
+            <Button variant="outline-gray" className="h-11 rounded-lg !text-gray-400">
               Browse files
             </Button>
           </div>
