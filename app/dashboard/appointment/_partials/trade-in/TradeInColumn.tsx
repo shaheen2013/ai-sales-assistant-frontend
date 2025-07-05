@@ -1,9 +1,14 @@
-import { Checkbox } from '@/components/shadcn/checkbox';
-import { TradeInResponseType } from '@/types/appointmentBookingSliceType';
-import { ColumnDef } from '@tanstack/react-table';
-import moment from 'moment';
+import { Checkbox } from "@/components/shadcn/checkbox";
+import { isValidDate } from "@/lib/utils";
+import { TradeInResponseType } from "@/types/appointmentBookingSliceType";
+import { ColumnDef } from "@tanstack/react-table";
+import moment from "moment";
 
-export const tradeInColumns = ({ handleChangeVisitStatus }: { handleChangeVisitStatus: (checked: boolean, id: number) => void }): ColumnDef<TradeInResponseType>[] => {
+export const tradeInColumns = ({
+  handleChangeVisitStatus,
+}: {
+  handleChangeVisitStatus: (checked: boolean, id: number) => void;
+}): ColumnDef<TradeInResponseType>[] => {
   return [
     {
       accessorKey: "model_name",
@@ -13,12 +18,16 @@ export const tradeInColumns = ({ handleChangeVisitStatus }: { handleChangeVisitS
     {
       accessorKey: "manufacturing_date",
       header: "Manufacturing Date",
-      cell: ({ row }) => `${moment.utc(row.original?.manufacturing_date).format("YYYY")}`,
+      cell: ({ row }) => (
+        row.original?.manufacturing_date || "N/A"
+      ),
     },
     {
       accessorKey: "buying_date",
       header: "Buying Date",
-      cell: ({ row }) => `${moment.utc(row.original?.buying_date).format("MMM DD, YYYY")}`,
+      cell: ({ row }) =>
+row.original?.buying_date || "N/A"
+
     },
     {
       accessorKey: "defects",
@@ -28,12 +37,21 @@ export const tradeInColumns = ({ handleChangeVisitStatus }: { handleChangeVisitS
     {
       accessorKey: "purchase_price",
       header: "Price",
-      cell: ({ row }) => `$${row.original?.purchase_price}` || "N/A",
+      cell: ({ row }) =>
+        row?.original?.purchase_price
+          ? `$${row.original?.purchase_price}`
+          : `N/A`,
+
+      // `$${row.original?.purchase_price}` || "N/A",
     },
     {
       accessorKey: "ai_suggested_trade_in_price",
       header: "AI Suggested Price",
-      cell: ({ row }) => `$${row.original?.ai_suggested_trade_in_price}` || "N/A",
+      cell: ({ row }) =>
+        row?.original?.ai_suggested_trade_in_price
+          ? `$${row.original?.ai_suggested_trade_in_price}`
+          : `N/A`,
+      // `$${row.original?.ai_suggested_trade_in_price}` || "N/A",
     },
     {
       accessorKey: "Visited",
@@ -42,13 +60,15 @@ export const tradeInColumns = ({ handleChangeVisitStatus }: { handleChangeVisitS
         return (
           <div>
             <Checkbox
-              wrapperClassName='border-none flex justify-center items-center'
+              wrapperClassName="border-none flex justify-center items-center"
               checked={row.original?.is_visited}
-              onCheckedChange={(checked) => handleChangeVisitStatus(Boolean(checked), row.original?.id)}
+              onCheckedChange={(checked) =>
+                handleChangeVisitStatus(Boolean(checked), row.original?.id)
+              }
             />
           </div>
         );
-      }
-    }
-  ]
-}
+      },
+    },
+  ];
+};

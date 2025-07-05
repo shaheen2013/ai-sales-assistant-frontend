@@ -323,3 +323,7 @@ export function getCountryLocation(countryName: string) {
     longitude: country.longitude,
   };
 }
+
+export function isValidDate(date: string): boolean {
+  return moment(date, "YYYY-MM-DD", true).isValid();
+}

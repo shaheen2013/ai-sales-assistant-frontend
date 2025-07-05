@@ -27,7 +27,7 @@ const technicalVisitSortOptions = [
   },
   {
     label: "Preferred Date Time",
-    value: "preferred_date_time",
+    value: "prefered_time",
   },
 ];
 
