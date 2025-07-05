@@ -850,7 +850,7 @@ export default function DashboardDealerInventory() {
           <div className="flex justify-end gap-3">
             <Button
               variant={"outline"}
-              className="h-11 rounded-lg"
+              className="h-11 rounded-lg !text-gray-400"
               onClick={(e) => {
                 e.preventDefault();
                 setModals({ ...modals, addPdf: false });
