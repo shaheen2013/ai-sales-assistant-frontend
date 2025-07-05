@@ -49,6 +49,8 @@ export default function Home() {
     },
   ];
 
+  console.log("Homepage rendered");
+
   return (
     <div className="">
       {/* herosection */}
