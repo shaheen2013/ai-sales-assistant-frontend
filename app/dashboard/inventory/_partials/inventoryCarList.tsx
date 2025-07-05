@@ -788,7 +788,7 @@ export default function InventoryCarList({
           xmlns="http://www.w3.org/2000/svg"
           className="lg:w-[301px] lg:h-[300px] w-[200px] h-[200px]"
         >
-          <g clip-path="url(#clip0_2638_16386)">
+          <g clipPath="url(#clip0_2638_16386)">
             <path
               d="M270.426 54.9316H36.4056C33.2484 54.9336 30.221 56.1887 27.9885 58.4211C25.756 60.6536 24.501 63.681 24.499 66.8382V281.555C24.501 284.712 25.756 287.739 27.9885 289.972C30.221 292.204 33.2484 293.459 36.4056 293.461H270.426C273.584 293.46 276.612 292.205 278.844 289.972C281.077 287.74 282.332 284.712 282.334 281.555V66.8382C282.332 63.6808 281.077 60.6532 278.844 58.4207C276.612 56.1882 273.584 54.9333 270.426 54.9316Z"
               fill="#C6C6C6"
@@ -841,9 +841,9 @@ export default function InventoryCarList({
               y2="115.388"
               gradientUnits="userSpaceOnUse"
             >
-              <stop stop-color="#C2CECE" stop-opacity="0" />
-              <stop offset="0.179" stop-color="#AFBCBC" stop-opacity="0.179" />
-              <stop offset="1" stop-color="#5B6A6A" />
+              <stop stopColor="#C2CECE" stopOpacity="0" />
+              <stop offset="0.179" stopColor="#AFBCBC" stopOpacity="0.179" />
+              <stop offset="1" stopColor="#5B6A6A" />
             </linearGradient>
             <linearGradient
               id="paint2_linear_2638_16386"
@@ -854,7 +854,7 @@ export default function InventoryCarList({
               gradientUnits="userSpaceOnUse"
             >
               <stop stop-color="#EEF0F4" />
-              <stop offset="0.927" stop-color="#E4E4E4" />
+              <stop offset="0.927" stopColor="#E4E4E4" />
             </linearGradient>
             <clipPath id="clip0_2638_16386">
               <rect
