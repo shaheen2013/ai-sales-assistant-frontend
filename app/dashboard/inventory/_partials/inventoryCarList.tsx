@@ -280,7 +280,7 @@ export default function InventoryCarList({
             className="flex items-center text-center gap-2 cursor-pointer"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            Model Number
+            Model
             <svg
               width="16"
               height="16"
@@ -445,7 +445,7 @@ export default function InventoryCarList({
       },
       cell: ({ row }) => {
         return (
-          <div className=" font-medium text-gray-400">
+          <div className=" font-medium text-gray-400 capitalize">
             {row.original?.odometer || "-"}
           </div>
         );
