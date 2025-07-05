@@ -803,7 +803,7 @@ export default function DashboardDealerInventory() {
           <DialogHeader>
             <DialogTitle>Media Upload</DialogTitle>
             <DialogDescription>
-              Add your documents here, and you can upload up to 5 files max
+              Add your documents here, and you can upload them
             </DialogDescription>
           </DialogHeader>
 

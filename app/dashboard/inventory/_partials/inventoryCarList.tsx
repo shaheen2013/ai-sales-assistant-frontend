@@ -445,7 +445,7 @@ export default function InventoryCarList({
       },
       cell: ({ row }) => {
         return (
-          <div className=" font-medium text-gray-400 capitalize">
+          <div className=" font-medium text-gray-400">
             {row.original?.odometer || "-"}
           </div>
         );
@@ -481,7 +481,7 @@ export default function InventoryCarList({
       },
       cell: ({ row }) => {
         return (
-          <div className=" font-medium text-gray-400">
+          <div className=" font-medium text-gray-400 uppercase">
             {row.original?.odometer_unit || "-"}
           </div>
         );
