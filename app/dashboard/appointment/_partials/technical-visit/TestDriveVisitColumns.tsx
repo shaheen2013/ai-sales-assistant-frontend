@@ -33,9 +33,13 @@ export const testDriveVisitsColumns = ({
       accessorKey: "schedule_date",
       header: "Scheduled Date & Time",
       cell: ({ row }) =>
-        `${moment.utc(row.original?.start_at).format("MMM DD, YYYY")} | ${moment
-          .utc(row.original?.start_at)
-          .format("hh:mm a")}`,
+        row.original?.start_at
+          ? `${moment
+              .utc(row.original?.start_at)
+              .format("MMM DD, YYYY")} | ${moment
+              .utc(row.original?.start_at)
+              .format("hh:mm a")}`
+          : "N/A",
     },
     {
       accessorKey: "Booking Status",

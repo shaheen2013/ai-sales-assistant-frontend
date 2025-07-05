@@ -1,8 +1,6 @@
 import { Checkbox } from "@/components/shadcn/checkbox";
-import { isValidDate } from "@/lib/utils";
 import { TradeInResponseType } from "@/types/appointmentBookingSliceType";
 import { ColumnDef } from "@tanstack/react-table";
-import moment from "moment";
 
 export const tradeInColumns = ({
   handleChangeVisitStatus,
@@ -18,16 +16,12 @@ export const tradeInColumns = ({
     {
       accessorKey: "manufacturing_date",
       header: "Manufacturing Date",
-      cell: ({ row }) => (
-        row.original?.manufacturing_date || "N/A"
-      ),
+      cell: ({ row }) => row.original?.manufacturing_date || "N/A",
     },
     {
       accessorKey: "buying_date",
       header: "Buying Date",
-      cell: ({ row }) =>
-row.original?.buying_date || "N/A"
-
+      cell: ({ row }) => row.original?.buying_date || "N/A",
     },
     {
       accessorKey: "defects",

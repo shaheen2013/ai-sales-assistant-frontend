@@ -1,11 +1,15 @@
 // import Badge from '@/components/badge/Badge';
-import { Checkbox } from '@/components/shadcn/checkbox';
-import { StoreVisitResponseType } from '@/types/appointmentBookingSliceType';
-import { ColumnDef } from '@tanstack/react-table';
+import { Checkbox } from "@/components/shadcn/checkbox";
+import { StoreVisitResponseType } from "@/types/appointmentBookingSliceType";
+import { ColumnDef } from "@tanstack/react-table";
 // import { Phone } from 'lucide-react';
-import moment from 'moment';
+import moment from "moment";
 
-export const storeVisitColumns = ({ handleChangeVisitStatus }: { handleChangeVisitStatus: (checked: boolean, id: number) => void }): ColumnDef<StoreVisitResponseType>[] => {
+export const storeVisitColumns = ({
+  handleChangeVisitStatus,
+}: {
+  handleChangeVisitStatus: (checked: boolean, id: number) => void;
+}): ColumnDef<StoreVisitResponseType>[] => {
   return [
     {
       accessorKey: "name",
@@ -15,7 +19,14 @@ export const storeVisitColumns = ({ handleChangeVisitStatus }: { handleChangeVis
     {
       accessorKey: "schedule_date",
       header: "Scheduled Date & Time",
-      cell: ({ row }) => `${moment.utc(row.original?.prefered_time).format("MMM DD, YYYY")} | ${moment.utc(row.original?.prefered_time).format("hh:mm a")}`,
+      cell: ({ row }) =>
+        row.original?.prefered_time
+          ? `${moment
+              .utc(row.original?.prefered_time)
+              .format("MMM DD, YYYY")} | ${moment
+              .utc(row.original?.prefered_time)
+              .format("hh:mm a")}`
+          : "N/A",
     },
     {
       accessorKey: "visit_reason",
@@ -29,13 +40,15 @@ export const storeVisitColumns = ({ handleChangeVisitStatus }: { handleChangeVis
         return (
           <div>
             <Checkbox
-              wrapperClassName='border-none flex justify-center items-center'
+              wrapperClassName="border-none flex justify-center items-center"
               checked={row.original?.is_visited}
-              onCheckedChange={(checked) => handleChangeVisitStatus(Boolean(checked), row.original?.id)}
+              onCheckedChange={(checked) =>
+                handleChangeVisitStatus(Boolean(checked), row.original?.id)
+              }
             />
           </div>
         );
-      }
-    }
-  ]
-}
+      },
+    },
+  ];
+};
