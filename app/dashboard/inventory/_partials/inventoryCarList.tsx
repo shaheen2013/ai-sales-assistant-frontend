@@ -1113,7 +1113,7 @@ export default function InventoryCarList({
                     control={control}
                     render={({ field, formState: { errors } }) => (
                       <Input
-                        type="odometer"
+                        type="number"
                         id="odometer"
                         className="h-11"
                         placeholder="Odometer"

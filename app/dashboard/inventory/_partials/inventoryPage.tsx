@@ -125,6 +125,7 @@ export default function DashboardDealerInventory() {
     page: Number(page) || 1,
     page_size: Number(page_size) || 10,
   });
+
   const {
     data: currentSubscriptionData,
     isLoading: isLoadingCurrentSubscription,
@@ -663,7 +664,7 @@ export default function DashboardDealerInventory() {
                     control={control}
                     render={({ field, formState: { errors } }) => (
                       <Input
-                        type="odometer"
+                        type="number"
                         id="odometer"
                         className="h-11"
                         placeholder="Odometer"
